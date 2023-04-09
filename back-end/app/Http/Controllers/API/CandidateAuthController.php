@@ -38,6 +38,7 @@ class CandidateAuthController extends Controller
             return response()->json([
                 'status' => 401,
                 'message' => 'Invalid username or password',
+                
             ]);
         }
         else{
@@ -46,7 +47,8 @@ class CandidateAuthController extends Controller
                 'status' => 200, 
                 'full_name' => $candidate->first_name . ' ' .$candidate->last_name ,
                 'message' => 'Logged In Successfully',
-                'token' => $token
+                'token' => $token,
+                'role' => 'candidate'
             ]);
         }
     }

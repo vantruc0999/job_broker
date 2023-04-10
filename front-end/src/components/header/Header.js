@@ -1,73 +1,135 @@
+import { Link } from "react-router-dom";
 import Logo from "../../assets/images/logo.jpg";
 function Header() {
   const renderLog = () => {
+    var user = localStorage.getItem("user");
+    user = JSON.parse(user);
+    console.log(user);
+    if (user) {
+      return (
+        <>
+          <li className="nav-item d-flex divide dropdown">
+            <img
+              className="navbar-brand"
+              src={Logo}
+              alt=""
+              style={{
+                width: "15%",
+                height: 30,
+                padding: 0,
+                margin: 0,
+                marginTop: 6,
+              }}
+            />
+            <a
+              className="nav-link dropdown-toggle text-dark"
+              data-toggle="dropdown"
+              href="#"
+            >
+              Thắng Nguyễn
+            </a>
+            <div className="dropdown-menu">
+              <div style={{ borderBottom: "1px solid #e7e9eb" }}>
+                <a className="dropdown-item" href="#">
+                  Cập nhập hồ sơ
+                </a>
+                <a className="dropdown-item" href="#">
+                  Giới thiệu bản thân
+                </a>
+                <a className="dropdown-item" href="#">
+                  Đổi mật khẩu
+                </a>
+              </div>
+              <div style={{ borderBottom: "1px solid #e7e9eb" }}>
+                <a className="dropdown-item" href="#">
+                  Việc làm đã ứng tuyển
+                </a>
+                <a className="dropdown-item" href="#">
+                  Việc làm đã lưu
+                </a>
+              </div>
+              <div>
+                <a className="dropdown-item" href="#">
+                  Đăng xuất
+                </a>
+              </div>
+            </div>
+          </li>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <li>
+            <Link to="/register">
+              <a href="" className="btn  btn-outline-primary mr-2">
+                Đăng ký
+              </a>
+            </Link>
+            <Link to="/login">
+            <a href="" className="btn btn-primary">
+              Đăng nhập
+            </a>
+            </Link>
+          </li>
+        </>
+      );
+    }
+  };
+
+  const renderToggle = () => {
     return (
       <>
-        <li>
-          <a href="" className="btn  btn-outline-primary mr-2">
-            Đăng ký
+        <li className="nav-item d-flex divide dropdown">
+          <img
+            className="navbar-brand"
+            src={Logo}
+            alt=""
+            style={{
+              width: "15%",
+              height: 30,
+              padding: 0,
+              margin: 0,
+              marginTop: 6,
+            }}
+          />
+          <a
+            className="nav-link dropdown-toggle text-dark"
+            data-toggle="dropdown"
+            href="#"
+          >
+            Thắng Nguyễn
           </a>
-          <a href="" className="btn btn-primary">
-            Đăng nhập
-          </a>
+          <div className="dropdown-menu">
+            <div style={{ borderBottom: "1px solid #e7e9eb" }}>
+              <a className="dropdown-item" href="#">
+                Cập nhập hồ sơ
+              </a>
+              <a className="dropdown-item" href="#">
+                Giới thiệu bản thân
+              </a>
+              <a className="dropdown-item" href="#">
+                Đổi mật khẩu
+              </a>
+            </div>
+            <div style={{ borderBottom: "1px solid #e7e9eb" }}>
+              <a className="dropdown-item" href="#">
+                Việc làm đã ứng tuyển
+              </a>
+              <a className="dropdown-item" href="#">
+                Việc làm đã lưu
+              </a>
+            </div>
+            <div>
+              <a className="dropdown-item" href="#">
+                Đăng xuất
+              </a>
+            </div>
+          </div>
         </li>
       </>
     );
   };
-
-  const renderToggle = ()=>{
-    return(
-      <>
-        <li className="nav-item d-flex divide dropdown">
-                <img
-                  className="navbar-brand"
-                  src={Logo}
-                  alt=""
-                  style={{
-                    width: "15%",
-                    height: 30,
-                    padding: 0,
-                    margin: 0,
-                    marginTop: 6,
-                  }}
-                />
-                <a
-                  className="nav-link dropdown-toggle text-dark"
-                  data-toggle="dropdown"
-                  href="#"
-                >
-                  Thắng Nguyễn
-                </a>
-                <div className="dropdown-menu">
-                  <div style={{ borderBottom: "1px solid #e7e9eb" }}>
-                    <a className="dropdown-item" href="#">
-                      Cập nhập hồ sơ
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Giới thiệu bản thân
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Đổi mật khẩu
-                    </a>
-                  </div>
-                  <div style={{ borderBottom: "1px solid #e7e9eb" }}>
-                    <a className="dropdown-item" href="#">
-                      Việc làm đã ứng tuyển
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Việc làm đã lưu
-                    </a>
-                  </div>
-                  <div>
-                    <a className="dropdown-item" href="#">
-                      Đăng xuất
-                    </a>
-                  </div>
-                </div>
-              </li>
-      </>
-    )
-  }
 
   return (
     <>
@@ -160,53 +222,7 @@ function Header() {
               </li>
             </ul>
             <ul className="nav justify-content-end align-items-center">
-              <li className="nav-item d-flex divide dropdown">
-                <img
-                  className="navbar-brand"
-                  src={Logo}
-                  alt=""
-                  style={{
-                    width: "15%",
-                    height: 30,
-                    padding: 0,
-                    margin: 0,
-                    marginTop: 6,
-                  }}
-                />
-                <a
-                  className="nav-link dropdown-toggle text-dark"
-                  data-toggle="dropdown"
-                  href="#"
-                >
-                  Thắng Nguyễn
-                </a>
-                <div className="dropdown-menu">
-                  <div style={{ borderBottom: "1px solid #e7e9eb" }}>
-                    <a className="dropdown-item" href="#">
-                      Cập nhập hồ sơ
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Giới thiệu bản thân
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Đổi mật khẩu
-                    </a>
-                  </div>
-                  <div style={{ borderBottom: "1px solid #e7e9eb" }}>
-                    <a className="dropdown-item" href="#">
-                      Việc làm đã ứng tuyển
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      Việc làm đã lưu
-                    </a>
-                  </div>
-                  <div>
-                    <a className="dropdown-item" href="#">
-                      Đăng xuất
-                    </a>
-                  </div>
-                </div>
-              </li>
+              {renderLog()}
               <li className="nav-item ml-3">
                 <a className="nav-link recruiter text-dark" href="#">
                   Nhà tuyển dụng

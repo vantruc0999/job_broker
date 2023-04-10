@@ -18,7 +18,6 @@ root.render(
           <Route index path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/registerCruiter" element={<RegisterCruiter />} />
-
         </Routes>
       </App>
     </Router>

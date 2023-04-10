@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+}
+/* NAVBAR HEADER */
+.navbar-brand {
+  height: 60px;
+  width: auto;
+}
+.navbar-light .navbar-nav .nav-link {
+  color: #fff;
+}
+.divide {
+  border-right: 2px solid #e7e9eb;
+}
+
+#menu-listjob {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 300%;
+}
+#menu-listjob td,
+#menu-listjob th {
+  padding: 8px;
+}
+
+.recruiter {
+  background-color: #f4f6f7;
+  border-radius: 5px;
+}
+/* NAVBAR HEADER */
+
+/* SEO */
+.search-job {
+  display: block;
+  text-align: center;
+}
+.card-border {
+  margin: 0 10px;
+  height: 154px;
+  border: 1px solid #1772bd;
+  border-radius: 5px;
+}
+/* SEO */
+
+/*  Urgent Hiring */
+.urgentHiring {
+  border: 2px solid #e7e9eb;
+  margin: 10px 5px;
+  height: 110px;
+  font-size: 12px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.urgentHiring ul li {
+  border: 1px solid #e7e9eb;
+  border-radius: 3px;
+  padding: 0 10px;
+}
+.urgentHiring ul li i {
+  padding-right: 3px;
+}
+.urgentHiring h6 {
+  color: #dc3545;
+}
+/*  Urgent Hiring */
+/*   <!-- Typical Employers --> */
+
+.swiper-button-next{
+  position: absolute;
+  right: 0%;
+}
+/*   <!-- Typical Employers --> */

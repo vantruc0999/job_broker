@@ -13,6 +13,7 @@ class Job extends Model
     use HasFactory;
 
     protected $guarded = [];
+    
     // protected $fillable = [
     //     'job_id',
     //     'job_name',

@@ -15,8 +15,9 @@ use Illuminate\Support\Facades\Hash;
 class RecruiterAuthController extends Controller
 {
     //
-    public function register(RecruiterRegisterRequest $request){
-        $user = Recruiter::create([
+    public function register(RecruiterRegisterRequest $request)
+    {
+        $recruiter = Recruiter::create([
             'recruiter_name' => $request->first_name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -28,27 +29,37 @@ class RecruiterAuthController extends Controller
 
         return response([
             'status' => 200,
-            'full_name' => $user->recruiter_name,
+            'full_name' => $recruiter->recruiter_name,
             'message' => 'Created User Successfully',
         ]);
     }
 
     public function login(RecruiterLoginRequest $request)
     {
-        $user = Recruiter::where('email',$request->email)->first();
-        
-        if(!$user || ! Hash::check($request->password, $user->password)){
+        $recruiter = Recruiter::where('email', $request->email)->first();
+
+        if (!$recruiter || !Hash::check($request->password, $recruiter->password)) {
             return response()->json([
                 'status' => 401,
                 'message' => 'Invalid username or password',
             ]);
-        }
-        else{
-            return response([    
-                'status' => 200, 
-                // 'full_name' => $user->first_name . ' ' . $user->last_name,
+        } else {
+            $token = $recruiter->createToken($recruiter->email . 'Token')->plainTextToken;
+            return response([
+                'status' => 200,
+                'recruiter_name' => $recruiter->recruiter_name,
                 'message' => 'Logged In Successfully',
+                'token' => $token
             ]);
         }
+    }
+
+    public function logout()
+    {
+        auth()->user()->tokens()->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Logged Out Successfully',
+        ]);
     }
 }

@@ -18,11 +18,12 @@ class RecruiterAuthController extends Controller
     public function register(RecruiterRegisterRequest $request)
     {
         $recruiter = Recruiter::create([
-            'recruiter_name' => $request->first_name,
+            'recruiter_name' => $request->recruiter_name,
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'company_name' => $request->company_name,
+            'image' => $request->image
         ]);
 
         //$token = $user->createToken($user->Username.'_Token')->plainTextToken;
@@ -30,7 +31,7 @@ class RecruiterAuthController extends Controller
         return response([
             'status' => 200,
             'full_name' => $recruiter->recruiter_name,
-            'message' => 'Created User Successfully',
+            'message' => 'Created recruiter Successfully, Hello ' . $recruiter->recruiter_name,
         ]);
     }
 
@@ -49,6 +50,7 @@ class RecruiterAuthController extends Controller
                 'status' => 200,
                 'recruiter_name' => $recruiter->recruiter_name,
                 'message' => 'Logged In Successfully',
+                'role' => 'recruiter',
                 'token' => $token
             ]);
         }

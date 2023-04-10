@@ -1,24 +1,18 @@
-// import "./App.css";
-import "./static/style.css";
-import "./static/cssAdmin.css";
-import "./static/cssCandidate/bootstrap.min.css";
-import "./static/vendor/bootstrap/css/bootstrap.min.css";
-import "./static/cssCandidate/style.css";
-import LoginCan from "./tempalate/LoginCan";
-import LoginRecuiter from "./tempalate/LoginRecruiter";
-import RegisterRecruiter from "./tempalate/RegisterRecruiter";
-import RegisterCan from "./tempalate/RegisterCan";
-import LoginAdmin from "./tempalate/LoginAdmin";
+import Footer from "./components/footer/Footer";
+import Header from "./components/header/Header";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 
-function App() {
+function App(props) {
+  let param1 = useLocation();
+console.log(param1);
   return (
-    <div>
-      <LoginRecuiter></LoginRecuiter>
-      <RegisterRecruiter></RegisterRecruiter>
-      <LoginCan></LoginCan>
-      <RegisterCan></RegisterCan>
-      <LoginAdmin></LoginAdmin>
-    </div>
+    <>
+      {param1["pathname"].includes("login") || param1["pathname"].includes("register")|| param1["pathname"].includes("registerCruiter") ? null : <Header />}
+      {props.children}
+      {param1["pathname"].includes("login") || param1["pathname"].includes("register")|| param1["pathname"].includes("registerCruiter") ? null : (
+        <Footer />
+      )}
+    </>
   );
 }
 

@@ -39,4 +39,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('candidate/create-cv', [ResumeController::class, 'handleCreateResume']);
     Route::get('candidate/show-all', [ResumeController::class, 'index']);
     Route::get('candidate/show-detail/{id}', [ResumeController::class, 'show']);
+    Route::post('candidate/update-cv/{id}', [ResumeController::class, 'handleUpdateResume']);
+    Route::post('candidate/delete-cv/{id}', [ResumeController::class, 'destroy']);
 });

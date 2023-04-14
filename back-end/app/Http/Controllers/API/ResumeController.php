@@ -20,8 +20,13 @@ class ResumeController extends Controller
         //
         $candidate_id = auth()->user()['candidate_id'];
         $resume = Resume::select('resume_id')->where('candidate_id', $candidate_id)->get();
+        $resume_id = [];
+        $resume->each(function($item) use (&$resume_id){
+            $resume_id[] = $item->resume_id;
+        });
+        // return $skill_name;
         return response([
-            'resume' => $resume,
+            'resume_id' => $resume_id,
         ]);
     }
 
@@ -180,9 +185,49 @@ class ResumeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function handleUpdateResume(Request $request, $id)
     {
         //
+        $education = $request->resume['education'];
+        $certificate = $request->resume['certificate'];
+        $image = $request->resume['image'];
+        
+        $experience_project = $request->resume['experience_project'];
+        $experience_company = $request->resume['experience_company'];
+        $skills = $request->resume['skills'];
+
+        self::updateResume($education, $certificate, $image, $id);
+        self::deleteExperience($id);
+        self::deleteResumeSkill($id);
+
+        self::storeExperience($experience_project, $id, "experience_project");
+        self::storeExperience($experience_company, $id, "experience_company");
+        self::storeResumeSkills($skills, $id);
+
+        return response([
+            'status' => 200,
+            'message' => 'Update resume successfully',
+            // 'user' => auth()->user()
+        ]);
+    }
+
+    private static function updateResume($education, $certificate, $image, $id)
+    {
+        $resume = Resume::where('resume_id', '=', $id)->
+        update([
+            'education' => $education,
+            'certificate' => $certificate,
+            'image' => $image,
+        ]);
+        return $resume;
+    }
+
+    private static function deleteExperience($id){
+        Experience::where('resume_id', $id)->delete();
+    }
+
+    private static function deleteResumeSkill($id){
+        ResumeSkills::where('resume_id', $id)->delete();
     }
 
     /**
@@ -194,5 +239,12 @@ class ResumeController extends Controller
     public function destroy($id)
     {
         //
+        Experience::where('resume_id', $id)->delete();
+        ResumeSkills::where('resume_id', $id)->delete();
+        Resume::where('resume_id', $id)->delete();
+
+        return response([
+            'message' => 'Delete Resume successfully',
+        ]);
     }
 }

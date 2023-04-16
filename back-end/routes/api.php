@@ -24,16 +24,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Recruiter
 Route::post('recruiter/login', [RecruiterAuthController::class, 'login']);
 Route::post('recruiter/register', [RecruiterAuthController::class, 'register']);
 Route::post('recruiter/add-job', [JobController::class, 'store']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('recruiter/logout', [RecruiterAuthController::class, 'logout']);
+});
 
-
+// Candidate
 Route::post('candidate/register', [CandidateAuthController::class, 'register']);
 Route::post('candidate/login', [CandidateAuthController::class, 'login']);
-
-
-
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('candidate/logout', [CandidateAuthController::class, 'logout']);
     Route::post('candidate/create-cv', [ResumeController::class, 'handleCreateResume']);

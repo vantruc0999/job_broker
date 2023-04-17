@@ -16,7 +16,6 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     let errorSubmit = {};
-    console.log("alo");
     const re =
       /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     

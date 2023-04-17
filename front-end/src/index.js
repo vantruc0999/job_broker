@@ -8,6 +8,10 @@ import Login from './components/authen/Login';
 import Register from './components/authen/Register';
 import RegisterCruiter from './components/authen/RegisterCruiter';
 import Homepage from './components/candidate/Homepage';
+import CreateCV from './components/candidate/CreateCV';
+import FileCV from './components/candidate/FileCV';
+import HandleCV from './components/candidate/HandleCV';
+import MyPdfReader from "./components/candidate/MyPdfReader"
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -18,6 +22,11 @@ root.render(
           <Route index path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/registerCruiter" element={<RegisterCruiter />} />
+          <Route path="/createCV" element={<CreateCV />} />
+          <Route path="/fileCV" element={<FileCV />} />
+          <Route path="/handleCV" element={<HandleCV />} />
+          <Route path="/uploadCV" element={<MyPdfReader />} />
+
         </Routes>
       </App>
     </Router>

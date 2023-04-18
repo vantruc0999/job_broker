@@ -3,9 +3,12 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CandidateAuthController;
 use App\Http\Controllers\API\JobController;
+use App\Http\Controllers\API\PackageController;
+use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\RecruiterAuthController;
 use App\Http\Controllers\API\ResumeController;
 use App\Models\Candidate;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,9 +30,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Recruiter
 Route::post('recruiter/login', [RecruiterAuthController::class, 'login']);
 Route::post('recruiter/register', [RecruiterAuthController::class, 'register']);
-Route::post('recruiter/add-job', [JobController::class, 'store']);
+
+Route::get('recruiter/package',[PackageController::class, 'index']);
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('recruiter/logout', [RecruiterAuthController::class, 'logout']);
+    Route::post('recruiter/add-job', [JobController::class, 'handleCreateJob']);
+    Route::post('recruiter/payment', [PaymentController::class, 'pay']);
+    Route::get('recruiter/payment-history', [PaymentController::class, 'getPaymentHistory']);
 });
 
 // Candidate

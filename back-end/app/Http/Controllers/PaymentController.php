@@ -40,13 +40,13 @@ class PaymentController extends Controller
 
         try {
             $response = $this->gateway->purchase(array(
-                'amount' => $request->amount,
+                'amount' => $package['price'],
                 'currency' => env('PAYPAL_CURRENCY'),
                 'returnUrl' => url('success'),
                 'cancelUrl' => url('error')
             ))->send();
 
-            // dd($response);
+            dd($response);
             if ($response->isRedirect()) {
                 $response->redirect();
             }
@@ -73,16 +73,23 @@ class PaymentController extends Controller
             if ($response->isSuccessful()) {
 
                 $arr = $response->getData();
-                Payment::where('recruiter_id', '=' , 1)->update(
-                    [
-                        'payment_id' => $arr['id'],
-                        'payer_id' => $arr['payer']['payer_info']['payer_id'],
-                        'payer_email' => $arr['payer']['payer_info']['email'],
-                        // 'amount' => $arr['transactions'][0]['amount']['total'],
-                        // 'currency' => env('PAYPAL_CURRENCY'),
-                        'payment_status' => $arr['state'],
-                    ]
-                );
+                $payment = Payment::where('recruiter_id', '=' , 1)->orderBy('id', 'desc')->first();
+                $payment->payment_id = $arr['id'];
+                $payment->payer_id = $arr['payer']['payer_info']['payer_id'];
+                $payment->payer_email = $arr['payer']['payer_info']['email'];
+                $payment->payment_status = $arr['state'];
+
+                $payment->save();
+                // Payment::where('recruiter_id', '=' , 1)->update(
+                //     [
+                //         'payment_id' => $arr['id'],
+                //         'payer_id' => $arr['payer']['payer_info']['payer_id'],
+                //         'payer_email' => $arr['payer']['payer_info']['email'],
+                //         // 'amount' => $arr['transactions'][0]['amount']['total'],
+                //         // 'currency' => env('PAYPAL_CURRENCY'),
+                //         'payment_status' => $arr['state'],
+                //     ]
+                // );
                 
                 return "Payment is Successfull. Your Transaction Id is : " . $arr['id'];
 

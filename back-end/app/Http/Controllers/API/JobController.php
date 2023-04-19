@@ -7,6 +7,8 @@ use App\Http\Requests\JobRequest;
 use App\Models\Job;
 use App\Models\JobSkills;
 use App\Models\Payment;
+use App\Models\ProgrammingSkills;
+use App\Models\Recruiter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -17,9 +19,37 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private static function getCompanyName()
+    {
+        return Recruiter::select('company_name')
+            ->where('recruiter_id', '=', auth()->user()['recruiter_id'])->first();
+    }
+
+    private static function getAllJobs()
+    {
+        return Job::select('job_id', 'salary', 'job_name', 'job_location')
+            ->where('recruiter_id', '=', auth()->user()['recruiter_id'])
+            ->orderBy('job_id', 'desc')
+            ->get();
+    }
+
     public function index()
     {
         //
+        $company = self::getCompanyName();
+
+        $jobs = self::getAllJobs();
+
+        $jobs->each(function ($job) use ($company) {
+            $job->company_name = $company['company_name'];
+        });
+
+        return response(
+            [
+                'jobs' => $jobs,
+            ]
+        );
     }
 
     /**
@@ -32,9 +62,9 @@ class JobController extends Controller
     private static function getExpiredDate()
     {
         $expire_date = Payment::select('end_date')
-                        ->where('recruiter_id', '=', auth()->user()['recruiter_id'])
-                        ->orderBy('id', 'desc')
-                        ->first();
+            ->where('recruiter_id', '=', auth()->user()['recruiter_id'])
+            ->orderBy('id', 'desc')
+            ->first();
         return $expire_date;
     }
 
@@ -110,6 +140,25 @@ class JobController extends Controller
     public function show($id)
     {
         //
+        $job = Job::where('job_id', '=', $id)->first();
+        $job->skills = self::getJobSkills($id);
+
+        return response([
+            'job_detail' => $job,
+        ]);
+    }
+
+    private static function getJobSkills($job_id)
+    {
+        $skills = JobSkills::select('skill_name')
+            ->join('programming_skills', 'programming_skills.skill_id', '=', 'job_skills.skill_id')
+            ->where('job_id', '=', $job_id)
+            ->get();
+        $skills_name = [];
+        $skills->each(function ($skill) use (&$skills_name) {
+            $skills_name[] = $skill['skill_name'];
+        });
+        return $skills_name;
     }
 
     /**
@@ -119,9 +168,37 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function handleUpdateJob(Request $request, $id)
     {
         //
+        self::deleteJobSkills($id);
+        self::storeSkill($request->job_skill, $id);
+        self::updateJob($request, $id);
+        return response([
+            "status" => 'Update job ' . $id .' successfully'
+        ]);
+    }
+
+    private static function updateJob($request, $job_id)
+    {
+        Job::where('job_id', '=', $job_id)->update(
+                [
+                    'job_name' => $request->job_name,
+                    'position_name' => $request->position_name,
+                    'job_start_date' => $request->job_start_date,
+                    'job_end_date' => $request->job_end_date,
+                    'salary' => $request->salary,
+                    'job_location' => $request->job_location,
+                    'language' => $request->language,
+                    'job_requirement' => $request->job_requirement,
+                    'job_description' => $request->job_description,
+                    'benefit' => $request->benefit,
+                ]
+            );
+    }
+
+    private static function deleteJobSkills($job_id){
+        JobSkills::where('job_id', '=', $job_id)->delete();
     }
 
     /**

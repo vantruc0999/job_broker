@@ -17,11 +17,9 @@ function HandleCV() {
     reader.readAsDataURL(file);
   };
   function handleDelete(id) {
-    console.log(id);
     setToggle(!toggle);
     if (Array.isArray(files)) {
       const newFiles = files.filter((file) => file.name !== id);
-      console.log(newFiles);
       setFile(newFiles);
     }
     console.log(toggle);

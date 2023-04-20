@@ -1,6 +1,12 @@
 import Logo from "../../assets/images/logo.jpg";
 
 function CreateCV() {
+  const tx = document.querySelector("textarea");
+  tx.addEventListener("keyup", e=>{
+    tx.style.height = "auto";
+    let scHeight = e.target.scrollHeight;
+    tx.style.height = `${scHeight}`;
+  })
   return (
     <>
       <div className="container-fluid d-flex" style={{ padding: 0 }}>
@@ -124,9 +130,24 @@ function CreateCV() {
                   <i className="fa-solid fa-briefcase" /> Kinh nghiệm làm việc
                 </h3>
                 <div className="content_form">
-                  <div>
-                    <i className="fa-solid fa-plus" />
+                  <div className="experienceForm">
+                    <div>
+                      <h5>Nhiệm vụ:</h5>
+                      <textarea placeholder="alo" defaultValue={""} />
+                    </div>
+                    <div>
+                      <h5>Thành tích:</h5>
+                      <textarea
+                        id="experienceInput"
+                        name="experienceInput"
+                        defaultValue={""}
+                      />
+                    </div>
                   </div>
+
+                  {/* <div>
+                    <i className="fa-solid fa-plus" />
+                  </div> */}
                 </div>
               </section>
               <section className="experience">

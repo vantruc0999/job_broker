@@ -35,31 +35,55 @@
   padding: 20px 0;
   margin-top: 20px;
   width: 100%;
+  position: relative;
 }
 .experience h3 {
-    border-bottom: 2px solid #8d9aad;
-    padding-bottom: 10px;
+  border-bottom: 2px solid #8d9aad;
+  padding-bottom: 10px;
 }
-.content_form{
+.content_form {
   border: 1px dashed #c7c7c7;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding: 5px 10px;
   border-radius: 5px;
 }
-.content_form:hover{
+.content_form:hover {
   border: 1px dashed green;
+  /* display: block; */
 }
-.experienceForm{
+/* .content_form:hover {
+} */
+textarea#story {
   width: 100%;
-}
-.content_form .experienceForm textarea{
-  width: 100%;
-  height: 59px;
-  padding: 15px;
-  outline: none;
-  resize: none;
-  font-size: 16px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  padding: 10px;
+  max-width: 100%;
+  line-height: 1.5;
   border-radius: 5px;
-  border: 1px dashed #bfbfbf;
+  border: 1px dashed #c7c7c7;
 }
+
+textarea#story:focus {
+  outline: 1px dashed green;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  padding: 10px;
+  max-width: 100%;
+  line-height: 1.5;
+  border-radius: 5px;
+  /* border: 1px dashed green; */
+}
+
+
+.additions {
+  display: flex;
+  justify-content: end;
+  font-size: 25px;
+}
+
+
+

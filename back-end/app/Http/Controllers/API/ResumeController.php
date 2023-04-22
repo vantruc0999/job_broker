@@ -19,14 +19,14 @@ class ResumeController extends Controller
     {
         //
         $candidate_id = auth()->user()['candidate_id'];
-        $resume = Resume::select('resume_id')->where('candidate_id', $candidate_id)->get();
-        $resume_id = [];
-        $resume->each(function($item) use (&$resume_id){
-            $resume_id[] = $item->resume_id;
-        });
+        $resume = Resume::select('resume_name', 'resume_id')->where('candidate_id', $candidate_id)->get();
+        // $resume_id = [];
+        // $resume->each(function($item) use (&$resume_id){
+        //     $resume_id[] = $item->resume_id;
+        // });
         // return $skill_name;
         return response([
-            'resume_id' => $resume_id,
+            'resume' => $resume,
         ]);
     }
 
@@ -40,6 +40,7 @@ class ResumeController extends Controller
     {
         //
         // $idCandidate = auth()->user()['candidate_id'];
+        $resume_name = $request->resume['resume_name'];
         $education = $request->resume['education'];
         $certificate = $request->resume['certificate'];
         $image = $request->resume['image'];
@@ -48,7 +49,7 @@ class ResumeController extends Controller
         $experience_company = $request->resume['experience_company'];
         $skills = $request->resume['skills'];
 
-        $id_resume = self::storeResume($education, $certificate, $image, $template);
+        $id_resume = self::storeResume($resume_name, $education, $certificate, $image, $template);
         self::storeExperience($experience_project, $id_resume, "experience_project");
         self::storeExperience($experience_company, $id_resume, "experience_company");
         self::storeResumeSkills($skills, $id_resume);
@@ -77,6 +78,7 @@ class ResumeController extends Controller
                 return 1;
             }
         } else if ($category === 'experience_company') {
+            // return $experience;
             if (count($experience) != 0) {
                 foreach ($experience as $item) {
                     Experience::create([
@@ -106,9 +108,10 @@ class ResumeController extends Controller
         }
     }
 
-    private static function storeResume($education, $certificate, $image, $template)
+    private static function storeResume($resume_name, $education, $certificate, $image, $template)
     {
         $resume = Resume::create([
+            'resume_name' => $resume_name,
             'education' => $education,
             'certificate' => $certificate,
             'image' => $image,

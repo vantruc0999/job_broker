@@ -111,7 +111,8 @@ class JobController extends Controller
                 'job_requirement' => $request->job_requirement,
                 'job_description' => $request->job_description,
                 'benefit' => $request->benefit,
-                'recruiter_id' => auth()->user()['recruiter_id']
+                'recruiter_id' => auth()->user()['recruiter_id'],
+                'status' => 'waiting'
             ]
         );
         return $job['job_id'];
@@ -199,6 +200,26 @@ class JobController extends Controller
 
     private static function deleteJobSkills($job_id){
         JobSkills::where('job_id', '=', $job_id)->delete();
+    }
+
+    public function approveJobRequest($job_id){
+        Job::where('job_id', '=', $job_id)
+            ->update([
+                'status' => 'approved'
+            ]);
+        return response([
+            'message' => 'Job Post has been approved'
+        ]);
+    }   
+
+    public function declineJobRequest($job_id){
+        Job::where('job_id', '=', $job_id)
+            ->update([
+                'status' => 'decline'
+            ]);
+        return response([
+            'message' => 'Job Post has been declined'
+        ]);
     }
 
     /**

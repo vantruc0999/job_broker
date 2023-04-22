@@ -1,8 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import HeaderRe from "../common/HeaderRe";
+import Sidebar from "../common/Sidebar";
 
 const ManageJob = () => {
   return (
     <div>
+      <HeaderRe></HeaderRe>
+      <Sidebar></Sidebar>
       <main id="main" class="main">
         <section class="section">
           <div class="row">
@@ -10,14 +15,16 @@ const ManageJob = () => {
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">Danh sách tin tuyển dụng</h5>
-                  <a href="/" class="btn btn-primary">
-                    Thêm Tin
-                  </a>
+                  <Link to="/recruiter/addjob">
+                    <a href="/" class="btn btn-primary">
+                      Thêm Tin
+                    </a>
+                  </Link>
 
                   <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col">ID</th>
+                        {/* <th scope="col">ID</th> */}
                         <th scope="col">Tiêu đề</th>
                         <th scope="col">Địa chỉ</th>
                         <th scope="col">Ngày bắt đầu</th>

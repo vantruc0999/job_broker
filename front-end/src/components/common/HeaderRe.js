@@ -1,15 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HeaderRe = () => {
   return (
     <div>
       <header id="header" class="header fixed-top d-flex align-items-center">
         <div class="d-flex align-items-center justify-content-between">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="" />
-            <span class="d-none d-lg-block">JobBroker</span>
-          </a>
-          {/* <i class="bi bi-list toggle-sidebar-btn"></i> */}
+          <Link to="/recruiter">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <span class="d-none d-lg-block">JobBroker</span>
+            </a>
+          </Link>
         </div>
 
         <div class="search-bar">
@@ -228,10 +229,12 @@ const HeaderRe = () => {
                 </li>
 
                 <li>
-                  <a class="dropdown-item d-flex align-items-center" href="/">
-                    <i class="bi bi-person"></i>
-                    <span>Trang hồ sơ</span>
-                  </a>
+                  <Link to="/recruiter/profile">
+                    <a class="dropdown-item d-flex align-items-center" href="/">
+                      <i class="bi bi-person"></i>
+                      <span>Trang hồ sơ</span>
+                    </a>
+                  </Link>
                 </li>
                 <li>
                   <hr class="dropdown-divider" />

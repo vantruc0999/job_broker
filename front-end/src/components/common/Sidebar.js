@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
@@ -6,10 +7,12 @@ const Sidebar = () => {
       <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="index.html">
-              <i class="bi bi-circle"></i>
-              <span>Quản lý tin tuyển dụng</span>
-            </a>
+            <Link to="recruiter/job">
+              <a class="nav-link " href="/">
+                <i class="bi bi-circle"></i>
+                <span>Quản lý tin tuyển dụng</span>
+              </a>
+            </Link>
           </li>
 
           <li class="nav-item">

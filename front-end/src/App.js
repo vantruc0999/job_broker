@@ -11,15 +11,17 @@ function App(props) {
   console.log(param1);
   return (
     <>
-      {/* {param1["pathname"].includes("login") || param1["pathname"].includes("register")|| param1["pathname"].includes("registerCruiter") ? null : <Header />}
+      {param1["pathname"].includes("login") ||
+      param1["pathname"].includes("register") ||
+      param1["pathname"].includes("registerCruiter") ? null : (
+        <HeaderRe />
+      )}
       {props.children}
-      {param1["pathname"].includes("login") || param1["pathname"].includes("register")|| param1["pathname"].includes("registerCruiter") ? null : (
-        <Footer />
-      )} */}
-      <HeaderRe />
-      <Sidebar />
-      {/* <HomeRe /> */}
-      <ManageJob />
+      {param1["pathname"].includes("login") ||
+      param1["pathname"].includes("register") ||
+      param1["pathname"].includes("registerCruiter") ? null : (
+        <Sidebar />
+      )}
     </>
   );
 }

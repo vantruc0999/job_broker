@@ -1,24 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import Header from './components/header/Header';
-import Login from './components/authen/Login';
-import Register from './components/authen/Register';
-import RegisterCruiter from './components/authen/RegisterCruiter';
-import Homepage from './components/candidate/Homepage';
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import Header from "./components/header/Header";
+import Login from "./components/authen/Login";
+import Register from "./components/authen/Register";
+import RegisterCruiter from "./components/authen/RegisterCruiter";
+import Homepage from "./components/candidate/Homepage";
+import HomeRe from "./components/recruiter/HomeRe";
+import ManageJob from "./components/recruiter/ManageJob";
+import AddJob from "./components/recruiter/AddJob";
+import LoginRecruiter from "./components/recruiter/account/LoginRecruiter";
+import RegisterRecruiter from "./components/recruiter/account/RegisterRecruiter";
+import Profile from "./components/recruiter/Profile";
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-   <Router>
+    <Router>
       <App>
         <Routes>
           <Route index path="/" element={<Homepage />} />
           <Route index path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/registerCruiter" element={<RegisterCruiter />} />
-
+          <Route path="/recruiter" element={<HomeRe />} />
+          <Route path="/recruiter/job" element={<ManageJob />} />
+          <Route path="/recruiter/addjob" element={<AddJob />} />
+          <Route path="/recruiter/login" element={<LoginRecruiter />} />
+          <Route path="/recruiter/register" element={<RegisterRecruiter />} />
+          <Route path="/recruiter/profile" element={<Profile />} />
         </Routes>
       </App>
     </Router>

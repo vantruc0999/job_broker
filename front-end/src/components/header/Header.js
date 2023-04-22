@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import Logo from "../../assets/images/logo.jpg";
+import { Navigate, useNavigate } from "react-router-dom";
 function Header() {
+  const navigate = useNavigate();
+  const logout = () =>{
+    localStorage.removeItem("user");
+    navigate("/login");
+  }
   const renderLog = () => {
     var user = localStorage.getItem("user");
     user = JSON.parse(user);
@@ -30,9 +36,11 @@ function Header() {
             </a>
             <div className="dropdown-menu">
               <div style={{ borderBottom: "1px solid #e7e9eb" }}>
+                <Link to="/fileCV">
                 <a className="dropdown-item" href="#">
                   Cập nhập hồ sơ
                 </a>
+                </Link>
                 <a className="dropdown-item" href="#">
                   Giới thiệu bản thân
                 </a>
@@ -48,7 +56,7 @@ function Header() {
                   Việc làm đã lưu
                 </a>
               </div>
-              <div>
+              <div onClick={logout}>
                 <a className="dropdown-item" href="#">
                   Đăng xuất
                 </a>
@@ -67,9 +75,9 @@ function Header() {
               </a>
             </Link>
             <Link to="/login">
-            <a href="" className="btn btn-primary">
-              Đăng nhập
-            </a>
+              <a href="" className="btn btn-primary">
+                Đăng nhập
+              </a>
             </Link>
           </li>
         </>
@@ -77,59 +85,7 @@ function Header() {
     }
   };
 
-  const renderToggle = () => {
-    return (
-      <>
-        <li className="nav-item d-flex divide dropdown">
-          <img
-            className="navbar-brand"
-            src={Logo}
-            alt=""
-            style={{
-              width: "15%",
-              height: 30,
-              padding: 0,
-              margin: 0,
-              marginTop: 6,
-            }}
-          />
-          <a
-            className="nav-link dropdown-toggle text-dark"
-            data-toggle="dropdown"
-            href="#"
-          >
-            Thắng Nguyễn
-          </a>
-          <div className="dropdown-menu">
-            <div style={{ borderBottom: "1px solid #e7e9eb" }}>
-              <a className="dropdown-item" href="#">
-                Cập nhập hồ sơ
-              </a>
-              <a className="dropdown-item" href="#">
-                Giới thiệu bản thân
-              </a>
-              <a className="dropdown-item" href="#">
-                Đổi mật khẩu
-              </a>
-            </div>
-            <div style={{ borderBottom: "1px solid #e7e9eb" }}>
-              <a className="dropdown-item" href="#">
-                Việc làm đã ứng tuyển
-              </a>
-              <a className="dropdown-item" href="#">
-                Việc làm đã lưu
-              </a>
-            </div>
-            <div>
-              <a className="dropdown-item" href="#">
-                Đăng xuất
-              </a>
-            </div>
-          </div>
-        </li>
-      </>
-    );
-  };
+
 
   return (
     <>
@@ -192,9 +148,11 @@ function Header() {
                   CV / Hồ sơ
                 </a>
                 <div className="dropdown-menu">
+                  <Link to="/createCV">
                   <a className="dropdown-item" href="#">
                     Tạo CV
                   </a>
+                  </Link>
                   <a className="dropdown-item" href="#">
                     Check CV
                   </a>

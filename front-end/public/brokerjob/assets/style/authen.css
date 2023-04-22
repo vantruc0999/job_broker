@@ -159,3 +159,6 @@
 .auth-form__help-forgot {
   color: #f46f11;
 }
+.auth-form ::placeholder {
+  color: #4664a5;
+}

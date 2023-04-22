@@ -101,10 +101,12 @@ function Homepage() {
             <div className="col-8">
               <h6>Tạo CV ấn tượng</h6>
               <p>Tạo CV online xin việc chuẩn, đẹp miễn phí.</p>
+              <Link to="/createCV">
               <button className="btn btn-primary" type="button">
                 <i className="fa-sharp fa-regular fa-plus" />
                 Tạo CV ngay!
               </button>
+              </Link>
             </div>
             <div className="col-4">
               <img

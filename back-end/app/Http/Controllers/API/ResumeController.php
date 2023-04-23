@@ -4,8 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Experience;
+use App\Models\Job;
+use App\Models\JobApplication;
 use App\Models\Resume;
 use App\Models\ResumeSkills;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ResumeController extends Controller
@@ -188,9 +191,44 @@ class ResumeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    private static function checkResumeBeforeUpdate($resume_id){
+        $applications = JobApplication::where('resume_id', '=', $resume_id)->get();
+
+        if(count($applications) != 0){
+            foreach($applications as $application){
+                $job_expired_date = self::checkJobExpiredDate($application['job_id']);
+                if(!($application['status'] === 'declined' || $job_expired_date || ($application['status'] === 'approved' && $application['application_completed'] === 1))){
+                    return false;
+                }
+                // if(!($application['status'] === 'approved' && $application['application_completed'] === 1)){
+                //     return false;
+                // }
+            }
+        }
+        return true;
+    }
+
+    private static function checkJobExpiredDate($job_id){
+
+        $expired_date = Job::select('job_end_date')
+                        ->where('job_id', '=', $job_id)
+                        ->first();
+
+        $current_date = Carbon::now();
+        // $current_date = Carbon::parse('Y/m/d', $current_date);
+
+        return $current_date->gt($expired_date['job_end_date']);
+    }
+
     public function handleUpdateResume(Request $request, $id)
     {
         //
+        if(!self::checkResumeBeforeUpdate($id)){
+            return response([
+                'status' => 200,
+                'message' => 'Your resume has been considered in a job',
+            ]);
+        }
         $education = $request->resume['education'];
         $certificate = $request->resume['certificate'];
         $image = $request->resume['image'];

@@ -32,11 +32,18 @@ class JobApplicationController extends Controller
     {
         //
         // $candidate = "";
-        $candidate = JobApplication::where('candidate_id', '=', auth()->user(['candidate_id']))
-            ->where('job_id', '=', $request->job_id)
-            ->first();
+        // One account can apply for 1 job post
+        $candidate = JobApplication::where([
+                    ['candidate_id', '=', auth()->user()['candidate_id']],
+                    ['job_id', '=', $request->job_id]
+                    ])
+                    ->first();
 
-        if ($candidate != null) {
+            // return response([
+            //     'candidate' => $candidate
+            // ]); 
+
+        if ($candidate == null) {
             JobApplication::create([
                 'candidate_id' => auth()->user()['candidate_id'],
                 'resume_id' => $request->resume_id,
@@ -49,7 +56,7 @@ class JobApplicationController extends Controller
         }
         return response([
             'message' => 'you already applied this job',
-            'candidate' => $candidate
+            // 'candidate' => $candidate
         ]);
     }
 

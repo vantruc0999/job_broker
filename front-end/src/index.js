@@ -14,6 +14,7 @@ import FileCV from "./components/candidate/FileCV";
 import HandleCV from "./components/candidate/HandleCV";
 import MyPdfReader from "./components/candidate/MyPdfReader";
 import Checkout from "./components/payment/Checkout";
+import AddJob from "./components/recruiter/AddJob";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -32,6 +33,7 @@ root.render(
             <Route path="/handleCV" element={<HandleCV />} />
             <Route path="/uploadCV" element={<MyPdfReader />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/addJob" element={<AddJob />} />
           </Routes>
         </App>
       </Router>

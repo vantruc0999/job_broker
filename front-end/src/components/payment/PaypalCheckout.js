@@ -52,14 +52,14 @@ function PayPalButton(props) {
           formData.append("package_id", product.id);
           formData.append("payment_id", order.id);
           formData.append("status", order.status);
-          formData.append("status", order.status);
-          formData.append("status", order.status);
+          formData.append("status", order.payer.email_address);
+       
           console.log(product.id + order.id + order.status);
 
           let user = JSON.parse(localStorage.getItem("user"));
           let config = {
             headers: {
-              Authorization: "Bearer " + user.token,
+              Authorization: "Bearer " + "18|N122KdwqzYvg8TZ4a4tcwaOUjR1uP6IBFJAuFR50",
               "Content-Type": "application/x-www-form-urlencoded",
               Accept: "application/json",
             },

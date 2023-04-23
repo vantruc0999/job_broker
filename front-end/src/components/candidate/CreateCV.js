@@ -12,7 +12,6 @@ function CreateCV() {
   const [skills, setSkills] = useState("");
   const [award, setAward] = useState("");
   const [toggle, setToggle] = useState(false);
-  console.log(showForm);
   const saveCV = (e) => {
     e.preventDefault();
     var educationStr = educationRef.current.innerText
@@ -22,6 +21,16 @@ function CreateCV() {
   };
   const handleShow = (formId, e) => {
     setShowForm((state) => [...state, formId]);
+  };
+  console.log(showForm);
+  const handleRemoveForm = (formId) => {
+    console.log(formId);
+    setShowForm((prevForms) => {
+      const newForms = [...prevForms];
+      newForms.pop();
+      console.log("newform:", newForms);
+      return newForms;
+    });
   };
   const addSkill = (e) => {
     return (
@@ -55,35 +64,29 @@ function CreateCV() {
       </>
     );
   };
+  console.log(showForm);
   const addContentCertificates = () => {
     return (
       <>
         <div className="additions">
-          <i class="fa-regular fa-square-plus mr-1"></i>
-          <i class="fa-regular fa-square-minus"></i>
+          <i
+            class="fa-regular fa-square-plus mr-1"
+            onClick={(e) => handleShow(4, e)}
+          ></i>
+          <i
+            class="fa-regular fa-square-minus"
+            onClick={(e) => handleRemoveForm(4)}
+          ></i>
         </div>
         <div className="content_form">
-        <div className="d-flex flex-column flex-md-row">
-          <p className="d-none item-id" info-name="id" info-group="award">
-            41204
-          </p>
-          <div
-            className="cv-editable-elem required medium-editor-element"
-            data-placeholder="Tên chứng chỉ"
-            info-name="name"
-            info-group="award"
-            contentEditable="true"
-            spellCheck="true"
-            data-medium-editor-element="true"
-            role="textbox"
-            aria-multiline="true"
-            data-medium-editor-editor-index={1}
-            medium-editor-index="8aeeade1-51b0-e6c9-78a4-2b8e336646ba"
-          >
-            Chứng chỉ java
+          <div className="d-flex flex-column flex-md-row">
+            <div
+              contentEditable="true"
+              spellCheck="true"
+            >
+              Chứng chỉ java
+            </div>
           </div>
-        </div>
-
         </div>
       </>
     );
@@ -99,21 +102,9 @@ function CreateCV() {
         <div className="content_form">
           <div id="content-suggest-skill"></div>
           <div className="d-flex flex-column flex-md-row">
-            <p className="d-none item-id" info-name="id" info-group="award">
-              41204
-            </p>
             <div
-              className="cv-editable-elem required medium-editor-element"
-              data-placeholder="Tên kĩ năng mềm"
-              info-name="name"
-              info-group="award"
               contentEditable="true"
               spellCheck="true"
-              data-medium-editor-element="true"
-              role="textbox"
-              aria-multiline="true"
-              data-medium-editor-editor-index={1}
-              medium-editor-index="8aeeade1-51b0-e6c9-78a4-2b8e336646ba"
             >
               Chơi game
             </div>
@@ -134,17 +125,8 @@ function CreateCV() {
           <div id="content-suggest-award">
             <div className="d-flex flex-column flex-md-row mt-2">
               <div
-                className="cv-editable-elem required medium-editor-element mr-5 "
-                data-placeholder="Tên thành tích"
-                info-name="name"
-                info-group="award"
                 contentEditable="true"
                 spellCheck="true"
-                data-medium-editor-element="true"
-                role="textbox"
-                aria-multiline="true"
-                data-medium-editor-editor-index={1}
-                medium-editor-index="8aeeade1-51b0-e6c9-78a4-2b8e336646ba"
               >
                 Nhân viên xuất sắc tại
               </div>
@@ -629,12 +611,6 @@ function CreateCV() {
   return (
     <>
       <div className="container-fluid d-flex" style={{ padding: 0 }}>
-        {/* <div class="col-2">
-    <div>
-      <h5><i class="fa-solid fa-circle-exclamation"></i>Hướng dẫn</h5>
-      <p>Điền đầy đủ các thông tin hiển thị trong CV</p>
-    </div>
-  </div> */}
         <div className="col-10" style={{ margin: "0 auto" }}>
           <div className="row">
             <div

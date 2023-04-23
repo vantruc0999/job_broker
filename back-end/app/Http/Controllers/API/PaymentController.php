@@ -23,6 +23,8 @@ class PaymentController extends Controller
             'package_name' => $package['package_name'],
             'payment_id' => $request->payment_id,
             'payment_status' => $request->status,
+            'payer_id' => $request->payer_id,
+            'payer_email' => $request->payer_email,
             'recruiter_id' => auth()->user()['recruiter_id'],
             'start_date' => Carbon::now(),
             'end_date' => Carbon::now()->addMonths($package['exp_time']),

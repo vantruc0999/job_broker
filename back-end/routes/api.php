@@ -35,6 +35,8 @@ Route::post('recruiter/login', [RecruiterAuthController::class, 'login']);
 Route::post('recruiter/register', [RecruiterAuthController::class, 'register']);
 Route::get('recruiter/package', [PackageController::class, 'index']);
 Route::get('job-detail/{id}', [JobController::class, 'show']);
+Route::get('jobs',[JobController::class, 'getAllJobsForAllUser']);
+
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('recruiter')->group(function () {

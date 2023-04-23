@@ -20,10 +20,34 @@ class JobController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function getAllJobsForAllUser()
+    {
+        $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
+            ->orderBy('job_id', 'desc')
+            ->get();
+        if (count($jobs) != 0) {
+            foreach ($jobs as $job) {
+                $company_name = self::getAllCompanyName($job['recruiter_id']);
+                $job->company_name = $company_name;
+                unset($job->recruiter_id);
+            }
+        }
+        return response([
+            'jobs' => $jobs
+        ]);
+    }
+
     private static function getCompanyName()
     {
         return Recruiter::select('company_name')
             ->where('recruiter_id', '=', auth()->user()['recruiter_id'])->first();
+    }
+
+    private static function getAllCompanyName($recruiter_id)
+    {
+        $company = Recruiter::select('company_name')
+            ->where('recruiter_id', '=', $recruiter_id)->first();
+        return $company['company_name'];
     }
 
     private static function getAllJobs()
@@ -87,10 +111,18 @@ class JobController extends Controller
                     "message" => 'Your package has been expired'
                 ]);
             } else {
-                $job_id = self::storeJob($request);
-                self::storeSkill($request->job_skill, $job_id);
+                if (Carbon::createFromDate($request->job_start_date)->gte($curr_date)) {
+                    $job_id = self::storeJob($request);
+                    self::storeSkill($request->job_skill, $job_id);
+                    return response([
+                        "message" => 'Job has been created successfully',
+                        // "curr_date" => $curr_date,
+                        // "start_date" => Carbon::createFromDate($request->job_start_date),
+                        // "compare" => $curr_date->gte(Carbon::createFromDate($request->job_start_date))
+                    ]);
+                }
                 return response([
-                    "message" => 'Job has been created successfully',
+                    "message" => "Job start date must be greater or equal today",
                 ]);
             }
         }
@@ -176,33 +208,35 @@ class JobController extends Controller
         self::storeSkill($request->job_skill, $id);
         self::updateJob($request, $id);
         return response([
-            "status" => 'Update job ' . $id .' successfully'
+            "status" => 'Update job ' . $id . ' successfully'
         ]);
     }
 
     private static function updateJob($request, $job_id)
     {
         Job::where('job_id', '=', $job_id)->update(
-                [
-                    'job_name' => $request->job_name,
-                    'position_name' => $request->position_name,
-                    'job_start_date' => $request->job_start_date,
-                    'job_end_date' => $request->job_end_date,
-                    'salary' => $request->salary,
-                    'job_location' => $request->job_location,
-                    'language' => $request->language,
-                    'job_requirement' => $request->job_requirement,
-                    'job_description' => $request->job_description,
-                    'benefit' => $request->benefit,
-                ]
-            );
+            [
+                'job_name' => $request->job_name,
+                'position_name' => $request->position_name,
+                'job_start_date' => $request->job_start_date,
+                'job_end_date' => $request->job_end_date,
+                'salary' => $request->salary,
+                'job_location' => $request->job_location,
+                'language' => $request->language,
+                'job_requirement' => $request->job_requirement,
+                'job_description' => $request->job_description,
+                'benefit' => $request->benefit,
+            ]
+        );
     }
 
-    private static function deleteJobSkills($job_id){
+    private static function deleteJobSkills($job_id)
+    {
         JobSkills::where('job_id', '=', $job_id)->delete();
     }
 
-    public function approveJobRequest($job_id){
+    public function approveJobRequest($job_id)
+    {
         Job::where('job_id', '=', $job_id)
             ->update([
                 'status' => 'approved'
@@ -210,9 +244,10 @@ class JobController extends Controller
         return response([
             'message' => 'Job Post has been approved'
         ]);
-    }   
+    }
 
-    public function declineJobRequest($job_id){
+    public function declineJobRequest($job_id)
+    {
         Job::where('job_id', '=', $job_id)
             ->update([
                 'status' => 'decline'

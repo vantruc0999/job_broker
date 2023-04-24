@@ -35,7 +35,7 @@ const ManageJob = () => {
                     </thead>
                     <tbody>
                       <tr>
-                        <th></th>
+                        {/* <th></th> */}
                         <th></th>
                         <td></td>
                         <td></td>

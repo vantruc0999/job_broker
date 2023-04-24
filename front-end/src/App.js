@@ -1,5 +1,5 @@
-// import Footer from "./components/footer/Footer";
-// import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
+import Header from "./components/header/Header";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Sidebar from "./components/common/Sidebar";
 import HeaderRe from "./components/common/HeaderRe";
@@ -14,13 +14,13 @@ function App(props) {
       {param1["pathname"].includes("login") ||
       param1["pathname"].includes("register") ||
       param1["pathname"].includes("registerCruiter") ? null : (
-        <HeaderRe />
+        <Header />
       )}
       {props.children}
       {param1["pathname"].includes("login") ||
       param1["pathname"].includes("register") ||
       param1["pathname"].includes("registerCruiter") ? null : (
-        <Sidebar />
+        <Footer />
       )}
     </>
   );

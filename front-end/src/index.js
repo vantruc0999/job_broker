@@ -14,6 +14,7 @@ import AddJob from "./components/recruiter/AddJob";
 import LoginRecruiter from "./components/recruiter/account/LoginRecruiter";
 import RegisterRecruiter from "./components/recruiter/account/RegisterRecruiter";
 import Profile from "./components/recruiter/Profile";
+import JobDetail from "./components/candidate/JobDetail";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -30,6 +31,7 @@ root.render(
           <Route path="/recruiter/login" element={<LoginRecruiter />} />
           <Route path="/recruiter/register" element={<RegisterRecruiter />} />
           <Route path="/recruiter/profile" element={<Profile />} />
+          <Route path="/jobdetail" element={<JobDetail />} />
         </Routes>
       </App>
     </Router>

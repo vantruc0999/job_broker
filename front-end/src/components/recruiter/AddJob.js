@@ -6,6 +6,9 @@ import { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import HeaderRe from "../common/Header";
+import Sidebar from "../common/Sidebar";
 
 const animatedComponents = makeAnimated();
 
@@ -16,6 +19,7 @@ const arraySkill = [
   { value: 4, label: "Python" },
 ];
 const AddJob = () => {
+  const navigate = useNavigate();
   const [job, setJob] = useState({
     job_name: "",
     position_name: "",
@@ -39,7 +43,7 @@ const AddJob = () => {
     let user = JSON.parse(localStorage.getItem("user"));
     let config = {
       headers: {
-        Authorization: "Bearer " + "18|N122KdwqzYvg8TZ4a4tcwaOUjR1uP6IBFJAuFR50",
+        Authorization: "Bearer " + user.token,
         "Content-Type": "application/x-www-form-urlencoded",
         Accept: "application/json",
       },
@@ -50,10 +54,19 @@ const AddJob = () => {
       .post("http://127.0.0.1:8000/api/recruiter/add-job", job, config)
       .then((res) => {
         console.log(res.data);
+        if(res.data.message === 'You have not bought any package'){
+          alert(res.data.message);
+          navigate('/checkout')
+        } else if(res.data.message === 'Job has been created successfully'){
+          alert(res.data.message);
+          navigate('/homeRecruiter')
+        }
       });
   };
   return (
     <div>
+      {/* <HeaderRe></HeaderRe>
+      <Sidebar></Sidebar> */}
       <main id="main" class="main">
         <section class="section">
           <div class="row">
@@ -224,7 +237,6 @@ const AnimatedMulti = (props) => {
     <Select
       closeMenuOnSelect={false}
       components={animatedComponents}
-      defaultValue={[arraySkill[0]]}
       isMulti
       options={arraySkill}
       onChange={sendData}

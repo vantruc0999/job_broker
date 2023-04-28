@@ -74,7 +74,7 @@ function Login() {
             });
             localStorage.setItem("user",JSON.stringify(res.data))
             alert(res.data.message);
-            if(res.data.role == "candidate"){
+            if(res.data.role === "candidate"){
               navigate("/")
             }
           }
@@ -124,13 +124,13 @@ function Login() {
             </div>
             <div className="auth-form__aside">
               <div className="auth-form__help">
-                <a href="" className="auth-form__link auth-form__help">
+                <Link to="#" className="auth-form__link auth-form__help">
                   Forgot password
-                </a>
+                </Link>
                 <span className="auth-form__help--separate" />
-                <a href="" className="auth-form__link">
+                <Link to="#" className="auth-form__link">
                   Need help ?
-                </a>
+                </Link>
               </div>
             </div>
             <div className="auth-form__controls">
@@ -142,20 +142,20 @@ function Login() {
           </form>
         </div>
         <div className="auth-form__socials">
-          <a
-            href=""
+          <Link
+            to="#"
             className="auth-form__socials--facebook btn btn--size-s btn--with-icon"
           >
             <i className="auth-form__socials-icon fa-brands fa-facebook-square" />
             Sign in with Facebook
-          </a>
-          <a
-            href=""
+          </Link>
+          <Link
+            to="#"
             className="auth-form__socials--google btn btn--size-s btn--with-icon"
           >
             <i className="auth-form__socials-icon fa-brands fa-google" />
             Sign in with Google
-          </a>
+          </Link>
         </div>
       </div>
     </>

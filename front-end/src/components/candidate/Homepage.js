@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/images/logo.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -6,8 +6,17 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
+import axios from "axios";
 function Homepage() {
   const [swiperRef, setSwiperRef] = useState(null);
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/api/jobs").then((res) => {
+      console.log(res.data);
+      setJobs(res.data.jobs);
+    });
+  }, []);
 
   return (
     <>
@@ -102,10 +111,10 @@ function Homepage() {
               <h6>Tạo CV ấn tượng</h6>
               <p>Tạo CV online xin việc chuẩn, đẹp miễn phí.</p>
               <Link to="/createCV">
-              <button className="btn btn-primary" type="button">
-                <i className="fa-sharp fa-regular fa-plus" />
-                Tạo CV ngay!
-              </button>
+                <button className="btn btn-primary" type="button">
+                  <i className="fa-sharp fa-regular fa-plus" />
+                  Tạo CV ngay!
+                </button>
               </Link>
             </div>
             <div className="col-4">
@@ -124,289 +133,293 @@ function Homepage() {
         <div className="container">
           <h3 style={{ paddingTop: 20 }}>Việc tuyển gấp</h3>
           <div className="row justify-content-between">
-            <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
-              <div className="col-3">
-                <img
-                  src="./assets/image/logo.jpg"
-                  alt=""
-                  style={{
-                    width: "120%",
-                    height: "80%",
-                    margin: "10px auto",
-                  }}
-                />
+            {/* List Job */}
+            {jobs.length > 0 &&
+              jobs.map((job) => (
+                <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
+                  <div className="col-3">
+                    <img
+                      src={Logo}
+                      alt=""
+                      style={{
+                        width: "120%",
+                        height: "80%",
+                        margin: "10px auto",
+                      }}
+                    />
+                  </div>
+                  <div className="col-9" style={{ margin: "8px auto" }}>
+                    <h6>{job.job_name}</h6>
+                    <p style={{ fontSize: 14 }}>{job.company_name}</p>
+                    <ul className="d-flex justify-content-between">
+                      <li>
+                        <i className="fa-solid fa-location-dot" />
+                        {job.job_location}
+                      </li>
+                      <li>
+                        <i className="fa-regular fa-clock" />
+                        26/12/1111
+                      </li>
+                      <li>
+                        <i className="fa-solid fa-sack-dollar" />
+                        {job.salary}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            {/* <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
+                  <div className="col-3">
+                    <img
+                      src="./assets/image/logo.jpg"
+                      alt=""
+                      style={{
+                        width: "120%",
+                        height: "80%",
+                        margin: "10px auto",
+                      }}
+                    />
+                  </div>
+                  <div className="col-9" style={{ margin: "8px auto" }}>
+                    <h6>Account Manage</h6>
+                    <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
+                    <ul className="d-flex justify-content-between">
+                      <li>
+                        <i className="fa-solid fa-location-dot" />
+                        Hà Nội
+                      </li>
+                      <li>
+                        <i className="fa-regular fa-clock" />
+                        26/12/1111
+                      </li>
+                      <li>
+                        <i className="fa-solid fa-sack-dollar" />
+                        salary
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
+                  <div className="col-3">
+                    <img
+                      src="./assets/image/logo.jpg"
+                      alt=""
+                      style={{
+                        width: "120%",
+                        height: "80%",
+                        margin: "10px auto",
+                      }}
+                    />
+                  </div>
+                  <div className="col-9" style={{ margin: "8px auto" }}>
+                    <h6>Account Manage</h6>
+                    <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
+                    <ul className="d-flex justify-content-between">
+                      <li>
+                        <i className="fa-solid fa-location-dot" />
+                        Hà Nội
+                      </li>
+                      <li>
+                        <i className="fa-regular fa-clock" />
+                        26/12/1111
+                      </li>
+                      <li>
+                        <i className="fa-solid fa-sack-dollar" />
+                        salary
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <div className="col-9" style={{ margin: "8px auto" }}>
-                <h6>Account Manage</h6>
-                <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
-                <ul className="d-flex justify-content-between">
-                  <li>
-                    <i className="fa-solid fa-location-dot" />
-                    Hà Nội
-                  </li>
-                  <li>
-                    <i className="fa-regular fa-clock" />
-                    26/12/1111
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-sack-dollar" />
-                    salary
-                  </li>
-                </ul>
+              <div className="row justify-content-between">
+                <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
+                  <div className="col-3">
+                    <img
+                      src="./assets/image/logo.jpg"
+                      alt=""
+                      style={{
+                        width: "120%",
+                        height: "80%",
+                        margin: "10px auto",
+                      }}
+                    />
+                  </div>
+                  <div className="col-9" style={{ margin: "8px auto" }}>
+                    <h6>Account Manage</h6>
+                    <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
+                    <ul className="d-flex justify-content-between">
+                      <li>
+                        <i className="fa-solid fa-location-dot" />
+                        Hà Nội
+                      </li>
+                      <li>
+                        <i className="fa-regular fa-clock" />
+                        26/12/1111
+                      </li>
+                      <li>
+                        <i className="fa-solid fa-sack-dollar" />
+                        salary
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
+                  <div className="col-3">
+                    <img
+                      src="./assets/image/logo.jpg"
+                      alt=""
+                      style={{
+                        width: "120%",
+                        height: "80%",
+                        margin: "10px auto",
+                      }}
+                    />
+                  </div>
+                  <div className="col-9" style={{ margin: "8px auto" }}>
+                    <h6>Account Manage</h6>
+                    <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
+                    <ul className="d-flex justify-content-between">
+                      <li>
+                        <i className="fa-solid fa-location-dot" />
+                        Hà Nội
+                      </li>
+                      <li>
+                        <i className="fa-regular fa-clock" />
+                        26/12/1111
+                      </li>
+                      <li>
+                        <i className="fa-solid fa-sack-dollar" />
+                        salary
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
+                  <div className="col-3">
+                    <img
+                      src="./assets/image/logo.jpg"
+                      alt=""
+                      style={{
+                        width: "120%",
+                        height: "80%",
+                        margin: "10px auto",
+                      }}
+                    />
+                  </div>
+                  <div className="col-9" style={{ margin: "8px auto" }}>
+                    <h6>Account Manage</h6>
+                    <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
+                    <ul className="d-flex justify-content-between">
+                      <li>
+                        <i className="fa-solid fa-location-dot" />
+                        Hà Nội
+                      </li>
+                      <li>
+                        <i className="fa-regular fa-clock" />
+                        26/12/1111
+                      </li>
+                      <li>
+                        <i className="fa-solid fa-sack-dollar" />
+                        salary
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
-              <div className="col-3">
-                <img
-                  src="./assets/image/logo.jpg"
-                  alt=""
-                  style={{
-                    width: "120%",
-                    height: "80%",
-                    margin: "10px auto",
-                  }}
-                />
-              </div>
-              <div className="col-9" style={{ margin: "8px auto" }}>
-                <h6>Account Manage</h6>
-                <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
-                <ul className="d-flex justify-content-between">
-                  <li>
-                    <i className="fa-solid fa-location-dot" />
-                    Hà Nội
-                  </li>
-                  <li>
-                    <i className="fa-regular fa-clock" />
-                    26/12/1111
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-sack-dollar" />
-                    salary
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
-              <div className="col-3">
-                <img
-                  src="./assets/image/logo.jpg"
-                  alt=""
-                  style={{
-                    width: "120%",
-                    height: "80%",
-                    margin: "10px auto",
-                  }}
-                />
-              </div>
-              <div className="col-9" style={{ margin: "8px auto" }}>
-                <h6>Account Manage</h6>
-                <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
-                <ul className="d-flex justify-content-between">
-                  <li>
-                    <i className="fa-solid fa-location-dot" />
-                    Hà Nội
-                  </li>
-                  <li>
-                    <i className="fa-regular fa-clock" />
-                    26/12/1111
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-sack-dollar" />
-                    salary
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="row justify-content-between">
-            <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
-              <div className="col-3">
-                <img
-                  src="./assets/image/logo.jpg"
-                  alt=""
-                  style={{
-                    width: "120%",
-                    height: "80%",
-                    margin: "10px auto",
-                  }}
-                />
-              </div>
-              <div className="col-9" style={{ margin: "8px auto" }}>
-                <h6>Account Manage</h6>
-                <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
-                <ul className="d-flex justify-content-between">
-                  <li>
-                    <i className="fa-solid fa-location-dot" />
-                    Hà Nội
-                  </li>
-                  <li>
-                    <i className="fa-regular fa-clock" />
-                    26/12/1111
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-sack-dollar" />
-                    salary
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
-              <div className="col-3">
-                <img
-                  src="./assets/image/logo.jpg"
-                  alt=""
-                  style={{
-                    width: "120%",
-                    height: "80%",
-                    margin: "10px auto",
-                  }}
-                />
-              </div>
-              <div className="col-9" style={{ margin: "8px auto" }}>
-                <h6>Account Manage</h6>
-                <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
-                <ul className="d-flex justify-content-between">
-                  <li>
-                    <i className="fa-solid fa-location-dot" />
-                    Hà Nội
-                  </li>
-                  <li>
-                    <i className="fa-regular fa-clock" />
-                    26/12/1111
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-sack-dollar" />
-                    salary
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
-              <div className="col-3">
-                <img
-                  src="./assets/image/logo.jpg"
-                  alt=""
-                  style={{
-                    width: "120%",
-                    height: "80%",
-                    margin: "10px auto",
-                  }}
-                />
-              </div>
-              <div className="col-9" style={{ margin: "8px auto" }}>
-                <h6>Account Manage</h6>
-                <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
-                <ul className="d-flex justify-content-between">
-                  <li>
-                    <i className="fa-solid fa-location-dot" />
-                    Hà Nội
-                  </li>
-                  <li>
-                    <i className="fa-regular fa-clock" />
-                    26/12/1111
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-sack-dollar" />
-                    salary
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="row justify-content-between">
-            <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
-              <div className="col-3">
-                <img
-                  src="./assets/image/logo.jpg"
-                  alt=""
-                  style={{
-                    width: "120%",
-                    height: "80%",
-                    margin: "10px auto",
-                  }}
-                />
-              </div>
-              <div className="col-9" style={{ margin: "8px auto" }}>
-                <h6>Account Manage</h6>
-                <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
-                <ul className="d-flex justify-content-between">
-                  <li>
-                    <i className="fa-solid fa-location-dot" />
-                    Hà Nội
-                  </li>
-                  <li>
-                    <i className="fa-regular fa-clock" />
-                    26/12/1111
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-sack-dollar" />
-                    salary
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
-              <div className="col-3">
-                <img
-                  src="./assets/image/logo.jpg"
-                  alt=""
-                  style={{
-                    width: "120%",
-                    height: "80%",
-                    margin: "10px auto",
-                  }}
-                />
-              </div>
-              <div className="col-9" style={{ margin: "8px auto" }}>
-                <h6>Account Manage</h6>
-                <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
-                <ul className="d-flex justify-content-between">
-                  <li>
-                    <i className="fa-solid fa-location-dot" />
-                    Hà Nội
-                  </li>
-                  <li>
-                    <i className="fa-regular fa-clock" />
-                    26/12/1111
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-sack-dollar" />
-                    salary
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
-              <div className="col-3">
-                <img
-                  src="./assets/image/logo.jpg"
-                  alt=""
-                  style={{
-                    width: "120%",
-                    height: "80%",
-                    margin: "10px auto",
-                  }}
-                />
-              </div>
-              <div className="col-9" style={{ margin: "8px auto" }}>
-                <h6>Account Manage</h6>
-                <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
-                <ul className="d-flex justify-content-between">
-                  <li>
-                    <i className="fa-solid fa-location-dot" />
-                    Hà Nội
-                  </li>
-                  <li>
-                    <i className="fa-regular fa-clock" />
-                    26/12/1111
-                  </li>
-                  <li>
-                    <i className="fa-solid fa-sack-dollar" />
-                    salary
-                  </li>
-                </ul>
-              </div>
-            </div>
+              <div className="row justify-content-between">
+                <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
+                  <div className="col-3">
+                    <img
+                      src="./assets/image/logo.jpg"
+                      alt=""
+                      style={{
+                        width: "120%",
+                        height: "80%",
+                        margin: "10px auto",
+                      }}
+                    />
+                  </div>
+                  <div className="col-9" style={{ margin: "8px auto" }}>
+                    <h6>Account Manage</h6>
+                    <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
+                    <ul className="d-flex justify-content-between">
+                      <li>
+                        <i className="fa-solid fa-location-dot" />
+                        Hà Nội
+                      </li>
+                      <li>
+                        <i className="fa-regular fa-clock" />
+                        26/12/1111
+                      </li>
+                      <li>
+                        <i className="fa-solid fa-sack-dollar" />
+                        salary
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
+                  <div className="col-3">
+                    <img
+                      src="./assets/image/logo.jpg"
+                      alt=""
+                      style={{
+                        width: "120%",
+                        height: "80%",
+                        margin: "10px auto",
+                      }}
+                    />
+                  </div>
+                  <div className="col-9" style={{ margin: "8px auto" }}>
+                    <h6>Account Manage</h6>
+                    <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
+                    <ul className="d-flex justify-content-between">
+                      <li>
+                        <i className="fa-solid fa-location-dot" />
+                        Hà Nội
+                      </li>
+                      <li>
+                        <i className="fa-regular fa-clock" />
+                        26/12/1111
+                      </li>
+                      <li>
+                        <i className="fa-solid fa-sack-dollar" />
+                        salary
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="urgentHiring col d-flex" style={{ padding: 0 }}>
+                  <div className="col-3">
+                    <img
+                      src="./assets/image/logo.jpg"
+                      alt=""
+                      style={{
+                        width: "120%",
+                        height: "80%",
+                        margin: "10px auto",
+                      }}
+                    />
+                  </div>
+                  <div className="col-9" style={{ margin: "8px auto" }}>
+                    <h6>Account Manage</h6>
+                    <p style={{ fontSize: 14 }}>Công ty TNHH Kim Thắng</p>
+                    <ul className="d-flex justify-content-between">
+                      <li>
+                        <i className="fa-solid fa-location-dot" />
+                        Hà Nội
+                      </li>
+                      <li>
+                        <i className="fa-regular fa-clock" />
+                        26/12/1111
+                      </li>
+                      <li>
+                        <i className="fa-solid fa-sack-dollar" />
+                        salary
+                      </li>
+                    </ul>
+                  </div>
+                </div> */}
           </div>
         </div>
       </div>

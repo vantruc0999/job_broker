@@ -1,8 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate()
   const [inputs, setInputs] = useState("");
   const [errors, setErrors] = useState("");
   const handleInput = (e) => {
@@ -156,6 +157,7 @@ function Register() {
               birthday: "",
             });
             alert(res.data.message);
+            navigate('/login')
           }
         })
         .catch((errors) => {

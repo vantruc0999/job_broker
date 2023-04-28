@@ -1,18 +1,148 @@
 import Logo from "../../assets/images/logo.jpg";
 import { useEffect, useRef, useState } from "react";
 
-function CreateCV() {
+function Test() {
   const [showForm, setShowForm] = useState([]);
+  const [exp, setExp] = useState([]);
+  const [education, setEducation] = useState([]);
+  const [active, setActive] = useState([]);
+  const [certificate, setCertificate] = useState([]);
+  const [skill, setSkill] = useState([]);
+  const [softSkill, setSoftSkill] = useState([]);
+  const [awards, setAwards] = useState([]);
+  const [language, setLanguage] = useState([]);
+
   const handleShow = (formId, e) => {
     setShowForm((state) => [...state, formId]);
   };
+
+  const handleExpInput = (index, event) => {
+    const value = event.target.innerText;
+    const newExps = [...exp];
+    newExps[index] = {
+      ...newExps[index],
+      [event.target.dataset.type]: value,
+    };
+    setExp(newExps);
+  };
+  const handleEduInput = (index, event) => {
+    const value = event.target.innerText;
+    const newEdu = [...education];
+    newEdu[index] = {
+      ...newEdu[index],
+      [event.target.dataset.type]: value,
+    };
+    setEducation(newEdu);
+  };
+  const handleActInput = (index, event) => {
+    const value = event.target.innerText;
+    const newAct = [...active];
+    newAct[index] = {
+      ...newAct[index],
+      [event.target.dataset.type]: value,
+    };
+    setActive(newAct);
+  };
+  const handleCerInput = (index, event) => {
+    const value = event.target.innerText;
+    const newCer = [...certificate];
+    newCer[index] = {
+      ...newCer[index],
+      [event.target.dataset.type]: value,
+    };
+    setCertificate(newCer);
+  };
+  const handleSkillInput = ( event) => {
+    let nameInput = event.target.name;
+    let value = event.target.value;
+    setSkill((state) => ({ ...state, [nameInput]: value }));
+  };
+  const handleSoftInput = (index, event) => {
+    const value = event.target.innerText;
+    const newSoft = [...softSkill];
+    newSoft[index] = {
+      ...newSoft[index],
+      [event.target.dataset.type]: value,
+    };
+    setSoftSkill(newSoft);
+  };
+  const handleAwardInput = (index, event) => {
+    const value = event.target.innerText;
+    const newAwards = [...awards];
+    newAwards[index] = {
+      ...newAwards[index],
+      [event.target.dataset.type]: value,
+    };
+    setAwards(newAwards);
+  };
+  const handleLangInput = (event) => {
+    let nameInput = event.target.name;
+    let value = event.target.value;
+    setLanguage((state) => ({ ...state, [nameInput]: value }));
+  };
+  console.log(exp);
+  console.log(education);
+  console.log(active);
+  console.log(certificate);
+  console.log(skill);
+  console.log(softSkill);
+  console.log(awards);
+  console.log(language);
   const handleShowIndex = (i, e) => {
     const newForm = [...showForm];
     if (newForm.length === 1) {
+      if (e === 1) {
+        setExp([]);
+      } else if (e === 2) {
+        setEducation([]);
+      } else if (e === 3) {
+        setActive([]);
+      } else if (e === 4) {
+        setCertificate([]);
+      } else if (e === 5) {
+        setSkill([]);
+      } else if (e === 6) {
+        setSoftSkill([]);
+      } else if (e === 7) {
+        setAwards([]);
+      } else if (e === 8) {
+        setLanguage([]);
+      }
       setShowForm([]);
     } else {
       const formId = showForm.filter((showForm) => showForm === e);
       formId.splice(i, 1);
+      if (e === 1) {
+        console.log(true);
+        const newExps = [...exp];
+        newExps.splice(i, 1);
+        setExp(newExps);
+      } 
+      else if (e === 2) {
+        const newEdu = [...education];
+        newEdu.splice(i, 1);
+        setEducation(newEdu);
+      }
+      else if (e === 3) {
+        const newAct = [...active];
+        newAct.splice(i, 1);
+        setActive(newAct);
+      }
+      else if (e === 4) {
+        const newCer = [...certificate];
+        newCer.splice(i, 1);
+        setCertificate(newCer);
+      }
+      else if (e === 6) {
+        const newSoft = [...softSkill];
+        newSoft.splice(i, 1);
+        setSoftSkill(newSoft);
+      }
+      else if (e === 7) {
+        const newAwards = [...awards];
+        newAwards.splice(i, 1);
+        setAwards(newAwards);
+      }
       if (formId === 1) {
         formId = "";
       }
@@ -21,12 +151,13 @@ function CreateCV() {
       setShowForm(result);
     }
   };
+
   const addSkill = (e) => {
     return (
       <>
         <div className="content_form">
           <div id="content-suggest-skill">
-            <select name="cars" id="cars">
+            <select name="skill" id="cars" onChange={handleSkillInput}>
               <option value="volvo">Volvo</option>
               <option value="saab">Saab</option>
               <option value="mercedes">Mercedes</option>
@@ -42,7 +173,7 @@ function CreateCV() {
       <>
         <div className="content_form">
           <div id="content-suggest-skill">
-            <select name="cars" id="cars">
+            <select name="language" id="cars" onChange={handleLangInput}>
               <option value="volvo">English</option>
               <option value="saab">Trung quoc</option>
               <option value="mercedes">Lào</option>
@@ -55,7 +186,6 @@ function CreateCV() {
   };
   const addContentCertificates = (formId) => {
     const filterExp = showForm.filter((showForm) => showForm === formId);
-    console.log(filterExp.length);
     if (filterExp.length > 0) {
       const html = filterExp.map((index, i) => {
         return (
@@ -72,7 +202,7 @@ function CreateCV() {
                 ></i>
               </div>
               <div className="d-flex flex-column flex-md-row">
-                <div contentEditable="true" spellCheck="true">
+                <div contentEditable="true" spellCheck="true" onInput={(e) => handleCerInput(i, e)}>
                   Chứng chỉ java
                 </div>
               </div>
@@ -87,7 +217,6 @@ function CreateCV() {
   };
   const addContentSoftSkill = (formId) => {
     const filterExp = showForm.filter((showForm) => showForm === formId);
-    console.log(filterExp.length);
     if (filterExp.length > 0) {
       const html = filterExp.map((index, i) => {
         return (
@@ -105,7 +234,7 @@ function CreateCV() {
               </div>
               <div id="content-suggest-skill"></div>
               <div className="d-flex flex-column flex-md-row">
-                <div contentEditable="true" spellCheck="true">
+                <div contentEditable="true" spellCheck="true" onInput={(e) => handleSoftInput(i, e)}>
                   Chơi game
                 </div>
               </div>
@@ -120,7 +249,6 @@ function CreateCV() {
   };
   const addContentAward = (formId) => {
     const filterExp = showForm.filter((showForm) => showForm === formId);
-    console.log(filterExp.length);
     if (filterExp.length > 0) {
       const html = filterExp.map((index, i) => {
         return (
@@ -138,10 +266,20 @@ function CreateCV() {
               </div>
               <div id="content-suggest-award">
                 <div className="d-flex flex-column flex-md-row mt-2">
-                  <div contentEditable="true" spellCheck="true">
+                  <div
+                    contentEditable="true"
+                    spellCheck="true"
+                    data-type="award"
+                    onInput={(e) => handleAwardInput(i, e)}
+                  >
                     Nhân viên xuất sắc tại
                   </div>
-                  <div contentEditable="true" spellCheck="true">
+                  <div
+                    contentEditable="true"
+                    spellCheck="true"
+                    data-type="year"
+                    onInput={(e) => handleAwardInput(i, e)}
+                  >
                     <p>2023</p>
                   </div>
                 </div>
@@ -160,7 +298,6 @@ function CreateCV() {
     console.log(filterExp.length);
     if (filterExp.length > 0) {
       const html = filterExp.map((index, i) => {
-        console.log(i);
         return (
           <>
             <div className="content_form" style={{ marginTop: "30px" }}>
@@ -186,7 +323,7 @@ function CreateCV() {
                       info-name="id"
                       info-group="activity"
                     />
-                    <div contentEditable="true" spellCheck="true">
+                    <div contentEditable="true" spellCheck="true" data-type="year" onInput={(e) => handleActInput(i, e)}>
                       <strong>Ngày hội tuyển dụng IT Việt Nam</strong>
                     </div>
                     <div className="resume-activity-desc ml-auto">
@@ -195,6 +332,8 @@ function CreateCV() {
                           className="cv-editable-elem d-inline required medium-editor-element"
                           contentEditable="true"
                           spellCheck="true"
+                          data-type="startday"
+                          onInput={(e) => handleActInput(i, e)}
                         >
                           17/04/2023
                         </p>
@@ -203,16 +342,18 @@ function CreateCV() {
                           className="cv-editable-elem d-inline required medium-editor-element"
                           contentEditable="true"
                           spellCheck="true"
+                          data-type="endday"
+                          onInput={(e) => handleActInput(i, e)}
                         >
                           17/04/2023
                         </p>
                       </div>
                     </div>
                   </div>
-                  <div contentEditable="true" spellCheck="true">
+                  <div contentEditable="true" spellCheck="true" data-type="content" onInput={(e) => handleActInput(i, e)}>
                     Diễn giả/cố vấn kỹ thuật
                   </div>
-                  <div contentEditable="true" spellCheck="true">
+                  <div contentEditable="true" spellCheck="true" data-type="description" onInput={(e) => handleActInput(i, e)}>
                     Trả lời những câu hỏi về vị trí cũng như tổ chức mà người
                     tham dự quan tâm.
                   </div>
@@ -248,14 +389,16 @@ function CreateCV() {
               </div>
               <div className="group">
                 <div className="meta">
-                  <div contentEditable="true" spellCheck="true">
+                  <div contentEditable="true" spellCheck="true"  data-type="specialize" onInput={(e) => handleEduInput(i, e)}>
                     Quản trị kinh doanh
                   </div>
-                  <div className="time">
+                  <div className="time" >
                     <p
                       className="summary cv-editable-elem d-inline required medium-editor-element"
                       contentEditable="true"
                       spellCheck="true"
+                      data-type="startday"
+                      onInput={(e) => handleEduInput(i, e)}
                     >
                       2022
                     </p>
@@ -264,17 +407,14 @@ function CreateCV() {
                       className="summary cv-editable-elem d-inline required medium-editor-element"
                       contentEditable="true"
                       spellCheck="true"
+                      data-type="endday"
+                      onInput={(e) => handleEduInput(i, e)}
                     >
                       2023
                     </p>
                   </div>
-                  <div className="upper-row title">
-                    <p contentEditable="true" spellCheck="true">
-                      Đại học ...
-                    </p>
-                  </div>
                 </div>
-                <div contentEditable="true" spellCheck="true">
+                <div contentEditable="true" spellCheck="true" data-type="rating" onInput={(e) => handleEduInput(i, e)}>
                   Tốt nghiệp loại Giỏi
                 </div>
               </div>
@@ -313,6 +453,8 @@ function CreateCV() {
                         className="summary cv-editable-elem d-inline required medium-editor-element"
                         contentEditable="true"
                         spellCheck="true"
+                        data-type="year1"
+                        onInput={(e) => handleExpInput(i, e)}
                       >
                         2022
                       </p>
@@ -321,57 +463,105 @@ function CreateCV() {
                         className="summary cv-editable-elem d-inline required medium-editor-element"
                         contentEditable="true"
                         spellCheck="true"
+                        data-type="year2"
+                        onInput={(e) => handleExpInput(i, e)}
                       >
                         2023
                       </p>
                     </div>
-                    <div contentEditable="true" spellCheck="true">
+                    <div
+                      contentEditable="true"
+                      spellCheck="true"
+                      onInput={(e) => handleExpInput(i, e)}
+                      data-type="position"
+                    >
                       <p>Nhân viên kinh doanh</p>
                     </div>
                   </div>
                   <div className="upper-row title">
-                    <p contentEditable="true" spellCheck="true">
+                    <p
+                      contentEditable="true"
+                      spellCheck="true"
+                      onInput={(e) => handleExpInput(i, e)}
+                      data-type="company"
+                    >
                       Công ty CP ...&nbsp;
                     </p>
                   </div>
                 </div>
-                <div contentEditable="true" spellCheck="true">
-                  <h4 contentEditable="true" spellCheck="true">
-                    Nhiệm vụ:
-                  </h4>
-                  <p contentEditable="true" spellCheck="true">
+                <div>
+                  <h4>Nhiệm vụ:</h4>
+                  <p
+                    contentEditable="true"
+                    spellCheck="true"
+                    data-type="misson1"
+                    onInput={(e) => handleExpInput(i, e)}
+                  >
                     - Thực hiện các kế hoạch kinh doanh: tìm kiếm khách hàng,
                     giới thiệu sản phẩm dịch vụ, tư vấn sản phẩm và ứng dụng,
                     chăm sóc và quản lý quan hệ khách hàng.
                   </p>
                   &nbsp;
-                  <p contentEditable="true" spellCheck="true">
+                  <p
+                    contentEditable="true"
+                    spellCheck="true"
+                    onInput={(e) => handleExpInput(i, e)}
+                    data-type="misson2"
+                  >
                     - Lập kế hoạch hoạt động năm, quý, tháng, tuần để đạt được
                     mục tiêu được giao.
                   </p>
-                  <p contentEditable="true" spellCheck="true">
+                  <p
+                    contentEditable="true"
+                    spellCheck="true"
+                    onInput={(e) => handleExpInput(i, e)}
+                    data-type="misson3"
+                  >
                     - Khảo sát, nghiên cứu, đánh giá doanh thu dự kiến tại khu
                     vực quản lý. Xây dựng, kiến nghị kế hoạch kinh doanh phù
                     hợp.
                   </p>
-                  <h4 contentEditable="true" spellCheck="true">
-                    Thành tích:
-                  </h4>
-                  <p contentEditable="true" spellCheck="true">
+                  <h4>Thành tích:</h4>
+                  <p
+                    contentEditable="true"
+                    spellCheck="true"
+                    onInput={(e) => handleExpInput(i, e)}
+                    data-type="achivement1"
+                  >
                     Qua quá trình làm việc tại Công ty cổ phần ... tôi đã đạt
                     được một số thành tích sau:
                   </p>
                   <ul>
-                    <li contentEditable="true" spellCheck="true">
+                    <li
+                      contentEditable="true"
+                      spellCheck="true"
+                      onInput={(e) => handleExpInput(i, e)}
+                      data-type="achivement2"
+                    >
                       ... Best seller 2022
                     </li>
-                    <li contentEditable="true" spellCheck="true">
+                    <li
+                      contentEditable="true"
+                      spellCheck="true"
+                      onInput={(e) => handleExpInput(i, e)}
+                      data-type="achivement3"
+                    >
                       Nhân viên xuất sắc 2022
                     </li>
-                    <li contentEditable="true" spellCheck="true">
+                    <li
+                      contentEditable="true"
+                      spellCheck="true"
+                      onInput={(e) => handleExpInput(i, e)}
+                      data-type="achivement4"
+                    >
                       Nhân viên sáng tạo
                     </li>
-                    <li contentEditable="true" spellCheck="true">
+                    <li
+                      contentEditable="true"
+                      spellCheck="true"
+                      onInput={(e) => handleExpInput(i, e)}
+                      data-type="achivement5"
+                    >
                       Dự án sale xuất sắc
                     </li>
                   </ul>
@@ -553,7 +743,7 @@ function CreateCV() {
               </section>
               <section className="experience">
                 <h3>
-                <i class="fa-solid fa-dumbbell"></i> Hoạt động
+                  <i class="fa-solid fa-dumbbell"></i> Hoạt động
                 </h3>
                 {showForm && showForm.includes(3) ? (
                   addContentAction(3)
@@ -569,7 +759,7 @@ function CreateCV() {
               </section>
               <section className="experience">
                 <h3>
-                <i className="fa-solid fa-certificate" /> Chứng chỉ
+                  <i className="fa-solid fa-certificate" /> Chứng chỉ
                 </h3>
                 {showForm && showForm.includes(4) ? (
                   addContentCertificates(4)
@@ -672,4 +862,4 @@ function CreateCV() {
     </>
   );
 }
-export default CreateCV;
+export default Test;

@@ -1,9 +1,10 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { json } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 
 function PayPalButton(props) {
+  const navigate = useNavigate()
   const { product } = props;
   console.log(product);
 
@@ -59,7 +60,7 @@ function PayPalButton(props) {
           let user = JSON.parse(localStorage.getItem("user"));
           let config = {
             headers: {
-              Authorization: "Bearer " + "18|N122KdwqzYvg8TZ4a4tcwaOUjR1uP6IBFJAuFR50",
+              Authorization: "Bearer " + user.token,
               "Content-Type": "application/x-www-form-urlencoded",
               Accept: "application/json",
             },
@@ -73,6 +74,7 @@ function PayPalButton(props) {
             )
             .then((res) => {
               console.log(res.data);
+              navigate('/addJob')
             });
         }}
         onCancel={() => {}}

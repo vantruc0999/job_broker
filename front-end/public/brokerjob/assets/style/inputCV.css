@@ -49,6 +49,7 @@
   align-items: center;
   padding: 5px 10px;
   border-radius: 5px;
+  position: relative;
 }
 .content_form:hover {
   border: 1px dashed green;
@@ -79,11 +80,14 @@ textarea#story:focus {
 }
 
 
-.additions {
-  display: flex;
-  justify-content: end;
+.addition {
   font-size: 25px;
+  position: absolute;
+  top: -30px;
+  right: 0;
+  display: none;
 }
 
-
-
+.content_form:hover > .addition{
+  display: block;
+}

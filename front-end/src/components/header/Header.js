@@ -3,10 +3,10 @@ import Logo from "../../assets/images/logo.jpg";
 import { Navigate, useNavigate } from "react-router-dom";
 function Header() {
   const navigate = useNavigate();
-  const logout = () =>{
+  const logout = () => {
     localStorage.removeItem("user");
     navigate("/login");
-  }
+  };
   const renderLog = () => {
     var user = localStorage.getItem("user");
     user = JSON.parse(user);
@@ -27,39 +27,39 @@ function Header() {
                 marginTop: 6,
               }}
             />
-            <a
+            <Link
               className="nav-link dropdown-toggle text-dark"
               data-toggle="dropdown"
               href="#"
             >
-              Thắng Nguyễn
-            </a>
+              {user.role === "candidate" ? user.full_name : user.recruiter_name}
+            </Link>
             <div className="dropdown-menu">
               <div style={{ borderBottom: "1px solid #e7e9eb" }}>
                 <Link to="/fileCV">
-                <a className="dropdown-item" href="#">
-                  Cập nhập hồ sơ
-                </a>
+                  <Link className="dropdown-item" href="#">
+                    Cập nhập hồ sơ
+                  </Link>
                 </Link>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" href="#">
                   Giới thiệu bản thân
-                </a>
-                <a className="dropdown-item" href="#">
+                </Link>
+                <Link className="dropdown-item" href="#">
                   Đổi mật khẩu
-                </a>
+                </Link>
               </div>
               <div style={{ borderBottom: "1px solid #e7e9eb" }}>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" href="#">
                   Việc làm đã ứng tuyển
-                </a>
-                <a className="dropdown-item" href="#">
+                </Link>
+                <Link className="dropdown-item" href="#">
                   Việc làm đã lưu
-                </a>
+                </Link>
               </div>
               <div onClick={logout}>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" href="#">
                   Đăng xuất
-                </a>
+                </Link>
               </div>
             </div>
           </li>
@@ -85,8 +85,6 @@ function Header() {
     }
   };
 
-
-
   return (
     <>
       <div className="container-fluid" style={{ padding: 0 }}>
@@ -96,14 +94,14 @@ function Header() {
             <ul className="nav justify-content-start align-items-center">
               <img className="navbar-brand" src={Logo} alt="" />
               <li className="nav-item dropdown">
-                <a
+                <Link
                   className="nav-link dropdown-toggle text-dark"
                   href="#"
                   id="navbardrop"
                   data-toggle="dropdown"
                 >
                   Việc làm
-                </a>
+                </Link>
                 <div className="dropdown-menu">
                   <table className="dropdown-item" id="menu-listjob">
                     <tbody>
@@ -122,21 +120,21 @@ function Header() {
                 </div>
               </li>
               <li className="nav-item dropdown">
-                <a
+                <Link
                   className="nav-link dropdown-toggle text-dark"
                   href="#"
                   id="navbardrop"
                   data-toggle="dropdown"
                 >
                   Công ty
-                </a>
+                </Link>
                 <div className="dropdown-menu">
-                  <a className="dropdown-item" href="#">
+                  <Link className="dropdown-item" href="#">
                     Công ty tiêu biểu
-                  </a>
-                  <a className="dropdown-item" href="#">
+                  </Link>
+                  <Link className="dropdown-item" href="#">
                     Tất cả công ty
-                  </a>
+                  </Link>
                 </div>
               </li>
               <li className="nav-item dropdown">
@@ -159,32 +157,35 @@ function Header() {
                 </div>
               </li>
               <li className="nav-item dropdown">
-                <a
+                <Link
                   className="nav-link dropdown-toggle text-dark"
                   data-toggle="dropdown"
                   href="#"
                 >
                   Phát triển sự nghiệp
-                </a>
+                </Link>
                 <div className="dropdown-menu">
-                  <a className="dropdown-item" href="#">
+                  <Link className="dropdown-item" href="#">
                     Tra cứu
-                  </a>
-                  <a className="dropdown-item" href="#">
+                  </Link>
+                  <Link className="dropdown-item" href="#">
                     Kiến thức
-                  </a>
-                  <a className="dropdown-item" href="#">
+                  </Link>
+                  <Link className="dropdown-item" href="#">
                     Tra cứu lương
-                  </a>
+                  </Link>
                 </div>
               </li>
             </ul>
             <ul className="nav justify-content-end align-items-center">
               {renderLog()}
               <li className="nav-item ml-3">
-                <a className="nav-link recruiter text-dark" href="#">
+                <Link
+                  className="nav-link recruiter text-dark"
+                  to="/loginCruiter"
+                >
                   Nhà tuyển dụng
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

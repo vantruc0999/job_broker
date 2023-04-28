@@ -1,8 +1,12 @@
 import React from "react";
+import HeaderRe from "../common/HeaderRe";
+import Sidebar from "../common/Sidebar";
 
 const Profile = () => {
   return (
     <div>
+      <HeaderRe></HeaderRe>
+      <Sidebar></Sidebar>
       <main id="main" class="main">
         <div class="pagetitle">
           <h1>Hồ sơ</h1>

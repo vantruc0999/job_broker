@@ -14,13 +14,13 @@ function App(props) {
       {param1["pathname"].includes("login") ||
       param1["pathname"].includes("register") ||
       param1["pathname"].includes("registerCruiter") ? null : (
-        <Header />
+        <HeaderRe />
       )}
       {props.children}
       {param1["pathname"].includes("login") ||
       param1["pathname"].includes("register") ||
       param1["pathname"].includes("registerCruiter") ? null : (
-        <Footer />
+        <Sidebar />
       )}
     </>
   );

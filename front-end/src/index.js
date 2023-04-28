@@ -15,6 +15,8 @@ import LoginRecruiter from "./components/recruiter/account/LoginRecruiter";
 import RegisterRecruiter from "./components/recruiter/account/RegisterRecruiter";
 import Profile from "./components/recruiter/Profile";
 import JobDetail from "./components/candidate/JobDetail";
+import ManageCan from "./components/recruiter/ManageCan";
+import Package from "./components/recruiter/Package";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -25,13 +27,15 @@ root.render(
           <Route index path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/registerCruiter" element={<RegisterCruiter />} />
+          <Route path="/jobdetail" element={<JobDetail />} />
           <Route path="/recruiter" element={<HomeRe />} />
           <Route path="/recruiter/job" element={<ManageJob />} />
           <Route path="/recruiter/addjob" element={<AddJob />} />
           <Route path="/recruiter/login" element={<LoginRecruiter />} />
           <Route path="/recruiter/register" element={<RegisterRecruiter />} />
           <Route path="/recruiter/profile" element={<Profile />} />
-          <Route path="/jobdetail" element={<JobDetail />} />
+          <Route path="/recruiter/managecan" element={<ManageCan />} />
+          <Route path="/recruiter/package" element={<Package />} />
         </Routes>
       </App>
     </Router>

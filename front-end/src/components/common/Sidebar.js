@@ -4,29 +4,33 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
   return (
     <div>
-      <aside id="sidebar" class="sidebar">
-        <ul class="sidebar-nav" id="sidebar-nav">
-          <li class="nav-item">
+      <aside id="sidebar" className="sidebar">
+        <ul className="sidebar-nav" id="sidebar-nav">
+          <li className="nav-item">
             <Link to="recruiter/job">
-              <a class="nav-link " href="/">
-                <i class="bi bi-circle"></i>
+              <a className="nav-link " href="/">
+                <i className="bi bi-circle"></i>
                 <span>Quản lý tin tuyển dụng</span>
               </a>
             </Link>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link " href="index.html">
-              <i class="bi bi-circle"></i>
-              <span>Mua gói dịch vụ</span>
-            </a>
+          <li className="nav-item">
+            <Link to="recruiter/managecan">
+              <a className="nav-link " href="/">
+                <i className="bi bi-circle"></i>
+                <span>Quản lý ứng viên</span>
+              </a>
+            </Link>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link " href="index.html">
-              <i class="bi bi-circle"></i>
-              <span>Chưa biết đặt tên</span>
-            </a>
+          <li className="nav-item">
+            <Link to="recruiter/package">
+              <a className="nav-link " href="/">
+                <i className="bi bi-circle"></i>
+                <span>Mua gói dịch vụ</span>
+              </a>
+            </Link>
           </li>
         </ul>
       </aside>

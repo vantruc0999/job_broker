@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Package;
+use App\Models\ProgrammingSkills;
 use Illuminate\Http\Request;
 
-class PackageController extends Controller
+class SkillController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,7 @@ class PackageController extends Controller
     public function index()
     {
         //
-        $packages = Package::all();
-        return $packages;
+        return ProgrammingSkills::where('status', '=', 1)->get();
     }
 
     /**
@@ -29,15 +28,14 @@ class PackageController extends Controller
     public function store(Request $request)
     {
         //
-        Package::create([
-            "package_name" => $request->package_name,
-            "package_description" => $request->package_description,
-            "price" => $request->price,
-            "exp_time" => $request->exp_time,
-            "unit" => $request->unit,
+        ProgrammingSkills::create([
+            "skill_name" => $request->skill_name,
+            "skill_description" => $request->skill_description,
+            "status" => 0
         ]);
+
         return response([
-            "message" => "Create package successfully"
+            "message" => "Create Programming Skills successfully"
         ]);
     }
 
@@ -50,10 +48,6 @@ class PackageController extends Controller
     public function show($id)
     {
         //
-        $package = Package::where('package_id', '=', $id)->first();
-        return response([
-            "package_infor" => $package
-        ]);
     }
 
     /**
@@ -66,16 +60,15 @@ class PackageController extends Controller
     public function update(Request $request, $id)
     {
         //
-        Package::where('package_id', '=', $id)
+        ProgrammingSkills::where('skill_id', '=', $id)
             ->update([
-                "package_name" => $request->package_name,
-                "package_description" => $request->package_description,
-                "price" => $request->price,
-                "exp_time" => $request->exp_time,
-                "unit" => $request->unit
+                "skill_name" => $request->skill_name,
+                "skill_description" => $request->skill_description,
+                "status" => $request->status
             ]);
+
         return response([
-            "message" => "Update package successfully"
+            "message" => "Update Programming Skills successfully"
         ]);
     }
 

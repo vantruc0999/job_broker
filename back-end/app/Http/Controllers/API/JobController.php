@@ -276,8 +276,6 @@ class JobController extends Controller
         ]);
     }
 
-
-
     /**
      * Remove the specified resource from storage.
      *

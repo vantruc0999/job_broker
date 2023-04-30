@@ -3,6 +3,8 @@
 use App\Http\Controllers\API\AdminAuthController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CandidateAuthController;
+use App\Http\Controllers\API\CategoryExamController;
+use App\Http\Controllers\API\CompanyQuestionController;
 use App\Http\Controllers\API\JobApplicationController;
 use App\Http\Controllers\API\JobController;
 use App\Http\Controllers\API\PackageController;
@@ -39,8 +41,11 @@ Route::post('admin/login', [AdminAuthController::class, 'login']);
 Route::post('recruiter/login', [RecruiterAuthController::class, 'login']);
 Route::post('recruiter/register', [RecruiterAuthController::class, 'register']);
 
+//View all job and view detail a job post
 Route::get('job-detail/{id}', [JobController::class, 'show']);
 Route::get('jobs', [JobController::class, 'getAllJobsForAllUser']);
+
+//View all programming skills
 Route::get('skills', [SkillController::class, 'index']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -59,15 +64,29 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('recruiter')->group(function () {
         Route::post('logout', [RecruiterAuthController::class, 'logout']);
+
         Route::post('payment', [PaymentController::class, 'pay']);
         Route::get('payment-history', [PaymentController::class, 'getPaymentHistory']);
+
         Route::get('jobs', [JobController::class, 'index']);
         Route::post('add-job', [JobController::class, 'handleCreateJob']);
         Route::post('job-update/{id}', [JobController::class, 'handleUpdateJob']);
+
         Route::post('resume-accept/{id}', [JobApplicationController::class, 'acceptApplicationRequest']);
         Route::post('resume-decline/{id}', [JobApplicationController::class, 'declineApplicationRequest']);
+
         Route::get('get-candidates/{id}', [JobApplicationController::class, 'getAllCandidateByJob']);
+
         Route::get('package', [PackageController::class, 'index']);
+        Route::post('add-question', [CompanyQuestionController::class, 'store']);
+        Route::post('update-question/{id}', [CompanyQuestionController::class, 'update']);
+        Route::post('delete-question/{id}', [CompanyQuestionController::class, 'destroy']);
+        Route::get('questions', [CompanyQuestionController::class, 'index']);
+        Route::get('questions-by-category/{id}', [CompanyQuestionController::class, 'getQuestionByCategoryId']);
+        Route::get('detail-question/{id}', [CompanyQuestionController::class, 'show']);
+
+        Route::get('categories', [CategoryExamController::class, 'index']);
+
     });
 
     Route::prefix('candidate')->group(function () {
@@ -78,6 +97,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('update-cv/{id}', [ResumeController::class, 'handleUpdateResume']);
         Route::post('delete-cv/{id}', [ResumeController::class, 'destroy']);
         Route::post('apply-cv', [JobApplicationController::class, 'store']);
+        Route::post('public-status-cv/{id}', [ResumeController::class, 'publicStatusResume']); 
+        Route::post('private-status-cv/{id}', [ResumeController::class, 'privateStatusResume']); 
     });
 });
 

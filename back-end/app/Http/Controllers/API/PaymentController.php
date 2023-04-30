@@ -12,7 +12,6 @@ class PaymentController extends Controller
 {
     //
     //
-
     public function pay(Request $request)
     {
         $package = Package::find($request->package_id);

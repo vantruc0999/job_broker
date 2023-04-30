@@ -22,7 +22,8 @@ class ResumeController extends Controller
     {
         //
         $candidate_id = auth()->user()['candidate_id'];
-        $resume = Resume::select('resume_name', 'resume_id')->where('candidate_id', $candidate_id)->get();
+        $resume = Resume::select('resume_name', 'resume_id', 'public_status')
+                        ->where('candidate_id', $candidate_id)->get();
         // $resume_id = [];
         // $resume->each(function($item) use (&$resume_id){
         //     $resume_id[] = $item->resume_id;
@@ -178,7 +179,7 @@ class ResumeController extends Controller
             ->where('resume_id', '=', $resume_id)
             ->get();
         $skill_name = [];
-        $skills->each(function($item) use (&$skill_name){
+        $skills->each(function ($item) use (&$skill_name) {
             $skill_name[] = $item->skill_name;
         });
         return $skill_name;
@@ -191,13 +192,14 @@ class ResumeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    private static function checkResumeBeforeUpdate($resume_id){
+    private static function checkResumeBeforeUpdate($resume_id)
+    {
         $applications = JobApplication::where('resume_id', '=', $resume_id)->get();
 
-        if(count($applications) != 0){
-            foreach($applications as $application){
+        if (count($applications) != 0) {
+            foreach ($applications as $application) {
                 $job_expired_date = self::checkJobExpiredDate($application['job_id']);
-                if(!($application['status'] === 'declined' || $job_expired_date || ($application['status'] === 'approved' && $application['application_completed'] === 1))){
+                if (!($application['status'] === 'declined' || $job_expired_date || ($application['status'] === 'approved' && $application['application_completed'] === 1))) {
                     return false;
                 }
                 // if(!($application['status'] === 'approved' && $application['application_completed'] === 1)){
@@ -208,11 +210,12 @@ class ResumeController extends Controller
         return true;
     }
 
-    private static function checkJobExpiredDate($job_id){
+    private static function checkJobExpiredDate($job_id)
+    {
 
         $expired_date = Job::select('job_end_date')
-                        ->where('job_id', '=', $job_id)
-                        ->first();
+            ->where('job_id', '=', $job_id)
+            ->first();
 
         $current_date = Carbon::now();
         // $current_date = Carbon::parse('Y/m/d', $current_date);
@@ -223,7 +226,7 @@ class ResumeController extends Controller
     public function handleUpdateResume(Request $request, $id)
     {
         //
-        if(!self::checkResumeBeforeUpdate($id)){
+        if (!self::checkResumeBeforeUpdate($id)) {
             return response([
                 'status' => 200,
                 'message' => 'Your resume has been considered in a job',
@@ -232,7 +235,7 @@ class ResumeController extends Controller
         $education = $request->resume['education'];
         $certificate = $request->resume['certificate'];
         $image = $request->resume['image'];
-        
+
         $experience_project = $request->resume['experience_project'];
         $experience_company = $request->resume['experience_company'];
         $skills = $request->resume['skills'];
@@ -254,8 +257,7 @@ class ResumeController extends Controller
 
     private static function updateResume($education, $certificate, $image, $id)
     {
-        $resume = Resume::where('resume_id', '=', $id)->
-        update([
+        $resume = Resume::where('resume_id', '=', $id)->update([
             'education' => $education,
             'certificate' => $certificate,
             'image' => $image,
@@ -263,11 +265,13 @@ class ResumeController extends Controller
         return $resume;
     }
 
-    private static function deleteExperience($id){
+    private static function deleteExperience($id)
+    {
         Experience::where('resume_id', $id)->delete();
     }
 
-    private static function deleteResumeSkill($id){
+    private static function deleteResumeSkill($id)
+    {
         ResumeSkills::where('resume_id', $id)->delete();
     }
 
@@ -286,6 +290,28 @@ class ResumeController extends Controller
 
         return response([
             'message' => 'Delete Resume successfully',
+        ]);
+    }
+
+    public function publicStatusResume($resume_id)
+    {
+        Resume::where('resume_id', '=', $resume_id)
+            ->update([
+                'public_status' => 1
+            ]);
+        return response([
+            'message' => 'Now recruiter can see your CV'
+        ]);
+    }
+
+    public function privateStatusResume($resume_id)
+    {
+        Resume::where('resume_id', '=', $resume_id)
+            ->update([
+                'public_status' => 0
+            ]);
+        return response([
+            'message' => 'Your resume is private'
         ]);
     }
 }

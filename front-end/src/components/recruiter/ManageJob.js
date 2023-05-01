@@ -35,7 +35,7 @@ const ManageJob = () => {
                     </Link>
                   </div>
 
-                  <table class="table table-bordered">
+                  <table className="table table-bordered">
                     <thead>
                       <tr
                         style={{
@@ -59,7 +59,7 @@ const ManageJob = () => {
                       >
                         <th scope="row">
                           <i
-                            class="bi bi-briefcase"
+                            className="bi bi-briefcase"
                             style={{
                               fontSize: "30px",
                               display: "flex",

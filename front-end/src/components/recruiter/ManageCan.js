@@ -26,10 +26,10 @@ const ManageCan = () => {
                     </h5>
                   </div>
 
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
+                  <div className="accordion-item">
+                    <h2 className="accordion-header" id="headingOne">
                       <button
-                        class="accordion-button collapsed"
+                        className="accordion-button collapsed"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#collapseOne"
@@ -44,26 +44,26 @@ const ManageCan = () => {
                       >
                         Bộ lọc ứng viên
                         <i
-                          class="bi bi-arrow-down-circle"
+                          className="bi bi-arrow-down-circle"
                           style={{ marginLeft: "10px" }}
                         ></i>
                       </button>
                     </h2>
                     <div
                       id="collapseOne"
-                      class="accordion-collapse collapse"
+                      className="accordion-collapse collapse"
                       aria-labelledby="headingOne"
                       data-bs-parent="#accordionExample"
                     >
-                      <div class="accordion-body">
-                        <form class="row g-12" style={{ display: "grid" }}>
+                      <div className="accordion-body">
+                        <form className="row g-12" style={{ display: "grid" }}>
                           <div className="form" style={{ display: "flex" }}>
-                            <div class="col-md-3 margin">
-                              <label class="form-label">
+                            <div className="col-md-3 margin">
+                              <label className="form-label">
                                 Ngành nghề chuyên môn
                               </label>
                               <select
-                                class="form-select"
+                                className="form-select"
                                 aria-label="Default select example"
                                 style={{ fontSize: "13px" }}
                               >
@@ -75,10 +75,10 @@ const ManageCan = () => {
                                 <option value="3">Three</option>
                               </select>
                             </div>
-                            <div class="col-md-3 margin">
-                              <label class="form-label">Kỹ năng mềm</label>
+                            <div className="col-md-3 margin">
+                              <label className="form-label">Kỹ năng mềm</label>
                               <select
-                                class="form-select"
+                                className="form-select"
                                 aria-label="Default select example"
                                 style={{ fontSize: "13px" }}
                               >
@@ -88,10 +88,10 @@ const ManageCan = () => {
                                 <option value="3">Three</option>
                               </select>
                             </div>
-                            <div class="col-md-3 margin">
-                              <label class="form-label">Ngôn ngữ</label>
+                            <div className="col-md-3 margin">
+                              <label className="form-label">Ngôn ngữ</label>
                               <select
-                                class="form-select"
+                                className="form-select"
                                 aria-label="Default select example"
                                 style={{ fontSize: "13px" }}
                               >
@@ -101,10 +101,10 @@ const ManageCan = () => {
                                 <option value="3">Three</option>
                               </select>
                             </div>
-                            <div class="col-md-3 margin">
-                              <label class="form-label">Bằng cấp</label>
+                            <div className="col-md-3 margin">
+                              <label className="form-label">Bằng cấp</label>
                               <select
-                                class="form-select"
+                                className="form-select"
                                 aria-label="Default select example"
                                 style={{ fontSize: "13px" }}
                               >
@@ -126,39 +126,48 @@ const ManageCan = () => {
                             }}
                           >
                             <label>Hiển thị: </label>
-                            <div class="checkbox">
+                            <div className="checkbox">
                               <input
-                                class="form-check-input"
+                                className="form-check-input"
                                 type="radio"
                                 name="gridRadios"
                                 id="gridRadios1"
                                 value="option1"
                               />
-                              <label class="form-check-label" for="gridRadios1">
+                              <label
+                                className="form-check-label"
+                                for="gridRadios1"
+                              >
                                 Tất cả ứng viên
                               </label>
                             </div>
-                            <div class="checkbox">
+                            <div className="checkbox">
                               <input
-                                class="form-check-input"
+                                className="form-check-input"
                                 type="radio"
                                 name="gridRadios"
                                 id="gridRadios1"
                                 value="option1"
                               />
-                              <label class="form-check-label" for="gridRadios1">
+                              <label
+                                className="form-check-label"
+                                for="gridRadios1"
+                              >
                                 Chỉ ứng viên đã xem
                               </label>
                             </div>
-                            <div class="checkbox">
+                            <div className="checkbox">
                               <input
-                                class="form-check-input"
+                                className="form-check-input"
                                 type="radio"
                                 name="gridRadios"
                                 id="gridRadios1"
                                 value="option1"
                               />
-                              <label class="form-check-label" for="gridRadios1">
+                              <label
+                                className="form-check-label"
+                                for="gridRadios1"
+                              >
                                 Chỉ ứng viên chưa xem
                               </label>
                             </div>
@@ -181,10 +190,10 @@ const ManageCan = () => {
                   </div>
                   <div className="table-candidate">
                     <h5 className="card-title" style={{ fontSize: "18px" }}>
-                      <i class="bi bi-file-earmark-person"></i>
+                      <i className="bi bi-file-earmark-person"></i>
                       Danh sách ứng viên được quyết định sau
                     </h5>
-                    <table class="table table-bordered">
+                    <table className="table table-bordered">
                       <thead>
                         <tr
                           style={{

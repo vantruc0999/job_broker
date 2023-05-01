@@ -8,72 +8,72 @@ const AddJob = () => {
     <div>
       <HeaderRe></HeaderRe>
       <Sidebar></Sidebar>
-      <main id="main" class="main">
-        <section class="section">
-          <div class="row">
-            <div class="col-lg-12"></div>
-            <div class="card addjob">
-              <div class="card-body">
-                <h5 class="card-title">Thêm tin tuyển dụng</h5>
+      <main id="main" className="main">
+        <section className="section">
+          <div className="row">
+            <div className="col-lg-12"></div>
+            <div className="card addjob">
+              <div className="card-body">
+                <h5 className="card-title">Thêm tin tuyển dụng</h5>
 
-                <form class="row g-12">
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Tên công việc</label>
-                    <input type="text" class="form-control" />
+                <form className="row g-12">
+                  <div className="col-md-6 margin">
+                    <label className="form-label">Tên công việc</label>
+                    <input type="text" className="form-control" />
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Vị trí tuyển dụng</label>
-                    <input type="text" class="form-control" />
+                  <div className="col-md-6 margin">
+                    <label className="form-label">Vị trí tuyển dụng</label>
+                    <input type="text" className="form-control" />
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Ngày bắt đầu</label>
-                    <input type="date" class="form-control" />
+                  <div className="col-md-6 margin">
+                    <label className="form-label">Ngày bắt đầu</label>
+                    <input type="date" className="form-control" />
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Ngày kết thúc</label>
-                    <input type="date" class="form-control" />
+                  <div className="col-md-6 margin">
+                    <label className="form-label">Ngày kết thúc</label>
+                    <input type="date" className="form-control" />
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Lương</label>
-                    <div class="input-group mb-3">
-                      <input type="text" class="form-control" />
-                      <span class="input-group-text">triệu</span>
+                  <div className="col-md-6 margin">
+                    <label className="form-label">Lương</label>
+                    <div className="input-group mb-3">
+                      <input type="text" className="form-control" />
+                      <span className="input-group-text">triệu</span>
                     </div>
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Nơi làm việc</label>
-                    <input type="text" class="form-control" />
+                  <div className="col-md-6 margin">
+                    <label className="form-label">Nơi làm việc</label>
+                    <input type="text" className="form-control" />
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Ngôn ngữ</label>
-                    <input type="text" class="form-control" />
+                  <div className="col-md-6 margin">
+                    <label className="form-label">Ngôn ngữ</label>
+                    <input type="text" className="form-control" />
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Yêu cầu công việc</label>
-                    <input type="text" class="form-control" />
+                  <div className="col-md-6 margin">
+                    <label className="form-label">Yêu cầu công việc</label>
+                    <input type="text" className="form-control" />
                   </div>
 
-                  <div class="col-md-12 margin">
-                    <label class="form-label">Mô tả công việc</label>
-                    <textarea type="text" class="form-control" />
+                  <div className="col-md-12 margin">
+                    <label className="form-label">Mô tả công việc</label>
+                    <textarea type="text" className="form-control" />
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Lợi ích</label>
-                    <input type="text" class="form-control" />
+                  <div className="col-md-6 margin">
+                    <label className="form-label">Lợi ích</label>
+                    <input type="text" className="form-control" />
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Kỹ năng</label>
+                  <div className="col-md-6 margin">
+                    <label className="form-label">Kỹ năng</label>
                     <select
-                      class="form-select"
+                      className="form-select"
                       aria-label="Default select example"
                     >
                       {/* <option selected="">Open this select menu</option> */}
@@ -83,11 +83,11 @@ const AddJob = () => {
                     </select>
                   </div>
 
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary">
+                  <div className="text-center">
+                    <button type="submit" className="btn btn-primary">
                       Submit
                     </button>
-                    <button type="reset" class="btn btn-secondary">
+                    <button type="reset" className="btn btn-secondary">
                       Reset
                     </button>
                   </div>

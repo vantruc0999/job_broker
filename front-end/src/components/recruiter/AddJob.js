@@ -1,5 +1,5 @@
 import React from "react";
-import "./addJob.css";
+// import "./addJob.css";
 import Sidebar from "../common/Sidebar";
 import HeaderRe from "../common/HeaderRe";
 
@@ -16,28 +16,28 @@ const AddJob = () => {
               <div className="card-body">
                 <h5 className="card-title">Thêm tin tuyển dụng</h5>
 
-                <form className="row g-12">
-                  <div className="col-md-6 margin">
+                <form className="row g-12" style={{ fontWeight: "bold" }}>
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
                     <label className="form-label">Tên công việc</label>
                     <input type="text" className="form-control" />
                   </div>
 
-                  <div className="col-md-6 margin">
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
                     <label className="form-label">Vị trí tuyển dụng</label>
                     <input type="text" className="form-control" />
                   </div>
 
-                  <div className="col-md-6 margin">
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
                     <label className="form-label">Ngày bắt đầu</label>
                     <input type="date" className="form-control" />
                   </div>
 
-                  <div className="col-md-6 margin">
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
                     <label className="form-label">Ngày kết thúc</label>
                     <input type="date" className="form-control" />
                   </div>
 
-                  <div className="col-md-6 margin">
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
                     <label className="form-label">Lương</label>
                     <div className="input-group mb-3">
                       <input type="text" className="form-control" />
@@ -45,32 +45,32 @@ const AddJob = () => {
                     </div>
                   </div>
 
-                  <div className="col-md-6 margin">
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
                     <label className="form-label">Nơi làm việc</label>
                     <input type="text" className="form-control" />
                   </div>
 
-                  <div className="col-md-6 margin">
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
                     <label className="form-label">Ngôn ngữ</label>
                     <input type="text" className="form-control" />
                   </div>
 
-                  <div className="col-md-6 margin">
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
                     <label className="form-label">Yêu cầu công việc</label>
                     <input type="text" className="form-control" />
                   </div>
 
-                  <div className="col-md-12 margin">
+                  <div className="col-md-12" style={{ margin: "10px 0" }}>
                     <label className="form-label">Mô tả công việc</label>
                     <textarea type="text" className="form-control" />
                   </div>
 
-                  <div className="col-md-6 margin">
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
                     <label className="form-label">Lợi ích</label>
                     <input type="text" className="form-control" />
                   </div>
 
-                  <div className="col-md-6 margin">
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
                     <label className="form-label">Kỹ năng</label>
                     <select
                       className="form-select"
@@ -84,11 +84,19 @@ const AddJob = () => {
                   </div>
 
                   <div className="text-center">
-                    <button type="submit" className="btn btn-primary">
-                      Submit
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      style={{ float: "right", margin: "20px" }}
+                    >
+                      Đăng
                     </button>
-                    <button type="reset" className="btn btn-secondary">
-                      Reset
+                    <button
+                      type="reset"
+                      className="btn btn-secondary"
+                      style={{ float: "right", margin: "20px" }}
+                    >
+                      Quay lại
                     </button>
                   </div>
                 </form>

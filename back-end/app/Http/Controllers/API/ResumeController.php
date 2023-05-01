@@ -46,6 +46,9 @@ class ResumeController extends Controller
         // $idCandidate = auth()->user()['candidate_id'];
         $resume_name = $request->resume['resume_name'];
         $education = $request->resume['education'];
+        $education_year = $request->resume['education_year'];
+        $education_major = $request->resume['education_major'];
+        $education_description = $request->resume['education_description'];
         $certificate = $request->resume['certificate'];
         $image = $request->resume['image'];
         $template = $request->resume['template'];
@@ -53,7 +56,7 @@ class ResumeController extends Controller
         $experience_company = $request->resume['experience_company'];
         $skills = $request->resume['skills'];
 
-        $id_resume = self::storeResume($resume_name, $education, $certificate, $image, $template);
+        $id_resume = self::storeResume($resume_name, $education, $education_year, $education_major, $education_description, $certificate, $image, $template);
         self::storeExperience($experience_project, $id_resume, "experience_project");
         self::storeExperience($experience_company, $id_resume, "experience_company");
         self::storeResumeSkills($skills, $id_resume);
@@ -112,11 +115,14 @@ class ResumeController extends Controller
         }
     }
 
-    private static function storeResume($resume_name, $education, $certificate, $image, $template)
+    private static function storeResume($resume_name, $education, $education_year, $education_major, $education_description, $certificate, $image, $template)
     {
         $resume = Resume::create([
             'resume_name' => $resume_name,
             'education' => $education,
+            'education_year' => $education_year,
+            'education_major' => $education_major,
+            'education_description' => $education_description,
             'certificate' => $certificate,
             'image' => $image,
             'template' => $template,

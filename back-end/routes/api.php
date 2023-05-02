@@ -91,6 +91,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('candidate')->group(function () {
         Route::post('logout', [CandidateAuthController::class, 'logout']);
+        Route::get('get-candidate-infor',[CandidateAuthController::class, 'getCandidateInfor']);
         Route::post('create-cv', [ResumeController::class, 'handleCreateResume']);
         Route::get('show-all', [ResumeController::class, 'index']);
         Route::get('show-detail/{id}', [ResumeController::class, 'show']);

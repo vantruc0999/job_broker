@@ -63,7 +63,7 @@ class ResumeController extends Controller
         return response([
             'status' => 200,
             'message' => 'Create resume successfully',
-            // 'user' => auth()->user()
+            'resume_id' => $id_resume
         ]);
     }
 

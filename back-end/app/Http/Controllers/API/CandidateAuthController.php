@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Hash;
 
 class CandidateAuthController extends Controller
 {
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $candidate = Candidate::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -25,27 +26,26 @@ class CandidateAuthController extends Controller
 
         return response([
             'status' => 200,
-            'full_name' => $candidate->first_name . ' ' .$candidate->last_name ,
+            'full_name' => $candidate->first_name . ' ' . $candidate->last_name,
             'message' => 'Created candidate Successfully',
         ]);
     }
 
     public function login(Request $request)
     {
-        $candidate = Candidate::where('email',$request->email)->first();
-        
-        if(!$candidate || ! Hash::check($request->password, $candidate->password)){
+        $candidate = Candidate::where('email', $request->email)->first();
+
+        if (!$candidate || !Hash::check($request->password, $candidate->password)) {
             return response()->json([
                 'status' => 401,
                 'message' => 'Invalid username or password',
-                
+
             ]);
-        }
-        else{
-            $token = $candidate->createToken($candidate->email.'Token')->plainTextToken;
-            return response([    
-                'status' => 200, 
-                'full_name' => $candidate->first_name . ' ' .$candidate->last_name ,
+        } else {
+            $token = $candidate->createToken($candidate->email . 'Token')->plainTextToken;
+            return response([
+                'status' => 200,
+                'full_name' => $candidate->first_name . ' ' . $candidate->last_name,
                 'message' => 'Logged In Successfully',
                 'token' => $token,
                 'role' => 'candidate'
@@ -53,11 +53,20 @@ class CandidateAuthController extends Controller
         }
     }
 
-    public function logout(){
+    public function logout()
+    {
         auth()->user()->tokens()->delete();
         return response()->json([
             'status' => 200,
-            'message' => 'Logged Out Successfully', 
+            'message' => 'Logged Out Successfully',
         ]);
+    }
+
+    public function getCandidateInfor()
+    {
+        $candidate = Candidate::select('email', 'first_name', 'last_name', 'phone', 'address', 'birth_day')
+            ->where('candidate_id', '=', auth()->user()['candidate_id'])
+            ->first();
+        return $candidate;
     }
 }

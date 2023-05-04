@@ -12,7 +12,7 @@ const AddJob = () => {
         <section className="section">
           <div className="row">
             <div className="col-lg-12"></div>
-            <div className="card addjob">
+            <div className="card">
               <div className="card-body">
                 <h5 className="card-title">Thêm tin tuyển dụng</h5>
 

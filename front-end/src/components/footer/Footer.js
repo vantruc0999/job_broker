@@ -1,8 +1,11 @@
 function Footer() {
   return (
     <>
-      <footer className="footer bg-white pt-4 pt-sm-5 pb-3">
-        <div className="no-padding" style={{ backgroundColor: "#f8f9fa" }}>
+      <footer
+        className="footer "
+        style={{ padding: "10px 0", backgroundColor: "#f8f9fa" }}
+      >
+        <div className="no-padding">
           <div className="container">
             <div className="row">
               <div className="col-sm-12 col-md-4">

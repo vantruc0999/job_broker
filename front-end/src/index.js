@@ -17,14 +17,19 @@ import Checkout from "./components/payment/Checkout";
 import AddJob from "./components/recruiter/AddJob";
 import LoginRecruiter from "./components/authen/LoginCruiter";
 import HomeRe from "./components/recruiter/HomeRecruiter";
-import HeaderRe from "./components/common/Header";
-import Test from "./components/candidate/Test";
+// import HeaderRe from "./components/common/Header";
 import Showjob from "./components/recruiter/Showjob";
+import ManageJob from "./components/recruiter/ManageJob";
+import MyCV from "./components/candidate/MyCV";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <PayPalScriptProvider
-      options={{ "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID }}
+      deferLoading={true}
+      options={{
+        "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
+        intent: "capture",
+      }}
     >
       <Router>
         <App>
@@ -35,16 +40,18 @@ root.render(
             <Route path="/register" element={<Register />} />
             <Route path="/registerCruiter" element={<RegisterCruiter />} />
             <Route path="/createCV" element={<CreateCV />} />
-            <Route path="/fileCV" element={<FileCV />} />
+            {/* <Route path="/fileCV/:id" element={<FileCV />} /> */}
+            <Route path="/allCV" element={<MyCV />} />
+            <Route path="/allCV/fileCV/:id" element={<FileCV />} />
+            {/* <Route path="/fileCV/:id" element={<FileCV />} /> */}
             <Route path="/handleCV" element={<HandleCV />} />
             <Route path="/uploadCV" element={<MyPdfReader />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/addJob" element={<AddJob />} />
             <Route path="/homeRecruiter" element={<HomeRe />} />
-            <Route path="/headerRe" element={<HeaderRe />} />
-            <Route path="/test" element={<Test />} />
-            <Route path="/job" element={<Showjob />} />
-
+            <Route path="/manageJob" element={<ManageJob />} />
+            {/* <Route path="/headerRe" element={<HeaderRe />} /> */}
+            <Route path="/job/:id" element={<Showjob />} />
           </Routes>
         </App>
       </Router>

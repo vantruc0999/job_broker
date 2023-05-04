@@ -17,7 +17,6 @@ const HomeRe = () => {
             </ol>
           </nav>
         </div>
-
         <section class="section dashboard">
           <div class="row">
             <div class="col-lg-12">

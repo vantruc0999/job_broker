@@ -8,7 +8,7 @@ import makeAnimated from "react-select/animated";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import HeaderRe from "../common/Header";
-import Sidebar from "../common/Sidebar";
+import Sidebar from "./Sidebar";
 
 const animatedComponents = makeAnimated();
 
@@ -54,12 +54,12 @@ const AddJob = () => {
       .post("http://127.0.0.1:8000/api/recruiter/add-job", job, config)
       .then((res) => {
         console.log(res.data);
-        if(res.data.message === 'You have not bought any package'){
+        if (res.data.message === "You have not bought any package") {
           alert(res.data.message);
-          navigate('/checkout')
-        } else if(res.data.message === 'Job has been created successfully'){
+          navigate("/checkout");
+        } else if (res.data.message === "Job has been created successfully") {
           alert(res.data.message);
-          navigate('/homeRecruiter')
+          navigate("/homeRecruiter");
         }
       });
   };
@@ -67,6 +67,7 @@ const AddJob = () => {
     <div>
       {/* <HeaderRe></HeaderRe>
       <Sidebar></Sidebar> */}
+      <Sidebar/>
       <main id="main" class="main">
         <section class="section">
           <div class="row">
@@ -75,148 +76,126 @@ const AddJob = () => {
               <div class="card-body">
                 <h5 class="card-title">Thêm tin tuyển dụng</h5>
 
-                <form class="row g-12">
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Tên công việc</label>
+                <form className="row g-12" style={{ fontWeight: "bold" }}>
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
+                    <label className="form-label">Tên công việc</label>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       onChange={(e) => {
                         setJob({ ...job, job_name: e.target.value });
                       }}
                     />
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Vị trí tuyển dụng</label>
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
+                    <label className="form-label">Vị trí tuyển dụng</label>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       onChange={(e) => {
                         setJob({ ...job, position_name: e.target.value });
                       }}
                     />
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Ngày bắt đầu</label>
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
+                    <label className="form-label">Ngày bắt đầu</label>
                     <input
                       type="date"
-                      class="form-control"
+                      className="form-control"
                       onChange={(e) => {
                         setJob({ ...job, job_start_date: e.target.value });
                       }}
                     />
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Ngày kết thúc</label>
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
+                    <label className="form-label">Ngày kết thúc</label>
                     <input
                       type="date"
-                      class="form-control"
+                      className="form-control"
                       onChange={(e) => {
                         setJob({ ...job, job_end_date: e.target.value });
                       }}
                     />
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Lương</label>
-                    <div class="input-group mb-3">
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
+                    <label className="form-label">Lương</label>
+                    <div className="input-group mb-3">
                       <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         onChange={(e) => {
                           setJob({ ...job, salary: e.target.value });
                         }}
                       />
-                      <span class="input-group-text">triệu</span>
+                      <span className="input-group-text">triệu</span>
                     </div>
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Nơi làm việc</label>
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
+                    <label className="form-label">Nơi làm việc</label>
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       onChange={(e) => {
                         setJob({ ...job, job_location: e.target.value });
                       }}
                     />
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Ngôn ngữ</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      onChange={(e) => {
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
+                    <label className="form-label">Ngôn ngữ</label>
+                    <input type="text" className="form-control" onChange={(e) => {
                         setJob({ ...job, language: e.target.value });
-                      }}
-                    />
+                      }}/>
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Yêu cầu công việc</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      onChange={(e) => {
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
+                    <label className="form-label">Yêu cầu công việc</label>
+                    <input type="text" className="form-control" onChange={(e) => {
                         setJob({ ...job, job_requirement: e.target.value });
-                      }}
-                    />
+                      }}/>
                   </div>
 
-                  <div class="col-md-12 margin">
-                    <label class="form-label">Mô tả công việc</label>
-                    <textarea
-                      type="text"
-                      class="form-control"
-                      onChange={(e) => {
+                  <div className="col-md-12" style={{ margin: "10px 0" }}>
+                    <label className="form-label">Mô tả công việc</label>
+                    <textarea type="text" className="form-control" onChange={(e) => {
                         setJob({ ...job, job_description: e.target.value });
-                      }}
-                    />
+                      }}/>
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Lợi ích</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      onChange={(e) => {
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
+                    <label className="form-label">Lợi ích</label>
+                    <input type="text" className="form-control" onChange={(e) => {
                         setJob({ ...job, benefit: e.target.value });
-                      }}
-                    />
+                      }}/>
                   </div>
 
-                  <div class="col-md-6 margin">
-                    <label class="form-label">Kỹ năng</label>
-                    {/* <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      onChange={(e) => {
-                        setJob({...job, job_skill: [...job.job_skill, e.target.value]})
-                    }}
-                    >
-                      <option value="1">JAVA</option>
-                      <option value="2">PHP</option>
-                      <option value="3">C#</option>
-                    </select> */}
+                  <div className="col-md-6" style={{ margin: "10px 0" }}>
+                    <label className="form-label">Kỹ năng</label>
                     <AnimatedMulti
                       parentCallback={callbackFunction}
                     ></AnimatedMulti>
                   </div>
 
-                  <div class="text-center">
+                  <div className="text-center">
                     <button
                       type="submit"
-                      class="btn btn-primary"
+                      className="btn btn-primary"
+                      style={{ float: "right", margin: "20px" }}
                       onClick={handleAddJob}
                     >
-                      Submit
+                      Đăng
                     </button>
-                    <button type="reset" class="btn btn-secondary">
-                      Reset
+                    <button
+                      type="reset"
+                      className="btn btn-secondary"
+                      style={{ float: "right", margin: "20px" }}
+                    >
+                      Quay lại
                     </button>
                   </div>
                 </form>

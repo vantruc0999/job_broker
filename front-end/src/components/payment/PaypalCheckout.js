@@ -20,6 +20,7 @@ function PayPalButton(props) {
   if (error) {
     alert("oke", error);
   }
+
   return (
     <PayPalScriptProvider>
       <PayPalButtons

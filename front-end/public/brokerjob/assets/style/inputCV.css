@@ -32,10 +32,18 @@
 }
 
 .experience {
+  margin: 0 auto;
   padding: 20px 0;
   margin-top: 20px;
-  width: 100%;
+  width: 90%;
   position: relative;
+}
+.experience input::placeholder {
+  color: #000;
+}
+.experience input:hover{
+  border-radius: 3px;
+  border: 1px dashed green !important;
 }
 .experience h3 {
   border-bottom: 2px solid #8d9aad;

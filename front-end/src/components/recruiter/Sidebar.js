@@ -7,7 +7,7 @@ function Sidebar() {
         <aside id="sidebar" class="sidebar">
           <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
-              <Link to="recruiter/job">
+              <Link to="/manageJob">
                 <a class="nav-link " href="/">
                   <i class="bi bi-circle"></i>
                   <span>Quản lý tin tuyển dụng</span>

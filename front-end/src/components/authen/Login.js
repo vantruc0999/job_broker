@@ -75,7 +75,9 @@ function Login() {
             localStorage.setItem("user",JSON.stringify(res.data))
             alert(res.data.message);
             if(res.data.role === "candidate"){
-              navigate("/")
+              navigate("/homeCandidate")
+            }else if(res.data.role === "recruiter"){
+              navigate("/homeRecruiter")
             }
           }
         })

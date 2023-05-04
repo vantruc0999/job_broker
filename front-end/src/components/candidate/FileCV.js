@@ -16,6 +16,24 @@ function FileCV() {
         Accept: "application/json",
       },
     };
+    
+    axios
+      .get(`http://127.0.0.1:8000/api/candidate/show-detail/`, config)
+      .then((res) => {
+        console.log("oke",res.data);
+        setResume(res.data);
+      });
+  }, []);
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    let config = {
+      headers: {
+        Authorization: "Bearer " + user.token,
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
+    };
+
     axios
       .get(`http://127.0.0.1:8000/api/candidate/show-detail/`+ params.id, config)
       .then((res) => {

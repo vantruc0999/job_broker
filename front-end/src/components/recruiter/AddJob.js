@@ -1,8 +1,6 @@
 import React from "react";
-// import Sidebar from "../common/sidebar";
-// import HeaderRe from "../common/headerRe";
-import { useState } from "react";
-
+import JoditEditor from "jodit-react";
+import { useState, useRef } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import axios from "axios";
@@ -33,7 +31,10 @@ const AddJob = () => {
     benefit: "",
     job_skill: [],
   });
-
+  const editorRequirement = useRef(null);
+  const editorDescription = useRef(null);
+  const editorBenefit = useRef(null);
+  
   const callbackFunction = (childData) => {
     setJob({ ...job, job_skill: [...childData] });
   };
@@ -63,11 +64,12 @@ const AddJob = () => {
         }
       });
   };
+  console.log(job);
   return (
     <div>
       {/* <HeaderRe></HeaderRe>
       <Sidebar></Sidebar> */}
-      <Sidebar/>
+      <Sidebar />
       <main id="main" class="main">
         <section class="section">
           <div class="row">
@@ -148,30 +150,82 @@ const AddJob = () => {
 
                   <div className="col-md-6" style={{ margin: "10px 0" }}>
                     <label className="form-label">Ngôn ngữ</label>
-                    <input type="text" className="form-control" onChange={(e) => {
+                    <input
+                      type="text"
+                      className="form-control"
+                      onChange={(e) => {
                         setJob({ ...job, language: e.target.value });
-                      }}/>
+                      }}
+                    />
                   </div>
 
                   <div className="col-md-6" style={{ margin: "10px 0" }}>
                     <label className="form-label">Yêu cầu công việc</label>
-                    <input type="text" className="form-control" onChange={(e) => {
+                    <JoditEditor
+                      ref={editorRequirement}
+                      tabIndex={1}
+                      value={job.job_requirement}
+                      // onChange={(e) => setJob({ ...job, job_requirement: editor.current.value })}
+                      onBlur={() =>
+                        setJob((prevJob) => ({
+                          ...prevJob,
+                          job_requirement: editorRequirement.current.value,
+                        }))
+                      }
+                    />
+                    {/* <input
+                      type="text"
+                      className="form-control"
+                      onChange={(e) => {
                         setJob({ ...job, job_requirement: e.target.value });
-                      }}/>
+                      }}
+                    /> */}
                   </div>
 
                   <div className="col-md-12" style={{ margin: "10px 0" }}>
                     <label className="form-label">Mô tả công việc</label>
-                    <textarea type="text" className="form-control" onChange={(e) => {
+                    <JoditEditor
+                      ref={editorDescription}
+                      tabIndex={1}
+                      value={job.job_description}
+                      // onChange={(e) => setJob({ ...job, job_description: editor.current.value })}
+                      onBlur={() =>
+                        setJob((prevJob) => ({
+                          ...prevJob,
+                          job_description: editorDescription.current.value,
+                        }))
+                      }
+                    />
+                    {/* <textarea
+                      type="text"
+                      className="form-control"
+                      onChange={(e) => {
                         setJob({ ...job, job_description: e.target.value });
-                      }}/>
+                      }}
+                    /> */}
                   </div>
 
                   <div className="col-md-6" style={{ margin: "10px 0" }}>
                     <label className="form-label">Lợi ích</label>
-                    <input type="text" className="form-control" onChange={(e) => {
+                    <JoditEditor
+                      ref={editorBenefit}
+                      tabIndex={1}
+                      value={job.benefit}
+                      // onChange={(e) => setJob({ ...job, benefit: editor.current.value })}
+                      onBlur={() =>
+                        setJob((prevJob) => ({
+                          ...prevJob,
+                          benefit: editorBenefit.current.value,
+                        }))
+                      }
+                    />
+                    {/* <input
+                      type="text"
+                      className="form-control"
+                      onChange={(e) => {
                         setJob({ ...job, benefit: e.target.value });
-                      }}/>
+                      }}
+                    /> */}
                   </div>
 
                   <div className="col-md-6" style={{ margin: "10px 0" }}>

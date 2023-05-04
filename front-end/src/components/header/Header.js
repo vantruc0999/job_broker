@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import Logo from "../../assets/images/logo.jpg";
 import { Navigate, useNavigate } from "react-router-dom";
+import Sidebar from "../recruiter/Sidebar";
+import HomeRecruiter from "../recruiter/HomeRecruiter"
+import HomeRe from "../recruiter/HomeRecruiter";
 function Header() {
   const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem("user");
-    navigate("/");
+    navigate("/homeCandidate");
   };
   const renderLog = () => {
     var user = localStorage.getItem("user");
@@ -36,7 +39,7 @@ function Header() {
             </Link>
             <div className="dropdown-menu">
               <div style={{ borderBottom: "1px solid #e7e9eb" }}>
-                  <Link to="/fileCV" className="dropdown-item" href="#">
+                  <Link to="/allCV" className="dropdown-item" href="#">
                     Cập nhập hồ sơ
                   </Link>
                 <Link className="dropdown-item" href="#">
@@ -90,7 +93,7 @@ function Header() {
         <div className="container">
           <div className="row justify-content-between p-2">
             <ul className="nav justify-content-start align-items-center">
-              <img className="navbar-brand" src={Logo} alt="" />
+              <img className="navbar-brand" src={Logo} style={{width:"90px"}} alt="" />
               <li className="nav-item dropdown">
                 <Link
                   className="nav-link dropdown-toggle text-dark"
@@ -383,19 +386,17 @@ function Header() {
   const renderHeader = ()=>{
     var user = localStorage.getItem("user");
     user = JSON.parse(user);
-    // console.log(user.role);
     if((user && user.role == "candidate") || user== null){
-      // console.log(user.role);
       return(
         <>
           {HeaderCan()}
         </>
       )
     }else if(user && user.role == "recruiter"){
-      // console.log(user.role);
       return(
         <>
           {HeaderRe()}
+          {/* {HomeRe()} */}
         </>
       )
     }

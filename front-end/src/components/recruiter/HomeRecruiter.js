@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar";
 
 const HomeRe = () => {
   return (
-    <div>
+    <>
       <Sidebar/>
       <main id="main" class="main">
         <div class="pagetitle">
@@ -175,7 +175,7 @@ const HomeRe = () => {
           </div>
         </section>
       </main>
-    </div>
+    </>
   );
 };
 

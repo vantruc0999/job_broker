@@ -3,9 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Example from "../candidate/Example";
+
 const Showjob = () => {
   let params = useParams();
   const [detailJob,setJobDetail] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+ 
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
     let config = {
@@ -18,13 +21,15 @@ const Showjob = () => {
     axios
       .get(`http://127.0.0.1:8000/api/job-detail/`+ params.id, config)
       .then((res) => {
-        console.log(res.data.job_detail);
         setJobDetail(res.data.job_detail);
       });
-  }, []);
+
+    }, []);
+    let abc = JSON.parse(detailJob.job_requirement)
+    console.log("abc",abc);
+  console.log(detailJob.job_requirement);
   return (
     <div>
-      <Example/>
       <div className="container" style={{ margin: "0 auto" }}>
         <section className="section">
           <div className="row">
@@ -33,13 +38,28 @@ const Showjob = () => {
                 <div className="card-body">
                   <h3 className="job_name">{detailJob.job_name}</h3>
                   <div className="button margin">
-                    <button
+                  
+                  {openModal == false?  <button
                       type="button"
                       className="btn btn-primary"
                       style={{ marginRight: "20px" }}
+                      onClick={setOpenModal(true)}
+                    >
+                      Ứng tuyển ngay
+                    </button> :<Example jobId={detailJob.job_id}/>}
+                    {/* <button
+                      type="button"
+                      className="btn btn-primary"
+                      style={{ marginRight: "20px" }}
+                      onClick={() => setOpenModal(true)}
                     >
                       Ứng tuyển ngay
                     </button>
+                    {openModal && (
+                      <Example
+                        closetModal={setOpenModal}
+                      />
+                    )} */}
                     <button
                       type="button"
                       className="btn btn-danger"

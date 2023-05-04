@@ -613,14 +613,7 @@ function CreateCV() {
           alert("Update succesful");
         }
       });
-    axios
-      .post("http://127.0.0.1:8000/api/candidate/create-cv", object, config)
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.errCode == 0) {
-          alert("Update succesful");
-        }
-      });
+
     console.log(resume);
   };
   return (
@@ -898,7 +891,7 @@ function CreateCV() {
                     value={summary.position}
                     name="position"
                     onChange={handleInput}
-                    style={{ padding: "5px", border: "none", color: "#fff" }}
+                    style={{ padding: "5px", border: "none", color: "#000" }}
                   />
                 </section>
                 <section className="experience">

@@ -6,11 +6,19 @@ function App(props) {
   let param1 = useLocation();
   return (
     <>
-      {param1["pathname"].includes("login") || param1["pathname"].includes("register")|| param1["pathname"].includes("registerCruiter") ? null : <Header />}
+      {param1["pathname"].includes("login") ||
+      param1["pathname"].includes("register") ||
+      param1["pathname"].includes("registerCruiter") ? null : (
+        <Header />
+      )}
       {props.children}
-      {param1["pathname"].includes("login") || param1["pathname"].includes("register")|| param1["pathname"].includes("registerCruiter") ? null : (
+      {param1["pathname"].includes("login") ||
+      param1["pathname"].includes("register") ||
+      param1["pathname"].includes("registerCruiter") ? null : (
         <Footer />
       )}
+
+     
     </>
   );
 }

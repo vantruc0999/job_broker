@@ -1,40 +1,244 @@
 import Logo from "../../assets/images/logo.jpg";
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+import { useNavigate } from "react-router-dom";
 
+const animatedComponents = makeAnimated();
+
+const arraySkill = [
+  { value: 1, label: ".NET" },
+  { value: 2, label: "Java" },
+  { value: 3, label: "PHP" },
+  { value: 4, label: "Python" },
+];
+const arraySkill2 = [
+  { value: 1, label: "Tiếng Anh" },
+  { value: 2, label: "Tiếng Nhật" },
+  { value: 3, label: "Tiếng Trung" },
+  { value: 4, label: "Tiếng Nga" },
+];
 function CreateCV() {
-  const educationRef = useRef();
+  const tx = document.getElementById("exp_input");
+  if (tx) {
+    tx.setAttribute(
+      "style",
+      "height:" +
+        tx.scrollHeight +
+        "px;overflow-y:hidden; width:100%;border:none "
+    );
+    tx.addEventListener("input", OnInput, false);
+  }
+
+  function OnInput() {
+    this.style.height = 0;
+    this.style.height = this.scrollHeight + "px";
+  }
+
+  const tx2 = document.getElementById("exp_input2");
+  if (tx2) {
+    tx2.setAttribute(
+      "style",
+      "height:" +
+        tx2.scrollHeight +
+        "px;overflow-y:hidden; width:100%;border:none "
+    );
+    tx2.addEventListener("input", OnInput2, false);
+  }
+
+  function OnInput2() {
+    this.style.height = 0;
+    this.style.height = this.scrollHeight + "px";
+  }
+
   const [showForm, setShowForm] = useState([]);
-  const [education, setEducation] = useState(false);
-  const [certificate, setCertificate] = useState(false);
-  const [image, setImage] = useState(false);
-  const [experienceProject, setExperienceProject] = useState(false);
-  const [experienceCompany, setExperienceCompany] = useState(false);
-  const [skills, setSkills] = useState("");
-  const [award, setAward] = useState("");
-  const [toggle, setToggle] = useState(false);
-  console.log(showForm);
-  const saveCV = (e) => {
-    e.preventDefault();
-    var educationStr = educationRef.current.innerText
-      .replaceAll("\n", "$")
-      .replaceAll("$$", "$");
-    console.log(educationStr);
+  const [exp, setExp] = useState([]);
+  const [education, setEducation] = useState([]);
+  const [active, setActive] = useState([]);
+  const [certificate, setCertificate] = useState([]);
+  const [skill, setSkill] = useState([]);
+  const [softSkill, setSoftSkill] = useState([]);
+  const [awards, setAwards] = useState([]);
+  const [language, setLanguage] = useState([]);
+  const [inputs, setInputs] = useState("");
+  const [summary, setSummary] = useState("");
+
+  useEffect(() => {
+    const textarea = document.getElementById("emailSummary");
+    const placeholder = "Email";
+
+    textarea.addEventListener("focus", () => {
+      if (textarea.placeholder === placeholder) {
+        textarea.placeholder = "";
+      }
+      textarea.rows = "2";
+    });
+
+    textarea.addEventListener("blur", () => {
+      if (textarea.value === "") {
+        textarea.placeholder = placeholder;
+      }
+      textarea.rows = "1";
+    });
+    let user = JSON.parse(localStorage.getItem("user"));
+    let config = {
+      headers: {
+        Authorization: "Bearer " + user.token,
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
+    };
+    axios
+      .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
+      .then((res) => {
+        setSummary(res.data);
+        console.log(summary);
+      });
+  }, []);
+  const handleInput = (e) => {
+    let nameInput = e.target.name;
+    let value = e.target.value;
+    setInputs((state) => ({ ...state, [nameInput]: value }));
+  };
+  const handleAwardInputChange = (index, field, value) => {
+    const newAwards = [...awards];
+    newAwards[index] = {
+      ...newAwards[index],
+      [field]: value,
+    };
+    setAwards(newAwards);
+  };
+
+  let experience_company = exp.map((item) => {
+    return {
+      company_name: item.company,
+      position: item.position,
+      achievement: item.description,
+      experience_start: item.time,
+      experience_end: "",
+    };
+  });
+  let experience_project = active.map((item) => {
+    return {
+      project_name: item.company,
+      responsibility: item.position,
+      achievement: item.description,
+      experience_start: item.time,
+      experience_end: "",
+    };
+  });
+
+  const handleAddAward = () => {
+    setAwards([...awards, ""]);
+  };
+
+  const handleRemoveAward = (index) => {
+    const newAwards = [...awards];
+    newAwards.splice(index, 1);
+    setAwards(newAwards);
+  };
+
+  const handleSoftInputChange = (index, field, value) => {
+    const newAwards = [...softSkill];
+    newAwards[index] = {
+      ...newAwards[index],
+      [field]: value,
+    };
+    setSoftSkill(newAwards);
+  };
+  const handleAddSoft = () => {
+    setSoftSkill([...softSkill, ""]);
+  };
+  const handleRemoveSoft = (index) => {
+    const newAwards = [...softSkill];
+    newAwards.splice(index, 1);
+    setSoftSkill(newAwards);
+  };
+
+  const handleCerInputChange = (index, field, value) => {
+    const newAwards = [...certificate];
+    newAwards[index] = {
+      ...newAwards[index],
+      [field]: value,
+    };
+    setCertificate(newAwards);
+  };
+  const handleAddCer = () => {
+    setCertificate([...certificate, ""]);
+  };
+  const handleRemoveCer = (index) => {
+    const newAwards = [...certificate];
+    newAwards.splice(index, 1);
+    setCertificate(newAwards);
+  };
+
+  const handleActInputChange = (index, field, value) => {
+    const newAwards = [...active];
+    newAwards[index] = {
+      ...newAwards[index],
+      [field]: value,
+    };
+    setActive(newAwards);
+  };
+  const handleAddAct = () => {
+    setActive([...active, ""]);
+  };
+  const handleRemoveAct = (index) => {
+    const newAwards = [...active];
+    newAwards.splice(index, 1);
+    setActive(newAwards);
+  };
+
+  const handleEduInputChange = (index, field, value) => {
+    const newAwards = [...education];
+    newAwards[index] = {
+      ...newAwards[index],
+      [field]: value,
+    };
+    setEducation(newAwards);
+  };
+  const handleAddEdu = () => {
+    setEducation([...education, ""]);
+  };
+  const handleRemoveEdu = (index) => {
+    const newAwards = [...education];
+    newAwards.splice(index, 1);
+    setEducation(newAwards);
+  };
+  const handleExpInputChange = (index, field, value) => {
+    const newAwards = [...exp];
+    newAwards[index] = {
+      ...newAwards[index],
+      [field]: value,
+    };
+    setExp(newAwards);
+  };
+  const handleAddExp = () => {
+    setExp([...exp, ""]);
+  };
+  const handleRemoveExp = (index) => {
+    const newAwards = [...exp];
+    newAwards.splice(index, 1);
+    setExp(newAwards);
   };
   const handleShow = (formId, e) => {
     setShowForm((state) => [...state, formId]);
   };
+
+  const handleSkillInput = (childData) => {
+    setSkill({ ...skill, job_skill: [...childData] });
+  };
+  const handleLangInput = (childData) => {
+    setLanguage({ ...language, job_lang: [...childData] });
+  };
+
   const addSkill = (e) => {
     return (
       <>
         <div className="content_form">
-          <div id="content-suggest-skill">
-            <select name="cars" id="cars">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="mercedes">Mercedes</option>
-              <option value="audi">Audi</option>
-            </select>
-          </div>
+          <label class="form-label">Kỹ năng</label>
+          <AnimatedMulti parentCallback={handleSkillInput}></AnimatedMulti>
         </div>
       </>
     );
@@ -43,14 +247,8 @@ function CreateCV() {
     return (
       <>
         <div className="content_form">
-          <div id="content-suggest-skill">
-            <select name="cars" id="cars">
-              <option value="volvo">English</option>
-              <option value="saab">Trung quoc</option>
-              <option value="mercedes">Lào</option>
-              <option value="audi">Láo</option>
-            </select>
-          </div>
+          <label class="form-label">Ngoại ngữ</label>
+          <AnimatedMulti2 parentCallback={handleLangInput}></AnimatedMulti2>
         </div>
       </>
     );
@@ -58,845 +256,770 @@ function CreateCV() {
   const addContentCertificates = () => {
     return (
       <>
-        <div className="additions">
-          <i class="fa-regular fa-square-plus mr-1"></i>
-          <i class="fa-regular fa-square-minus"></i>
-        </div>
-        <div className="content_form">
-        <div className="d-flex flex-column flex-md-row">
-          <p className="d-none item-id" info-name="id" info-group="award">
-            41204
-          </p>
-          <div
-            className="cv-editable-elem required medium-editor-element"
-            data-placeholder="Tên chứng chỉ"
-            info-name="name"
-            info-group="award"
-            contentEditable="true"
-            spellCheck="true"
-            data-medium-editor-element="true"
-            role="textbox"
-            aria-multiline="true"
-            data-medium-editor-editor-index={1}
-            medium-editor-index="8aeeade1-51b0-e6c9-78a4-2b8e336646ba"
-          >
-            Chứng chỉ java
+        {certificate.map((certificate, index) => (
+          <div className="content_form" style={{ marginTop: "30px" }}>
+            <div className="addition">
+              <i
+                class="fa-regular fa-square-plus mr-1"
+                onClick={handleAddCer}
+              ></i>
+              <i
+                class="fa-regular fa-square-minus"
+                onClick={() => handleRemoveCer(index)}
+              ></i>
+            </div>
+            <div key={index} className="form-field">
+              <input
+                className="form_input"
+                type="text"
+                placeholder=" "
+                value={certificate.title}
+                onChange={(e) =>
+                  handleCerInputChange(index, "title", e.target.value)
+                }
+              />
+              <label for="name" className="form-label">
+                Chứng chỉ
+              </label>
+            </div>
           </div>
-        </div>
-
-        </div>
+        ))}
       </>
     );
   };
-
   const addContentSoftSkill = () => {
     return (
       <>
-        <div className="additions">
-          <i class="fa-regular fa-square-plus mr-1"></i>
-          <i class="fa-regular fa-square-minus"></i>
-        </div>
-        <div className="content_form">
-          <div id="content-suggest-skill"></div>
-          <div className="d-flex flex-column flex-md-row">
-            <p className="d-none item-id" info-name="id" info-group="award">
-              41204
-            </p>
-            <div
-              className="cv-editable-elem required medium-editor-element"
-              data-placeholder="Tên kĩ năng mềm"
-              info-name="name"
-              info-group="award"
-              contentEditable="true"
-              spellCheck="true"
-              data-medium-editor-element="true"
-              role="textbox"
-              aria-multiline="true"
-              data-medium-editor-editor-index={1}
-              medium-editor-index="8aeeade1-51b0-e6c9-78a4-2b8e336646ba"
-            >
-              Chơi game
+        {softSkill.map((softSkill, index) => (
+          <div className="content_form" style={{ marginTop: "30px" }}>
+            <div className="addition">
+              <i
+                class="fa-regular fa-square-plus mr-1"
+                onClick={handleAddSoft}
+              ></i>
+              <i
+                class="fa-regular fa-square-minus"
+                onClick={() => handleRemoveSoft(index)}
+              ></i>
+            </div>
+            <div key={index} className="form-field">
+              <input
+                className="form_input"
+                type="text"
+                placeholder=" "
+                value={softSkill.title}
+                onChange={(e) =>
+                  handleSoftInputChange(index, "title", e.target.value)
+                }
+              />
+              <label for="name" className="form-label">
+                Kĩ năng mềm
+              </label>
             </div>
           </div>
-        </div>
+        ))}
       </>
     );
   };
-
   const addContentAward = () => {
     return (
       <>
-        <div className="additions">
-          <i class="fa-regular fa-square-plus mr-1"></i>
-          <i class="fa-regular fa-square-minus"></i>
-        </div>
-        <div className="content_form">
-          <div id="content-suggest-award">
-            <div className="d-flex flex-column flex-md-row mt-2">
-              <div
-                className="cv-editable-elem required medium-editor-element mr-5 "
-                data-placeholder="Tên thành tích"
-                info-name="name"
-                info-group="award"
-                contentEditable="true"
-                spellCheck="true"
-                data-medium-editor-element="true"
-                role="textbox"
-                aria-multiline="true"
-                data-medium-editor-editor-index={1}
-                medium-editor-index="8aeeade1-51b0-e6c9-78a4-2b8e336646ba"
-              >
-                Nhân viên xuất sắc tại
-              </div>
-              <div
-                className="resume-award-desc ml-auto cv-editable-elem required medium-editor-element"
-                data-placeholder="Năm"
-                info-name="year"
-                info-group="award"
-                contentEditable="true"
-                spellCheck="true"
-                data-medium-editor-element="true"
-                role="textbox"
-                aria-multiline="true"
-                data-medium-editor-editor-index={1}
-                medium-editor-index="49be6dd6-7cb9-790a-1bb9-a47972a74305"
-                data-medium-focused="true"
-              >
-                <p>2023</p>
-              </div>
+        {awards.map((award, index) => (
+          <div className="content_form" style={{ marginTop: "30px" }}>
+            <div className="addition">
+              <i
+                class="fa-regular fa-square-plus mr-1"
+                onClick={handleAddAward}
+              ></i>
+              <i
+                class="fa-regular fa-square-minus"
+                onClick={() => handleRemoveAward(index)}
+              ></i>
+            </div>
+            <div key={index} className="form-field">
+              <input
+                className="form_input"
+                type="text"
+                placeholder=" "
+                value={award.title}
+                onChange={(e) =>
+                  handleAwardInputChange(index, "title", e.target.value)
+                }
+              />
+              <label for="name" className="form-label">
+                Giải thưởng
+              </label>
             </div>
           </div>
-        </div>
+        ))}
       </>
     );
   };
-
   const addContentAction = () => {
     return (
       <>
-        <div className="additions">
-          <i class="fa-regular fa-square-plus mr-1"></i>
-          <i class="fa-regular fa-square-minus"></i>
-        </div>
-        <div className="content_form">
-          <ul
-            className="list-unstyled resume-awards-list"
-            block="activity"
-            id="activity-container"
-          >
-            <li className="mb-0 mb-2 position-relative cv-child-elem activity-item">
-              <div className="d-flex flex-md-row">
-                <p
-                  className="d-none item-id"
-                  info-name="id"
-                  info-group="activity"
-                />
-                <div
-                  className="cv-editable-elem required medium-editor-element"
-                  data-placeholder="Tên công ty/tổ chức/sự kiện"
-                  info-name="organization"
-                  info-group="activity"
-                  contentEditable="true"
-                  spellCheck="true"
-                  data-medium-editor-element="true"
-                  role="textbox"
-                  aria-multiline="true"
-                  data-medium-editor-editor-index={2}
-                  medium-editor-index="36bbebc1-61a4-be17-4a3e-d07c3305b902"
-                >
-                  <strong>Ngày hội tuyển dụng IT Việt Nam</strong>
-                </div>
-                <div className="resume-activity-desc ml-auto">
-                  <div className="resume-degree-time">
-                    <p
-                      className="cv-editable-elem d-inline required medium-editor-element"
-                      data-placeholder="Từ ngày"
-                      info-group="activity"
-                      info-name="from"
-                      contentEditable="true"
-                      spellCheck="true"
-                      data-medium-editor-element="true"
-                      role="textbox"
-                      aria-multiline="true"
-                      data-medium-editor-editor-index={2}
-                      medium-editor-index="66a43cfa-9ff3-307d-cd6c-bfd3bad4d1ea"
-                    >
-                      17/04/2023
-                    </p>
-                    -
-                    <p
-                      className="cv-editable-elem d-inline required medium-editor-element"
-                      data-placeholder="Đến ngày"
-                      info-group="activity"
-                      info-name="to"
-                      contentEditable="true"
-                      spellCheck="true"
-                      data-medium-editor-element="true"
-                      role="textbox"
-                      aria-multiline="true"
-                      data-medium-editor-editor-index={2}
-                      medium-editor-index="4bf07e0e-cf1d-e9b8-c26b-d43efc5fb95d"
-                    >
-                      17/04/2023
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="company cv-editable-elem required medium-editor-element"
-                data-placeholder="Vị trí/vai trò"
-                info-name="role"
-                info-group="activity"
-                contentEditable="true"
-                spellCheck="true"
-                data-medium-editor-element="true"
-                role="textbox"
-                aria-multiline="true"
-                data-medium-editor-editor-index={2}
-                medium-editor-index="ea82fcac-d195-635b-867b-7933200c7581"
-              >
-                Diễn giả/cố vấn kỹ thuật
-              </div>
-              <div
-                className="item-content cv-editable-elem medium-editor-element"
-                data-placeholder="Mô tả hoạt động"
-                info-name="description"
-                info-group="activity"
-                contentEditable="true"
-                spellCheck="true"
-                data-medium-editor-element="true"
-                role="textbox"
-                aria-multiline="true"
-                data-medium-editor-editor-index={2}
-                medium-editor-index="0e0fffe7-c9fc-0f2a-5cb9-90c3e16efb21"
-              >
-                Trả lời những câu hỏi về vị trí cũng như tổ chức mà người tham
-                dự quan tâm.
-              </div>
-            </li>
-          </ul>
-        </div>
+        {active.map((active, index) => (
+          <div className="content_form" style={{ marginTop: "30px" }}>
+            <div className="addition">
+              <i
+                class="fa-regular fa-square-plus mr-1"
+                onClick={handleAddAct}
+              ></i>
+              <i
+                class="fa-regular fa-square-minus"
+                onClick={() => handleRemoveAct(index)}
+              ></i>
+            </div>
+            <div key={index} className="form-field">
+              <input
+                className="exp_input"
+                type="text"
+                placeholder="1900 - 2001"
+                value={active.time}
+                style={{ border: "none" }}
+                onChange={(e) =>
+                  handleActInputChange(index, "time", e.target.value)
+                }
+              />
+              <input
+                className="exp_input"
+                type="text"
+                placeholder="Vị trí"
+                value={active.position}
+                style={{ border: "none" }}
+                onChange={(e) =>
+                  handleActInputChange(index, "position", e.target.value)
+                }
+              />
+              <input
+                className="exp_input"
+                type="text"
+                placeholder="Tên dự án"
+                value={active.company}
+                style={{ border: "none" }}
+                onChange={(e) =>
+                  handleActInputChange(index, "company", e.target.value)
+                }
+              />
+              <h6 style={{ marginLeft: "20px", marginTop: "15px" }}>
+                Mô tả công việc :
+              </h6>
+              <textarea
+                // rows={rows}
+                className="exp_input"
+                id="exp_input2"
+                placeholder="Mô tả dự án"
+                style={{
+                  border: "none",
+                  width: "100%",
+                  overflow: "hidden",
+                }}
+                value={active.description}
+                onChange={(e) => {
+                  handleActInputChange(index, "description", e.target.value, e);
+                }}
+                minRows={1}
+                maxRows={6}
+              />
+            </div>
+          </div>
+        ))}
       </>
     );
   };
   const addContentEducation = () => {
     return (
       <>
-        <div className="additions">
-          <i class="fa-regular fa-square-plus mr-1"></i>
-          <i class="fa-regular fa-square-minus"></i>
-        </div>
-        <div className="content_form">
-          <div className="group">
-            <div className="meta">
-              <div
-                className="summary cv-editable-elem required medium-editor-element"
-                data-placeholder="Chuyên ngành"
-                info-name="specialization"
-                info-group="education"
-                contentEditable="true"
-                spellCheck="true"
-                data-medium-editor-element="true"
-                role="textbox"
-                aria-multiline="true"
-                data-medium-editor-editor-index={1}
-                medium-editor-index="57486af1-19be-60a6-ae12-281cbae65a33"
-              >
-                Quản trị kinh doanh
-              </div>
-              <div className="time">
-                <p
-                  className="summary cv-editable-elem d-inline required medium-editor-element"
-                  data-placeholder="Năm bắt đầu"
-                  info-group="education"
-                  info-name="date_start"
-                  contentEditable="true"
-                  spellCheck="true"
-                  data-medium-editor-element="true"
-                  role="textbox"
-                  aria-multiline="true"
-                  data-medium-editor-editor-index={1}
-                  medium-editor-index="a4ca8ff4-0010-5427-6d2a-c627d030c35f"
-                >
-                  2022
-                </p>
-                -
-                <p
-                  className="summary cv-editable-elem d-inline required medium-editor-element"
-                  data-placeholder="Năm kết thúc"
-                  info-group="education"
-                  info-name="date_end"
-                  contentEditable="true"
-                  spellCheck="true"
-                  data-medium-editor-element="true"
-                  role="textbox"
-                  aria-multiline="true"
-                  data-medium-editor-editor-index={1}
-                  medium-editor-index="5fda7554-db02-233e-16a4-45257c3cb7ef"
-                >
-                  2023
-                </p>
-              </div>
-              <div className="upper-row title">
-                <p
-                  className="cl-change job-title cv-editable-elem required medium-editor-element"
-                  data-placeholder="Tên trường"
-                  info-name="school_name"
-                  info-group="education"
-                  contentEditable="true"
-                  spellCheck="true"
-                  data-medium-editor-element="true"
-                  role="textbox"
-                  aria-multiline="true"
-                  data-medium-editor-editor-index={1}
-                  medium-editor-index="6e3df1c0-c951-2151-7d18-da023770c90d"
-                >
-                  Đại học ...
-                </p>
-              </div>
+        {education.map((education, index) => (
+          <div className="content_form" style={{ marginTop: "30px" }}>
+            <div className="addition">
+              <i
+                class="fa-regular fa-square-plus mr-1"
+                onClick={handleAddEdu}
+              ></i>
+              <i
+                class="fa-regular fa-square-minus"
+                onClick={() => handleRemoveEdu(index)}
+              ></i>
             </div>
-            <div
-              className="summary cv-editable-elem medium-editor-element"
-              data-placeholder="Mô tả học vấn"
-              info-name="hightlight"
-              info-group="education"
-              contentEditable="true"
-              spellCheck="true"
-              data-medium-editor-element="true"
-              role="textbox"
-              aria-multiline="true"
-              data-medium-editor-editor-index={1}
-              medium-editor-index="e53e78f0-f5b5-c628-2a3b-bbb68f32b9b6"
-            >
-              Tốt nghiệp loại Giỏi
+            <div key={index} className="form-field">
+              <table className="edu_form">
+                <tr>
+                  <td>
+                    <input
+                      className="form_input"
+                      type="text"
+                      placeholder="Ngành học"
+                      value={education.specialize}
+                      onChange={(e) =>
+                        handleEduInputChange(
+                          index,
+                          "specialize",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="form_input"
+                      type="text"
+                      placeholder="Học vấn"
+                      value={education.school}
+                      onChange={(e) =>
+                        handleEduInputChange(index, "school", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="form_input"
+                      type="text"
+                      placeholder="Niên khóa"
+                      value={education.time}
+                      onChange={(e) =>
+                        handleEduInputChange(index, "time", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="form_input"
+                      type="text"
+                      placeholder="Xếp loại"
+                      value={education.rank}
+                      onChange={(e) =>
+                        handleEduInputChange(index, "rank", e.target.value)
+                      }
+                    />
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
-        </div>
+        ))}
       </>
     );
   };
   const addContentExp = () => {
     return (
       <>
-        <div className="additions">
-          <i class="fa-regular fa-square-plus mr-1"></i>
-          <i class="fa-regular fa-square-minus"></i>
-        </div>
-        <div className="content_form">
-          <div className="group">
-            <div className="meta">
-              <div className="group-content">
-                <div style={{ fontWeight: 700 }} className="time">
-                  <p
-                    className="summary cv-editable-elem d-inline required medium-editor-element"
-                    data-placeholder="Năm bắt đầu"
-                    info-group="job_history"
-                    info-name="date_start"
-                    contentEditable="true"
-                    spellCheck="true"
-                    data-medium-editor-element="true"
-                    role="textbox"
-                    aria-multiline="true"
-                    data-medium-editor-editor-index={1}
-                    medium-editor-index="ba8918f3-778f-3981-1b88-f60d47dc901a"
-                  >
-                    2022
-                  </p>
-                  -
-                  <p
-                    className="summary cv-editable-elem d-inline required medium-editor-element"
-                    data-placeholder="Năm kết thúc"
-                    info-group="job_history"
-                    info-name="date_end"
-                    contentEditable="true"
-                    spellCheck="true"
-                    data-medium-editor-element="true"
-                    role="textbox"
-                    aria-multiline="true"
-                    data-medium-editor-editor-index={1}
-                    medium-editor-index="033cdc9d-52dd-da07-cbe9-1e11cd846907"
-                  >
-                    2023
-                  </p>
-                </div>
-                <div
-                  className="summary cv-editable-elem required medium-editor-element"
-                  data-placeholder="Vị trí/công việc"
-                  info-name="job_title"
-                  info-group="job_history"
-                  contentEditable="true"
-                  spellCheck="true"
-                  data-medium-editor-element="true"
-                  role="textbox"
-                  aria-multiline="true"
-                  data-medium-editor-editor-index={1}
-                  medium-editor-index="8c069554-7c72-8921-0d13-769c61ba27f9"
-                >
-                  <p>Nhân viên kinh doanh</p>
-                </div>
-              </div>
-              <div className="upper-row title">
-                <p
-                  className="cl-change job-title cv-editable-elem required medium-editor-element"
-                  data-placeholder="Tên công ty"
-                  info-name="job_company"
-                  info-group="job_history"
-                  contentEditable="true"
-                  spellCheck="true"
-                  data-medium-editor-element="true"
-                  role="textbox"
-                  aria-multiline="true"
-                  data-medium-editor-editor-index={1}
-                  medium-editor-index="c2653746-22b9-723b-d07b-5b3ef5f0d082"
-                >
-                  Công ty CP ...&nbsp;
-                </p>
-              </div>
+        {exp.map((exp, index) => (
+          <div className="content_form" style={{ marginTop: "30px" }}>
+            <div className="addition">
+              <i
+                class="fa-regular fa-square-plus mr-1"
+                onClick={handleAddExp}
+              ></i>
+              <i
+                class="fa-regular fa-square-minus"
+                onClick={() => handleRemoveExp(index)}
+              ></i>
             </div>
-            <div
-              className="summary cv-editable-elem required medium-editor-element"
-              data-placeholder="Mô tả công việc"
-              info-name="job_description_html"
-              info-group="job_history"
-              contentEditable="true"
-              spellCheck="true"
-              data-medium-editor-element="true"
-              role="textbox"
-              aria-multiline="true"
-              data-medium-editor-editor-index={1}
-              medium-editor-index="50839119-a64f-cc4a-08bc-0c7e8caa3568"
-            >
-              <h4
-                className="resume-timeline-item-desc-heading font-weight-bold cv-editable-elem medium-editor-element"
-                contentEditable="true"
-                spellCheck="true"
-                data-medium-editor-element="true"
-                role="textbox"
-                aria-multiline="true"
-                data-medium-editor-editor-index={8}
-                medium-editor-index="9a5fd1fd-c581-f6d9-9290-5c3b12832411"
-                data-placeholder="Click để sửa mục này"
-              >
-                Nhiệm vụ:
-              </h4>
-              <p
-                className="cv-editable-elem medium-editor-element"
-                contentEditable="true"
-                spellCheck="true"
-                data-medium-editor-element="true"
-                role="textbox"
-                aria-multiline="true"
-                data-medium-editor-editor-index={8}
-                medium-editor-index="a61e79bf-0a30-424e-5794-ac6118b40659"
-                data-placeholder="Click để sửa mục này"
-              >
-                - Thực hiện các kế hoạch kinh doanh: tìm kiếm khách hàng, giới
-                thiệu sản phẩm dịch vụ, tư vấn sản phẩm và ứng dụng, chăm sóc và
-                quản lý quan hệ khách hàng.
-              </p>
-              &nbsp;
-              <p
-                className="cv-editable-elem medium-editor-element"
-                contentEditable="true"
-                spellCheck="true"
-                data-medium-editor-element="true"
-                role="textbox"
-                aria-multiline="true"
-                data-medium-editor-editor-index={8}
-                medium-editor-index="7e038187-7504-0d24-98ed-c70548acdd23"
-                data-placeholder="Click để sửa mục này"
-              >
-                - Lập kế hoạch hoạt động năm, quý, tháng, tuần để đạt được mục
-                tiêu được giao.
-              </p>
-              <p
-                className="cv-editable-elem medium-editor-element"
-                contentEditable="true"
-                spellCheck="true"
-                data-medium-editor-element="true"
-                role="textbox"
-                aria-multiline="true"
-                data-medium-editor-editor-index={8}
-                medium-editor-index="d32955b7-f2e7-5275-2e83-6b316f602a91"
-                data-placeholder="Click để sửa mục này"
-              >
-                - Khảo sát, nghiên cứu, đánh giá doanh thu dự kiến tại khu vực
-                quản lý. Xây dựng, kiến nghị kế hoạch kinh doanh phù hợp.
-              </p>
-              <h4
-                className="resume-timeline-item-desc-heading font-weight-bold cv-editable-elem medium-editor-element"
-                contentEditable="true"
-                spellCheck="true"
-                data-medium-editor-element="true"
-                role="textbox"
-                aria-multiline="true"
-                data-medium-editor-editor-index={8}
-                medium-editor-index="4bdd0480-37b8-e56d-970c-c2f3a760eebf"
-                data-placeholder="Click để sửa mục này"
-              >
-                Thành tích:
-              </h4>
-              <p
-                className="cv-editable-elem medium-editor-element"
-                contentEditable="true"
-                spellCheck="true"
-                data-medium-editor-element="true"
-                role="textbox"
-                aria-multiline="true"
-                data-medium-editor-editor-index={8}
-                medium-editor-index="f74c0ec1-de2f-33b4-3d66-bf19dbc67e8b"
-                data-placeholder="Click để sửa mục này"
-              >
-                Qua quá trình làm việc tại Công ty cổ phần ... tôi đã đạt được
-                một số thành tích sau:
-              </p>
-              <ul>
-                <li
-                  className="cv-editable-elem medium-editor-element"
-                  contentEditable="true"
-                  spellCheck="true"
-                  data-medium-editor-element="true"
-                  role="textbox"
-                  aria-multiline="true"
-                  data-medium-editor-editor-index={8}
-                  medium-editor-index="cfc69b96-fe16-4328-c3f8-1dbdf61ba78d"
-                  data-placeholder="Click để sửa mục này"
-                >
-                  ... Best seller 2022
-                </li>
-                <li
-                  className="cv-editable-elem medium-editor-element"
-                  contentEditable="true"
-                  spellCheck="true"
-                  data-medium-editor-element="true"
-                  role="textbox"
-                  aria-multiline="true"
-                  data-medium-editor-editor-index={8}
-                  medium-editor-index="3faeae84-8659-b559-4bae-d357dec4b910"
-                  data-placeholder="Click để sửa mục này"
-                >
-                  Nhân viên xuất sắc 2022
-                </li>
-                <li
-                  className="cv-editable-elem medium-editor-element"
-                  contentEditable="true"
-                  spellCheck="true"
-                  data-medium-editor-element="true"
-                  role="textbox"
-                  aria-multiline="true"
-                  data-medium-editor-editor-index={8}
-                  medium-editor-index="bb49920e-5591-9cdb-20a8-0981463285f8"
-                  data-placeholder="Click để sửa mục này"
-                >
-                  Nhân viên sáng tạo
-                </li>
-                <li
-                  className="cv-editable-elem medium-editor-element"
-                  contentEditable="true"
-                  spellCheck="true"
-                  data-medium-editor-element="true"
-                  role="textbox"
-                  aria-multiline="true"
-                  data-medium-editor-editor-index={8}
-                  medium-editor-index="25249717-b644-b80a-34b6-71f7b44e78d6"
-                  data-placeholder="Click để sửa mục này"
-                >
-                  Dự án sale xuất sắc
-                </li>
-              </ul>
+            <div key={index} className="form-field">
+              <input
+                className="exp_input"
+                type="text"
+                placeholder="1900 - 2001"
+                value={exp.time}
+                style={{ border: "none" }}
+                onChange={(e) =>
+                  handleExpInputChange(index, "time", e.target.value)
+                }
+              />
+              <input
+                className="exp_input"
+                type="text"
+                placeholder="Chức vụ"
+                value={exp.position}
+                style={{ border: "none" }}
+                onChange={(e) =>
+                  handleExpInputChange(index, "position", e.target.value)
+                }
+              />
+              <input
+                className="exp_input"
+                type="text"
+                placeholder="Công ty"
+                value={exp.company}
+                style={{ border: "none" }}
+                onChange={(e) =>
+                  handleExpInputChange(index, "company", e.target.value)
+                }
+              />
+              <h6 style={{ marginLeft: "20px", marginTop: "15px" }}>
+                Mô tả công việc :
+              </h6>
+              <textarea
+                // rows={rows}
+                className="exp_input"
+                id="exp_input"
+                placeholder="Mô tả công việc"
+                style={{
+                  border: "none",
+                  width: "100%",
+                  overflow: "hidden",
+                }}
+                value={exp.description}
+                onChange={(e) => {
+                  handleExpInputChange(index, "description", e.target.value, e);
+                }}
+                // onKeyDown={(e) => {
+                //   handleKeyDown(index, "description", e.target.value, e);
+                // }}
+
+                minRows={1}
+                maxRows={6}
+              />
             </div>
           </div>
-        </div>
+        ))}
       </>
     );
   };
-  useEffect(() => {
-    const tx = document.getElementsByTagName("textarea");
-    for (let i = 0; i < tx.length; i++) {
-      tx[i].setAttribute(
-        "style",
-        "height:" + tx[i].scrollHeight + "px;overflow-y:hidden;"
-      );
-      tx[i].addEventListener("input", OnInput);
-    }
 
-    function OnInput() {
-      this.style.height = 0;
-      console.log(this.scrollHeight);
-      this.style.height = this.scrollHeight + "px";
-    }
-  }, []);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(education);
+    let resume = {
+      resume_name: "Intern Software",
+      education: education[0].school,
+      education_year: education[0].time,
+      education_major: education[0].specialize,
+      education_description: education[0].rank,
+      certificate: certificate[0].title,
+      template: 1,
+      image: "",
+      experience_project: experience_project,
+      experience_company: experience_company,
+      skills: skill.job_skill,
+    };
+    console.log(typeof experience_project);
+    let object = {};
+    object.resume = resume;
+    let user = JSON.parse(localStorage.getItem("user"));
+    let config = {
+      headers: {
+        Authorization: "Bearer " + user.token,
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
+    };
+    axios
+      .post("http://127.0.0.1:8000/api/candidate/create-cv", object, config)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.errCode == 0) {
+          alert("Update succesful");
+        }
+      });
+
+    console.log(resume);
+  };
   return (
     <>
-      <div className="container-fluid d-flex" style={{ padding: 0 }}>
-        {/* <div class="col-2">
-    <div>
-      <h5><i class="fa-solid fa-circle-exclamation"></i>Hướng dẫn</h5>
-      <p>Điền đầy đủ các thông tin hiển thị trong CV</p>
-    </div>
-  </div> */}
-        <div className="col-10" style={{ margin: "0 auto" }}>
-          <div className="row">
-            <div
-              className="col-3"
-              style={{ backgroundColor: "#434e5e", padding: 0 }}
-            >
-              <img src={Logo} alt="" style={{ width: 250, height: 250 }} />
-            </div>
-            <div
-              className="col-9"
-              style={{
-                padding: 0,
-                backgroundColor: "#434e5e",
-                marginLeft: "-4%",
-                color: "#fff",
-              }}
-            >
-              <div className="d-flex inputcv">
-                <div
-                  className="col-8 d-flex flex-column"
-                  style={{ padding: 0 }}
-                >
+      <div className="container-fluid d-flex" style={{ padding: "0" }}>
+        <form
+          className="container-fluid d-flex"
+          action=""
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
+          <div className="col-9" style={{ margin: "0 auto" }}>
+            {/* <div className="row">
+              <div
+                className="col-3"
+                style={{ backgroundColor: "#434e5e", padding: 0 }}
+              >
+                <img src={Logo} alt="" style={{ width: 250, height: 250 }} />
+              </div>
+              <div
+                className="col-9"
+                style={{
+                  padding: 0,
+                  backgroundColor: "#434e5e",
+                  marginLeft: "-4%",
+                  color: "#fff",
+                }}
+              >
+                <div className="d-flex inputcv">
                   <div
-                    style={{ fontSize: 12, color: "#fff", paddingTop: "10px" }}
+                    className="col-8 d-flex flex-column"
+                    style={{ padding: 0 }}
                   >
-                    <h3>THANG NGUYEN</h3>
-                    <div style={{ width: "30%" }}>
-                      <div className="mt-3">
-                        <input
-                          style={{ width: "100%", height: 30, padding: 5 }}
-                          type="text"
-                          placeholder="Vị trí mong muốn"
-                        />
+                    <div
+                      style={{
+                        fontSize: 12,
+                        color: "#fff",
+                        paddingTop: "10px",
+                      }}
+                    >
+                      <h3>THANG NGUYEN</h3>
+                      <div style={{ width: "30%" }}>
+                        <div className="mt-3">
+                          <input
+                            style={{ width: "100%", height: 30, padding: 5 }}
+                            type="text"
+                            placeholder="Vị trí mong muốn"
+                            name="position"
+                            onChange={handleInput}
+                          />
+                        </div>
+                        <div className="mt-3">
+                          <i className="fa-regular fa-envelope"> </i>
+                          <input
+                            style={{ width: "90%" }}
+                            type="text"
+                            name="email"
+                            placeholder="email@gmail.com"
+                            onChange={handleInput}
+                          />
+                        </div>
+                        <div className="mt-3">
+                          <i className="fa-solid fa-phone" />
+                          <input
+                            style={{ width: "90%" }}
+                            type="text"
+                            name="phone"
+                            placeholder="Số điện thoại"
+                            onChange={handleInput}
+                          />
+                        </div>
+                        <div className="mt-3">
+                          <i className="fa-solid fa-cake-candles" />
+                          <input
+                            style={{ width: "90%" }}
+                            type="text"
+                            placeholder="Ngày sinh"
+                            name="birthday"
+                            onChange={handleInput}
+                          />
+                        </div>
+                        <div className="mt-3">
+                          <i className="fa-solid fa-location-dot" />
+                          <input
+                            style={{ width: "90%" }}
+                            type="text"
+                            placeholder="Địa chỉ"
+                            name="address"
+                            onChange={handleInput}
+                          />
+                        </div>
                       </div>
-                      <div className="mt-3">
-                        <i className="fa-regular fa-envelope"> </i>
-                        <input
-                          style={{ width: "90%" }}
+                    </div>
+                  </div>
+                  <div className="col-4 d-flex flex-column">
+                    <div className="pt-4">
+                      <i
+                        style={{ fontSize: 22, marginRight: 5 }}
+                        className="fa-brands fa-linkedin"
+                      />
+                      <input
+                        style={{ width: "90%" }}
+                        type="text"
+                        placeholder="linkedin.com/..."
+                        name="linked"
+                        onChange={handleInput}
+                      />
+                    </div>
+                    <div className="pt-4">
+                      <i
+                        style={{ fontSize: 22, marginRight: 4 }}
+                        className="fa-brands fa-facebook"
+                      />
+                      <input
+                        style={{ width: "90%" }}
+                        type="text"
+                        placeholder="linkedin.com/..."
+                        name="faceboook"
+                        onChange={handleInput}
+                      />
+                    </div>
+                    <div className="pt-4">
+                      <i
+                        style={{ fontSize: 22, marginRight: 5 }}
+                        className="fa-brands fa-skype"
+                      />
+                      <input
+                        style={{ width: "90%" }}
+                        type="text"
+                        placeholder="linkedin.com/..."
+                        name="skyline"
+                        onChange={handleInput}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> */}
+            <div className="row" style={{ padding: "50px 0" }}>
+              <div
+                className="col-4 "
+                style={{ background: "#0bb5f4", padding: "0" }}
+              >
+                <div className="summary" style={{ padding: "0" }}>
+                  <div className="avatar">
+                    <img
+                      src={Logo}
+                      alt=""
+                      style={{
+                        maxWidth: "220px",
+                        height: "220px",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      textAlign: "center",
+                    }}
+                    className="summary-child"
+                  >
+                    <div>
+                      <div className="email">
+                        <i className="fa-regular fa-envelope mr-2 "> </i>
+                        {/* <input
+                          id="emailSummary"
                           type="text"
+                          name="email"
                           placeholder="email@gmail.com"
-                        />
-                      </div>
-                      <div className="mt-3">
-                        <i className="fa-solid fa-phone" />
-                        <input
-                          style={{ width: "90%" }}
+                          value={summary.email}
+                          onChange={handleInput}
+                          style={{ width: "60%" }}
+                        /> */}
+                        <textarea
+                          id="emailSummary"
                           type="text"
+                          name="email"
+                          placeholder="Email"
+                          rows="1"
+                          value={summary.email}
+                          onChange={handleInput}
+                          style={{
+                            width: "60%",
+                            fontSize: "14px",
+                            border: "none",
+                            borderRadius: "4px",
+                            resize: "vertical",
+                            wordBreak: "break-all",
+                            wordWrap: "break-word",
+                            overflow: "hidden",
+                          }}
+                        ></textarea>
+                      </div>
+                      <div className="mt-4">
+                        <i className="fa-solid fa-phone mr-2" />
+                        <input
+                          type="text"
+                          name="phone"
+                          value={summary.phone}
                           placeholder="Số điện thoại"
+                          onChange={handleInput}
+                          style={{ width: "60%" }}
                         />
                       </div>
-                      <div className="mt-3">
-                        <i className="fa-solid fa-cake-candles" />
+                      <div className="mt-4">
+                        <i className="fa-solid fa-cake-candles mr-2" />
                         <input
-                          style={{ width: "90%" }}
                           type="text"
-                          placeholder="Ngày sinh"
+                          placeholder="dd-mm-yyyy"
+                          name="birthday"
+                          value={summary.birth_day}
+                          onChange={handleInput}
+                          style={{ width: "60%" }}
                         />
                       </div>
-                      <div className="mt-3">
-                        <i className="fa-solid fa-location-dot" />
+                      <div className="mt-4">
+                        <i className="fa-solid fa-location-dot mr-2" />
                         <input
-                          style={{ width: "90%" }}
                           type="text"
                           placeholder="Địa chỉ"
+                          value={summary.address}
+                          name="address"
+                          onChange={handleInput}
+                          style={{ width: "60%" }}
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-4 d-flex flex-column">
-                  <div className="pt-4">
-                    <i
-                      style={{ fontSize: 22, marginRight: 5 }}
-                      className="fa-brands fa-linkedin"
-                    />
-                    <input
-                      style={{ width: "90%" }}
-                      type="text"
-                      placeholder="linkedin.com/..."
-                    />
-                  </div>
-                  <div className="pt-4">
-                    <i
-                      style={{ fontSize: 22, marginRight: 4 }}
-                      className="fa-brands fa-facebook"
-                    />
-                    <input
-                      style={{ width: "90%" }}
-                      type="text"
-                      placeholder="linkedin.com/..."
-                    />
-                  </div>
-                  <div className="pt-4">
-                    <i
-                      style={{ fontSize: 22, marginRight: 5 }}
-                      className="fa-brands fa-skype"
-                    />
-                    <input
-                      style={{ width: "90%" }}
-                      type="text"
-                      placeholder="linkedin.com/..."
-                    />
-                  </div>
-                </div>
+                <section className="experience">
+                  <h3>
+                    <i className="fa-solid fa-laptop-code" /> Kĩ năng
+                  </h3>
+                  {showForm && showForm.includes(5) ? (
+                    addSkill()
+                  ) : (
+                    <div
+                      className="content_form"
+                      onClick={(e) => handleShow(5, e)}
+                    >
+                      <div id="content-suggest-skill"></div>
+                      <i className="fa-solid fa-plus" />
+                    </div>
+                  )}
+                </section>
+
+                <section className="experience">
+                  <h3>
+                    <i className="fa-solid fa-language" /> Ngoại ngữ
+                  </h3>
+
+                  {showForm && showForm.includes(8) ? (
+                    addLanguage()
+                  ) : (
+                    <div
+                      className="content_form"
+                      onClick={(e) => handleShow(8, e)}
+                    >
+                      <div id="content-suggest-skill"></div>
+                      <i className="fa-solid fa-plus" />
+                    </div>
+                  )}
+                </section>
+              </div>
+              <div className="col-8">
+                <section className="experience">
+                  <h1 style={{ fontWeight: "700" }}>
+                    {summary.last_name} {summary.first_name}
+                  </h1>
+                  <input
+                    type="text"
+                    placeholder="Vị trí mong muốn"
+                    value={summary.position}
+                    name="position"
+                    onChange={handleInput}
+                    style={{ padding: "5px", border: "none", color: "#000" }}
+                  />
+                </section>
+                <section className="experience">
+                  <h3>
+                    <i className="fa-solid fa-briefcase" /> Kinh nghiệm làm việc
+                  </h3>
+                  {/* <div className="additions">
+                  <i class="fa-regular fa-square-plus mr-1"></i>
+                  <i class="fa-regular fa-square-minus"></i>
+                </div> */}
+                  {exp.length > 0 ? (
+                    addContentExp()
+                  ) : (
+                    <div className="content_form" onClick={handleAddExp}>
+                      <div id="content-suggest-award"></div>
+                      <i className="fa-solid fa-plus" />
+                    </div>
+                  )}
+                </section>
+                <section className="experience">
+                  <h3>
+                    <i className="fa-solid fa-graduation-cap" />
+                    Học vấn
+                  </h3>
+                  {education.length > 0 ? (
+                    addContentEducation()
+                  ) : (
+                    <div className="content_form" onClick={handleAddEdu}>
+                      <div id="content-suggest-award"></div>
+                      <i className="fa-solid fa-plus" />
+                    </div>
+                  )}
+                </section>
+                <section className="experience">
+                  <h3>
+                    <i class="fa-solid fa-dumbbell"></i> Dự án
+                  </h3>
+                  {active.length > 0 ? (
+                    addContentAction()
+                  ) : (
+                    <div className="content_form" onClick={handleAddAct}>
+                      <div id="content-suggest-award"></div>
+                      <i className="fa-solid fa-plus" />
+                    </div>
+                  )}
+                </section>
+                <section className="experience">
+                  <h3>
+                    <i className="fa-solid fa-certificate" /> Chứng chỉ
+                  </h3>
+                  {certificate.length > 0 ? (
+                    addContentCertificates()
+                  ) : (
+                    <div className="content_form" onClick={handleAddCer}>
+                      <div id="content-suggest-award"></div>
+                      <i className="fa-solid fa-plus" />
+                    </div>
+                  )}
+                </section>
+                <section className="experience">
+                  <h3>
+                    <i className="fa-solid fa-feather" /> Kĩ năng mềm
+                  </h3>
+
+                  {softSkill.length > 0 ? (
+                    addContentSoftSkill()
+                  ) : (
+                    <div className="content_form" onClick={handleAddSoft}>
+                      <div id="content-suggest-award"></div>
+                      <i className="fa-solid fa-plus" />
+                    </div>
+                  )}
+                </section>
+                <section className="experience">
+                  <h3>
+                    <i className="fa-solid fa-medal" /> Giải thưởng
+                  </h3>
+                  {awards.length > 0 ? (
+                    addContentAward()
+                  ) : (
+                    <div className="content_form" onClick={handleAddAward}>
+                      <div id="content-suggest-award"></div>
+                      <i className="fa-solid fa-plus" />
+                    </div>
+                  )}
+                </section>
               </div>
             </div>
           </div>
-          <div className="row" style={{ padding: "50px 0" }}>
-            <div className="col-8">
-              <section className="experience">
-                <h3>
-                  <i className="fa-solid fa-briefcase" /> Kinh nghiệm làm việc
-                </h3>
-                {showForm && showForm.includes(1) ? (
-                  addContentExp()
-                ) : (
-                  <div
-                    className="content_form"
-                    onClick={(e) => handleShow(1, e)}
-                  >
-                    <div id="content-suggest-skill"></div>
-                    <i className="fa-solid fa-plus" />
-                  </div>
-                )}
-              </section>
-              <section className="experience">
-                <h3>
-                  <i className="fa-solid fa-graduation-cap" />
-                  Học vấn
-                </h3>
-                {showForm && showForm.includes(2) ? (
-                  addContentEducation()
-                ) : (
-                  <div
-                    className="content_form"
-                    onClick={(e) => handleShow(2, e)}
-                  >
-                    <div id="content-suggest-skill"></div>
-                    <i className="fa-solid fa-plus" />
-                  </div>
-                )}
-              </section>
-              <section className="experience">
-                <h3>
-                  <i className="fa-solid fa-graduation-cap" /> Hoạt động
-                </h3>
-                {showForm && showForm.includes(3) ? (
-                  addContentAction()
-                ) : (
-                  <div
-                    className="content_form"
-                    onClick={(e) => handleShow(3, e)}
-                  >
-                    <div id="content-suggest-skill"></div>
-                    <i className="fa-solid fa-plus" />
-                  </div>
-                )}
-              </section>
-              <section className="experience">
-                <h3>
-                  <i className="fa-solid fa-certificate" /> Chứng chỉ
-                </h3>
-                {showForm && showForm.includes(4) ? (
-                  addContentCertificates()
-                ) : (
-                  <div
-                    className="content_form"
-                    onClick={(e) => handleShow(4, e)}
-                  >
-                    <div id="content-suggest-skill"></div>
-                    <i className="fa-solid fa-plus" />
-                  </div>
-                )}
-              </section>
-            </div>
-            <div className="col-3">
-              <section className="experience">
-                <h3>
-                  <i className="fa-solid fa-laptop-code" /> Kĩ năng
-                </h3>
-                {showForm && showForm.includes(5) ? (
-                  addSkill()
-                ) : (
-                  <div
-                    className="content_form"
-                    onClick={(e) => handleShow(5, e)}
-                  >
-                    <div id="content-suggest-skill"></div>
-                    <i className="fa-solid fa-plus" />
-                  </div>
-                )}
-              </section>
-              <section className="experience">
-                <h3>
-                  <i className="fa-solid fa-feather" /> Kĩ năng mềm
-                </h3>
-
-                {showForm && showForm.includes(6) ? (
-                  addContentSoftSkill()
-                ) : (
-                  <div
-                    className="content_form"
-                    onClick={(e) => handleShow(6, e)}
-                  >
-                    <div id="content-suggest-skill"></div>
-                    <i className="fa-solid fa-plus" />
-                  </div>
-                )}
-              </section>
-              <section className="experience">
-                <h3>
-                  <i className="fa-solid fa-medal" /> Giải thưởng
-                </h3>
-                {showForm && showForm.includes(7) ? (
-                  addContentAward()
-                ) : (
-                  <div
-                    className="content_form"
-                    onClick={(e) => handleShow(7, e)}
-                  >
-                    <div id="content-suggest-award"></div>
-                    <i className="fa-solid fa-plus" />
-                  </div>
-                )}
-              </section>
-
-              <section className="experience">
-                <h3>
-                  <i className="fa-solid fa-language" /> Ngoại ngữ
-                </h3>
-
-                {showForm && showForm.includes(8) ? (
-                  addLanguage()
-                ) : (
-                  <div
-                    className="content_form"
-                    onClick={(e) => handleShow(8, e)}
-                  >
-                    <div id="content-suggest-skill"></div>
-                    <i className="fa-solid fa-plus" />
-                  </div>
-                )}
-              </section>
-            </div>
-          </div>
-        </div>
+          <button
+            className="btn btn-primary"
+            style={{ width: "20%", marginLeft: "39%", marginBottom: "30px" }}
+          >
+            Lưu CV
+          </button>
+        </form>
       </div>
-      <button
-        className="btn btn-primary"
-        style={{
-          display: "flex",
-          margin: "0 auto",
-          width: "20%",
-          padding: "5px 15px",
-          justifyContent: "center",
-        }}
-        type="submit"
-        onClick={saveCV}
-      >
-        Lưu CV
-      </button>
     </>
   );
 }
+const AnimatedMulti = (props) => {
+  const sendData = (selected) => {
+    props.parentCallback(selected.map((skill) => skill.value));
+  };
+  return (
+    <Select
+      closeMenuOnSelect={false}
+      components={animatedComponents}
+      isMulti
+      options={arraySkill}
+      onChange={sendData}
+    />
+  );
+};
+
+const AnimatedMulti2 = (props) => {
+  const sendData = (selected) => {
+    props.parentCallback(selected.map((language) => language.value));
+  };
+  return (
+    <Select
+      closeMenuOnSelect={false}
+      components={animatedComponents}
+      isMulti
+      options={arraySkill2}
+      onChange={sendData}
+    />
+  );
+};
+
 export default CreateCV;

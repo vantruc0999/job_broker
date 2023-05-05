@@ -32,10 +32,19 @@
 }
 
 .experience {
+  margin: 0 auto;
   padding: 20px 0;
   margin-top: 20px;
-  width: 100%;
+  width: 90%;
   position: relative;
+}
+
+.experience input::placeholder {
+  color: #000;
+}
+.experience input:hover{
+  border-radius: 3px;
+  border: 1px dashed green !important;
 }
 .experience h3 {
   border-bottom: 2px solid #8d9aad;
@@ -49,6 +58,7 @@
   align-items: center;
   padding: 5px 10px;
   border-radius: 5px;
+  position: relative;
 }
 .content_form:hover {
   border: 1px dashed green;
@@ -79,11 +89,14 @@ textarea#story:focus {
 }
 
 
-.additions {
-  display: flex;
-  justify-content: end;
+.addition {
   font-size: 25px;
+  position: absolute;
+  top: -30px;
+  right: 0;
+  display: none;
 }
 
-
-
+.content_form:hover > .addition{
+  display: block;
+}

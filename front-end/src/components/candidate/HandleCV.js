@@ -46,8 +46,6 @@ function HandleCV() {
       setErrors(errorSubmit);
     } else {
       alert("oke");
-      
-
     }
   };
   return (
@@ -73,7 +71,7 @@ function HandleCV() {
             href=""
             className="border-primary text-uppercase text-bold btn btn-default"
           >
-            <i className="fa fa-list-alt" /> Hoàn thiện CV{"{"}" "{"}"}
+            <i className="fa fa-list-alt" /> Hoàn thiện CV
             <div
               style={{
                 position: "absolute",
@@ -100,7 +98,7 @@ function HandleCV() {
             href=""
             className="border-primary text-uppercase text-bold btn btn-default"
           >
-            <i className="fa fa-line-chart" /> Phân tích CV
+            <i className="fa fa-line-chart" /> CV của bạn
           </a>
           <a
             href=""

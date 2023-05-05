@@ -1,9 +1,10 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { json } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 
 function PayPalButton(props) {
+  const navigate = useNavigate()
   const { product } = props;
   console.log(product);
 
@@ -19,6 +20,7 @@ function PayPalButton(props) {
   if (error) {
     alert("oke", error);
   }
+
   return (
     <PayPalScriptProvider>
       <PayPalButtons
@@ -52,8 +54,8 @@ function PayPalButton(props) {
           formData.append("package_id", product.id);
           formData.append("payment_id", order.id);
           formData.append("status", order.status);
-          formData.append("status", order.status);
-          formData.append("status", order.status);
+          formData.append("status", order.payer.email_address);
+       
           console.log(product.id + order.id + order.status);
 
           let user = JSON.parse(localStorage.getItem("user"));
@@ -73,6 +75,7 @@ function PayPalButton(props) {
             )
             .then((res) => {
               console.log(res.data);
+              navigate('/addJob')
             });
         }}
         onCancel={() => {}}

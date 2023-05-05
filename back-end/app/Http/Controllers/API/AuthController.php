@@ -20,6 +20,7 @@ class AuthController extends Controller
             'phone' => $request->phone,
             'address' => $request->address,
             'password' => Hash::make($request->password),
+            
         ]);
 
         //$token = $user->createToken($user->Username.'_Token')->plainTextToken;
@@ -42,7 +43,8 @@ class AuthController extends Controller
             ]);
         }
         else{
-            return response([     
+            return response([    
+                'status' => 200, 
                 'full_name' => $user->first_name . ' ' . $user->last_name,
                 'message' => 'Logged In Successfully',
             ]);

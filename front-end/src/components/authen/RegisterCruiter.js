@@ -259,7 +259,7 @@ function RegisterCruiter() {
               </p>
             </div>
             <div className="auth-form__controls">
-              <Link to="/login">
+              <Link to="/loginCruiter">
                 <button type="submit" className="btn auth-form__controls-back">
                   LOGIN
                 </button>
@@ -271,20 +271,20 @@ function RegisterCruiter() {
           </form>
         </div>
         <div className="auth-form__socials">
-          <a
-            href=""
+          <Link
+            to="#"
             className="auth-form__socials--facebook btn btn--size-s btn--with-icon"
           >
             <i className="auth-form__socials-icon fa-brands fa-facebook-square" />
             Connect with Facebook
-          </a>
-          <a
-            href=""
+          </Link>
+          <Link
+            to="#"
             className="auth-form__socials--google btn btn--size-s btn--with-icon"
           >
             <i className="auth-form__socials-icon fa-brands fa-google" />
             Connect with Google
-          </a>
+          </Link>
         </div>
       </div>
     </>

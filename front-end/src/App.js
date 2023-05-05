@@ -8,7 +8,6 @@ import ManageJob from "./components/recruiter/ManageJob";
 
 function App(props) {
   let param1 = useLocation();
-  console.log(param1);
   return (
     <>
       {param1["pathname"].includes("login") ||

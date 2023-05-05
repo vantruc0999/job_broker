@@ -1,95 +1,113 @@
+import { Link } from "react-router-dom";
 import Logo from "../../assets/images/logo.jpg";
+import { Navigate, useNavigate } from "react-router-dom";
+import Sidebar from "../recruiter/Sidebar";
+import HomeRecruiter from "../recruiter/HomeRecruiter";
+import HomeRe from "../recruiter/HomeRecruiter";
 function Header() {
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem("user");
+    navigate("/homeCandidate");
+  };
   const renderLog = () => {
+    var user = localStorage.getItem("user");
+    user = JSON.parse(user);
+    console.log(user);
+    if (user) {
+      return (
+        <>
+          <li className="nav-item d-flex divide dropdown">
+            <img
+              className="navbar-brand"
+              src={Logo}
+              alt=""
+              style={{
+                width: "15%",
+                height: 30,
+                padding: 0,
+                margin: 0,
+                marginTop: 6,
+              }}
+            />
+            <Link
+              className="nav-link dropdown-toggle text-dark"
+              data-toggle="dropdown"
+              href="#"
+            >
+              {user.role === "candidate" ? user.full_name : user.recruiter_name}
+            </Link>
+            <div className="dropdown-menu">
+              <div style={{ borderBottom: "1px solid #e7e9eb" }}>
+                <Link to="/allCV" className="dropdown-item" href="#">
+                  Cập nhập hồ sơ
+                </Link>
+                <Link className="dropdown-item" href="#">
+                  Giới thiệu bản thân
+                </Link>
+                <Link className="dropdown-item" href="#">
+                  Đổi mật khẩu
+                </Link>
+              </div>
+              <div style={{ borderBottom: "1px solid #e7e9eb" }}>
+                <Link className="dropdown-item" href="#">
+                  Việc làm đã ứng tuyển
+                </Link>
+                <Link className="dropdown-item" href="#">
+                  Việc làm đã lưu
+                </Link>
+              </div>
+              <div onClick={logout}>
+                <Link className="dropdown-item" href="#">
+                  Đăng xuất
+                </Link>
+              </div>
+            </div>
+          </li>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <li>
+            <Link to="/register">
+              <a href="" className="btn  btn-outline-primary mr-2">
+                Đăng ký
+              </a>
+            </Link>
+            <Link to="/login">
+              <a href="" className="btn btn-primary">
+                Đăng nhập
+              </a>
+            </Link>
+          </li>
+        </>
+      );
+    }
+  };
+  const HeaderCan = () => {
     return (
       <>
-        <li>
-          <a href="/" className="btn  btn-outline-primary mr-2">
-            Đăng ký
-          </a>
-          <a href="/" className="btn btn-primary">
-            Đăng nhập
-          </a>
-        </li>
-      </>
-    );
-  };
-
-  const renderToggle = () => {
-    return (
-      <>
-        <li className="nav-item d-flex divide dropdown">
-          <img
-            className="navbar-brand"
-            src={Logo}
-            alt=""
-            style={{
-              width: "15%",
-              height: 30,
-              padding: 0,
-              margin: 0,
-              marginTop: 6,
-            }}
-          />
-          <a
-            className="nav-link dropdown-toggle text-dark"
-            data-toggle="dropdown"
-            href="/"
-          >
-            Thắng Nguyễn
-          </a>
-          <div className="dropdown-menu">
-            <div style={{ borderBottom: "1px solid /e7e9eb" }}>
-              <a className="dropdown-item" href="/">
-                Cập nhập hồ sơ
-              </a>
-              <a className="dropdown-item" href="/">
-                Giới thiệu bản thân
-              </a>
-              <a className="dropdown-item" href="/">
-                Đổi mật khẩu
-              </a>
-            </div>
-            <div style={{ borderBottom: "1px solid /e7e9eb" }}>
-              <a className="dropdown-item" href="/">
-                Việc làm đã ứng tuyển
-              </a>
-              <a className="dropdown-item" href="/">
-                Việc làm đã lưu
-              </a>
-            </div>
-            <div>
-              <a className="dropdown-item" href="/">
-                Đăng xuất
-              </a>
-            </div>
-          </div>
-        </li>
-      </>
-    );
-  };
-
-  return (
-    <>
-      <div className="container-fluid" style={{ background: "#fff" }}>
-        {/* NAVBAR HEADER */}
-        <div className="container" style={{ background: "#fff" }}>
-          <div
-            className="row p-2"
-            // style={{ display: "flex", justifyContent: "space-between" }}
-          >
-            <div className="navbar">
-              <ul className="nav" style={{ textAlign: "center" }}>
-                <img className="navbar-brand" src={Logo} alt="" />
+        <div className="container-fluid" style={{ padding: 0 }}>
+          {/* NAVBAR HEADER */}
+          <div className="container">
+            <div className="row justify-content-between p-2">
+              <ul className="nav justify-content-start align-items-center">
+                <img
+                  className="navbar-brand"
+                  src={Logo}
+                  style={{ width: "90px" }}
+                  alt=""
+                />
                 <li className="nav-item dropdown">
-                  <a
+                  <Link
                     className="nav-link dropdown-toggle text-dark"
-                    href="/"
+                    href="#"
                     id="navbardrop"
                     data-toggle="dropdown"
                   >
                     Việc làm
-                  </a>
+                  </Link>
                   <div className="dropdown-menu">
                     <table className="dropdown-item" id="menu-listjob">
                       <tbody>
@@ -108,121 +126,281 @@ function Header() {
                   </div>
                 </li>
                 <li className="nav-item dropdown">
-                  <a
+                  <Link
                     className="nav-link dropdown-toggle text-dark"
-                    href="/"
+                    href="#"
                     id="navbardrop"
                     data-toggle="dropdown"
                   >
                     Công ty
-                  </a>
+                  </Link>
                   <div className="dropdown-menu">
-                    <a className="dropdown-item" href="/">
+                    <Link className="dropdown-item" href="#">
                       Công ty tiêu biểu
-                    </a>
-                    <a className="dropdown-item" href="/">
+                    </Link>
+                    <Link className="dropdown-item" href="#">
                       Tất cả công ty
-                    </a>
+                    </Link>
                   </div>
                 </li>
                 <li className="nav-item dropdown">
                   <a
                     className="nav-link dropdown-toggle text-dark"
                     data-toggle="dropdown"
-                    href="/"
+                    href="#"
                   >
                     CV / Hồ sơ
                   </a>
                   <div className="dropdown-menu">
-                    <a className="dropdown-item" href="/">
-                      Tạo CV
-                    </a>
-                    <a className="dropdown-item" href="/">
+                    <Link to="/createCV">
+                      <a className="dropdown-item" href="#">
+                        Tạo CV
+                      </a>
+                    </Link>
+                    <a className="dropdown-item" href="#">
                       Check CV
                     </a>
                   </div>
                 </li>
                 <li className="nav-item dropdown">
-                  <a
+                  <Link
                     className="nav-link dropdown-toggle text-dark"
                     data-toggle="dropdown"
-                    href="/"
+                    href="#"
                   >
                     Phát triển sự nghiệp
-                  </a>
+                  </Link>
                   <div className="dropdown-menu">
-                    <a className="dropdown-item" href="/">
+                    <Link className="dropdown-item" href="#">
                       Tra cứu
-                    </a>
-                    <a className="dropdown-item" href="/">
+                    </Link>
+                    <Link className="dropdown-item" href="#">
                       Kiến thức
-                    </a>
-                    <a className="dropdown-item" href="/">
+                    </Link>
+                    <Link className="dropdown-item" href="#">
                       Tra cứu lương
-                    </a>
+                    </Link>
                   </div>
                 </li>
-
-                {/* <li className="nav-item ml-3">
-                <a className="nav-link recruiter text-dark" href="/">
-                  Nhà tuyển dụng
-                </a>
-              </li> */}
               </ul>
-              <div className="account" style={{ float: "right" }}>
-                <li className="nav-item d-flex divide dropdown">
-                  <img
-                    className="navbar-brand"
-                    src={Logo}
-                    alt=""
-                    style={{
-                      width: "15%",
-                      height: 30,
-                      padding: 0,
-                      margin: 0,
-                      marginTop: 6,
-                    }}
-                  />
-                  <a
-                    className="nav-link dropdown-toggle text-dark"
-                    data-toggle="dropdown"
-                    href="/"
+              <ul className="nav justify-content-end align-items-center">
+                {renderLog()}
+                <li className="nav-item ml-3">
+                  <Link
+                    className="nav-link recruiter text-dark"
+                    to="/loginCruiter"
                   >
-                    Thắng Nguyễn
-                  </a>
-                  <div className="dropdown-menu">
-                    <div style={{ borderBottom: "1px solid /e7e9eb" }}>
-                      <a className="dropdown-item" href="/">
-                        Cập nhập hồ sơ
-                      </a>
-                      <a className="dropdown-item" href="/">
-                        Giới thiệu bản thân
-                      </a>
-                      <a className="dropdown-item" href="/">
-                        Đổi mật khẩu
-                      </a>
-                    </div>
-                    <div style={{ borderBottom: "1px solid /e7e9eb" }}>
-                      <a className="dropdown-item" href="/">
-                        Việc làm đã ứng tuyển
-                      </a>
-                      <a className="dropdown-item" href="/">
-                        Việc làm đã lưu
-                      </a>
-                    </div>
-                    <div>
-                      <a className="dropdown-item" href="/">
-                        Đăng xuất
-                      </a>
-                    </div>
-                  </div>
+                    Nhà tuyển dụng
+                  </Link>
                 </li>
-              </div>
+              </ul>
             </div>
           </div>
         </div>
+      </>
+    );
+  };
+  const HeaderRe = () => {
+    return (
+      <div>
+        <header
+          id="header"
+          className="header fixed-top d-flex align-items-center"
+        >
+          <div className="d-flex align-items-center justify-content-between">
+            <Link to="/recruiter">
+              <a href="index.html" className="logo d-flex align-items-center">
+                <span className="d-none d-lg-block">JobBroker</span>
+              </a>
+            </Link>
+          </div>
+
+          <div className="search-bar">
+            <form
+              className="search-form d-flex align-items-center"
+              method="POST"
+              action="#"
+            >
+              <input
+                type="text"
+                name="query"
+                placeholder="Search"
+                title="Enter search keyword"
+              />
+              <button type="submit" title="Search">
+                <i className="bi bi-search"></i>
+              </button>
+            </form>
+          </div>
+
+          <nav className="header-nav ms-auto">
+            <ul className="d-flex align-items-center">
+              <li className="nav-item d-block d-lg-none">
+                <a className="nav-link nav-icon search-bar-toggle " href="/">
+                  <i className="bi bi-search"></i>
+                </a>
+              </li>
+
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link nav-icon"
+                  href="/"
+                  data-bs-toggle="dropdown"
+                >
+                  <i className="bi bi-bell"></i>
+                  <span className="badge bg-primary badge-number">4</span>
+                </a>
+
+                <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                  <li className="dropdown-header">
+                    Bạn có 4 cái thông báo
+                    <a href="/">
+                      <span className="badge rounded-pill bg-primary p-2 ms-2">
+                        Xem tất cả
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+
+                  <li className="notification-item">
+                    <i className="bi bi-exclamation-circle text-warning"></i>
+                    <div>
+                      <h4>Lorem Ipsum</h4>
+                      <p>Quae dolorem earum veritatis oditseno</p>
+                      <p>30 min. ago</p>
+                    </div>
+                  </li>
+
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                </ul>
+              </li>
+
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link nav-icon"
+                  href="/"
+                  data-bs-toggle="dropdown"
+                >
+                  <i className="bi bi-chat-left-text"></i>
+                  <span className="badge bg-success badge-number">3</span>
+                </a>
+
+                <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+                  <li className="dropdown-header">
+                    Bạn có 3 tin nhắn
+                    <a href="/">
+                      <span className="badge rounded-pill bg-primary p-2 ms-2">
+                        Xem tất cả
+                      </span>
+                    </a>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+
+                  <li className="message-item">
+                    <a href="/">
+                      <img
+                        src="assets/img/messages-1.jpg"
+                        alt=""
+                        className="rounded-circle"
+                      />
+                      <div>
+                        <h4>Maria Hudson</h4>
+                        <p>
+                          Velit asperiores et ducimus soluta repudiandae labore
+                          officia est ut...
+                        </p>
+                        <p>4 hrs. ago</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                </ul>
+              </li>
+
+              <li className="nav-item dropdown pe-3">
+                <a
+                  className="nav-link nav-profile d-flex align-items-center pe-0"
+                  href="/"
+                  data-bs-toggle="dropdown"
+                >
+                  <img
+                    src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                    alt="Profile"
+                    className="rounded-circle"
+                    style={{
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                      maxWidth: "100px",
+                    }}
+                  />
+                  <span className="d-none d-md-block dropdown-toggle ps-2">
+                    Recruiter_Name
+                  </span>
+                </a>
+
+                <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                  <li className="dropdown-header">
+                    <h6>Recruiter_name</h6>
+                    <span>Company_name</span>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+
+                  <li>
+                    <Link to="/recruiter/profile">
+                      <a
+                        className="dropdown-item d-flex align-items-center"
+                        href="/"
+                      >
+                        <i className="bi bi-person"></i>
+                        <span>Trang hồ sơ</span>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+
+                  <li>
+                    <a
+                      className="dropdown-item d-flex align-items-center"
+                      href="/"
+                    >
+                      <i className="bi bi-box-arrow-right"></i>
+                      <span onClick={logout}>Đăng xuất</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </header>
       </div>
-    </>
-  );
+    );
+  };
+  const renderHeader = () => {
+    var user = localStorage.getItem("user");
+    user = JSON.parse(user);
+    if ((user && user.role == "candidate") || user == null) {
+      return <>{HeaderCan()}</>;
+    } else if (user && user.role == "recruiter") {
+      return (
+        <>
+          {HeaderRe()}
+          {/* {HomeRe()} */}
+        </>
+      );
+    }
+  };
+  return <>{renderHeader()}</>;
 }
 export default Header;

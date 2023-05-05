@@ -1,13 +1,88 @@
-import React from "react";
-import HeaderRe from "../common/HeaderRe";
-import Sidebar from "../common/Sidebar";
+import Sidebar from "./Sidebar";
+import { useEffect, useRef, useState } from "react";
+import axios, { all } from "axios";
 import { Link } from "react-router-dom";
 
 const ManageCan = () => {
+  const [job, setJob] = useState("");
+  const [allJob, setAllJob] = useState("");
+  const [candidate, setCandidate] = useState("");
+
+  let user = JSON.parse(localStorage.getItem("user"));
+  let config = {
+    headers: {
+      Authorization: "Bearer " + user.token,
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+  };
+  useEffect(() => {
+    axios
+      .get(`http://127.0.0.1:8000/api/recruiter/jobs`, config)
+      .then((res) => {
+        setAllJob(res.data);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios.get(`http://127.0.0.1:8000/api/jobs`, config).then((res) => {
+      // console.log(res.data);
+      setJob(res.data);
+    });
+  }, []);
+  const handleGetID = (e) => {
+    let id = e.target.value;
+    axios
+      .get(`http://127.0.0.1:8000/api/recruiter/get-candidates/` + id, config)
+      .then((res) => {
+        console.log(res.data);
+        setCandidate(res.data);
+      });
+  };
+  const renderJob = () => {
+    if (Object.keys(allJob).length > 0) {
+      return allJob.jobs.map((value, key) => {
+        return (
+          <>
+            <option value={value.job_id}> {value.job_name}</option>
+          </>
+        );
+      });
+    }
+  };
+  const renderCanofJobID = () => {
+    if (Object.keys(candidate).length > 0) {
+      return candidate.map((value, key) => {
+        return (
+          <>
+            <tbody>
+              <tr
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                <td>
+                  <img
+                    src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                    alt=""
+                    style={{ maxWidth: "80px", borderRadius: "50%" }}
+                  />
+                </td>
+                <a href="/">{value.fullname}</a>
+                <td>Fresher</td>
+                <td>1 Năm</td>
+                <td>{value.skills}</td>
+                <td>Giỏi</td>
+              </tr>
+            </tbody>
+          </>
+        );
+      });
+    }
+  };
   return (
     <div>
-      <HeaderRe></HeaderRe>
-      <Sidebar></Sidebar>
+      <Sidebar />
       <main id="main" className="main">
         <section className="section">
           <div className="row">
@@ -62,17 +137,18 @@ const ManageCan = () => {
                               <label className="form-label">
                                 Ngành nghề chuyên môn
                               </label>
+
                               <select
                                 className="form-select"
                                 aria-label="Default select example"
                                 style={{ fontSize: "13px" }}
+                                value=""
+                                onChange={handleGetID}
                               >
-                                <option selected="">
+                                <option selected="" value="">
                                   Chọn ngành nghề chuyên môn
                                 </option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {renderJob()}
                               </select>
                             </div>
                             <div className="col-md-3 margin">
@@ -208,7 +284,8 @@ const ManageCan = () => {
                           <th scope="col">Học vấn</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      {renderCanofJobID()}
+                      {/* <tbody>
                         <tr
                           style={{
                             textAlign: "center",
@@ -227,7 +304,7 @@ const ManageCan = () => {
                           <td>JAVA</td>
                           <td>Giỏi</td>
                         </tr>
-                      </tbody>
+                      </tbody> */}
                     </table>
                   </div>
                 </div>

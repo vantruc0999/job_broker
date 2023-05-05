@@ -1,13 +1,125 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import HeaderRe from "../common/HeaderRe";
-import Sidebar from "../common/Sidebar";
-
+import Sidebar from "./Sidebar";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 const ManageJob = () => {
+  const [job, setJob] = useState("");
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    let config = {
+      headers: {
+        Authorization: "Bearer " + user.token,
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
+    };
+    axios
+      .get(`http://127.0.0.1:8000/api/recruiter/jobs`, config)
+      .then((res) => {
+        // console.log(res);
+        setJob(res.data);
+      });
+  }, []);
+  // console.log(job.jobs[0].company_name);
+  const renderAllJob = () => {
+    if (Object.keys(job).length > 0) {
+      console.log(job.jobs);
+      return job.jobs.map((value, key) => {
+        return (
+          <>
+            <tbody>
+              <tr
+                style={{
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
+              >
+                <th scope="row">
+                  <i
+                    class="bi bi-briefcase"
+                    style={{
+                      fontSize: "30px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  ></i>
+                </th>
+                <td>
+                  <ul style={{ textAlign: "left" }}>
+                    <a href="/" className="title-list">
+                      {value.job_name}
+                    </a>
+
+                    {/* <li className="title-list">{job.jobs[0].company_name}</li> */}
+                    <li className="title-list">Cập nhật lúc</li>
+                    <li className="title-list">{value.job_location}</li>
+                    <a href="/" className="title-list">
+                      Xem danh sách phù hợp
+                    </a>
+                  </ul>
+                </td>
+                <td>00/00/0000</td>
+                <td>00/00/0000</td>
+                <td>Nguyễn Văn A</td>
+                <td style={{ display: "grid" }}>
+                  <a
+                    href="/"
+                    className="btn btn-outline-success"
+                    style={{
+                      margin: "2px",
+                      fontSize: "13px",
+                      padding: "2px 5px",
+                    }}
+                  >
+                    Chỉnh Sửa
+                  </a>
+                  <a
+                    href="/"
+                    className="btn btn-outline-danger"
+                    style={{
+                      margin: "2px",
+                      fontSize: "13px",
+                      padding: "2px 5px",
+                    }}
+                  >
+                    Xóa
+                  </a>
+                  <a
+                    href="/"
+                    className="btn btn-outline-info"
+                    style={{
+                      margin: "2px",
+                      fontSize: "13px",
+                      padding: "2px 5px",
+                    }}
+                  >
+                    Chia sẻ
+                  </a>
+                  <a
+                    href="/"
+                    className="btn btn-outline-secondary"
+                    style={{
+                      margin: "2px",
+                      fontSize: "13px",
+                      padding: "2px 5px",
+                    }}
+                  >
+                    Tạm dừng
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </>
+        );
+      });
+    }
+  };
+
   return (
     <div>
-      <HeaderRe></HeaderRe>
-      <Sidebar></Sidebar>
+      <Sidebar />
       <main id="main" className="main">
         <section className="section">
           <div className="row">
@@ -24,7 +136,7 @@ const ManageJob = () => {
                     <h5 className="card-title" style={{ fontSize: "25px" }}>
                       Danh sách tin tuyển dụng
                     </h5>
-                    <Link to="/recruiter/addjob">
+                    <Link to="/addjob">
                       <a
                         href="/"
                         className="btn btn-warning"
@@ -35,7 +147,7 @@ const ManageJob = () => {
                     </Link>
                   </div>
 
-                  <table className="table table-bordered">
+                  <table class="table table-bordered">
                     <thead>
                       <tr
                         style={{
@@ -50,88 +162,7 @@ const ManageJob = () => {
                         <th scope="col">Hành động</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr
-                        style={{
-                          fontSize: "14px",
-                          textAlign: "center",
-                        }}
-                      >
-                        <th scope="row">
-                          <i
-                            className="bi bi-briefcase"
-                            style={{
-                              fontSize: "30px",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                            }}
-                          ></i>
-                        </th>
-                        <td>
-                          <ul style={{ textAlign: "left" }}>
-                            <a href="/" className="title-list">
-                              Tìm việc làm JAVA
-                            </a>
-                            <li className="title-list">Tạo lúc</li>
-                            <li className="title-list">Cập nhật lúc</li>
-                            <li className="title-list">Địa điểm làm việc</li>
-                            <a href="/" className="title-list">
-                              Xem danh sách phù hợp
-                            </a>
-                          </ul>
-                        </td>
-                        <td>00/00/0000</td>
-                        <td>00/00/0000</td>
-                        <td>Nguyễn Văn A</td>
-                        <td style={{ display: "grid" }}>
-                          <a
-                            href="/"
-                            className="btn btn-outline-success"
-                            style={{
-                              margin: "2px",
-                              fontSize: "13px",
-                              padding: "2px 5px",
-                            }}
-                          >
-                            Chỉnh Sửa
-                          </a>
-                          <a
-                            href="/"
-                            className="btn btn-outline-danger"
-                            style={{
-                              margin: "2px",
-                              fontSize: "13px",
-                              padding: "2px 5px",
-                            }}
-                          >
-                            Xóa
-                          </a>
-                          <a
-                            href="/"
-                            className="btn btn-outline-info"
-                            style={{
-                              margin: "2px",
-                              fontSize: "13px",
-                              padding: "2px 5px",
-                            }}
-                          >
-                            Chia sẻ
-                          </a>
-                          <a
-                            href="/"
-                            className="btn btn-outline-secondary"
-                            style={{
-                              margin: "2px",
-                              fontSize: "13px",
-                              padding: "2px 5px",
-                            }}
-                          >
-                            Tạm dừng
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
+                    {renderAllJob()}
                   </table>
                 </div>
               </div>

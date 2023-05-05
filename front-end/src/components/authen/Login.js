@@ -1,8 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+
 function Login() {
   const [inputs, setInputs] = useState("");
   const [errors, setErrors] = useState("");
+  const navigate = useNavigate();
+
   const handleInput = (e) => {
     let nameInput = e.target.name;
     let value = e.target.value;
@@ -11,7 +16,6 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     let errorSubmit = {};
-    console.log("alo");
     const re =
       /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     
@@ -70,6 +74,9 @@ function Login() {
             });
             localStorage.setItem("user",JSON.stringify(res.data))
             alert(res.data.message);
+            if(res.data.role == "candidate"){
+              navigate("/")
+            }
           }
         })
         .catch((errors) => {
@@ -127,7 +134,9 @@ function Login() {
               </div>
             </div>
             <div className="auth-form__controls">
+              <Link to="/register">
               <button className="btn auth-form__controls-back">SIGN UP</button>
+              </Link>
               <button className="btn btn--primary ">LOGIN</button>
             </div>
           </form>

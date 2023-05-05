@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 function Register() {
   const [inputs, setInputs] = useState("");
   const [errors, setErrors] = useState("");
@@ -137,29 +139,29 @@ function Register() {
       };
       let url = "http://127.0.0.1:8000/api/candidate/register";
       axios
-      .post(url, data)
-      .then((res) =>{
-        console.log(res);
-        if(res.data.errors){
-          setErrors(res.data.errors);
-          alert(res.data.message);
-        }else{
-          setInputs({
-            first_name: "",
-            last_name: "",
-            email:"",
-            password: "",
-            phone: "",
-            address: "",
-            birthday:"",
-          });
-          alert(res.data.message)
-        }
-      })
-      .catch((errors) => {
-        console.log(errors);
-      });
-    setErrors({});
+        .post(url, data)
+        .then((res) => {
+          console.log(res);
+          if (res.data.errors) {
+            setErrors(res.data.errors);
+            alert(res.data.message);
+          } else {
+            setInputs({
+              first_name: "",
+              last_name: "",
+              email: "",
+              password: "",
+              phone: "",
+              address: "",
+              birthday: "",
+            });
+            alert(res.data.message);
+          }
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+      setErrors({});
     }
   };
 
@@ -282,9 +284,11 @@ function Register() {
               </p>
             </div>
             <div className="auth-form__controls">
-              <button type="submit" className="btn auth-form__controls-back">
-                LOGIN
-              </button>
+              <Link to="/login">
+                <button type="submit" className="btn auth-form__controls-back">
+                  LOGIN
+                </button>
+              </Link>
               <button type="submit" className="btn btn--primary ">
                 SIGN UP
               </button>

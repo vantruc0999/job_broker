@@ -53,7 +53,7 @@ class JobController extends Controller
 
     private static function getAllJobs()
     {
-        return Job::select('job_id', 'salary', 'job_name', 'job_location')
+        return Job::select('job_id', 'salary', 'job_name', 'job_location', 'job_start_date', 'job_end_date', 'status')
             ->where('recruiter_id', '=', auth()->user()['recruiter_id'])
             ->orderBy('job_id', 'desc')
             ->get();
@@ -286,4 +286,24 @@ class JobController extends Controller
     {
         //
     }
+
+    public function getJobsByProgrammingSkills($skill_id)
+    {
+
+        $jobs = Job::select('job.job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
+            ->join('job_skills', 'job.job_id', '=', 'job_skills.job_id')
+            ->where('skill_id', '=', $skill_id)
+            ->where('status', '=', 'approved')
+            ->orderBy('job_id', 'desc')
+            ->get();
+        if (count($jobs) != 0) {
+            foreach ($jobs as $job) {
+                $company_name = self::getAllCompanyName($job['recruiter_id']);
+                $job->company_name = $company_name;
+                unset($job->recruiter_id);
+            }
+        }
+        return $jobs;
+    }
+
 }

@@ -1,6 +1,9 @@
 import React from "react";
 import HeaderRe from "../common/HeaderRe";
 import Sidebar from "../common/Sidebar";
+import "../../assets/css/style.css";
+import "../../assets/vendor/bootstrap/css/bootstrap.min.css";
+import "../../assets/vendor/bootstrap-icons/bootstrap-icons.css";
 
 const Profile = () => {
   return (

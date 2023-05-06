@@ -3,12 +3,15 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Example from "../candidate/Example";
+import "../../assets/css/style.css";
+import "../../assets/vendor/bootstrap/css/bootstrap.min.css";
+import "../../assets/vendor/bootstrap-icons/bootstrap-icons.css";
 
 const Showjob = () => {
   let params = useParams();
-  const [detailJob,setJobDetail] = useState("");
+  const [detailJob, setJobDetail] = useState("");
   const [openModal, setOpenModal] = useState(false);
- 
+
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
     let config = {
@@ -19,14 +22,13 @@ const Showjob = () => {
       },
     };
     axios
-      .get(`http://127.0.0.1:8000/api/job-detail/`+ params.id, config)
+      .get(`http://127.0.0.1:8000/api/job-detail/` + params.id, config)
       .then((res) => {
         setJobDetail(res.data.job_detail);
       });
-
-    }, []);
-    let abc = JSON.parse(detailJob.job_requirement)
-    console.log("abc",abc);
+  }, []);
+  let abc = JSON.parse(detailJob.job_requirement);
+  console.log("abc", abc);
   console.log(detailJob.job_requirement);
   return (
     <div>
@@ -38,15 +40,18 @@ const Showjob = () => {
                 <div className="card-body">
                   <h3 className="job_name">{detailJob.job_name}</h3>
                   <div className="button margin">
-                  
-                  {openModal == false?  <button
-                      type="button"
-                      className="btn btn-primary"
-                      style={{ marginRight: "20px" }}
-                      onClick={setOpenModal(true)}
-                    >
-                      Ứng tuyển ngay
-                    </button> :<Example jobId={detailJob.job_id}/>}
+                    {openModal == false ? (
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        style={{ marginRight: "20px" }}
+                        onClick={setOpenModal(true)}
+                      >
+                        Ứng tuyển ngay
+                      </button>
+                    ) : (
+                      <Example jobId={detailJob.job_id} />
+                    )}
                     {/* <button
                       type="button"
                       className="btn btn-primary"
@@ -183,7 +188,7 @@ const Showjob = () => {
                         className="content-detail"
                         title="Xem thêm các việc làm Full-time"
                       >
-                       {detailJob.skills}
+                        {detailJob.skills}
                       </div>
                     </div>
                   </div>
@@ -198,8 +203,9 @@ const Showjob = () => {
                     >
                       Địa điểm làm việc
                     </p>
-                    <div className="content-detail">{detailJob.job_location
-}</div>
+                    <div className="content-detail">
+                      {detailJob.job_location}
+                    </div>
                   </div>
 
                   <div className="content-min" style={{ margin: "15px 0" }}>
@@ -212,7 +218,9 @@ const Showjob = () => {
                     >
                       Yêu cầu công việc
                     </p>
-                    <div className="content-detail">{detailJob.job_requirement}</div>
+                    <div className="content-detail">
+                      {detailJob.job_requirement}
+                    </div>
                   </div>
 
                   <div className="content-min" style={{ margin: "15px 0" }}>
@@ -240,9 +248,7 @@ const Showjob = () => {
                     >
                       Lợi ích
                     </p>
-                    <div className="content-detail">
-                     {detailJob.benefit}
-                    </div>
+                    <div className="content-detail">{detailJob.benefit}</div>
                   </div>
                 </div>
               </div>

@@ -2,6 +2,9 @@ import Sidebar from "./Sidebar";
 import { useEffect, useRef, useState } from "react";
 import axios, { all } from "axios";
 import { Link } from "react-router-dom";
+import "../../assets/css/style.css";
+import "../../assets/vendor/bootstrap/css/bootstrap.min.css";
+import "../../assets/vendor/bootstrap-icons/bootstrap-icons.css";
 
 const ManageCan = () => {
   const [job, setJob] = useState("");

@@ -3,6 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Example from "../candidate/Example";
+import "../../assets/css/style.css";
+import "../../assets/vendor/bootstrap/css/bootstrap.min.css";
+import "../../assets/vendor/bootstrap-icons/bootstrap-icons.css";
 const Test = () => {
   let params = useParams();
   const [detailJob, setJobDetail] = useState("");
@@ -22,9 +25,9 @@ const Test = () => {
         setJobDetail(res.data.job_detail);
       });
   }, []);
-//   let abc = JSON.parse(detailJob.job_requirement)
-//   console.log("abc",abc);
-// console.log(detailJob.job_requirement);
+  //   let abc = JSON.parse(detailJob.job_requirement)
+  //   console.log("abc",abc);
+  // console.log(detailJob.job_requirement);
   return (
     <div>
       <div className="container" style={{ margin: "0 auto", width: "1250px" }}>
@@ -90,7 +93,7 @@ const Test = () => {
                         className="content-detail"
                         title="Xem thêm các việc làm Full-time"
                       >
-                       {detailJob.position_name}
+                        {detailJob.position_name}
                       </div>
                     </div>
                     <div
@@ -110,7 +113,7 @@ const Test = () => {
                         className="content-detail"
                         title="Xem thêm các việc làm Full-time"
                       >
-                       {detailJob.job_start_date}
+                        {detailJob.job_start_date}
                       </div>
                     </div>
                     <div
@@ -170,7 +173,7 @@ const Test = () => {
                         className="content-detail"
                         title="Xem thêm các việc làm Full-time"
                       >
-                       {detailJob.language}
+                        {detailJob.language}
                       </div>
                     </div>
                     <div
@@ -190,7 +193,7 @@ const Test = () => {
                         className="content-detail"
                         title="Xem thêm các việc làm Full-time"
                       >
-                       {detailJob.skills}
+                        {detailJob.skills}
                       </div>
                     </div>
                   </div>
@@ -227,8 +230,12 @@ const Test = () => {
                       Yêu cầu công việc
                     </p>
                     <div className="content-detail">
-                    <div dangerouslySetInnerHTML={{__html: detailJob.job_requirement}}></div>
-                    {/* {detailJob.job_requirement} */}
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: detailJob.job_requirement,
+                        }}
+                      ></div>
+                      {/* {detailJob.job_requirement} */}
                     </div>
                   </div>
 
@@ -246,8 +253,12 @@ const Test = () => {
                       Mô tả công việc
                     </p>
                     <div className="content-detail">
-                    <div dangerouslySetInnerHTML={{__html: detailJob.job_description}}></div>
-                    {/* {detailJob.job_description} */}
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: detailJob.job_description,
+                        }}
+                      ></div>
+                      {/* {detailJob.job_description} */}
                     </div>
                   </div>
 
@@ -265,8 +276,10 @@ const Test = () => {
                       Lợi ích
                     </p>
                     <div className="content-detail">
-                    <div dangerouslySetInnerHTML={{__html: detailJob.benefit}}></div>
-                    {/* {detailJob.benefit} */}
+                      <div
+                        dangerouslySetInnerHTML={{ __html: detailJob.benefit }}
+                      ></div>
+                      {/* {detailJob.benefit} */}
                     </div>
                   </div>
                 </div>

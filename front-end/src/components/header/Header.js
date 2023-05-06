@@ -93,12 +93,14 @@ function Header() {
           <div className="container">
             <div className="row justify-content-between p-2">
               <ul className="nav justify-content-start align-items-center">
-                <img
-                  className="navbar-brand"
-                  src={Logo}
-                  style={{ width: "90px" }}
-                  alt=""
-                />
+                <Link to="/">
+                  <img
+                    className="navbar-brand"
+                    src={Logo}
+                    style={{ width: "90px" }}
+                    alt=""
+                  />
+                </Link>
                 <li className="nav-item dropdown">
                   <Link
                     className="nav-link dropdown-toggle text-dark"

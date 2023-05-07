@@ -5,6 +5,8 @@ import Logo from "../../assets/images/logo.jpg";
 import { Link } from "react-router-dom";
 import PayPalButton from "./PaypalCheckout";
 import axios from "axios";
+import "../../assets/css/package.css";
+
 // import "swiper/css";
 // import "swiper/css/pagination";
 // import "swiper/css/navigation";

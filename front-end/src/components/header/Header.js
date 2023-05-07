@@ -3,9 +3,6 @@ import "../../assets/css/homepage.css";
 import "../../assets/css/adminlte.min.css";
 import Logo from "../../assets/images/logo.jpg";
 import { Navigate, useNavigate } from "react-router-dom";
-import Sidebar from "../recruiter/Sidebar";
-import HomeRecruiter from "../recruiter/HomeRecruiter";
-import HomeRe from "../recruiter/HomeRecruiter";
 import { useLocation } from "react-router-dom";
 function Header() {
   const navigate = useNavigate();
@@ -105,110 +102,114 @@ function Header() {
       <>
         <div className="container-fluid" style={{ padding: 0 }}>
           {/* NAVBAR HEADER */}
-          <div className="container">
-            <div className="row justify-content-between p-2">
-              <ul className="nav justify-content-start align-items-center">
-                <img
-                  className="navbar-brand"
-                  src={Logo}
-                  style={{ width: "80px" }}
-                  alt=""
-                />
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle text-dark"
-                    href="#"
-                    id="navbardrop"
-                    data-toggle="dropdown"
-                  >
-                    Việc làm
-                  </Link>
-                  <div className="dropdown-menu">
-                    <table className="dropdown-item" id="menu-listjob">
-                      <tbody>
-                        <tr>
-                          <th>Việc làm theo chuyên ngành ngành</th>
-                          <th>Việc làm theo địa điểm</th>
-                          <th>Việc làm theo nhu cầu</th>
-                        </tr>
-                        <tr>
-                          <td>Alfreds Futterkiste</td>
-                          <td>Maria Anders</td>
-                          <td>Germany</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </li>
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle text-dark"
-                    href="#"
-                    id="navbardrop"
-                    data-toggle="dropdown"
-                  >
-                    Công ty
-                  </Link>
-                  <div className="dropdown-menu">
-                    <Link className="dropdown-item" href="#">
-                      Công ty tiêu biểu
+          <div className="container" style={{width:"80%"}}>
+            <div className="d-flex justify-content-between p-2">
+              <div>
+                <ul className="nav  align-items-center">
+                  <img
+                    className="navbar-brand"
+                    src={Logo}
+                    style={{ width: "80px",height:"45px" }}
+                    alt=""
+                  />
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link dropdown-toggle text-dark"
+                      href="#"
+                      id="navbardrop"
+                      data-toggle="dropdown"
+                    >
+                      Việc làm
                     </Link>
-                    <Link className="dropdown-item" href="#">
-                      Tất cả công ty
+                    <div className="dropdown-menu">
+                      <table className="dropdown-item" id="menu-listjob">
+                        <tbody>
+                          <tr>
+                            <th>Việc làm theo chuyên ngành ngành</th>
+                            <th>Việc làm theo địa điểm</th>
+                            <th>Việc làm theo nhu cầu</th>
+                          </tr>
+                          <tr>
+                            <td>Alfreds Futterkiste</td>
+                            <td>Maria Anders</td>
+                            <td>Germany</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link dropdown-toggle text-dark"
+                      href="#"
+                      id="navbardrop"
+                      data-toggle="dropdown"
+                    >
+                      Công ty
                     </Link>
-                  </div>
-                </li>
-                <li className="nav-item dropdown">
-                  <a
-                    className="nav-link dropdown-toggle text-dark"
-                    data-toggle="dropdown"
-                    href="#"
-                  >
-                    CV / Hồ sơ
-                  </a>
-                  <div className="dropdown-menu">
-                    <Link to="/createCV">
-                      <a className="dropdown-item" href="#">
-                        Tạo CV
-                      </a>
-                    </Link>
-                    <a className="dropdown-item" href="#">
-                      Check CV
+                    <div className="dropdown-menu">
+                      <Link className="dropdown-item" href="#">
+                        Công ty tiêu biểu
+                      </Link>
+                      <Link className="dropdown-item" href="#">
+                        Tất cả công ty
+                      </Link>
+                    </div>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <a
+                      className="nav-link dropdown-toggle text-dark"
+                      data-toggle="dropdown"
+                      href="#"
+                    >
+                      CV / Hồ sơ
                     </a>
-                  </div>
-                </li>
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle text-dark"
-                    data-toggle="dropdown"
-                    href="#"
-                  >
-                    Phát triển sự nghiệp
-                  </Link>
-                  <div className="dropdown-menu">
-                    <Link className="dropdown-item" href="#">
-                      Tra cứu
+                    <div className="dropdown-menu">
+                      <Link to="/createCV">
+                        <a className="dropdown-item" href="#">
+                          Tạo CV
+                        </a>
+                      </Link>
+                      <a className="dropdown-item" href="#">
+                        Check CV
+                      </a>
+                    </div>
+                  </li>
+                  <li className="nav-item dropdown">
+                    <Link
+                      className="nav-link dropdown-toggle text-dark"
+                      data-toggle="dropdown"
+                      href="#"
+                    >
+                      Phát triển sự nghiệp
                     </Link>
-                    <Link className="dropdown-item" href="#">
-                      Kiến thức
+                    <div className="dropdown-menu">
+                      <Link className="dropdown-item" href="#">
+                        Tra cứu
+                      </Link>
+                      <Link className="dropdown-item" href="#">
+                        Kiến thức
+                      </Link>
+                      <Link className="dropdown-item" href="#">
+                        Tra cứu lương
+                      </Link>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div className="pt-2">
+                <ul className="nav  align-items-center">
+                  {renderLog()}
+                  <li className="nav-item ml-3">
+                    <Link
+                      className="nav-link recruiter text-dark"
+                      to="/loginCruiter"
+                    >
+                      Nhà tuyển dụng
                     </Link>
-                    <Link className="dropdown-item" href="#">
-                      Tra cứu lương
-                    </Link>
-                  </div>
-                </li>
-              </ul>
-              <ul className="nav justify-content-end align-items-center">
-                {renderLog()}
-                <li className="nav-item ml-3">
-                  <Link
-                    className="nav-link recruiter text-dark"
-                    to="/loginCruiter"
-                  >
-                    Nhà tuyển dụng
-                  </Link>
-                </li>
-              </ul>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -531,7 +532,7 @@ function Header() {
                       <p>Gói dịch vụ</p>
                     </Link>
                   </li>
-                  <li className="nav-item"  onClick={logout}>
+                  <li className="nav-item" onClick={logout}>
                     <a className="nav-link">
                       <i className="nav-icon fas fa-th" />
                       <span>Đăng xuất</span>
@@ -562,7 +563,7 @@ function Header() {
       );
     } else if (user && user.role == "admin") {
       return <>{HeaderAdmin()}</>;
-    }else if (param1["pathname"].includes("")){
+    } else if (param1["pathname"].includes("")) {
       return <>{HeaderCan()}</>;
     }
   };

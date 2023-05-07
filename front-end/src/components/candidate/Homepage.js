@@ -118,7 +118,7 @@ function Homepage() {
         </div>
 
         <div
-          className="row d-flex justify-content"
+          className="row d-flex justify-content-around"
           style={{ margin: "50px auto", width: "60%" }}
         >
           <div
@@ -175,7 +175,7 @@ function Homepage() {
         <div className="job_urgent">
           <h3 style={{ paddingTop: 20,marginLeft:33 }}>Việc tuyển gấp</h3>
           <div
-            className="row  "
+            className="row d-flex "
             style={{ margin: "0 auto" }}
           >
             {/* List Job */}
@@ -184,10 +184,10 @@ function Homepage() {
                 console.log(job);
                 return (
                   <div
-                    className="urgentHiring  "
-                    style={{ padding: "0", }}
+                    className="urgentHiring mr-3" 
+                    style={{ padding: "0",width:400 }}
                   >
-                    <Link to={"/job/" + job.job_id} style={{ display: "flex" }}>
+                    <Link to={"/job/" + job.job_id} style={{ display: "flex",textDecoration:"none" }}>
                       <div className="col-3">
                         <img
                           src={Logo}

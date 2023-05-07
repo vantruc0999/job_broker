@@ -4,6 +4,7 @@ import axios from "axios";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useNavigate } from "react-router-dom";
+import "../../assets/css/inputCV.css";
 
 const animatedComponents = makeAnimated();
 
@@ -627,7 +628,7 @@ function CreateCV() {
         >
           <div className="col-9" style={{ margin: "0 auto" }}>
            
-            <div className="row" style={{ padding: "50px 0" }}>
+            <div className="row" style={{ margin: "50px 0",boxShadow:"5px 5px 5px 5px"  }}>
               <div
                 className="col-4 "
                 style={{ background: "#0bb5f4", padding: "0" }}

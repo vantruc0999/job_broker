@@ -85,7 +85,6 @@ function FileCV() {
         <>
           <div id="vn">
             <div className="resume">
-              {/* <div class="lang"><a href="#en"><img src="en.png" alt=""></a></div> */}
               <div className="lang">
                 <img src="en.png" alt="" />
               </div>

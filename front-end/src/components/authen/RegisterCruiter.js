@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "../../assets/css/loginCruiter.css";
+
 function RegisterCruiter() {
   const [inputs, setInputs] = useState("");
   const [errors, setErrors] = useState("");
@@ -156,135 +158,134 @@ function RegisterCruiter() {
 
   return (
     <>
-      <div className="auth-form auth-form__signup">
-        <div className="auth-form__container">
-          <div className="auth-form__header">
-            <h3 className="auth-form__heading">Sign Up</h3>
-          </div>
-          <form action="" id="register" onSubmit={handleSubmit}>
-            <div className="auth-form__form">
-              <div className="auth-form__group">
-                <input
-                  name="company_name"
-                  id="company_name"
-                  type="text"
-                  className="auth-form__input"
-                  placeholder="Company name"
-                  value={inputs.company_name}
-                  onChange={handleInput}
-                />
-                <p style={{ color: "red" }}>{errors.company_name}</p>
-              </div>
-              <div className="auth-form__group">
-                <input
-                  name="recruiter_name"
-                  id="recruiter_name"
-                  type="text"
-                  className="auth-form__input"
-                  placeholder="Recruiter name "
-                  value={inputs.recruiter_name}
-                  onChange={handleInput}
-                />
-                <p style={{ color: "red" }}>{errors.recruiter_name}</p>
-              </div>
-              <div className="auth-form__group">
-                <input
-                  name="email"
-                  id="email"
-                  type="email"
-                  className="auth-form__input"
-                  placeholder="Email "
-                  value={inputs.email}
-                  onChange={handleInput}
-                />
-                <p style={{ color: "red" }}>{errors.email}</p>
-              </div>
-              <div className="auth-form__group">
-                <input
-                  name="password"
-                  id="password"
-                  type="password"
-                  className="auth-form__input"
-                  placeholder="Password "
-                  value={inputs.password}
-                  onChange={handleInput}
-                />
-                <p style={{ color: "red" }}>{errors.password}</p>
-              </div>
-              <div className="auth-form__group">
-                <input
-                  name="repassword"
-                  id="repassword"
-                  type="password"
-                  className="auth-form__input"
-                  placeholder="Confirm password"
-                  value={inputs.repassword}
-                  onChange={handleInput}
-                />
-                <p style={{ color: "red" }}>{errors.repassword}</p>
-              </div>
-              <div className="auth-form__group">
-                <input
-                  name="phone"
-                  id="phone"
-                  type="text"
-                  className="auth-form__input"
-                  placeholder="Number phone"
-                  value={inputs.phone}
-                  onChange={handleInput}
-                />
-                <p style={{ color: "red" }}>{errors.phone}</p>
-              </div>
-              <div className="auth-form__group">
-                <input
-                  name="avatar"
-                  id="avatar"
-                  type="file"
-                  multiple
-                  onChange={handleInputFile}
-                />
-                <p style={{ color: "red" }}>{errors.avatar}</p>
-              </div>
-            </div>
-            <div className="auth-form__aside">
-              <p className="auth-form__policy-text">
-                By registering, you agree to BrokerJob about
-                <a href="" className="auth-form__text-link">
-                  Terms of Service
-                </a>
-                &amp;
-                <a href="" className="auth-form__text-link">
-                  Privacy Policy
-                </a>
+      <div
+        className="container-fluid form-container"
+        style={{ marginTop: "-80px" }}
+      >
+        <div className="container login-container">
+          <div className="row">
+            <div
+              className="col-md-6 content-part"
+              style={{ alignItems: "center" }}
+            >
+              <img src="https://static.ybox.vn/2016/06/24/19.jpg" alt="" />
+
+              <h2>Tìm kiếm việc làm IT ở Đà Nẵng</h2>
+              <p>
+                Trang website này giúp bạn có thể tìm ứng viên nhanh chóng ở
+                thành phố Đà Nẵng
               </p>
             </div>
-            <div className="auth-form__controls">
-              <Link to="/loginCruiter">
-                <button type="submit" className="btn auth-form__controls-back">
-                  LOGIN
-                </button>
-              </Link>
-              <button type="submit" className="btn btn--primary ">
-                SIGN UP
-              </button>
+            <div className="col-md-6 form-part">
+              <form action="" id="register" onSubmit={handleSubmit}>
+                <div className="row">
+                  <div className="col-lg-10 col-md-11  formcol mx-auto">
+                    <div className="form-floating mb-3">
+                      <input
+                        name="company_name"
+                        type="text"
+                        className="form-control auth-form__input"
+                        id="floatingInput company_name"
+                        placeholder="Enter Company Name"
+                        value={inputs.company_name}
+                        onChange={handleInput}
+                      />
+                      <p style={{ color: "red" }}>{errors.company_name}</p>
+                      <label for="floatingInput">Tên công ty</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        name="recruiter_name"
+                        type="text"
+                        className="form-control"
+                        id="floatingInput recruiter_name"
+                        placeholder="Enter Full Name"
+                        value={inputs.recruiter_name}
+                        onChange={handleInput}
+                      />
+                      <p style={{ color: "red" }}>{errors.recruiter_name}</p>
+                      <label for="floatingInput">Họ và tên</label>
+                    </div>
+
+                    <div className="form-floating mb-3">
+                      <input
+                        name="email"
+                        type="email"
+                        className="form-control"
+                        id="floatingInput email"
+                        placeholder="Enter Email Address"
+                        value={inputs.email}
+                        onChange={handleInput}
+                      />
+                      <p style={{ color: "red" }}>{errors.email}</p>
+                      <label for="floatingInput">Email</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        name="password"
+                        type="password"
+                        className="form-control"
+                        id="floatingPassword password"
+                        placeholder="Password"
+                        value={inputs.password}
+                        onChange={handleInput}
+                      />
+                      <p style={{ color: "red" }}>{errors.password}</p>
+                      <label for="floatingPassword">Mật khẩu</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        name="repassword"
+                        type="password"
+                        className="form-control"
+                        id="floatingPassword repassword"
+                        placeholder="RePassword"
+                        value={inputs.repassword}
+                        onChange={handleInput}
+                      />
+                      <p style={{ color: "red" }}>{errors.repassword}</p>
+                      <label for="floatingRePassword">Nhập lại mật khẩu</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        name="phone"
+                        type="text"
+                        className="form-control"
+                        id="floatingInput phone"
+                        placeholder="Enter Mobile Number"
+                        value={inputs.phone}
+                        onChange={handleInput}
+                      />
+                      <p style={{ color: "red" }}>{errors.phone}</p>
+                      <label for="floatingInput">Số điện thoại</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        name="avatar"
+                        type="file"
+                        className="form-control"
+                        id="avatar"
+                        multiple
+                        onChange={handleInputFile}
+                      />
+                      <p style={{ color: "red" }}>{errors.avatar}</p>
+                      {/* <label for="floatingInput">Số điện thoại</label> */}
+                    </div>
+                    <div className="form-floating">
+                      <button type="submit" className="btn btn-primary">
+                        Đăng ký
+                      </button>
+                    </div>
+                    <Link to="/loginCruiter">
+                      <p className="signinlink">
+                        Bạn đã có tài khoản? <a href="/">Đăng nhập</a>
+                      </p>
+                    </Link>
+                  </div>
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
-        <div className="auth-form__socials">
-          <Link
-            to="#"
-            className="auth-form__socials--facebook btn btn--size-s btn--with-icon"
-          >
-            <i className="auth-form__socials-icon fa-brands fa-facebook-square" />
-            Connect with Facebook
-          </Link>
-          <Link
-            to="#"
-            className="auth-form__socials--google btn btn--size-s btn--with-icon"
-          >
-            <i className="auth-form__socials-icon fa-brands fa-google" />
-            Connect with Google
-          </Link>
+          </div>
         </div>
       </div>
     </>

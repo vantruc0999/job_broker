@@ -2,9 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Navigate, useNavigate } from "react-router-dom";
-import "../../assets/css/authen.css";
 
-function Login() {
+function LoginAdmin() {
   const [inputs, setInputs] = useState("");
   const [errors, setErrors] = useState("");
   const navigate = useNavigate();
@@ -19,10 +18,10 @@ function Login() {
     let errorSubmit = {};
     const re =
       /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    
+
     var regexPass =
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+~`\-={}[\]:\\|;\"',<.>/?]).{8,}$/;
-   
+
     let flag = true;
     if (!re.test(inputs.email)) {
       flag = false;
@@ -49,7 +48,6 @@ function Login() {
       flag = false;
       errorSubmit.password = "Please enter your password";
     }
-    
 
     if (!flag) {
       setErrors(errorSubmit);
@@ -60,25 +58,26 @@ function Login() {
         email: inputs.email,
         password: inputs.password,
       };
-      let url = "http://127.0.0.1:8000/api/candidate/login";
+      console.log(data);
+      let url = "http://127.0.0.1:8000/api/admin/login";
       axios
         .post(url, data)
         .then((res) => {
-          console.log(res);
           if (res.data.errors) {
             setErrors(res.data.errors);
             alert(res.data.message);
           } else {
-            setInputs({
-              email: "",
-              password: "",
-            });
-            localStorage.setItem("user",JSON.stringify(res.data))
+            // setInputs({
+            //   email: "",
+            //   password: "",
+            // });
+            console.log(res.data);
+            localStorage.setItem("user", JSON.stringify(res.data));
             alert(res.data.message);
-            if(res.data.role === "candidate"){
-              navigate("/homeCandidate")
-            }else if(res.data.role === "recruiter"){
-              navigate("/homeRecruiter")
+            if (res.data.role === "admin") {
+              navigate("/adminhome");
+            } else {
+              navigate("/loginadmin");
             }
           }
         })
@@ -91,17 +90,19 @@ function Login() {
 
   return (
     <>
-      <div className="auth-form auth-form__login" style={{ marginTop: 150 }}>
-        <div className="auth-form__container">
-          <div className="auth-form__header">
-            <h3 className="auth-form__heading">Login</h3>
-            <span className="auth-form__switch-btn auth-form__switch-btn2">
-              Sign Up
-            </span>
-          </div>
-          <form action="" id="login" onSubmit={handleSubmit}>
-            <div className="auth-form__form">
-              <div className="auth-form__group">
+      <>
+        <div className="login-box" style={{margin:"200px auto"}}>
+          {/* /.login-logo */}
+          <div className="card card-outline card-primary">
+            <div className="card-header text-center">
+              <a  className="h1">
+                <b>Admin</b>
+              </a>
+            </div>
+            <div className="card-body">
+              <p className="login-box-msg">Xin hãy đăng nhập để tiếp tục</p>
+              <form action="" id="login"  onSubmit={handleSubmit}>
+                <div className="input-group mb-3">
                 <input
                   name="email"
                   id="emaill"
@@ -112,8 +113,13 @@ function Login() {
                   onChange={handleInput}
                 />
                 <p style={{ color: "red" }}>{errors.email}</p>
-              </div>
-              <div className="auth-form__group">
+                  <div className="input-group-append">
+                    <div className="input-group-text">
+                      <span className="fas fa-envelope" />
+                    </div>
+                  </div>
+                </div>
+                <div className="input-group mb-3">
                 <input
                   name="password"
                   id="password"
@@ -124,45 +130,48 @@ function Login() {
                   onChange={handleInput}
                 />
                  <p style={{ color: "red" }}>{errors.password}</p>
-              </div>
+                  <div className="input-group-append">
+                    <div className="input-group-text">
+                      <span className="fas fa-lock" />
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-7">
+                    <div className="icheck-primary">
+                      <input type="checkbox" id="remember" />
+                      <label htmlFor="remember">Nhớ mật khẩu </label>
+                    </div>
+                  </div>
+                  {/* /.col */}
+                  <div className="col-5">
+                    <button type="submit" className="btn btn-primary btn-block">
+                      Đăng nhập
+                    </button>
+                  </div>
+                  {/* /.col */}
+                </div>
+              </form>
+              {/* <div class="social-auth-links text-center mt-2 mb-3">
+      <a href="#" class="btn btn-block btn-primary">
+        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+      </a>
+      <a href="#" class="btn btn-block btn-danger">
+        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+      </a>
+    </div> */}
+              {/* /.social-auth-links */}
+              <p className="mb-1">
+                <a href="/">Quên mật khẩu</a>
+              </p>
             </div>
-            <div className="auth-form__aside">
-              <div className="auth-form__help">
-                <Link to="#" className="auth-form__link auth-form__help">
-                  Forgot password
-                </Link>
-                <span className="auth-form__help--separate" />
-                <Link to="#" className="auth-form__link">
-                  Need help ?
-                </Link>
-              </div>
-            </div>
-            <div className="auth-form__controls">
-              <Link to="/register">
-              <button className="btn auth-form__controls-back">SIGN UP</button>
-              </Link>
-              <button className="btn btn--primary ">LOGIN</button>
-            </div>
-          </form>
+            {/* /.card-body */}
+          </div>
+          {/* /.card */}
         </div>
-        <div className="auth-form__socials">
-          <Link
-            to="#"
-            className="auth-form__socials--facebook btn btn--size-s btn--with-icon"
-          >
-            <i className="auth-form__socials-icon fa-brands fa-facebook-square" />
-            Sign in with Facebook
-          </Link>
-          <Link
-            to="#"
-            className="auth-form__socials--google btn btn--size-s btn--with-icon"
-          >
-            <i className="auth-form__socials-icon fa-brands fa-google" />
-            Sign in with Google
-          </Link>
-        </div>
-      </div>
+        {/* /.login-box */}
+      </>
     </>
   );
 }
-export default Login;
+export default LoginAdmin;

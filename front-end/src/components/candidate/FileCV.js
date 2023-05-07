@@ -2,22 +2,24 @@ import Logo from "../../assets/images/logo.jpg";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import "../../assets/css/cv.css";
+
 function FileCV() {
   let params = useParams();
   const [resume, setResume] = useState("");
   const [id, setId] = useState([]);
+  const [info, setInfo] = useState("")
   console.log(resume);
  
+  let user = JSON.parse(localStorage.getItem("user"));
+  let config = {
+    headers: {
+      Authorization: "Bearer " + user.token,
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+  };
   useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user"));
-    let config = {
-      headers: {
-        Authorization: "Bearer " + user.token,
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
-    };
-
     axios
       .get(`http://127.0.0.1:8000/api/candidate/show-detail/`+ params.id, config)
       .then((res) => {
@@ -25,6 +27,15 @@ function FileCV() {
         setResume(res.data);
       });
   }, []);
+  useEffect(() => {
+   
+    axios
+      .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
+      .then((res) => {
+        setInfo(res.data);
+      });
+  }, []);
+  console.log("info",info);
   const renderExp = () => {
     if (Object.keys(resume).length > 0) {
       return  resume.experience_company.map((value, key)=>{
@@ -85,7 +96,7 @@ function FileCV() {
                 <div className="resume_content">
                   <div className="resume_item resume_info">
                     <div className="title">
-                      <p className="bold">Nguyễn Kim Thắng</p>
+                      <p className="bold"> {info.last_name} {info.first_name}</p>
                       <p className="regular">Developer</p>
                     </div>
                     <ul>
@@ -94,7 +105,7 @@ function FileCV() {
                           <i className="fas fa-map-signs" />
                         </div>
                         <div className="data">
-                          66, Nguyễn Tư Giản <br />
+                          {info.address} <br />
                           Tp. Đà Nẵng, Đà Nẵng
                         </div>
                       </li>
@@ -102,16 +113,14 @@ function FileCV() {
                         <div className="icon">
                           <i className="fas fa-mobile-alt" />
                         </div>
-                        <div className="data">+84 708 283 063</div>
+                        <div className="data">{info.phone}</div>
                       </li>
                       <li>
                         <div className="icon">
                           <i className="fas fa-envelope" />
                         </div>
                         <div className="data">
-                          nguyenkimthang.26122001
-                          <br />
-                          @gmail.com
+                          {info.email}
                         </div>
                       </li>
                       <li>

@@ -1,8 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../assets/css/style.css";
-import "../../assets/vendor/bootstrap/css/bootstrap.min.css";
-import "../../assets/vendor/bootstrap-icons/bootstrap-icons.css";
 
 const HeaderRe = () => {
   return (
@@ -80,48 +77,6 @@ const HeaderRe = () => {
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
-
-                {/* <li className="notification-item">
-                  <i className="bi bi-x-circle text-danger"></i>
-                  <div>
-                    <h4>Atque rerum nesciunt</h4>
-                    <p>Quae dolorem earum veritatis oditseno</p>
-                    <p>1 hr. ago</p>
-                  </div>
-                </li>
-
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-
-                <li className="notification-item">
-                  <i className="bi bi-check-circle text-success"></i>
-                  <div>
-                    <h4>Sit rerum fuga</h4>
-                    <p>Quae dolorem earum veritatis oditseno</p>
-                    <p>2 hrs. ago</p>
-                  </div>
-                </li>
-
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-
-                <li className="notification-item">
-                  <i className="bi bi-info-circle text-primary"></i>
-                  <div>
-                    <h4>Dicta reprehenderit</h4>
-                    <p>Quae dolorem earum veritatis oditseno</p>
-                    <p>4 hrs. ago</p>
-                  </div>
-                </li>
-
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li className="dropdown-footer">
-                  <a href="#">Show all notifications</a>
-                </li> */}
               </ul>
             </li>
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "../../assets/cssCandidate/style.css";
+// import "../../assets/cssCandidate/style.css";
 
 function RegisterCruiter() {
   const [inputs, setInputs] = useState("");

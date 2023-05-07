@@ -149,7 +149,7 @@ function Header() {
                   <a
                     className="nav-link dropdown-toggle text-dark"
                     data-toggle="dropdown"
-                    href="#"
+                    href="/"
                   >
                     CV / Hồ sơ
                   </a>

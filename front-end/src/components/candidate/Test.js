@@ -3,9 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Example from "../candidate/Example";
-import "../../assets/css/style.css";
-import "../../assets/vendor/bootstrap/css/bootstrap.min.css";
-import "../../assets/vendor/bootstrap-icons/bootstrap-icons.css";
+
 const Test = () => {
   let params = useParams();
   const [detailJob, setJobDetail] = useState("");
@@ -212,7 +210,7 @@ const Test = () => {
                       Địa điểm làm việc
                     </p>
                     <div className="content-detail">
-                      <i class="bi bi-geo-alt"></i> {detailJob.job_location}
+                      <i className="bi bi-geo-alt"></i> {detailJob.job_location}
                     </div>
                   </div>
 
@@ -302,19 +300,19 @@ const Test = () => {
                   style={{ textDecoration: "none" }}
                   className="col-lg-6"
                 >
-                  <div class="card mb-0">
-                    <div class="row g-0">
-                      <div class="col-md-3">
+                  <div className="card mb-0">
+                    <div className="row g-0">
+                      <div className="col-md-3">
                         <img
                           src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          class="img-fluid rounded-start"
+                          className="img-fluid rounded-start"
                           alt="..."
                           style={{ padding: "8px" }}
                         />
                       </div>
-                      <div class="col-md-9">
+                      <div className="col-md-9">
                         <div
-                          class="card_body"
+                          className="card_body"
                           style={{
                             display: "grid",
                             marginLeft: "-20px",
@@ -324,7 +322,7 @@ const Test = () => {
                           }}
                         >
                           <h6
-                            class="card_title"
+                            className="card_title"
                             style={{
                               paddingTop: "8px",
                               color: "red",
@@ -334,7 +332,7 @@ const Test = () => {
                             Card with an image onnnnnnnnnnnnnnnnnnn
                             ttttttttttttttttttttttttttttttttttttttttttttttttt
                           </h6>
-                          <p class="card_text" style={{ fontSize: "12px" }}>
+                          <p className="card_text" style={{ fontSize: "12px" }}>
                             Tên công ty
                           </p>
                         </div>
@@ -347,19 +345,19 @@ const Test = () => {
                   style={{ textDecoration: "none" }}
                   className="col-lg-6"
                 >
-                  <div class="card mb-0">
-                    <div class="row g-0">
-                      <div class="col-md-3">
+                  <div className="card mb-0">
+                    <div className="row g-0">
+                      <div className="col-md-3">
                         <img
                           src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          class="img-fluid rounded-start"
+                          className="img-fluid rounded-start"
                           alt="..."
                           style={{ padding: "8px" }}
                         />
                       </div>
-                      <div class="col-md-9">
+                      <div className="col-md-9">
                         <div
-                          class="card_body"
+                          className="card_body"
                           style={{
                             display: "grid",
                             marginLeft: "-20px",
@@ -369,7 +367,7 @@ const Test = () => {
                           }}
                         >
                           <h6
-                            class="card_title"
+                            className="card_title"
                             style={{
                               paddingTop: "8px",
                               color: "red",
@@ -379,7 +377,7 @@ const Test = () => {
                             Card with an image onnnnnnnnnnnnnnnnnnn
                             ttttttttttttttttttttttttttttttttttttttttttttttttt
                           </h6>
-                          <p class="card_text" style={{ fontSize: "12px" }}>
+                          <p className="card_text" style={{ fontSize: "12px" }}>
                             Tên công ty
                           </p>
                         </div>
@@ -392,19 +390,19 @@ const Test = () => {
                   style={{ textDecoration: "none" }}
                   className="col-lg-6"
                 >
-                  <div class="card mb-0">
-                    <div class="row g-0">
-                      <div class="col-md-3">
+                  <div className="card mb-0">
+                    <div className="row g-0">
+                      <div className="col-md-3">
                         <img
                           src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          class="img-fluid rounded-start"
+                          className="img-fluid rounded-start"
                           alt="..."
                           style={{ padding: "8px" }}
                         />
                       </div>
-                      <div class="col-md-9">
+                      <div className="col-md-9">
                         <div
-                          class="card_body"
+                          className="card_body"
                           style={{
                             display: "grid",
                             marginLeft: "-20px",
@@ -414,7 +412,7 @@ const Test = () => {
                           }}
                         >
                           <h6
-                            class="card_title"
+                            className="card_title"
                             style={{
                               paddingTop: "8px",
                               color: "red",
@@ -424,7 +422,7 @@ const Test = () => {
                             Card with an image onnnnnnnnnnnnnnnnnnn
                             ttttttttttttttttttttttttttttttttttttttttttttttttt
                           </h6>
-                          <p class="card_text" style={{ fontSize: "12px" }}>
+                          <p className="card_text" style={{ fontSize: "12px" }}>
                             Tên công ty
                           </p>
                         </div>
@@ -437,19 +435,19 @@ const Test = () => {
                   style={{ textDecoration: "none" }}
                   className="col-lg-6"
                 >
-                  <div class="card mb-0">
-                    <div class="row g-0">
-                      <div class="col-md-3">
+                  <div className="card mb-0">
+                    <div className="row g-0">
+                      <div className="col-md-3">
                         <img
                           src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          class="img-fluid rounded-start"
+                          className="img-fluid rounded-start"
                           alt="..."
                           style={{ padding: "8px" }}
                         />
                       </div>
-                      <div class="col-md-9">
+                      <div className="col-md-9">
                         <div
-                          class="card_body"
+                          className="card_body"
                           style={{
                             display: "grid",
                             marginLeft: "-20px",
@@ -459,7 +457,7 @@ const Test = () => {
                           }}
                         >
                           <h6
-                            class="card_title"
+                            className="card_title"
                             style={{
                               paddingTop: "8px",
                               color: "red",
@@ -469,7 +467,7 @@ const Test = () => {
                             Card with an image onnnnnnnnnnnnnnnnnnn
                             ttttttttttttttttttttttttttttttttttttttttttttttttt
                           </h6>
-                          <p class="card_text" style={{ fontSize: "12px" }}>
+                          <p className="card_text" style={{ fontSize: "12px" }}>
                             Tên công ty
                           </p>
                         </div>
@@ -510,10 +508,10 @@ const Test = () => {
                   >
                     {/* <div className="h6 text-semibold">Địa chỉ công ty</div> */}
                     <p className="content-detail">
-                      <i class="bi bi-geo-alt"></i> Đà Nẵng
+                      <i className="bi bi-geo-alt"></i> Đà Nẵng
                     </p>
                     <p className="content-detail">
-                      <i class="bi bi-geo-alt"></i> Đà Nẵng
+                      <i className="bi bi-geo-alt"></i> Đà Nẵng
                     </p>
                   </div>
                   <div className="social-links mt-2"></div>
@@ -530,19 +528,19 @@ const Test = () => {
                   VIỆC LÀM KHÁC CÙNG CÔNG TY
                 </h6>
                 <a href="/" style={{ textDecoration: "none" }}>
-                  <div class="card mb-0">
-                    <div class="row g-0">
-                      <div class="col-md-3">
+                  <div className="card mb-0">
+                    <div className="row g-0">
+                      <div className="col-md-3">
                         <img
                           src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          class="img-fluid rounded-start"
+                          className="img-fluid rounded-start"
                           alt="..."
                           style={{ padding: "8px" }}
                         />
                       </div>
-                      <div class="col-md-9">
+                      <div className="col-md-9">
                         <div
-                          class="card_body"
+                          className="card_body"
                           style={{
                             display: "grid",
                             marginLeft: "-20px",
@@ -552,7 +550,7 @@ const Test = () => {
                           }}
                         >
                           <h6
-                            class="card_title"
+                            className="card_title"
                             style={{
                               paddingTop: "8px",
                               color: "black",
@@ -562,7 +560,7 @@ const Test = () => {
                             Card with an image onnnnnnnnnnnnnnnnnnn
                             ttttttttttttttttttttttttttttttttttttttttttttttttt
                           </h6>
-                          <p class="card_text" style={{ fontSize: "12px" }}>
+                          <p className="card_text" style={{ fontSize: "12px" }}>
                             Tên công ty
                           </p>
                         </div>
@@ -571,19 +569,19 @@ const Test = () => {
                   </div>
                 </a>
                 <a href="/" style={{ textDecoration: "none" }}>
-                  <div class="card mb-0">
-                    <div class="row g-0">
-                      <div class="col-md-3">
+                  <div className="card mb-0">
+                    <div className="row g-0">
+                      <div className="col-md-3">
                         <img
                           src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          class="img-fluid rounded-start"
+                          className="img-fluid rounded-start"
                           alt="..."
                           style={{ padding: "8px" }}
                         />
                       </div>
-                      <div class="col-md-9">
+                      <div className="col-md-9">
                         <div
-                          class="card_body"
+                          className="card_body"
                           style={{
                             display: "grid",
                             marginLeft: "-20px",
@@ -593,7 +591,7 @@ const Test = () => {
                           }}
                         >
                           <h6
-                            class="card_title"
+                            className="card_title"
                             style={{
                               paddingTop: "8px",
                               color: "black",
@@ -603,7 +601,7 @@ const Test = () => {
                             Card with an image onnnnnnnnnnnnnnnnnnn
                             ttttttttttttttttttttttttttttttttttttttttttttttttt
                           </h6>
-                          <p class="card_text" style={{ fontSize: "12px" }}>
+                          <p className="card_text" style={{ fontSize: "12px" }}>
                             Tên công ty
                           </p>
                         </div>
@@ -612,19 +610,19 @@ const Test = () => {
                   </div>
                 </a>
                 <a href="/" style={{ textDecoration: "none" }}>
-                  <div class="card mb-0">
-                    <div class="row g-0">
-                      <div class="col-md-3">
+                  <div className="card mb-0">
+                    <div className="row g-0">
+                      <div className="col-md-3">
                         <img
                           src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          class="img-fluid rounded-start"
+                          className="img-fluid rounded-start"
                           alt="..."
                           style={{ padding: "8px" }}
                         />
                       </div>
-                      <div class="col-md-9">
+                      <div className="col-md-9">
                         <div
-                          class="card_body"
+                          className="card_body"
                           style={{
                             display: "grid",
                             marginLeft: "-20px",
@@ -634,7 +632,7 @@ const Test = () => {
                           }}
                         >
                           <h6
-                            class="card_title"
+                            className="card_title"
                             style={{
                               paddingTop: "8px",
                               color: "black",
@@ -644,7 +642,7 @@ const Test = () => {
                             Card with an image onnnnnnnnnnnnnnnnnnn
                             ttttttttttttttttttttttttttttttttttttttttttttttttt
                           </h6>
-                          <p class="card_text" style={{ fontSize: "12px" }}>
+                          <p className="card_text" style={{ fontSize: "12px" }}>
                             Tên công ty
                           </p>
                         </div>
@@ -653,19 +651,19 @@ const Test = () => {
                   </div>
                 </a>
                 <a href="/" style={{ textDecoration: "none" }}>
-                  <div class="card mb-0">
-                    <div class="row g-0">
-                      <div class="col-md-3">
+                  <div className="card mb-0">
+                    <div className="row g-0">
+                      <div className="col-md-3">
                         <img
                           src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          class="img-fluid rounded-start"
+                          className="img-fluid rounded-start"
                           alt="..."
                           style={{ padding: "8px" }}
                         />
                       </div>
-                      <div class="col-md-9">
+                      <div className="col-md-9">
                         <div
-                          class="card_body"
+                          className="card_body"
                           style={{
                             display: "grid",
                             marginLeft: "-20px",
@@ -675,7 +673,7 @@ const Test = () => {
                           }}
                         >
                           <h6
-                            class="card_title"
+                            className="card_title"
                             style={{
                               paddingTop: "8px",
                               color: "black",
@@ -685,7 +683,7 @@ const Test = () => {
                             Card with an image onnnnnnnnnnnnnnnnnnn
                             ttttttttttttttttttttttttttttttttttttttttttttttttt
                           </h6>
-                          <p class="card_text" style={{ fontSize: "12px" }}>
+                          <p className="card_text" style={{ fontSize: "12px" }}>
                             Tên công ty
                           </p>
                         </div>

@@ -8,12 +8,19 @@ function Footer() {
         <div className="no-padding">
           <div className="container">
             <div className="row">
-              <div className="col-sm-12 col-md-4">
+              <div className="col-sm-12 col-md-12">
                 <div className="footer-widget">
                   <h3 className="widgettitle widget-title text-dark fw-bold">
                     Ứng dụng môi giới việc làm Broker Job
                   </h3>
-                  <div className="textwidget">
+                  <div
+                    className="textwidget"
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
                     <p>
                       <strong className="text-body">Văn phòng Miền Bắc:</strong>{" "}
                       Tầng 3 tòa G1 <br />
@@ -68,7 +75,7 @@ function Footer() {
                   </div>
                 </div>
               </div>
-              <div className="col-sm-3 col-6 col-xs-6 col-md-2">
+              {/* <div className="col-sm-3 col-6 col-xs-6 col-md-2">
                 <div className="footer-widget">
                   <h3
                     className="widgettitle widget-title text-dark fw-bold"
@@ -369,14 +376,14 @@ function Footer() {
                     </ul>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
-        <div className="copyright" style={{ backgroundColor: "#f8f9fa" }}>
+        {/* <div className="copyright" style={{ backgroundColor: "#f8f9fa" }}>
           <div className="container">
             <div className="row">
-              <div className="col-12 col-sm-10">
+              <div className="col-12 col-sm-12">
                 <ul className="list-inline list-unstyled mb-1 text-primary">
                   <li className="list-inline-item">
                     <a
@@ -402,7 +409,6 @@ function Footer() {
                       <u>Giải quyết tranh chấp</u>
                     </a>
                   </li>
-                  {/*<li><a href="https://jobsgo.vn/site/term-of-service" title="Điều khoản sử dụng">Điều khoản</a></li>*/}
                   <li className="list-inline-item">
                     <a
                       href="https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fjobsgo.vn%2Fjobsgo_thoa_thuan_mang_xa_hoi.doc&wdOrigin=BROWSELINK"
@@ -505,7 +511,7 @@ function Footer() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </footer>
     </>
   );

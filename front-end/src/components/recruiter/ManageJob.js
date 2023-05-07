@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import "../../assets/css/style.css";
-import "../../assets/vendor/bootstrap/css/bootstrap.min.css";
-import "../../assets/vendor/bootstrap-icons/bootstrap-icons.css";
 
 const ManageJob = () => {
   const [job, setJob] = useState("");

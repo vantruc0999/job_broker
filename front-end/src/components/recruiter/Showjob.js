@@ -3,9 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Example from "../candidate/Example";
-import "../../assets/css/style.css";
-import "../../assets/vendor/bootstrap/css/bootstrap.min.css";
-import "../../assets/vendor/bootstrap-icons/bootstrap-icons.css";
 
 const Showjob = () => {
   let params = useParams();

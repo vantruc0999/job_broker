@@ -5,7 +5,6 @@ import Sidebar from "./components/common/Sidebar";
 import HeaderRe from "./components/common/HeaderRe";
 import HomeRe from "./components/recruiter/HomeRe";
 import ManageJob from "./components/recruiter/ManageJob";
-import Navbar from "./components/admin/Navbar";
 
 function App(props) {
   let param1 = useLocation();

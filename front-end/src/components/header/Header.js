@@ -224,7 +224,7 @@ function Header() {
           className="header fixed-top d-flex align-items-center"
         >
           <div className="d-flex align-items-center justify-content-between">
-            <Link to="/recruiter">
+            <Link to="/">
               <a href="index.html" className="logo d-flex align-items-center">
                 <span className="d-none d-lg-block">JobBroker</span>
               </a>
@@ -372,7 +372,7 @@ function Header() {
                   </li>
 
                   <li>
-                    <Link to="/recruiter/profile">
+                    <Link to="/homeRecruiter">
                       <a
                         className="dropdown-item d-flex align-items-center"
                         href="/"

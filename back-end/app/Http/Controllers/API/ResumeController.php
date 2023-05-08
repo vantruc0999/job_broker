@@ -23,7 +23,7 @@ class ResumeController extends Controller
         //
         $candidate_id = auth()->user()['candidate_id'];
         $resume = Resume::select('resume_name', 'resume_id', 'public_status')
-                        ->where('candidate_id', $candidate_id)->get();
+            ->where('candidate_id', $candidate_id)->get();
         // $resume_id = [];
         // $resume->each(function($item) use (&$resume_id){
         //     $resume_id[] = $item->resume_id;
@@ -238,7 +238,11 @@ class ResumeController extends Controller
                 'message' => 'Your resume has been considered in a job',
             ]);
         }
+        $resume_name = $request->resume['resume_name'];
         $education = $request->resume['education'];
+        $education_year = $request->resume['education_year'];
+        $education_major = $request->resume['education_major'];
+        $education_description = $request->resume['education_description'];
         $certificate = $request->resume['certificate'];
         $image = $request->resume['image'];
 
@@ -246,7 +250,16 @@ class ResumeController extends Controller
         $experience_company = $request->resume['experience_company'];
         $skills = $request->resume['skills'];
 
-        self::updateResume($education, $certificate, $image, $id);
+        self::updateResume(
+            $resume_name,
+            $education,
+            $education_year,
+            $education_major,
+            $education_description,
+            $certificate,
+            $image,
+            $id
+        );
         self::deleteExperience($id);
         self::deleteResumeSkill($id);
 
@@ -261,10 +274,22 @@ class ResumeController extends Controller
         ]);
     }
 
-    private static function updateResume($education, $certificate, $image, $id)
-    {
+    private static function updateResume(
+        $resume_name,
+        $education,
+        $education_year,
+        $education_major,
+        $education_description,
+        $certificate,
+        $image,
+        $id
+    ) {
         $resume = Resume::where('resume_id', '=', $id)->update([
+            'resume_name' => $resume_name,
             'education' => $education,
+            'education_year' => $education_year,
+            'education_major' => $education_major,
+            'education_description' => $education_description,
             'certificate' => $certificate,
             'image' => $image,
         ]);

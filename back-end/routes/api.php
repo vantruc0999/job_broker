@@ -48,17 +48,24 @@ Route::get('jobs', [JobController::class, 'getAllJobsForAllUser']);
 //View all programming skills
 Route::get('skills', [SkillController::class, 'index']);
 
+
+Route::get('jobs-by-skills/{id}', [JobController::class, 'getJobsByProgrammingSkills']);
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::post('logout', [AdminAuthController::class, 'logout']);
+
         Route::post('add-package', [PackageController::class, 'store']);
         Route::post('update-package/{id}', [PackageController::class, 'update']);
         Route::get('package-detail/{id}', [PackageController::class, 'show']);
         Route::get('package', [PackageController::class, 'index']);
+
         Route::post('add-skill', [SkillController::class, 'store']);
         Route::post('update-skill/{id}', [SkillController::class, 'update']);
+
         Route::post('accept-job/{id}', [JobController::class, 'approveJobRequest']);
         Route::post('decline-job/{id}', [JobController::class, 'declineJobRequest']);
+
         Route::get('waiting-jobs', [JobController::class, 'getAllJobsOnWaiting']);
     });
 
@@ -91,7 +98,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('candidate')->group(function () {
         Route::post('logout', [CandidateAuthController::class, 'logout']);
+
         Route::get('get-candidate-infor',[CandidateAuthController::class, 'getCandidateInfor']);
+
         Route::post('create-cv', [ResumeController::class, 'handleCreateResume']);
         Route::get('show-all', [ResumeController::class, 'index']);
         Route::get('show-detail/{id}', [ResumeController::class, 'show']);

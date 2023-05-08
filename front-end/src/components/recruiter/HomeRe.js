@@ -5,9 +5,8 @@ import Sidebar from "../common/Sidebar";
 const HomeRe = () => {
   return (
     <div>
-      <HeaderRe></HeaderRe>
-      <Sidebar></Sidebar>
-      <main id="main" className="main">
+      {/* <Sidebar></Sidebar> */}
+      <main id="main" className="main" style={{ minHeight: "665px" }}>
         <div className="pagetitle">
           <h1>Hello các bạn</h1>
           <nav>

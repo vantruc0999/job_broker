@@ -16,7 +16,7 @@ function MyCV() {
         Accept: "application/json",
       },
     };
-    console.log("1", config);
+    console.log(user.token);
     axios
       .get(`http://127.0.0.1:8000/api/candidate/show-all`, config)
       .then((res) => {
@@ -24,7 +24,7 @@ function MyCV() {
         setCv(res.data.resume);
       });
   }, []);
-
+  console.log("allCV",cv);
   const renderResume = () => {
     if (Object.keys(cv).length > 0) {
       return cv.map((value, key) => {

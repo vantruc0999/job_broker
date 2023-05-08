@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import "../../assets/css/style.css";
+import "../../assets/css/bootstrap_min.css";
 import Example from "../candidate/Example";
 
 const Test = () => {
@@ -210,7 +212,8 @@ const Test = () => {
                       Địa điểm làm việc
                     </p>
                     <div className="content-detail">
-                      <i className="bi bi-geo-alt"></i> {detailJob.job_location}
+                      <i class="fas fa-map-marker-alt mr-1"></i>
+                      {detailJob.job_location}
                     </div>
                   </div>
 
@@ -315,7 +318,7 @@ const Test = () => {
                           className="card_body"
                           style={{
                             display: "grid",
-                            marginLeft: "-20px",
+                            marginLeft: "-10px",
                             overflow: "hidden",
                             width: "100%",
                             whiteSpace: "nowrap",
@@ -360,7 +363,7 @@ const Test = () => {
                           className="card_body"
                           style={{
                             display: "grid",
-                            marginLeft: "-20px",
+                            marginLeft: "-10px",
                             overflow: "hidden",
                             width: "100%",
                             whiteSpace: "nowrap",
@@ -405,7 +408,7 @@ const Test = () => {
                           className="card_body"
                           style={{
                             display: "grid",
-                            marginLeft: "-20px",
+                            marginLeft: "-10px",
                             overflow: "hidden",
                             width: "100%",
                             whiteSpace: "nowrap",
@@ -450,7 +453,7 @@ const Test = () => {
                           className="card_body"
                           style={{
                             display: "grid",
-                            marginLeft: "-20px",
+                            marginLeft: "-10px",
                             overflow: "hidden",
                             width: "100%",
                             whiteSpace: "nowrap",
@@ -508,10 +511,7 @@ const Test = () => {
                   >
                     {/* <div className="h6 text-semibold">Địa chỉ công ty</div> */}
                     <p className="content-detail">
-                      <i className="bi bi-geo-alt"></i> Đà Nẵng
-                    </p>
-                    <p className="content-detail">
-                      <i className="bi bi-geo-alt"></i> Đà Nẵng
+                      <i className="fas fa-map-marker-alt mr-1"></i> Đà Nẵng
                     </p>
                   </div>
                   <div className="social-links mt-2"></div>
@@ -543,7 +543,7 @@ const Test = () => {
                           className="card_body"
                           style={{
                             display: "grid",
-                            marginLeft: "-20px",
+                            marginLeft: "-10px",
                             overflow: "hidden",
                             width: "100%",
                             whiteSpace: "nowrap",
@@ -584,7 +584,7 @@ const Test = () => {
                           className="card_body"
                           style={{
                             display: "grid",
-                            marginLeft: "-20px",
+                            marginLeft: "-10px",
                             overflow: "hidden",
                             width: "100%",
                             whiteSpace: "nowrap",
@@ -625,7 +625,7 @@ const Test = () => {
                           className="card_body"
                           style={{
                             display: "grid",
-                            marginLeft: "-20px",
+                            marginLeft: "-10px",
                             overflow: "hidden",
                             width: "100%",
                             whiteSpace: "nowrap",
@@ -666,7 +666,7 @@ const Test = () => {
                           className="card_body"
                           style={{
                             display: "grid",
-                            marginLeft: "-20px",
+                            marginLeft: "-10px",
                             overflow: "hidden",
                             width: "100%",
                             whiteSpace: "nowrap",

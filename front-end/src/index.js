@@ -25,9 +25,14 @@ import MyCV from "./components/candidate/MyCV";
 import Test2 from "./components/candidate/Test2";
 import ManageCan from "./components/recruiter/ManageCan";
 // import AdminHome from "./components/admin/AdminHome";
-import AdminIndex from "./components/admin/AdminIndex";
+import AdminIndex from "./components/admin/AdminJob";
 import Sidebar from "./components/recruiter/Sidebar";
 import SidebarAdmin from "./components/admin/SidebarAdmin";
+import LoginAdmin from "./components/authen/LoginAdmin";
+import AdminHome from "./components/admin/AdminHome";
+import AdminJob from "./components/admin/AdminJob";
+import AdminCV from "./components/admin/AdminCV";
+import Package from "./components/admin/Package";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -60,7 +65,14 @@ root.render(
             <Route path="/job/:id" element={<Test />} />
             <Route path="/managecan" element={<ManageCan />} />
             {/* admin */}
-            <Route path="/homeadmin" element={<SidebarAdmin />} />
+            <Route path="/loginadmin" element={<LoginAdmin />} />
+            <Route path="/adminhome" element={<AdminHome />} />
+            <Route path="/adminjob" element={<AdminJob />} />
+            <Route path="/adminjob/job/:id" element={<Test />} />
+            <Route path="/admincv" element={<AdminCV />} />
+            <Route path="/admincv/fileCV/:id" element={<FileCV />} />
+            <Route path="/package" element={<Package />} />
+
           </Routes>
         </App>
       </Router>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Navigate, useNavigate } from "react-router-dom";
+import "../../assets/css/authen.css";
 
 function Login() {
   const [inputs, setInputs] = useState("");
@@ -87,6 +88,7 @@ function Login() {
       setErrors({});
     }
   };
+
   return (
     <>
       <div className="auth-form auth-form__login" style={{ marginTop: 150 }}>

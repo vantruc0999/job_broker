@@ -121,7 +121,7 @@ const ManageJob = () => {
   return (
     <div>
       <Sidebar />
-      <main id="main" className="main">
+      <main id="main" className="main" style={{ minHeight: "665px" }}>
         <section className="section">
           <div className="row">
             <div className="col-lg-12">

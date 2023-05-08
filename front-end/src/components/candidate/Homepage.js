@@ -126,7 +126,9 @@ function Homepage() {
             style={{ padding: "10px 0" }}
           >
             <div className="col-8">
-              <h6 style={{fontWeight:500, fontSize:18}}>Phân tích CV - BrokerAI</h6>
+              <h6 style={{ fontWeight: 500, fontSize: 18 }}>
+                Phân tích CV - BrokerAI
+              </h6>
               <p>Bạn đã có sẵn CV? Tải lên để nhận phân tích CV.</p>
               <button className="btn btn-primary" type="button">
                 <i className="fa-solid fa-file-arrow-up mr-3" />
@@ -146,7 +148,7 @@ function Homepage() {
             style={{ padding: "10px 0" }}
           >
             <div className="col-8">
-              <h6 style={{fontWeight:500, fontSize:18}}>Tạo CV ấn tượng</h6>
+              <h6 style={{ fontWeight: 500, fontSize: 18 }}>Tạo CV ấn tượng</h6>
               <p>Tạo CV online xin việc chuẩn, đẹp miễn phí.</p>
               <Link to="/createCV">
                 <button className="btn btn-primary" type="button">
@@ -170,24 +172,28 @@ function Homepage() {
       {/* Urgent Hiring */}
       <div
         className="container-fluid"
-        style={{ backgroundColor: "#f8f9fa",paddingLeft:"124.5px",paddingBottom:20 }}
+        style={{
+          backgroundColor: "#f8f9fa",
+          paddingLeft: "124.5px",
+          paddingBottom: 20,
+        }}
       >
         <div className="job_urgent">
-          <h3 style={{ paddingTop: 20,marginLeft:33 }}>Việc tuyển gấp</h3>
-          <div
-            className="row d-flex "
-            style={{ margin: "0 auto" }}
-          >
+          <h3 style={{ paddingTop: 20, marginLeft: 33 }}>Việc tuyển gấp</h3>
+          <div className="row d-flex " style={{ margin: "0 auto" }}>
             {/* List Job */}
             {jobs.length > 0 &&
               jobs.map((job) => {
                 console.log(job);
                 return (
                   <div
-                    className="urgentHiring mr-3" 
-                    style={{ padding: "0",width:400 }}
+                    className="urgentHiring mr-3"
+                    style={{ padding: "0", width: 400 }}
                   >
-                    <Link to={"/job/" + job.job_id} style={{ display: "flex",textDecoration:"none" }}>
+                    <Link
+                      to={"/job/" + job.job_id}
+                      style={{ display: "flex", textDecoration: "none" }}
+                    >
                       <div className="col-3">
                         <img
                           src={Logo}
@@ -206,7 +212,7 @@ function Homepage() {
                         <p>{job.company_name}</p>
                         <ul class="p-0">
                           <li class="list-group-item list-group-item-action">
-                            <i class="fa-solid fa-location-dot"></i> Hà Nội...
+                            <i class="fas fa-map-marker-alt mr-1"></i> Hà Nội...
                           </li>
                           <li class="list-group-item list-group-item-action">
                             <i class="fa-regular fa-clock"></i> 21/05/2023

@@ -83,7 +83,7 @@ const ManageCan = () => {
   return (
     <div>
       <Sidebar />
-      <main id="main" className="main">
+      <main id="main" className="main" style={{ minHeight: "665px" }}>
         <section className="section">
           <div className="row">
             <div className="col-lg-12">
@@ -119,7 +119,7 @@ const ManageCan = () => {
                       >
                         Bộ lọc ứng viên
                         <i
-                          className="bi bi-arrow-down-circle"
+                          className="fas fa-arrow-circle-right"
                           style={{ marginLeft: "10px" }}
                         ></i>
                       </button>
@@ -134,9 +134,7 @@ const ManageCan = () => {
                         <form className="row g-12" style={{ display: "grid" }}>
                           <div className="form" style={{ display: "flex" }}>
                             <div className="col-md-3 margin">
-                              <label className="form-label">
-                                Ngành nghề chuyên môn
-                              </label>
+                              <label>Ngành nghề chuyên môn</label>
 
                               <select
                                 className="form-select"
@@ -152,7 +150,7 @@ const ManageCan = () => {
                               </select>
                             </div>
                             <div className="col-md-3 margin">
-                              <label className="form-label">Kỹ năng mềm</label>
+                              <label>Kỹ năng mềm</label>
                               <select
                                 className="form-select"
                                 aria-label="Default select example"
@@ -165,7 +163,7 @@ const ManageCan = () => {
                               </select>
                             </div>
                             <div className="col-md-3 margin">
-                              <label className="form-label">Ngôn ngữ</label>
+                              <label>Ngôn ngữ</label>
                               <select
                                 className="form-select"
                                 aria-label="Default select example"
@@ -178,7 +176,7 @@ const ManageCan = () => {
                               </select>
                             </div>
                             <div className="col-md-3 margin">
-                              <label className="form-label">Bằng cấp</label>
+                              <label>Bằng cấp</label>
                               <select
                                 className="form-select"
                                 aria-label="Default select example"
@@ -193,12 +191,12 @@ const ManageCan = () => {
                           </div>
 
                           <div
-                            className="form-label"
                             style={{
                               display: "flex",
                               justifyContent: "space-between",
                               width: "60%",
                               marginLeft: "10px",
+                              marginTop: "10px",
                             }}
                           >
                             <label>Hiển thị: </label>

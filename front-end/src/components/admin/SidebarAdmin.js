@@ -1,10 +1,6 @@
 import "../../assets/css/adminlte.min.css";
 
 function SidebarAdmin() {
-  return (
-    <>
-      
-    </>
-  );
+  return <></>;
 }
 export default SidebarAdmin;

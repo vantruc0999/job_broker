@@ -54,9 +54,9 @@ function PayPalButton(props) {
           formData.append("package_id", product.id);
           formData.append("payment_id", order.id);
           formData.append("status", order.status);
-          formData.append("status", order.payer.email_address);
+          formData.append("payer_id", order.payer.payer_id);
+          formData.append("payer_email", order.payer.email_address);
        
-          console.log(product.id + order.id + order.status);
 
           let user = JSON.parse(localStorage.getItem("user"));
           let config = {

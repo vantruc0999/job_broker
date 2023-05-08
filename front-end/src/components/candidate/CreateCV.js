@@ -21,6 +21,7 @@ const arraySkill2 = [
   { value: 4, label: "Tiếng Nga" },
 ];
 function CreateCV() {
+  const navigate = useNavigate();
   const tx = document.getElementById("exp_input");
   if (tx) {
     tx.setAttribute(
@@ -261,11 +262,11 @@ function CreateCV() {
           <div className="content_form" style={{ marginTop: "30px" }}>
             <div className="addition">
               <i
-                class="fa-regular fa-square-plus mr-1"
+                class="fa fa-plus mr-1"
                 onClick={handleAddCer}
               ></i>
               <i
-                class="fa-regular fa-square-minus"
+                class="fa fa-minus"
                 onClick={() => handleRemoveCer(index)}
               ></i>
             </div>
@@ -509,11 +510,11 @@ function CreateCV() {
           <div className="content_form" style={{ marginTop: "30px" }}>
             <div className="addition">
               <i
-                class="fa-regular fa-square-plus mr-1"
+                class="fa fa-plus mr-1"
                 onClick={handleAddExp}
               ></i>
               <i
-                class="fa-regular fa-square-minus"
+                class="fa fa-minus"
                 onClick={() => handleRemoveExp(index)}
               ></i>
             </div>
@@ -609,10 +610,15 @@ function CreateCV() {
     axios
       .post("http://127.0.0.1:8000/api/candidate/create-cv", object, config)
       .then((res) => {
-        console.log(res.data);
-        if (res.data.errCode == 0) {
-          alert("Update succesful");
+        if(res.data.status == "200"){
+          alert("Bạn đã tạo CV thành công")
+          navigate("/homeCandidate")
         }
+        console.log(res.data.status);
+        // if (res.data.errCode == 0) {
+
+        //   alert("Update succesful");
+        // }
       });
 
     console.log(resume);

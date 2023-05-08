@@ -25,37 +25,40 @@ function AdminCV() {
   console.log(cv);
   const renderCvAll = () => {
     if (Object.keys(cv).length > 0) {
-        console.log(cv);
+      console.log(cv);
       return cv.map((value, key) => {
         return (
           <>
-             <tbody>
-                  <tr>
-                    <td>
-                      <img
-                        alt="Avatar"
-                        className="table-avatar"
-                        src="https://ctp.edu.vn/wp-content/uploads/2022/05/anh-meo-cute-doi-mu-long-tai-tho-600x600.jpg"
-                      />
-                    </td>
-                    <td>{value.resume_name}</td>
-                    <td>DTU</td>
-                    <td>
-                      <span className="badge badge-success">Success</span>
-                    </td>
-                    <td>GPA: 3.4</td>
-                    <td className="project-actions text-right">
-                      <Link to={"/admincv/fileCV/" + value.resume_id}  className="btn btn-primary btn-sm" >
-                        <i className="fas fa-folder"> </i>
-                        Xem chi tiết
-                      </Link>
-                      <a className="btn btn-danger btn-sm" href="#">
-                        <i className="fas fa-trash"> </i>
-                        Xóa
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
+            <tbody>
+              <tr>
+                <td>
+                  <img
+                    alt="Avatar"
+                    className="table-avatar"
+                    src="https://ctp.edu.vn/wp-content/uploads/2022/05/anh-meo-cute-doi-mu-long-tai-tho-600x600.jpg"
+                  />
+                </td>
+                <td>{value.resume_name}</td>
+                <td>DTU</td>
+                <td>
+                  <span className="badge badge-success">Success</span>
+                </td>
+                <td>GPA: 3.4</td>
+                <td className="project-actions text-right">
+                  <Link
+                    to={"/admincv/fileCV/" + value.resume_id}
+                    className="btn btn-primary btn-sm"
+                  >
+                    <i className="fas fa-folder"> </i>
+                    Xem chi tiết
+                  </Link>
+                  <a className="btn btn-danger btn-sm" href="#">
+                    <i className="fas fa-trash"> </i>
+                    Xóa
+                  </a>
+                </td>
+              </tr>
+            </tbody>
           </>
         );
       });
@@ -63,7 +66,7 @@ function AdminCV() {
   };
   return (
     <>
-      <div className="content-wrapper" style={{ minHeight: "1604.8px" }}>
+      <div className="content-wrapper" style={{ minHeight: "665px" }}>
         {/* Content Header (Page header) */}
         <section className="content-header">
           <div className="container-fluid">
@@ -117,7 +120,7 @@ function AdminCV() {
                     <th />
                   </tr>
                 </thead>
-               {renderCvAll()}
+                {renderCvAll()}
               </table>
             </div>
             {/* /.card-body */}

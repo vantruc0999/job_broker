@@ -2,6 +2,9 @@ import React from "react";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+// import "../../assets/css/showjob.css";
+import "../../assets/css/style.css";
+import "../../assets/css/bootstrap_min.css";
 import Example from "../candidate/Example";
 const Test = () => {
   let params = useParams();

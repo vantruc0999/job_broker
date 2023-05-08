@@ -4,6 +4,7 @@ import axios from "axios";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useNavigate } from "react-router-dom";
+import "../../assets/css/inputCV.css";
 
 const animatedComponents = makeAnimated();
 
@@ -626,133 +627,8 @@ function CreateCV() {
           style={{ display: "flex", flexDirection: "column" }}
         >
           <div className="col-9" style={{ margin: "0 auto" }}>
-            {/* <div className="row">
-              <div
-                className="col-3"
-                style={{ backgroundColor: "#434e5e", padding: 0 }}
-              >
-                <img src={Logo} alt="" style={{ width: 250, height: 250 }} />
-              </div>
-              <div
-                className="col-9"
-                style={{
-                  padding: 0,
-                  backgroundColor: "#434e5e",
-                  marginLeft: "-4%",
-                  color: "#fff",
-                }}
-              >
-                <div className="d-flex inputcv">
-                  <div
-                    className="col-8 d-flex flex-column"
-                    style={{ padding: 0 }}
-                  >
-                    <div
-                      style={{
-                        fontSize: 12,
-                        color: "#fff",
-                        paddingTop: "10px",
-                      }}
-                    >
-                      <h3>THANG NGUYEN</h3>
-                      <div style={{ width: "30%" }}>
-                        <div className="mt-3">
-                          <input
-                            style={{ width: "100%", height: 30, padding: 5 }}
-                            type="text"
-                            placeholder="Vị trí mong muốn"
-                            name="position"
-                            onChange={handleInput}
-                          />
-                        </div>
-                        <div className="mt-3">
-                          <i className="fa-regular fa-envelope"> </i>
-                          <input
-                            style={{ width: "90%" }}
-                            type="text"
-                            name="email"
-                            placeholder="email@gmail.com"
-                            onChange={handleInput}
-                          />
-                        </div>
-                        <div className="mt-3">
-                          <i className="fa-solid fa-phone" />
-                          <input
-                            style={{ width: "90%" }}
-                            type="text"
-                            name="phone"
-                            placeholder="Số điện thoại"
-                            onChange={handleInput}
-                          />
-                        </div>
-                        <div className="mt-3">
-                          <i className="fa-solid fa-cake-candles" />
-                          <input
-                            style={{ width: "90%" }}
-                            type="text"
-                            placeholder="Ngày sinh"
-                            name="birthday"
-                            onChange={handleInput}
-                          />
-                        </div>
-                        <div className="mt-3">
-                          <i className="fa-solid fa-location-dot" />
-                          <input
-                            style={{ width: "90%" }}
-                            type="text"
-                            placeholder="Địa chỉ"
-                            name="address"
-                            onChange={handleInput}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-4 d-flex flex-column">
-                    <div className="pt-4">
-                      <i
-                        style={{ fontSize: 22, marginRight: 5 }}
-                        className="fa-brands fa-linkedin"
-                      />
-                      <input
-                        style={{ width: "90%" }}
-                        type="text"
-                        placeholder="linkedin.com/..."
-                        name="linked"
-                        onChange={handleInput}
-                      />
-                    </div>
-                    <div className="pt-4">
-                      <i
-                        style={{ fontSize: 22, marginRight: 4 }}
-                        className="fa-brands fa-facebook"
-                      />
-                      <input
-                        style={{ width: "90%" }}
-                        type="text"
-                        placeholder="linkedin.com/..."
-                        name="faceboook"
-                        onChange={handleInput}
-                      />
-                    </div>
-                    <div className="pt-4">
-                      <i
-                        style={{ fontSize: 22, marginRight: 5 }}
-                        className="fa-brands fa-skype"
-                      />
-                      <input
-                        style={{ width: "90%" }}
-                        type="text"
-                        placeholder="linkedin.com/..."
-                        name="skyline"
-                        onChange={handleInput}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-            <div className="row" style={{ padding: "50px 0" }}>
+           
+            <div className="row" style={{ margin: "50px 0",boxShadow:"5px 5px 5px 5px"  }}>
               <div
                 className="col-4 "
                 style={{ background: "#0bb5f4", padding: "0" }}
@@ -780,15 +656,7 @@ function CreateCV() {
                     <div>
                       <div className="email">
                         <i className="fa-regular fa-envelope mr-2 "> </i>
-                        {/* <input
-                          id="emailSummary"
-                          type="text"
-                          name="email"
-                          placeholder="email@gmail.com"
-                          value={summary.email}
-                          onChange={handleInput}
-                          style={{ width: "60%" }}
-                        /> */}
+                       
                         <textarea
                           id="emailSummary"
                           type="text"

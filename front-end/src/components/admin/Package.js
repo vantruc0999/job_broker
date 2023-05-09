@@ -38,10 +38,13 @@ function Package() {
                 <td>{value.exp_time} Năm</td>
                 <td className="text-right py-0 align-middle">
                   <div className="btn-group btn-group-sm">
-                    <a href="#" className="btn btn-info">
+                    <a href="/" className="btn btn-info">
                       <i className="fas fa-eye" />
                     </a>
-                    <a href="#" className="btn btn-danger">
+                    <a href="/" className="btn btn-primary">
+                      <i className="fas fa-edit" />
+                    </a>
+                    <a href="/" className="btn btn-danger">
                       <i className="fas fa-trash" />
                     </a>
                   </div>
@@ -56,6 +59,20 @@ function Package() {
   return (
     <>
       <div classname="content-wrapper" style={{ minHeight: "665px" }}>
+        <section className="content-header">
+          <div className="container-fluid">
+            <div className="row mb-2">
+              <div className="col-sm-12">
+                <ol className="breadcrumb float-sm-right">
+                  <li className="breadcrumb-item">
+                    <a href="#">Home</a>
+                  </li>
+                  <li className="breadcrumb-item active">Gói dịch vụ</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
         <section className="content" style={{ float: "right", width: "83%" }}>
           <div className="card">
             <div className="card-header">

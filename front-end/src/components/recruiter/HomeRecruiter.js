@@ -4,8 +4,8 @@ import Sidebar from "./Sidebar";
 const HomeRe = () => {
   return (
     <>
-      <Sidebar/>
-      <main id="main" class="main">
+      <Sidebar />
+      <main id="main" class="main" style={{ minHeight: "665px" }}>
         <div class="pagetitle">
           <h1>Hello các bạn</h1>
           <nav>
@@ -18,156 +18,37 @@ const HomeRe = () => {
           </nav>
         </div>
         <section class="section dashboard">
-          <div class="row">
-            <div class="col-lg-12">
+          <div className="row">
+            <div className="col-lg-12">
               <div class="row">
-                <div class="col-xxl-4 col-md-4">
-                  <div class="card info-card sales-card">
-                    <div class="filter">
-                      <a class="icon" href="/" data-bs-toggle="dropdown">
-                        <i class="bi bi-three-dots"></i>
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start">
-                          <h6>Lọc</h6>
-                        </li>
+                <div class="col-lg-3 col-6">
+                  <div class="small-box bg-info">
+                    <div class="inner">
+                      <h3>15</h3>
 
-                        <li>
-                          <a class="dropdown-item" href="/">
-                            Ngày
-                          </a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="/">
-                            Tháng
-                          </a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="/">
-                            Năm
-                          </a>
-                        </li>
-                      </ul>
+                      <p>Tin tuyển dụng</p>
                     </div>
-
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        Tin tuyển dụng <span>| Ngày</span>
-                      </h5>
-
-                      <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                          <i class="bi bi-newspaper"></i>
-                        </div>
-                        <div class="ps-3">
-                          <h6>12</h6>
-                          <span class="text-success small pt-1 fw-bold">
-                            12%
-                          </span>
-                          <span class="text-muted small pt-2 ps-1">
-                            tăng trưởng
-                          </span>
-                        </div>
-                      </div>
+                    <div class="icon">
+                      <i class="fas fa-file"></i>
                     </div>
+                    <a href="/manageJob" class="small-box-footer">
+                      Xem chi tiết <i class="fas fa-arrow-circle-right"></i>
+                    </a>
                   </div>
                 </div>
+                <div class="col-lg-3 col-6">
+                  <div class="small-box bg-success">
+                    <div class="inner">
+                      <h3>53</h3>
 
-                <div class="col-xxl-4 col-md-4">
-                  <div class="card info-card revenue-card">
-                    <div class="filter">
-                      <a class="icon" href="/" data-bs-toggle="dropdown">
-                        <i class="bi bi-three-dots"></i>
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start">
-                          <h6>Lọc</h6>
-                        </li>
-
-                        <li>
-                          <a class="dropdown-item" href="/">
-                            Ngày
-                          </a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="/">
-                            Tháng
-                          </a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="/">
-                            Năm
-                          </a>
-                        </li>
-                      </ul>
+                      <p>Ứng viên</p>
                     </div>
-
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        Tin nhắn <span>| Ngày</span>
-                      </h5>
-
-                      <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                          <i class="bi bi-messenger"></i>
-                        </div>
-                        <div class="ps-3">
-                          <h6>5</h6>
-                        </div>
-                      </div>
+                    <div class="icon">
+                      <i class="fas fa-user-plus"></i>
                     </div>
-                  </div>
-                </div>
-
-                <div class="col-xxl-4 col-md-4">
-                  <div class="card info-card customers-card">
-                    <div class="filter">
-                      <a class="icon" href="/" data-bs-toggle="dropdown">
-                        <i class="bi bi-three-dots"></i>
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li class="dropdown-header text-start">
-                          <h6>Lọc</h6>
-                        </li>
-
-                        <li>
-                          <a class="dropdown-item" href="/">
-                            Ngày
-                          </a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="/">
-                            Tháng
-                          </a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="/">
-                            Năm
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        Hồ sơ ứng tuyển <span>| Ngày</span>
-                      </h5>
-
-                      <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                          <i class="bi bi-people"></i>
-                        </div>
-                        <div class="ps-3">
-                          <h6>12</h6>
-                          <span class="text-danger small pt-1 fw-bold">
-                            12%
-                          </span>
-                          <span class="text-muted small pt-2 ps-1">
-                            tăng trưởng
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                    <a href="/managecan" class="small-box-footer">
+                      Xem chi tiết <i class="fas fa-arrow-circle-right"></i>
+                    </a>
                   </div>
                 </div>
               </div>

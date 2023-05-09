@@ -56,19 +56,19 @@ function HandleCV() {
           style={{ width: "100%", textAlign: "center" }}
         >
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-dashboard" /> Bảng tin
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-primary"
           >
             <i className="fa fa-upload" /> Tải lên CV có sẵn
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-list-alt" /> Hoàn thiện CV
@@ -89,19 +89,19 @@ function HandleCV() {
             </div>
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-exclamation-triangle" /> Sửa lỗi CV
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-line-chart" /> CV của bạn
           </a>
           <a
-            href=""
+            href="/"
             target="_blank"
             className="border-primary text-uppercase text-bold btn  btn-default"
           >

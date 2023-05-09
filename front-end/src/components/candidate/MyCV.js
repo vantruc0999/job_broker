@@ -24,13 +24,13 @@ function MyCV() {
         setCv(res.data.resume);
       });
   }, []);
-  console.log("allCV",cv);
+  console.log("allCV", cv);
   const renderResume = () => {
     if (Object.keys(cv).length > 0) {
       return cv.map((value, key) => {
         return (
           <>
-            <div
+            {/* <div
               className="allcv col d-flex"
               style={{ padding: "0", height: "140px", width: "32%" }}
             >
@@ -61,6 +61,47 @@ function MyCV() {
                   </li>
                 </ul>
               </div>
+            </div> */}
+            <div className="col-md-3">
+              <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
+                  <div class="text-center">
+                    <img
+                      class=""
+                      src={Logo2}
+                      alt=""
+                      style={{ maxWidth: "80px", borderRadius: "50%" }}
+                    />
+                  </div>
+                  <h3 class="profile-username text-center">
+                    {value.resume_name}
+                  </h3>
+                  <p class=" text-center">Tên CV</p>
+                  <div
+                    class="list-group-item"
+                    style={{ fontSize: "14px", marginBottom: "10px" }}
+                  >
+                    <b>Trạng thái</b>{" "}
+                    <p class="float-right">{value.public_status}</p>
+                  </div>
+                  <Link to={"/allCV/fileCV/" + value.resume_id}>
+                    <a
+                      href="/"
+                      class="btn btn-primary btn-block"
+                      style={{ margin: "10px 0" }}
+                    >
+                      <b>Xem</b>
+                    </a>
+                  </Link>
+
+                  <a href="/" class="btn btn-success btn-block">
+                    <b>Chỉnh sửa</b>
+                  </a>
+                  <a href="/" class="btn btn-danger btn-block">
+                    <b>Xóa</b>
+                  </a>
+                </div>
+              </div>
             </div>
           </>
         );
@@ -75,19 +116,19 @@ function MyCV() {
           style={{ width: "100%", textAlign: "center" }}
         >
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-dashboard" /> Bảng tin
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-upload" /> Tải lên CV có sẵn
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-list-alt" /> Hoàn thiện CV
@@ -108,19 +149,19 @@ function MyCV() {
             </div>
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-exclamation-triangle" /> Sửa lỗi CV
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-primary"
           >
             <i className="fa fa-line-chart" /> CV của bạn
           </a>
           <a
-            href=""
+            href="/"
             target="_blank"
             className="border-primary text-uppercase text-bold btn  btn-default"
           >
@@ -134,10 +175,7 @@ function MyCV() {
         >
           <div className="job_cv">
             <h3 style={{ paddingTop: 20 }}>CV của bạn</h3>
-            <div
-              className="row justify-content-between"
-              style={{ margin: "20px auto" }}
-            >
+            <div className="row" style={{ margin: "20px auto" }}>
               {renderResume()}
             </div>
           </div>

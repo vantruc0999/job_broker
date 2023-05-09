@@ -131,7 +131,7 @@ function Homepage() {
               </h6>
               <p>Bạn đã có sẵn CV? Tải lên để nhận phân tích CV.</p>
               <button className="btn btn-primary" type="button">
-                <i className="fa-solid fa-file-arrow-up mr-3" />
+                <i className="fas fa-file mr-2" />
                 Tải lên CV
               </button>
             </div>
@@ -152,7 +152,7 @@ function Homepage() {
               <p>Tạo CV online xin việc chuẩn, đẹp miễn phí.</p>
               <Link to="/createCV">
                 <button className="btn btn-primary" type="button">
-                  <i className="fa-sharp fa-regular fa-plus mr-3" />
+                  <i className="fas fa-regular fa-plus mr-2" />
                   Tạo CV ngay!
                 </button>
               </Link>
@@ -179,7 +179,7 @@ function Homepage() {
         }}
       >
         <div className="job_urgent">
-          <h3 style={{ paddingTop: 20, marginLeft: 33 }}>Việc tuyển gấp</h3>
+          <h4 style={{ paddingTop: 20, fontWeight: "bold" }}>Việc tuyển gấp</h4>
           <div className="row d-flex " style={{ margin: "0 auto" }}>
             {/* List Job */}
             {jobs.length > 0 &&
@@ -211,13 +211,22 @@ function Homepage() {
                         </h5>
                         <p>{job.company_name}</p>
                         <ul class="p-0">
-                          <li class="list-group-item list-group-item-action">
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{ width: "35%" }}
+                          >
                             <i class="fas fa-map-marker-alt mr-1"></i> Hà Nội...
                           </li>
-                          <li class="list-group-item list-group-item-action">
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{ width: "35%" }}
+                          >
                             <i class="fa-regular fa-clock"></i> 21/05/2023
                           </li>
-                          <li class="list-group-item list-group-item-action">
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{ width: "35%" }}
+                          >
                             <i class="fa-solid fa-sack-dollar"></i> 9 - 11 triệu
                             VNĐ
                           </li>
@@ -230,9 +239,12 @@ function Homepage() {
           </div>
         </div>
       </div>
-      {/* Typical Employers */}
-      {/* infinite loop */}
-      <div className="container">
+
+      <div className="container-fluid" style={{ padding: "0 40px" }}>
+        <h4 style={{ paddingTop: 20, fontWeight: "bold" }}>
+          Nhà Tuyển Dụng Tiêu Biểu
+        </h4>
+
         <Swiper
           onSwiper={setSwiperRef}
           slidesPerView={6}
@@ -246,19 +258,28 @@ function Homepage() {
           className="mySwiper"
         >
           <SwiperSlide>
-            <div className="col" style={{ padding: "0 10px" }}>
-              <div className="card" style={{ width: "100%" }}>
+            <div className="col" style={{ padding: "10px 10px" }}>
+              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
                 <img
                   className="card-img-top img-thumbnail"
                   src={Logo2}
                   alt=""
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    margin: "0 auto",
+                    objectFit: "cover",
+                  }}
                 />
-                <div className="card-body" style={{ textAlign: "start" }}>
-                  <h6 className="card-title">
+                <div
+                  className="card_body"
+                  style={{ textAlign: "center", padding: "10px" }}
+                >
+                  <h6 className="card_title" style={{ fontSize: "15px" }}>
                     Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
                   </h6>
                   <p className="card-text">
-                    <i className="fa-solid fa-location-dot" />
+                    <i className="fas fa-map-marker-alt mr-2" />
                     Hà Nội
                   </p>
                 </div>
@@ -266,19 +287,28 @@ function Homepage() {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="col" style={{ padding: "0 10px" }}>
-              <div className="card" style={{ width: "100%" }}>
+            <div className="col" style={{ padding: "10px 10px" }}>
+              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
                 <img
                   className="card-img-top img-thumbnail"
                   src={Logo2}
                   alt=""
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    margin: "0 auto",
+                    objectFit: "cover",
+                  }}
                 />
-                <div className="card-body" style={{ textAlign: "start" }}>
-                  <h6 className="card-title">
+                <div
+                  className="card_body"
+                  style={{ textAlign: "center", padding: "10px" }}
+                >
+                  <h6 className="card_title" style={{ fontSize: "15px" }}>
                     Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
                   </h6>
                   <p className="card-text">
-                    <i className="fa-solid fa-location-dot" />
+                    <i className="fas fa-map-marker-alt mr-2" />
                     Hà Nội
                   </p>
                 </div>
@@ -286,19 +316,28 @@ function Homepage() {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="col" style={{ padding: "0 10px" }}>
-              <div className="card" style={{ width: "100%" }}>
+            <div className="col" style={{ padding: "10px 10px" }}>
+              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
                 <img
                   className="card-img-top img-thumbnail"
                   src={Logo2}
                   alt=""
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    margin: "0 auto",
+                    objectFit: "cover",
+                  }}
                 />
-                <div className="card-body" style={{ textAlign: "start" }}>
-                  <h6 className="card-title">
+                <div
+                  className="card_body"
+                  style={{ textAlign: "center", padding: "10px" }}
+                >
+                  <h6 className="card_title" style={{ fontSize: "15px" }}>
                     Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
                   </h6>
                   <p className="card-text">
-                    <i className="fa-solid fa-location-dot" />
+                    <i className="fas fa-map-marker-alt mr-2" />
                     Hà Nội
                   </p>
                 </div>
@@ -306,19 +345,28 @@ function Homepage() {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="col" style={{ padding: "0 10px" }}>
-              <div className="card" style={{ width: "100%" }}>
+            <div className="col" style={{ padding: "10px 10px" }}>
+              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
                 <img
                   className="card-img-top img-thumbnail"
                   src={Logo2}
                   alt=""
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    margin: "0 auto",
+                    objectFit: "cover",
+                  }}
                 />
-                <div className="card-body" style={{ textAlign: "start" }}>
-                  <h6 className="card-title">
+                <div
+                  className="card_body"
+                  style={{ textAlign: "center", padding: "10px" }}
+                >
+                  <h6 className="card_title" style={{ fontSize: "15px" }}>
                     Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
                   </h6>
                   <p className="card-text">
-                    <i className="fa-solid fa-location-dot" />
+                    <i className="fas fa-map-marker-alt mr-2" />
                     Hà Nội
                   </p>
                 </div>
@@ -326,19 +374,28 @@ function Homepage() {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="col" style={{ padding: "0 10px" }}>
-              <div className="card" style={{ width: "100%" }}>
+            <div className="col" style={{ padding: "10px 10px" }}>
+              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
                 <img
                   className="card-img-top img-thumbnail"
                   src={Logo2}
                   alt=""
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    margin: "0 auto",
+                    objectFit: "cover",
+                  }}
                 />
-                <div className="card-body" style={{ textAlign: "start" }}>
-                  <h6 className="card-title">
+                <div
+                  className="card_body"
+                  style={{ textAlign: "center", padding: "10px" }}
+                >
+                  <h6 className="card_title" style={{ fontSize: "15px" }}>
                     Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
                   </h6>
                   <p className="card-text">
-                    <i className="fa-solid fa-location-dot" />
+                    <i className="fas fa-map-marker-alt mr-2" />
                     Hà Nội
                   </p>
                 </div>
@@ -346,19 +403,28 @@ function Homepage() {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="col" style={{ padding: "0 10px" }}>
-              <div className="card" style={{ width: "100%" }}>
+            <div className="col" style={{ padding: "10px 10px" }}>
+              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
                 <img
                   className="card-img-top img-thumbnail"
                   src={Logo2}
                   alt=""
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    margin: "0 auto",
+                    objectFit: "cover",
+                  }}
                 />
-                <div className="card-body" style={{ textAlign: "start" }}>
-                  <h6 className="card-title">
+                <div
+                  className="card_body"
+                  style={{ textAlign: "center", padding: "10px" }}
+                >
+                  <h6 className="card_title" style={{ fontSize: "15px" }}>
                     Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
                   </h6>
                   <p className="card-text">
-                    <i className="fa-solid fa-location-dot" />
+                    <i className="fas fa-map-marker-alt mr-2" />
                     Hà Nội
                   </p>
                 </div>
@@ -366,19 +432,28 @@ function Homepage() {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="col" style={{ padding: "0 10px" }}>
-              <div className="card" style={{ width: "100%" }}>
+            <div className="col" style={{ padding: "10px 10px" }}>
+              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
                 <img
                   className="card-img-top img-thumbnail"
                   src={Logo2}
                   alt=""
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    margin: "0 auto",
+                    objectFit: "cover",
+                  }}
                 />
-                <div className="card-body" style={{ textAlign: "start" }}>
-                  <h6 className="card-title">
+                <div
+                  className="card_body"
+                  style={{ textAlign: "center", padding: "10px" }}
+                >
+                  <h6 className="card_title" style={{ fontSize: "15px" }}>
                     Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
                   </h6>
                   <p className="card-text">
-                    <i className="fa-solid fa-location-dot" />
+                    <i className="fas fa-map-marker-alt mr-2" />
                     Hà Nội
                   </p>
                 </div>
@@ -386,19 +461,28 @@ function Homepage() {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="col" style={{ padding: "0 10px" }}>
-              <div className="card" style={{ width: "100%" }}>
+            <div className="col" style={{ padding: "10px 10px" }}>
+              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
                 <img
                   className="card-img-top img-thumbnail"
                   src={Logo2}
                   alt=""
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    margin: "0 auto",
+                    objectFit: "cover",
+                  }}
                 />
-                <div className="card-body" style={{ textAlign: "start" }}>
-                  <h6 className="card-title">
+                <div
+                  className="card_body"
+                  style={{ textAlign: "center", padding: "10px" }}
+                >
+                  <h6 className="card_title" style={{ fontSize: "15px" }}>
                     Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
                   </h6>
                   <p className="card-text">
-                    <i className="fa-solid fa-location-dot" />
+                    <i className="fas fa-map-marker-alt mr-2" />
                     Hà Nội
                   </p>
                 </div>

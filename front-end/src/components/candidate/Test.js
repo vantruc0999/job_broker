@@ -5,32 +5,43 @@ import { useParams } from "react-router-dom";
 import "../../assets/css/style.css";
 import "../../assets/css/bootstrap_min.css";
 import Example from "../candidate/Example";
+import { useNavigate } from "react-router-dom";
 
 const Test = () => {
+  const navigate = useNavigate();
   let params = useParams();
   const [role, setRole] = useState("");
   const [detailJob, setJobDetail] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  let user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user"));
-    let config = {
-      headers: {
-        Authorization: "Bearer " + user.token,
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
-    };
-    setRole(user.role);
-    axios
-      .get(`http://127.0.0.1:8000/api/job-detail/` + params.id, config)
-      .then((res) => {
-        setJobDetail(res.data.job_detail);
-      });
+    if (user) {
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      setRole(user.role);
+      axios
+        .get(`http://127.0.0.1:8000/api/job-detail/` + params.id, config)
+        .then((res) => {
+          console.log("1");
+          setJobDetail(res.data.job_detail);
+        });
+    } else {
+      axios
+        .get(`http://127.0.0.1:8000/api/job-detail/` + params.id)
+        .then((res) => {
+          console.log("2");
+          setJobDetail(res.data.job_detail);
+        });
+    }
   }, []);
 
-  //   let abc = JSON.parse(detailJob.job_requirement)
-  //   console.log("abc",abc);
-  // console.log(detailJob.job_requirement);
+  
+console.log(user);
   return (
     <div>
       <div className="container" style={{ margin: "0 auto", width: "1250px" }}>
@@ -42,7 +53,7 @@ const Test = () => {
                   <h3 className="job_name" style={{ fontWeight: "bold" }}>
                     {detailJob.job_name}
                   </h3>
-                  {role !== "recruiter" ? (
+                  { user && role !== "recruiter"  ? (
                     <>
                       <div className="button" style={{ margin: "20px 0" }}>
                         {openModal == false ? (
@@ -50,7 +61,9 @@ const Test = () => {
                             type="button"
                             className="btn btn-primary"
                             style={{ marginRight: "20px" }}
-                            onClick={setOpenModal(true)}
+                            onClick={() => {
+                              setOpenModal(true);
+                            }}
                           >
                             Ứng tuyển ngay
                           </button>
@@ -202,7 +215,6 @@ const Test = () => {
                       >
                         {detailJob.skills}
                         {/* {JSON.stringify(detailJob.skills)} */}
-
                       </div>
                     </div>
                   </div>

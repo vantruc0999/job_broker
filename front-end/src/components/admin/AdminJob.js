@@ -3,8 +3,11 @@ import "../../assets/css/adminlte.min.css";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ModalViewJob from "./ModalViewJob";
 function AdminJob() {
   const [jobwait, setJobwait] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [id, setId] = useState("");
   let user = JSON.parse(localStorage.getItem("user"));
   let config = {
     headers: {
@@ -21,9 +24,11 @@ function AdminJob() {
         setJobwait(res.data.jobs);
       });
   }, []);
-  const handleDetailCV = (e) => {
-    console.log(e.target.id);
-  };
+  // const handleDetailCV = (e) => {
+  //   alert(e.target.id);
+  //   setId(e.target.id);
+  // };
+  console.log(openModal);
   const renderJobWait = () => {
     if (Object.keys(jobwait).length > 0) {
       return jobwait.map((value, key) => {
@@ -41,15 +46,23 @@ function AdminJob() {
                 <td className="project_progress">00/00/0000</td>
                 <td className="project-state">Hoạt động</td>
                 <td className="project-actions text-right">
-                  <Link
-                    to={"/adminjob/job/" + value.job_id}
-                    className="btn btn-primary btn-sm"
-                    id={value.job_id}
-                    onClick={(e) => handleDetailCV(e)}
-                  >
-                    <i className="fas fa-folder"> </i>
-                    Xem
-                  </Link>
+                  {openModal == false ? (
+                    <>
+                      <a
+                        className="btn btn-primary btn-sm"
+                        id={value.job_id}
+                        onClick={(e) => {
+                          setOpenModal(true);
+                        }}
+                      >
+                        <i className="fas fa-folder"> </i>
+                        Xem
+                      </a>
+                    </>
+                  ) : (
+                    <ModalViewJob id={value.job_id} />
+                  )}
+
                   <a className="btn btn-info btn-sm">
                     <i className="fas fa-pencil-alt"> </i>
                     Chỉnh sửa

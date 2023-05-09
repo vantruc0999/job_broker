@@ -10,9 +10,12 @@ import "../../assets/css/homepage.css";
 
 import { Pagination, Navigation } from "swiper";
 import axios from "axios";
+import Example2 from "./Example2";
 function Homepage() {
   const [swiperRef, setSwiperRef] = useState(null);
   const [jobs, setJobs] = useState([]);
+  const [show, setShow] = useState(false);
+  let user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/jobs").then((res) => {
@@ -20,7 +23,38 @@ function Homepage() {
       setJobs(res.data.jobs);
     });
   }, []);
-
+ 
+  function handleModalClose(showValue) {
+    setShow(showValue);
+  }
+  const checkLogin = () => {
+    if (!user) {
+      return (
+        <>
+          <button
+            className="btn btn-primary"
+            type="button"
+            onClick={() => {
+              setShow(true);
+            }}
+          >
+            <i className="fa-sharp fa-regular fa-plus mr-3" />
+            Tạo CV ngay!
+          </button>
+          <Example2 show={show} onCloseModal={handleModalClose} />
+        </>
+      );
+    } else {
+      return (
+        <Link to="/createCV">
+          <button className="btn btn-primary" type="button">
+            <i className="fa-sharp fa-regular fa-plus mr-3" />
+            Tạo CV ngay!
+          </button>
+        </Link>
+      );
+    }
+  };
   return (
     <>
       {/* SEO */}
@@ -150,12 +184,13 @@ function Homepage() {
             <div className="col-8">
               <h6 style={{ fontWeight: 500, fontSize: 18 }}>Tạo CV ấn tượng</h6>
               <p>Tạo CV online xin việc chuẩn, đẹp miễn phí.</p>
-              <Link to="/createCV">
+              {/* <Link to="/createCV">
                 <button className="btn btn-primary" type="button">
                   <i className="fa-sharp fa-regular fa-plus mr-3" />
                   Tạo CV ngay!
                 </button>
-              </Link>
+              </Link> */}
+              {checkLogin()}
             </div>
             <div className="col-4">
               <img

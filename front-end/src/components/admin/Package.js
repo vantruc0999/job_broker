@@ -41,6 +41,9 @@ function Package() {
                     <a href="#" className="btn btn-info">
                       <i className="fas fa-eye" />
                     </a>
+                    <a href="/" className="btn btn-primary">
+                      <i className="fas fa-edit" />
+                    </a>
                     <a href="#" className="btn btn-danger">
                       <i className="fas fa-trash" />
                     </a>

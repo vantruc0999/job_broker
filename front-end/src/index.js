@@ -1,6 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  BrowserRouter,
+} from "react-router-dom";
 import App from "./App";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import reportWebVitals from "./reportWebVitals";
@@ -46,8 +52,8 @@ root.render(
       }}
     >
       <Router>
-      <App/>
-       {/* <App>
+        <App />
+        {/* <App>
        
           <Routes>
             <Route index path="/" element={<Homepage />} />
@@ -84,10 +90,8 @@ root.render(
        
       </App> */}
       </Router>
-
     </PayPalScriptProvider>
     {/* </BrowserRouter> */}
-   
   </React.StrictMode>
 );
 

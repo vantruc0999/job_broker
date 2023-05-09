@@ -261,14 +261,8 @@ function CreateCV() {
         {certificate.map((certificate, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
             <div className="addition">
-              <i
-                class="fa fa-plus mr-1"
-                onClick={handleAddCer}
-              ></i>
-              <i
-                class="fa fa-minus"
-                onClick={() => handleRemoveCer(index)}
-              ></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddCer}></i>
+              <i class="fa fa-minus" onClick={() => handleRemoveCer(index)}></i>
             </div>
             <div key={index} className="form-field">
               <input
@@ -509,14 +503,8 @@ function CreateCV() {
         {exp.map((exp, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
             <div className="addition">
-              <i
-                class="fa fa-plus mr-1"
-                onClick={handleAddExp}
-              ></i>
-              <i
-                class="fa fa-minus"
-                onClick={() => handleRemoveExp(index)}
-              ></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddExp}></i>
+              <i class="fa fa-minus" onClick={() => handleRemoveExp(index)}></i>
             </div>
             <div key={index} className="form-field">
               <input
@@ -610,9 +598,9 @@ function CreateCV() {
     axios
       .post("http://127.0.0.1:8000/api/candidate/create-cv", object, config)
       .then((res) => {
-        if(res.data.status == "200"){
-          alert("Bạn đã tạo CV thành công")
-          navigate("/homeCandidate")
+        if (res.data.status == "200") {
+          alert("Bạn đã tạo CV thành công");
+          navigate("/homeCandidate");
         }
         console.log(res.data.status);
         // if (res.data.errCode == 0) {
@@ -633,8 +621,10 @@ function CreateCV() {
           style={{ display: "flex", flexDirection: "column" }}
         >
           <div className="col-9" style={{ margin: "0 auto" }}>
-           
-            <div className="row" style={{ margin: "50px 0",boxShadow:"5px 5px 5px 5px"  }}>
+            <div
+              className="row"
+              style={{ margin: "50px 0", boxShadow: "5px 5px 5px 5px" }}
+            >
               <div
                 className="col-4 "
                 style={{ background: "#0bb5f4", padding: "0" }}
@@ -661,9 +651,14 @@ function CreateCV() {
                   >
                     <div>
                       <div className="email">
-                        <i className="fa-regular fa-envelope mr-2 "> </i>
-                       
-                        <textarea
+                        <i
+                          className="fas fa-envelope mr-2"
+                          style={{ alignItems: "center" }}
+                        >
+                          {" "}
+                        </i>
+
+                        <input
                           id="emailSummary"
                           type="text"
                           name="email"
@@ -673,7 +668,7 @@ function CreateCV() {
                           onChange={handleInput}
                           style={{
                             width: "60%",
-                            fontSize: "14px",
+                            // fontSize: "14px",
                             border: "none",
                             borderRadius: "4px",
                             resize: "vertical",
@@ -681,10 +676,10 @@ function CreateCV() {
                             wordWrap: "break-word",
                             overflow: "hidden",
                           }}
-                        ></textarea>
+                        ></input>
                       </div>
                       <div className="mt-4">
-                        <i className="fa-solid fa-phone mr-2" />
+                        <i className="fas fa-phone mr-2" />
                         <input
                           type="text"
                           name="phone"
@@ -695,7 +690,7 @@ function CreateCV() {
                         />
                       </div>
                       <div className="mt-4">
-                        <i className="fa-solid fa-cake-candles mr-2" />
+                        <i className="fas fa-birthday-cake mr-2" />
                         <input
                           type="text"
                           placeholder="dd-mm-yyyy"
@@ -706,7 +701,7 @@ function CreateCV() {
                         />
                       </div>
                       <div className="mt-4">
-                        <i className="fa-solid fa-location-dot mr-2" />
+                        <i className="fas fa-map-marker-alt mr-2" />
                         <input
                           type="text"
                           placeholder="Địa chỉ"
@@ -720,36 +715,37 @@ function CreateCV() {
                   </div>
                 </div>
                 <section className="experience">
-                  <h3>
-                    <i className="fa-solid fa-laptop-code" /> Kĩ năng
-                  </h3>
+                  <h4>
+                    <i className="fas fa-laptop-code" /> Kỹ năng
+                  </h4>
                   {showForm && showForm.includes(5) ? (
                     addSkill()
                   ) : (
                     <div
                       className="content_form"
                       onClick={(e) => handleShow(5, e)}
+                      style={{ cursor: "pointer" }}
                     >
                       <div id="content-suggest-skill"></div>
-                      <i className="fa-solid fa-plus" />
+                      <i className="fas fa-plus" />
                     </div>
                   )}
                 </section>
 
                 <section className="experience">
-                  <h3>
-                    <i className="fa-solid fa-language" /> Ngoại ngữ
-                  </h3>
-
+                  <h4>
+                    <i className="fas fa-language" /> Ngoại ngữ
+                  </h4>
                   {showForm && showForm.includes(8) ? (
                     addLanguage()
                   ) : (
                     <div
                       className="content_form"
                       onClick={(e) => handleShow(8, e)}
+                      style={{ cursor: "pointer" }}
                     >
                       <div id="content-suggest-skill"></div>
-                      <i className="fa-solid fa-plus" />
+                      <i className="fas fa-plus" />
                     </div>
                   )}
                 </section>
@@ -769,86 +765,106 @@ function CreateCV() {
                   />
                 </section>
                 <section className="experience">
-                  <h3>
-                    <i className="fa-solid fa-briefcase" /> Kinh nghiệm làm việc
-                  </h3>
-                  {/* <div className="additions">
-                  <i class="fa-regular fa-square-plus mr-1"></i>
-                  <i class="fa-regular fa-square-minus"></i>
-                </div> */}
+                  <h4>
+                    <i className="fas fa-briefcase" /> Kinh nghiệm làm việc
+                  </h4>
                   {exp.length > 0 ? (
                     addContentExp()
                   ) : (
-                    <div className="content_form" onClick={handleAddExp}>
+                    <div
+                      className="content_form"
+                      onClick={handleAddExp}
+                      style={{ cursor: "pointer" }}
+                    >
                       <div id="content-suggest-award"></div>
-                      <i className="fa-solid fa-plus" />
+                      <i className="fas fa-plus" />
                     </div>
                   )}
                 </section>
                 <section className="experience">
-                  <h3>
-                    <i className="fa-solid fa-graduation-cap" />
+                  <h4>
+                    <i className="fas fa-graduation-cap" />
                     Học vấn
-                  </h3>
+                  </h4>
                   {education.length > 0 ? (
                     addContentEducation()
                   ) : (
-                    <div className="content_form" onClick={handleAddEdu}>
+                    <div
+                      className="content_form"
+                      onClick={handleAddEdu}
+                      style={{ cursor: "pointer" }}
+                    >
                       <div id="content-suggest-award"></div>
-                      <i className="fa-solid fa-plus" />
+                      <i className="fas fa-plus" />
                     </div>
                   )}
                 </section>
                 <section className="experience">
-                  <h3>
-                    <i class="fa-solid fa-dumbbell"></i> Dự án
-                  </h3>
+                  <h4>
+                    <i class="fas fa-file-code"></i> Dự án
+                  </h4>
                   {active.length > 0 ? (
                     addContentAction()
                   ) : (
-                    <div className="content_form" onClick={handleAddAct}>
+                    <div
+                      className="content_form"
+                      onClick={handleAddAct}
+                      style={{ cursor: "pointer" }}
+                    >
                       <div id="content-suggest-award"></div>
-                      <i className="fa-solid fa-plus" />
+                      <i className="fas fa-plus" />
                     </div>
                   )}
                 </section>
                 <section className="experience">
-                  <h3>
-                    <i className="fa-solid fa-certificate" /> Chứng chỉ
-                  </h3>
+                  <h4>
+                    <i className="fas fa-certificate" /> Chứng chỉ
+                  </h4>
                   {certificate.length > 0 ? (
                     addContentCertificates()
                   ) : (
-                    <div className="content_form" onClick={handleAddCer}>
+                    <div
+                      className="content_form"
+                      onClick={handleAddCer}
+                      style={{ cursor: "pointer" }}
+                    >
                       <div id="content-suggest-award"></div>
-                      <i className="fa-solid fa-plus" />
+                      <i className="fas fa-plus" />
                     </div>
                   )}
                 </section>
                 <section className="experience">
-                  <h3>
-                    <i className="fa-solid fa-feather" /> Kĩ năng mềm
-                  </h3>
+                  <h4>
+                    <i className="fas fa-feather" /> Kĩ năng mềm
+                  </h4>
 
                   {softSkill.length > 0 ? (
                     addContentSoftSkill()
                   ) : (
-                    <div className="content_form" onClick={handleAddSoft}>
+                    <div
+                      className="content_form"
+                      onClick={handleAddSoft}
+                      style={{ cursor: "pointer" }}
+                    >
                       <div id="content-suggest-award"></div>
-                      <i className="fa-solid fa-plus" />
+                      <i className="fas fa-plus" />
                     </div>
                   )}
                 </section>
                 <section className="experience">
-                  <h3>
-                    <i className="fa-solid fa-medal" /> Giải thưởng
-                  </h3>
+                  <h4>
+                    <i className="fas fa-medal" /> Giải thưởng
+                  </h4>
                   {awards.length > 0 ? (
                     addContentAward()
                   ) : (
-                    <div className="content_form" onClick={handleAddAward}>
+                    <div
+                      className="content_form"
+                      onClick={handleAddAward}
+                      style={{ cursor: "pointer" }}
+                    >
                       <div id="content-suggest-award"></div>
-                      <i className="fa-solid fa-plus" />
+                      <i className="fas fa-plus" />
                     </div>
                   )}
                 </section>

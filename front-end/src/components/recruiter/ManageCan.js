@@ -69,10 +69,23 @@ const ManageCan = () => {
                   />
                 </td>
                 <a href="/">{value.fullname}</a>
-                <td>Fresher</td>
-                <td>1 Năm</td>
+                <td>Nguyenkimthang@gmail.com</td>
                 <td>{value.skills}</td>
-                <td>Giỏi</td>
+                <td>Chưa duyệt</td>
+                <td class="project-actions text-right">
+                  <a class="btn btn-primary btn-sm" href="/">
+                    <i class="fas fa-eye"></i>
+                    Xem
+                  </a>
+                  <a class="btn btn-info btn-sm" href="/">
+                    <i class="fas fa-check"></i>
+                    Duyệt
+                  </a>
+                  <a class="btn btn-danger btn-sm" href="/">
+                    <i class="fas fa-trash"></i>
+                    Xóa
+                  </a>
+                </td>
               </tr>
             </tbody>
           </>
@@ -276,33 +289,13 @@ const ManageCan = () => {
                         >
                           <th scope="col">Ảnh đại diện</th>
                           <th scope="col">Họ tên</th>
-                          <th scope="col">Việc làm đã ứng tuyển</th>
-                          <th scope="col">Kinh nghiệm làm việc</th>
+                          <th scope="col">Email</th>
                           <th scope="col">Kỹ năng chuyên môn</th>
-                          <th scope="col">Học vấn</th>
+                          <th scope="col">Trạng thái</th>
+                          <th scope="col">Chức năng</th>
                         </tr>
                       </thead>
                       {renderCanofJobID()}
-                      {/* <tbody>
-                        <tr
-                          style={{
-                            textAlign: "center",
-                          }}
-                        >
-                          <td>
-                            <img
-                              src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                              alt=""
-                              style={{ maxWidth: "80px", borderRadius: "50%" }}
-                            />
-                          </td>
-                          <a href="/">Nguyễn Văn A</a>
-                          <td>Fresher</td>
-                          <td>1 Năm</td>
-                          <td>JAVA</td>
-                          <td>Giỏi</td>
-                        </tr>
-                      </tbody> */}
                     </table>
                   </div>
                 </div>

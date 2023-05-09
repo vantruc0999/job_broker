@@ -3,31 +3,25 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-
 function Example(props) {
   console.log(props.jobId);
   const [show, setShow] = useState(false);
   const [cv, setCv] = useState("");
   let user = JSON.parse(localStorage.getItem("user"));
-  const navigate = useNavigate();
-
+  let config = {
+    headers: {
+      Authorization: "Bearer " + user.token,
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+  };
   useEffect(() => {
-    if (user) {
-      let config = {
-        headers: {
-          Authorization: "Bearer " + user.token,
-          "Content-Type": "application/x-www-form-urlencoded",
-          Accept: "application/json",
-        },
-      };
-      axios
-        .get(`http://127.0.0.1:8000/api/candidate/show-all`, config)
-        .then((res) => {
-          console.log(res.data.resume);
-          setCv(res.data.resume);
-        });
-    } 
+    axios
+      .get(`http://127.0.0.1:8000/api/candidate/show-all`, config)
+      .then((res) => {
+        console.log(res.data.resume);
+        setCv(res.data.resume);
+      });
   }, []);
   const handleClick = (e) => {
     let jobId = props.jobId;
@@ -36,23 +30,13 @@ function Example(props) {
       resume_id: e.currentTarget.id,
       job_id: job_id,
     };
-    console.log(user);
-    if (user) {
-      let config = {
-        headers: {
-          Authorization: "Bearer " + user.token,
-          "Content-Type": "application/x-www-form-urlencoded",
-          Accept: "application/json",
-        },
-      };
-      axios
-        .post("http://127.0.0.1:8000/api/candidate/apply-cv", id, config)
-        .then((res) => {
-          if(res.data.message){
-            alert(res.data.message)
-          }
-        });
-    }
+    console.log(typeof job_id);
+    console.log(typeof jobId);
+    axios
+      .post("http://127.0.0.1:8000/api/candidate/apply-cv", id, config)
+      .then((res) => {
+        console.log(res.data);
+      });
   };
   const renderResume = () => {
     if (Object.keys(cv).length > 0) {
@@ -82,7 +66,7 @@ function Example(props) {
                     <b>Trạng thái</b>{" "}
                     <p class="float-right">{value.public_status}</p>
                   </div>
-                  <a onClick={handleClick} class="btn btn-primary btn-block">
+                  <a href="/" class="btn btn-primary btn-block">
                     <b>Ứng tuyển</b>
                   </a>
                 </div>
@@ -106,15 +90,15 @@ function Example(props) {
         onHide={() => setShow(false)}
         dialogClassName="modal-90w"
         aria-labelledby="example-custom-modal-styling-title"
-        style={{ margin: "150px auto" }}
+        style={{ margin: "50px auto" }}
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
             Đăng ký việc làm
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body >
-        <div className="job_cv">
+        <Modal.Body>
+          <div className="job_cv">
             <h3>CV của bạn</h3>
             <div className="row" style={{ margin: "20px auto" }}>
               {renderResume()}

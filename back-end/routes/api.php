@@ -94,6 +94,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::get('categories', [CategoryExamController::class, 'index']);
 
+        Route::post('check-paid-package',[PaymentController::class, 'checkPaidPackage']);
+        Route::post('extend-package',[PaymentController::class, 'extendPackage']);
     });
 
     Route::prefix('candidate')->group(function () {

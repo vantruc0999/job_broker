@@ -5,12 +5,14 @@ import Logo from "../../assets/images/logo.jpg";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Example2 from "../candidate/Example2";
 function Header() {
   const [name, setName] = useState("");
+  const [show, setShow] = useState(false);
   const navigate = useNavigate();
   let param1 = useLocation();
+  let user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user"));
     setName(user);
   }, []);
   const logout = () => {
@@ -22,6 +24,7 @@ function Header() {
       localStorage.removeItem("user");
       navigate("/homeCandidate");
     } else if (user && user.role == "recruiter") {
+      alert("đã đăng xuất")
       localStorage.removeItem("user");
       navigate("/homeCandidate");
     } else if (user && user.role == "admin") {
@@ -88,18 +91,45 @@ function Header() {
       return (
         <>
           <li>
-            <Link to="/register">
-              <a href="" className="btn  btn-outline-primary mr-2">
-                Đăng ký
-              </a>
+            <Link to="/register" className="btn  btn-outline-primary mr-2">
+              Đăng ký
             </Link>
-            <Link to="/login">
-              <a href="" className="btn btn-primary">
-                Đăng nhập
-              </a>
+            <Link to="/login" className="btn btn-primary">
+              Đăng nhập
             </Link>
           </li>
         </>
+      );
+    }
+  };
+
+  function handleModalClose(showValue) {
+    setShow(showValue);
+  }
+  const checkLogin = () => {
+    if (!user) {
+      console.log("oke");
+      return (
+        <>
+          <a
+            className="dropdown-item"
+            onClick={() => {
+              setShow(true);
+            }}
+          >
+            Tạo CV
+          </a>
+          <Example2 show={show} onCloseModal={handleModalClose} />
+        </>
+      );
+    } else {
+      return (
+        <Link
+          to="createCV"
+          className="dropdown-item"
+        >
+          Tạo CV
+        </Link>
       );
     }
   };
@@ -173,11 +203,12 @@ function Header() {
                       CV / Hồ sơ
                     </a>
                     <div className="dropdown-menu">
-                      <Link to="/createCV">
+                      {/* <Link to="/createCV">
                         <a className="dropdown-item" href="#">
                           Tạo CV
                         </a>
-                      </Link>
+                      </Link> */}
+                      {checkLogin()}
                       <a className="dropdown-item" href="#">
                         Check CV
                       </a>
@@ -265,7 +296,6 @@ function Header() {
               <li className="nav-item dropdown pe-3">
                 <a
                   className="nav-link nav-profile d-flex align-items-center pe-0"
-                  href="/"
                   data-bs-toggle="dropdown"
                 >
                   <img
@@ -296,7 +326,6 @@ function Header() {
                     <Link to="/homeRecruiter">
                       <a
                         className="dropdown-item d-flex align-items-center"
-                        href="/"
                       >
                         <i className="bi bi-person"></i>
                         <span>Trang hồ sơ</span>
@@ -321,7 +350,6 @@ function Header() {
                   <li>
                     <a
                       className="dropdown-item d-flex align-items-center"
-                      href="/"
                     >
                       <i className="bi bi-box-arrow-right"></i>
                       <span onClick={logout}>Đăng xuất</span>

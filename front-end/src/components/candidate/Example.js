@@ -3,25 +3,31 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 function Example(props) {
   console.log(props.jobId);
   const [show, setShow] = useState(false);
   const [cv, setCv] = useState("");
   let user = JSON.parse(localStorage.getItem("user"));
-  let config = {
-    headers: {
-      Authorization: "Bearer " + user.token,
-      "Content-Type": "application/x-www-form-urlencoded",
-      Accept: "application/json",
-    },
-  };
+  const navigate = useNavigate();
+
   useEffect(() => {
-    axios
-      .get(`http://127.0.0.1:8000/api/candidate/show-all`, config)
-      .then((res) => {
-        console.log(res.data.resume);
-        setCv(res.data.resume);
-      });
+    if (user) {
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      axios
+        .get(`http://127.0.0.1:8000/api/candidate/show-all`, config)
+        .then((res) => {
+          console.log(res.data.resume);
+          setCv(res.data.resume);
+        });
+    } 
   }, []);
   const handleClick = (e) => {
     let jobId = props.jobId;
@@ -30,13 +36,21 @@ function Example(props) {
       resume_id: e.currentTarget.id,
       job_id: job_id,
     };
-    console.log(typeof job_id);
-    console.log(typeof jobId);
-    axios
-      .post("http://127.0.0.1:8000/api/candidate/apply-cv", id, config)
-      .then((res) => {
-        console.log(res.data);
-      });
+    console.log(user);
+    if (user) {
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      axios
+        .post("http://127.0.0.1:8000/api/candidate/apply-cv", id, config)
+        .then((res) => {
+          console.log(res.data);
+        });
+    }
   };
   const renderResume = () => {
     if (Object.keys(cv).length > 0) {
@@ -67,7 +81,10 @@ function Example(props) {
                 />
               </div>
 
-              <div className="col-9 cv" style={{ lineHeight: " 0.5" }}>
+              <div
+                className="col-9 cv"
+                style={{ lineHeight: " 0.5", marginTop: "20px" }}
+              >
                 <h5 style={{ wordWrap: "break-word" }}>{value.resume_name}</h5>
                 <p>Tên CV:</p>
                 <p>Trạng thái: {value.public_status}</p>
@@ -162,7 +179,7 @@ function Example(props) {
         onHide={() => setShow(false)}
         dialogClassName="modal-90w"
         aria-labelledby="example-custom-modal-styling-title"
-        style={{ margin: "50px auto" }}
+        style={{ margin: "150px auto" }}
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\JobRequest;
 use App\Models\Job;
 use App\Models\JobSkills;
+use App\Models\Package;
 use App\Models\Payment;
 use App\Models\ProgrammingSkills;
 use App\Models\Recruiter;
@@ -305,5 +306,4 @@ class JobController extends Controller
         }
         return $jobs;
     }
-
 }

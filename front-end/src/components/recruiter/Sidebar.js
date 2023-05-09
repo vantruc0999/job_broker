@@ -22,18 +22,12 @@ function Sidebar() {
               </a>
             </li>
             <li className="nav-item">
-            <Link to="/managecan">
-              <a className="nav-link " href="/">
-                <i className="bi bi-circle"></i>
-                <span>Quản lý ứng viên</span>
-              </a>
-            </Link>
-          </li>
-            <li class="nav-item">
-              <a class="nav-link " href="index.html">
-                <i class="bi bi-circle"></i>
-                <span>Chưa biết đặt tên</span>
-              </a>
+              <Link to="/managecan">
+                <a className="nav-link " href="/">
+                  <i className="bi bi-circle"></i>
+                  <span>Quản lý ứng viên</span>
+                </a>
+              </Link>
             </li>
           </ul>
         </aside>

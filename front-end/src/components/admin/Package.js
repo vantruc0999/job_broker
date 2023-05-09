@@ -55,15 +55,13 @@ function Package() {
   };
   return (
     <>
-      <div classname="content-wrapper" style={{ minHeight: "1604.8px" }}>
+      <div classname="content-wrapper" style={{ minHeight: "665px" }}>
         <section className="content" style={{ float: "right", width: "83%" }}>
           <div className="card">
             <div className="card-header">
               <h3 className="card-title">Dịch vụ</h3>
-              <a
-                className="btn btn-primary btn-sm float-right"
-              >
-                <AddPackage/>
+              <a className="btn btn-primary btn-sm float-right">
+                <AddPackage />
               </a>
             </div>
             <div className="card-body p-0">

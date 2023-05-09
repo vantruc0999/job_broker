@@ -8,7 +8,7 @@ import "../../assets/css/adminlte.min.css";
 function AddPackage() {
   const [show, setShow] = useState(false);
   const [inputs, setInputs] = useState("");
- 
+
   const handleInput = (e) => {
     let nameInput = e.target.name;
     let value = e.target.value;
@@ -41,11 +41,11 @@ function AddPackage() {
         }
       });
 
-      console.log(inputs);
+    console.log(inputs);
   };
   return (
     <>
-      <Button variant="primary mr-4" onClick={() => setShow(true)}>
+      <Button variant="primary" onClick={() => setShow(true)}>
         Thêm gói
       </Button>
 
@@ -58,11 +58,11 @@ function AddPackage() {
         aria-labelledby="example-custom-modal-styling-title"
         // style={{ margin: "150px auto" }}
       >
-        <Modal.Body style={{ height: "500px" }}>
-          <section className="content" style={{ marginTop: "-36px" }}>
+        <Modal.Body>
+          <section className="content">
             <div
               className="card card-primary"
-              style={{ width: 910, marginLeft: "-36px" }}
+              style={{ width: 900, margin: "0 auto" }}
             >
               <div className="card-header">
                 <h3 className="card-title">Thêm gói dịch vụ</h3>
@@ -129,6 +129,7 @@ function AddPackage() {
                 <input
                   type="submit"
                   defaultValue="Thêm"
+                  value={"Thêm"}
                   className="btn btn-success float-right"
                 />
               </form>

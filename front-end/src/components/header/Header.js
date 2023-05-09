@@ -4,9 +4,15 @@ import "../../assets/css/adminlte.min.css";
 import Logo from "../../assets/images/logo.jpg";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 function Header() {
+  const [name, setName] = useState("")
   const navigate = useNavigate();
   let param1 = useLocation();
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    setName(user)
+  }, []);
   const logout = () => {
     console.log("oke");
     var user = localStorage.getItem("user");
@@ -102,16 +108,18 @@ function Header() {
       <>
         <div className="container-fluid" style={{ padding: 0 }}>
           {/* NAVBAR HEADER */}
-          <div className="container" style={{width:"80%"}}>
+          <div className="container" style={{ width: "80%" }}>
             <div className="d-flex justify-content-between p-2">
               <div>
                 <ul className="nav  align-items-center">
-                  <img
-                    className="navbar-brand"
-                    src={Logo}
-                    style={{ width: "80px",height:"45px" }}
-                    alt=""
-                  />
+                  <Link to={"/homeCandidate"}>
+                    <img
+                      className="navbar-brand"
+                      src={Logo}
+                      style={{ width: "80px", height: "45px" }}
+                      alt=""
+                    />
+                  </Link>
                   <li className="nav-item dropdown">
                     <Link
                       className="nav-link dropdown-toggle text-dark"
@@ -224,10 +232,13 @@ function Header() {
           className="header fixed-top d-flex align-items-center"
         >
           <div className="d-flex align-items-center justify-content-between">
-            <Link to="/recruiter">
-              <a href="index.html" className="logo d-flex align-items-center">
-                <span className="d-none d-lg-block">JobBroker</span>
-              </a>
+            <Link to="/">
+              <img
+                className="navbar-brand"
+                src={Logo}
+                style={{ width: "200px", height: "55px", objectFit: "cover" }}
+                alt=""
+              />
             </Link>
           </div>
 
@@ -244,102 +255,18 @@ function Header() {
                 title="Enter search keyword"
               />
               <button type="submit" title="Search">
-                <i className="bi bi-search"></i>
+                <i className="fa fa-search"></i>
               </button>
             </form>
           </div>
 
           <nav className="header-nav ms-auto">
             <ul className="d-flex align-items-center">
-              <li className="nav-item d-block d-lg-none">
+              {/* <li className="nav-item d-block d-lg-none">
                 <a className="nav-link nav-icon search-bar-toggle " href="/">
-                  <i className="bi bi-search"></i>
+                  <i className="fa fa-search"></i>
                 </a>
-              </li>
-
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link nav-icon"
-                  href="/"
-                  data-bs-toggle="dropdown"
-                >
-                  <i className="bi bi-bell"></i>
-                  <span className="badge bg-primary badge-number">4</span>
-                </a>
-
-                <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                  <li className="dropdown-header">
-                    Bạn có 4 cái thông báo
-                    <a href="/">
-                      <span className="badge rounded-pill bg-primary p-2 ms-2">
-                        Xem tất cả
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-
-                  <li className="notification-item">
-                    <i className="bi bi-exclamation-circle text-warning"></i>
-                    <div>
-                      <h4>Lorem Ipsum</h4>
-                      <p>Quae dolorem earum veritatis oditseno</p>
-                      <p>30 min. ago</p>
-                    </div>
-                  </li>
-
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                </ul>
-              </li>
-
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link nav-icon"
-                  href="/"
-                  data-bs-toggle="dropdown"
-                >
-                  <i className="bi bi-chat-left-text"></i>
-                  <span className="badge bg-success badge-number">3</span>
-                </a>
-
-                <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                  <li className="dropdown-header">
-                    Bạn có 3 tin nhắn
-                    <a href="/">
-                      <span className="badge rounded-pill bg-primary p-2 ms-2">
-                        Xem tất cả
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-
-                  <li className="message-item">
-                    <a href="/">
-                      <img
-                        src="assets/img/messages-1.jpg"
-                        alt=""
-                        className="rounded-circle"
-                      />
-                      <div>
-                        <h4>Maria Hudson</h4>
-                        <p>
-                          Velit asperiores et ducimus soluta repudiandae labore
-                          officia est ut...
-                        </p>
-                        <p>4 hrs. ago</p>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                </ul>
-              </li>
+              </li> */}
 
               <li className="nav-item dropdown pe-3">
                 <a
@@ -358,13 +285,13 @@ function Header() {
                     }}
                   />
                   <span className="d-none d-md-block dropdown-toggle ps-2">
-                    Recruiter_Name
+                    {name.recruiter_name}
                   </span>
                 </a>
 
                 <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                   <li className="dropdown-header">
-                    <h6>Recruiter_name</h6>
+                    <h6>Recruiter_Name</h6>
                     <span>Company_name</span>
                   </li>
                   <li>
@@ -372,7 +299,7 @@ function Header() {
                   </li>
 
                   <li>
-                    <Link to="/recruiter/profile">
+                    <Link to="/homeRecruiter">
                       <a
                         className="dropdown-item d-flex align-items-center"
                         href="/"
@@ -406,145 +333,144 @@ function Header() {
   const HeaderAdmin = () => {
     return (
       <>
-        <div className="wrapper">
-          <nav className="main-header navbar navbar-expand navbar-white navbar-light">
-            {/* Left navbar links */}
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <a
-                  className="nav-link"
-                  data-widget="pushmenu"
-                  href="#"
-                  role="button"
-                >
-                  <i className="fas fa-bars" />
-                </a>
-              </li>
-              <li className="nav-item d-none d-sm-inline-block">
-                <a href="Home.html" className="nav-link">
-                  Trang chủ
-                </a>
-              </li>
-            </ul>
-            {/* Right navbar links */}
-            <ul className="navbar-nav ml-auto">
-              {/* Navbar Search */}
-              <li className="nav-item">
-                <a
-                  className="nav-link"
-                  data-widget="navbar-search"
-                  data-target="#main-header-search"
-                  href="#"
-                  role="button"
-                >
-                  <i className="fas fa-search" />
-                </a>
-                <div className="navbar-search-block" id="main-header-search">
-                  <form className="form-inline">
-                    <div className="input-group input-group-sm">
-                      <input
-                        className="form-control form-control-navbar"
-                        type="search"
-                        placeholder="Search"
-                        aria-label="Search"
-                      />
-                      <div className="input-group-append">
-                        <button className="btn btn-navbar" type="submit">
-                          <i className="fas fa-search" />
-                        </button>
-                        <button
-                          className="btn btn-navbar"
-                          type="button"
-                          data-widget="navbar-search"
-                        >
-                          <i className="fas fa-times" />
-                        </button>
-                      </div>
+        <nav className="main-header navbar navbar-expand navbar-white navbar-light">
+          {/* Left navbar links */}
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <a
+                className="nav-link"
+                data-widget="pushmenu"
+                href="#"
+                role="button"
+              >
+                <i className="fas fa-bars" />
+              </a>
+            </li>
+            <li className="nav-item d-none d-sm-inline-block">
+              <a href="Home.html" className="nav-link">
+                Trang chủ
+              </a>
+            </li>
+          </ul>
+          {/* Right navbar links */}
+          <ul className="navbar-nav ml-auto">
+            {/* Navbar Search */}
+            <li className="nav-item">
+              <a
+                className="nav-link"
+                data-widget="navbar-search"
+                data-target="#main-header-search"
+                href="#"
+                role="button"
+              >
+                <i className="fas fa-search" />
+              </a>
+              <div className="navbar-search-block" id="main-header-search">
+                <form className="form-inline">
+                  <div className="input-group input-group-sm">
+                    <input
+                      className="form-control form-control-navbar"
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                    />
+                    <div className="input-group-append">
+                      <button className="btn btn-navbar" type="submit">
+                        <i className="fas fa-search" />
+                      </button>
+                      <button
+                        className="btn btn-navbar"
+                        type="button"
+                        data-widget="navbar-search"
+                      >
+                        <i className="fas fa-times" />
+                      </button>
                     </div>
-                  </form>
-                </div>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link"
-                  data-widget="fullscreen"
-                  href="#"
-                  role="button"
-                >
-                  <i className="fas fa-expand-arrows-alt" />
-                </a>
-              </li>
-            </ul>
-          </nav>
-          {/* Sidebar */}
-          <aside className="main-sidebar sidebar-dark-primary elevation-4">
-            {/* Brand Logo */}
-            <a href="Home.html" className="brand-link">
-              <img
-                src="https://ctp.edu.vn/wp-content/uploads/2022/05/anh-meo-cute-doi-mu-long-tai-tho-600x600.jpg"
-                alt="AdminLTE Logo"
-                className="brand-image img-circle elevation-3"
-                style={{ opacity: "0.8" }}
-              />
-              <span className="brand-text font-weight-light">Tên ADMIN</span>
-            </a>
-            {/* Sidebar */}
-            <div className="sidebar">
-              {/* SidebarSearch Form */}
-              <div className="form-inline">
-                <div className="input-group" data-widget="sidebar-search">
-                  <input
-                    className="form-control form-control-sidebar"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                  />
-                  <div className="input-group-append">
-                    <button className="btn btn-sidebar">
-                      <i className="fas fa-search fa-fw" />
-                    </button>
                   </div>
+                </form>
+              </div>
+            </li>
+            <li className="nav-item">
+              <a
+                className="nav-link"
+                data-widget="fullscreen"
+                href="#"
+                role="button"
+              >
+                <i className="fas fa-expand-arrows-alt" />
+              </a>
+            </li>
+          </ul>
+        </nav>
+        {/* Sidebar */}
+        <aside className="main-sidebar sidebar-dark-primary elevation-4">
+          {/* Brand Logo */}
+          <a href="Home.html" className="brand-link">
+            <img
+              src="https://ctp.edu.vn/wp-content/uploads/2022/05/anh-meo-cute-doi-mu-long-tai-tho-600x600.jpg"
+              alt="AdminLTE Logo"
+              className="brand-image img-circle elevation-3"
+              style={{ opacity: "0.8" }}
+            />
+            <span className="brand-text font-weight-light">Tên ADMIN</span>
+          </a>
+          {/* Sidebar */}
+          <div className="sidebarAdmin">
+            {/* SidebarSearch Form */}
+            <div className="form-inline">
+              <div className="input-group" data-widget="sidebar-search">
+                <input
+                  className="form-control form-control-sidebar"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
+                <div className="input-group-append">
+                  <button className="btn btn-sidebar">
+                    <i className="fas fa-search fa-fw" />
+                  </button>
                 </div>
               </div>
-              {/* Sidebar Menu */}
-              <nav className="mt-2">
-                <ul
-                  className="nav nav-pills nav-sidebar flex-column"
-                  data-widget="treeview"
-                  role="menu"
-                  data-accordion="false"
-                >
-                  <li className="nav-item">
-                    <Link to="/adminjob" className="nav-link">
-                      <i className="nav-icon fas fa-th" />
-                      <p>Quản lý tin tuyển dụng</p>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/admincv" className="nav-link">
-                      <i className="nav-icon fas fa-th" />
-                      <p>Quản lý CV</p>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/package" className="nav-link">
-                      <i className="nav-icon fas fa-th" />
-                      <p>Gói dịch vụ</p>
-                    </Link>
-                  </li>
-                  <li className="nav-item" onClick={logout}>
-                    <a className="nav-link">
-                      <i className="nav-icon fas fa-th" />
-                      <span>Đăng xuất</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-              {/* /.sidebar-menu */}
             </div>
-            {/* /.sidebar */}
-          </aside>
-        </div>
+            {/* Sidebar Menu */}
+            <nav className="mt-2">
+              <ul
+                className="nav nav-pills nav-sidebar flex-column"
+                data-widget="treeview"
+                role="menu"
+                data-accordion="false"
+                style={{ fontSize: "14px" }}
+              >
+                <li className="nav-item">
+                  <Link to="/adminjob" className="nav-link">
+                    <i className="nav-icon fas fa-th" />
+                    <p>Quản lý tin tuyển dụng</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/admincv" className="nav-link">
+                    <i className="nav-icon fas fa-th" />
+                    <p>Quản lý CV</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/package" className="nav-link">
+                    <i className="nav-icon fas fa-th" />
+                    <p>Gói dịch vụ</p>
+                  </Link>
+                </li>
+                <li className="nav-item" onClick={logout}>
+                  <a className="nav-link" style={{ cursor: "pointer" }}>
+                    <i className="nav-icon fas fa-th" />
+                    <span>Đăng xuất</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            {/* /.sidebar-menu */}
+          </div>
+          {/* /.sidebar */}
+        </aside>
       </>
     );
   };

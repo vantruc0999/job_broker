@@ -1,4 +1,5 @@
 import "../../assets/css/adminlte.min.css";
+// import "../../assets/newcss/fontawesome-free/css/all.min.css";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -20,9 +21,9 @@ function AdminJob() {
         setJobwait(res.data.jobs);
       });
   }, []);
-  const handleDetailCV = (e) =>{
+  const handleDetailCV = (e) => {
     console.log(e.target.id);
-  }
+  };
   const renderJobWait = () => {
     if (Object.keys(jobwait).length > 0) {
       return jobwait.map((value, key) => {
@@ -40,15 +41,20 @@ function AdminJob() {
                 <td className="project_progress">00/00/0000</td>
                 <td className="project-state">Hoạt động</td>
                 <td className="project-actions text-right">
-                  <Link to={"/adminjob/job/" + value.job_id}  className="btn btn-primary btn-sm"  id={value.job_id} onClick={(e)=>handleDetailCV(e)}>
+                  <Link
+                    to={"/adminjob/job/" + value.job_id}
+                    className="btn btn-primary btn-sm"
+                    id={value.job_id}
+                    onClick={(e) => handleDetailCV(e)}
+                  >
                     <i className="fas fa-folder"> </i>
                     Xem
                   </Link>
-                  <a className="btn btn-info btn-sm" >
+                  <a className="btn btn-info btn-sm">
                     <i className="fas fa-pencil-alt"> </i>
                     Chỉnh sửa
                   </a>
-                  <a className="btn btn-danger btn-sm" >
+                  <a className="btn btn-danger btn-sm">
                     <i className="fas fa-trash"> </i>
                     Xóa
                   </a>
@@ -62,7 +68,7 @@ function AdminJob() {
   };
   return (
     <>
-      <div className="content-wrapper" style={{ minHeight: "1604.8px" }}>
+      <div className="content-wrapper" style={{ minHeight: "665px" }}>
         {/* Content Header (Page header) */}
         <section className="content-header">
           <div className="container-fluid">

@@ -3,17 +3,18 @@ import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+
 const ManageJob = () => {
   const [job, setJob] = useState("");
+  let user = JSON.parse(localStorage.getItem("user"));
+  let config = {
+    headers: {
+      Authorization: "Bearer " + user.token,
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+  };
   useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user"));
-    let config = {
-      headers: {
-        Authorization: "Bearer " + user.token,
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
-    };
     axios
       .get(`http://127.0.0.1:8000/api/recruiter/jobs`, config)
       .then((res) => {
@@ -25,7 +26,7 @@ const ManageJob = () => {
   const renderAllJob = () => {
     if (Object.keys(job).length > 0) {
       console.log(job.jobs);
-      return job.jobs.map((value, key)=>{
+      return job.jobs.map((value, key) => {
         return (
           <>
             <tbody>
@@ -49,9 +50,9 @@ const ManageJob = () => {
                 <td>
                   <ul style={{ textAlign: "left" }}>
                     <a href="/" className="title-list">
-                        {value.job_name}
+                      {value.job_name}
                     </a>
-  
+
                     {/* <li className="title-list">{job.jobs[0].company_name}</li> */}
                     <li className="title-list">Cập nhật lúc</li>
                     <li className="title-list">{value.job_location}</li>
@@ -60,9 +61,9 @@ const ManageJob = () => {
                     </a>
                   </ul>
                 </td>
-                <td>00/00/0000</td>
-                <td>00/00/0000</td>
-                <td>Nguyễn Văn A</td>
+                <td>{value.job_start_date}</td>
+                <td>{value.job_end_date}</td>
+                <td>{user.recruiter_name}</td>
                 <td style={{ display: "grid" }}>
                   <a
                     href="/"
@@ -113,14 +114,14 @@ const ManageJob = () => {
             </tbody>
           </>
         );
-      })
+      });
     }
   };
 
   return (
     <div>
       <Sidebar />
-      <main id="main" className="main">
+      <main id="main" className="main" style={{ minHeight: "665px" }}>
         <section className="section">
           <div className="row">
             <div className="col-lg-12">

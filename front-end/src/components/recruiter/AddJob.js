@@ -139,7 +139,7 @@ const AddJob = () => {
                           setJob({ ...job, salary: e.target.value });
                         }}
                       />
-                      <span className="input-group-text">triệu</span>
+                      {/* <span className="input-group-text">triệu</span> */}
                     </div>
                   </div>
 

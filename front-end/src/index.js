@@ -16,7 +16,7 @@ import MyPdfReader from "./components/candidate/MyPdfReader";
 import Checkout from "./components/payment/Checkout";
 import AddJob from "./components/recruiter/AddJob";
 import LoginRecruiter from "./components/authen/LoginCruiter";
-import HomeRe from "./components/recruiter/HomeRecruiter";
+import HomeRecruiter from "./components/recruiter/HomeRecruiter";
 // import HeaderRe from "./components/common/Header";
 import Showjob from "./components/recruiter/Showjob";
 import Test from "./components/candidate/Test";
@@ -33,6 +33,9 @@ import AdminHome from "./components/admin/AdminHome";
 import AdminJob from "./components/admin/AdminJob";
 import AdminCV from "./components/admin/AdminCV";
 import Package from "./components/admin/Package";
+import PackageRe from "./components/recruiter/PackageRe";
+import PaymentHistory from "./components/recruiter/PaymentHistory";
+import ListJob from "./components/candidate/ListJob";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -59,11 +62,14 @@ root.render(
             <Route path="/handleCV" element={<HandleCV />} />
             <Route path="/uploadCV" element={<MyPdfReader />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/list" element={<ListJob />} />
             <Route path="/addJob" element={<AddJob />} />
-            <Route path="/homeRecruiter" element={<HomeRe />} />
+            <Route path="/homeRecruiter" element={<HomeRecruiter />} />
             <Route path="/manageJob" element={<ManageJob />} />
             <Route path="/job/:id" element={<Test />} />
             <Route path="/managecan" element={<ManageCan />} />
+            <Route path="/packageRecruiter" element={<PackageRe />} />
+            <Route path="/paymentHistory" element={<PaymentHistory />} />
             {/* admin */}
             <Route path="/loginadmin" element={<LoginAdmin />} />
             <Route path="/adminhome" element={<AdminHome />} />
@@ -72,7 +78,6 @@ root.render(
             <Route path="/admincv" element={<AdminCV />} />
             <Route path="/admincv/fileCV/:id" element={<FileCV />} />
             <Route path="/package" element={<Package />} />
-
           </Routes>
         </App>
       </Router>

@@ -1,5 +1,4 @@
 import "../../assets/css/adminlte.min.css";
-// import "../../assets/newcss/fontawesome-free/css/all.min.css";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -50,14 +49,14 @@ function AdminJob() {
                     <i className="fas fa-folder"> </i>
                     Xem
                   </Link>
-                  <a className="btn btn-info btn-sm">
+                  {/* <a className="btn btn-info btn-sm">
                     <i className="fas fa-pencil-alt"> </i>
                     Chỉnh sửa
                   </a>
                   <a className="btn btn-danger btn-sm">
                     <i className="fas fa-trash"> </i>
                     Xóa
-                  </a>
+                  </a> */}
                 </td>
               </tr>
             </tbody>
@@ -224,54 +223,8 @@ function AdminJob() {
                 </div>
               </div>
             </div>
-            {/* <div class="card-body p-0">
-      <table class="table table-striped projects">
-        <thead>
-          <tr>
-            <th>Tên công ty</th>
-            <th>Tên công việc</th>
-            <th>Ngày bắt đầu</th>
-            <th>Lương</th>
-            <th style="width: 8%">Trạng thái</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>FPT</td>
-            <td>
-              <a> PHP INTERSHIP </a>
-              <br />
-              <small> Ngày tạo 01.01.2019 </small>
-            </td>
-            <td>00/00/0000</td>
-            <td class="project_progress">00/00/0000</td>
-            <td class="project-state">
-              Hoạt động
-            </td>
-            <td class="project-actions text-right">
-              <a class="btn btn-primary btn-sm" href="#">
-                <i class="fas fa-folder"> </i>
-                Xem
-              </a>
-              <a class="btn btn-info btn-sm" href="#">
-                <i class="fas fa-pencil-alt"> </i>
-                Chỉnh sửa
-              </a>
-              <a class="btn btn-danger btn-sm" href="#">
-                <i class="fas fa-trash"> </i>
-                Xóa
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div> */}
-            {/* /.card-body */}
           </div>
-          {/* /.card */}
         </section>
-        {/* /.content */}
       </div>
     </>
   );

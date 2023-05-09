@@ -6,12 +6,12 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 function Header() {
-  const [name, setName] = useState("")
+  const [name, setName] = useState("");
   const navigate = useNavigate();
   let param1 = useLocation();
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
-    setName(user)
+    setName(user);
   }, []);
   const logout = () => {
     console.log("oke");
@@ -232,7 +232,7 @@ function Header() {
           className="header fixed-top d-flex align-items-center"
         >
           <div className="d-flex align-items-center justify-content-between">
-            <Link to="/">
+            <Link to="/homeRecruiter">
               <img
                 className="navbar-brand"
                 src={Logo}
@@ -262,12 +262,6 @@ function Header() {
 
           <nav className="header-nav ms-auto">
             <ul className="d-flex align-items-center">
-              {/* <li className="nav-item d-block d-lg-none">
-                <a className="nav-link nav-icon search-bar-toggle " href="/">
-                  <i className="fa fa-search"></i>
-                </a>
-              </li> */}
-
               <li className="nav-item dropdown pe-3">
                 <a
                   className="nav-link nav-profile d-flex align-items-center pe-0"
@@ -306,6 +300,17 @@ function Header() {
                       >
                         <i className="bi bi-person"></i>
                         <span>Trang hồ sơ</span>
+                      </a>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/">
+                      <a
+                        className="dropdown-item d-flex align-items-center"
+                        href="/"
+                      >
+                        <i className="bi bi-person"></i>
+                        <span>Quay lại trang chính</span>
                       </a>
                     </Link>
                   </li>

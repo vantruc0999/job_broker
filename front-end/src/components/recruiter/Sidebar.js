@@ -14,18 +14,27 @@ function Sidebar() {
                 </a>
               </Link>
             </li>
-
-            <li class="nav-item">
-              <a class="nav-link " href="index.html">
-                <i class="bi bi-circle"></i>
-                <span>Mua gói dịch vụ</span>
-              </a>
-            </li>
             <li className="nav-item">
               <Link to="/managecan">
                 <a className="nav-link " href="/">
                   <i className="bi bi-circle"></i>
                   <span>Quản lý ứng viên</span>
+                </a>
+              </Link>
+            </li>
+            <li class="nav-item">
+              <Link to="/packageRecruiter">
+                <a class="nav-link " href="index.html">
+                  <i class="bi bi-circle"></i>
+                  <span>Mua gói dịch vụ</span>
+                </a>
+              </Link>
+            </li>
+            <li class="nav-item">
+              <Link to="/paymentHistory">
+                <a class="nav-link " href="index.html">
+                  <i class="bi bi-circle"></i>
+                  <span>Lịch sử mua gói</span>
                 </a>
               </Link>
             </li>

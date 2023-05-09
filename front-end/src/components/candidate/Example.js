@@ -24,20 +24,19 @@ function Example(props) {
       });
   }, []);
   const handleClick = (e) => {
-    let jobId =  props.jobId
+    let jobId = props.jobId;
     let job_id = jobId.toString();
     let id = {
-      resume_id:e.currentTarget.id,
+      resume_id: e.currentTarget.id,
       job_id: job_id,
     };
-    console.log(typeof(job_id));
-    console.log(typeof(jobId));
+    console.log(typeof job_id);
+    console.log(typeof jobId);
     axios
-    .post("http://127.0.0.1:8000/api/candidate/apply-cv", id, config)
-    .then((res) => {
-      console.log(res.data);
-     
-    });
+      .post("http://127.0.0.1:8000/api/candidate/apply-cv", id, config)
+      .then((res) => {
+        console.log(res.data);
+      });
   };
   const renderResume = () => {
     if (Object.keys(cv).length > 0) {
@@ -45,12 +44,12 @@ function Example(props) {
         console.log(value);
         return (
           <>
-            <div
+            {/* <div
               id={value.resume_id}
               className="allcv col d-flex"
               style={{
                 padding: "0",
-                height: "140px",
+                // height: "140px",
                 width: "32%",
                 border: "2px solid #e7e9eb",
               }}
@@ -61,17 +60,14 @@ function Example(props) {
                   src={Logo2}
                   alt=""
                   style={{
-                    width: "90px",
-                    height: "90px",
+                    width: "100px",
+                    height: "100px",
                     margin: " 25px auto",
                   }}
                 />
               </div>
 
-              <div
-                className="col-9 cv"
-                style={{ lineHeight: " 0.5", marginTop:"20px" }}
-              >
+              <div className="col-9 cv" style={{ lineHeight: " 0.5" }}>
                 <h5 style={{ wordWrap: "break-word" }}>{value.resume_name}</h5>
                 <p>Tên CV:</p>
                 <p>Trạng thái: {value.public_status}</p>
@@ -109,7 +105,43 @@ function Example(props) {
                     ></i>{" "}
                     Tải xuống
                   </li>
+                  <a
+                    href="/"
+                    class="btn btn-sm btn-success"
+                    style={{ float: "right" }}
+                  >
+                    Apply
+                  </a>
                 </ul>
+              </div>
+            </div> */}
+
+            <div className="col-md-3">
+              <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
+                  <div class="text-center">
+                    <img
+                      class=""
+                      src={Logo2}
+                      alt=""
+                      style={{ maxWidth: "80px", borderRadius: "50%" }}
+                    />
+                  </div>
+                  <h3 class="profile-username text-center">
+                    {value.resume_name}
+                  </h3>
+                  <p class=" text-center">Tên CV</p>
+                  <div
+                    class="list-group-item"
+                    style={{ fontSize: "14px", marginBottom: "10px" }}
+                  >
+                    <b>Trạng thái</b>{" "}
+                    <p class="float-right">{value.public_status}</p>
+                  </div>
+                  <a href="/" class="btn btn-primary btn-block">
+                    <b>Ứng tuyển</b>
+                  </a>
+                </div>
               </div>
             </div>
           </>
@@ -130,20 +162,17 @@ function Example(props) {
         onHide={() => setShow(false)}
         dialogClassName="modal-90w"
         aria-labelledby="example-custom-modal-styling-title"
-        style={{margin:"150px auto"}}
+        style={{ margin: "50px auto" }}
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
             Đăng ký việc làm
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ height: "300px" }}>
+        <Modal.Body>
           <div className="job_cv">
-            <h3 style={{ paddingTop: 20 }}>CV của bạn</h3>
-            <div
-              className="row justify-content-between"
-              style={{ margin: "20px auto" }}
-            >
+            <h3>CV của bạn</h3>
+            <div className="row" style={{ margin: "20px auto" }}>
               {renderResume()}
             </div>
           </div>

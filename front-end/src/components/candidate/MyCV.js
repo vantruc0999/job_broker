@@ -30,7 +30,49 @@ function MyCV() {
       return cv.map((value, key) => {
         return (
           <>
-            <div
+            <div className="col-md-3">
+              <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
+                  <div class="text-center">
+                    <img
+                      class=""
+                      src={Logo2}
+                      alt=""
+                      style={{ maxWidth: "80px", borderRadius: "50%" }}
+                    />
+                  </div>
+                  <h3 class="profile-username text-center">
+                    {value.resume_name}
+                  </h3>
+                  <p class=" text-center">Tên CV</p>
+                  <div
+                    class="list-group-item"
+                    style={{ fontSize: "14px", marginBottom: "10px" }}
+                  >
+                    <b>Trạng thái</b>{" "}
+                    <p class="float-right">{value.public_status}</p>
+                  </div>
+                  <Link to={"/allCV/fileCV/" + value.resume_id}>
+                    <a
+                      href="/"
+                      class="btn btn-primary btn-block"
+                      style={{ margin: "10px 0" }}
+                    >
+                      <b>Xem</b>
+                    </a>
+                  </Link>
+
+                  <a href="/" class="btn btn-success btn-block">
+                    <b>Chỉnh sửa</b>
+                  </a>
+                  <a href="/" class="btn btn-danger btn-block">
+                    <b>Xóa</b>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* <div
               className="allcv col d-flex"
               style={{ padding: "0", height: "140px", width: "32%" }}
             >
@@ -61,7 +103,7 @@ function MyCV() {
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> */}
           </>
         );
       });

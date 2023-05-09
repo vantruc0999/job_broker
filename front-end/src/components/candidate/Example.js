@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Example(props) {
   console.log(props.jobId);
@@ -48,7 +48,9 @@ function Example(props) {
       axios
         .post("http://127.0.0.1:8000/api/candidate/apply-cv", id, config)
         .then((res) => {
-          console.log(res.data);
+          if(res.data.message){
+            alert(res.data.message)
+          }
         });
     }
   };
@@ -58,71 +60,32 @@ function Example(props) {
         console.log(value);
         return (
           <>
-            <div
-              id={value.resume_id}
-              className="allcv col d-flex"
-              style={{
-                padding: "0",
-                height: "140px",
-                width: "32%",
-                border: "2px solid #e7e9eb",
-              }}
-              onClick={(e) => handleClick(e)}
-            >
-              <div className="col-3">
-                <img
-                  src={Logo2}
-                  alt=""
-                  style={{
-                    width: "90px",
-                    height: "90px",
-                    margin: " 25px auto",
-                  }}
-                />
-              </div>
-
-              <div
-                className="col-9 cv"
-                style={{ lineHeight: " 0.5", marginTop: "20px" }}
-              >
-                <h5 style={{ wordWrap: "break-word" }}>{value.resume_name}</h5>
-                <p>Tên CV:</p>
-                <p>Trạng thái: {value.public_status}</p>
-                <ul class="p-0 d-flex">
-                  <li
-                    class="list-group-item list-group-item-action mr-2"
-                    style={{
-                      width: "initial",
-                      fontSize: "9.5px",
-                      padding: "2px 4px",
-                      float: "left",
-                      border: "1px solid #ddd !important",
-                      margin: "3px 3px 3px 0",
-                      borderRadius: "5px !important",
-                    }}
+            <div className="col-md-3">
+              <div class="card card-primary card-outline">
+                <div class="card-body box-profile">
+                  <div class="text-center">
+                    <img
+                      class=""
+                      src={Logo2}
+                      alt=""
+                      style={{ maxWidth: "80px", borderRadius: "50%" }}
+                    />
+                  </div>
+                  <h3 class="profile-username text-center">
+                    {value.resume_name}
+                  </h3>
+                  <p class=" text-center">Tên CV</p>
+                  <div
+                    class="list-group-item"
+                    style={{ fontSize: "14px", marginBottom: "10px" }}
                   >
-                    <i class="fa-solid fa-location-dot"></i> Chỉnh sửa
-                  </li>
-                  <li
-                    class="list-group-item list-group-item-action"
-                    style={{
-                      width: "initial",
-                      fontSize: "9.5px",
-                      padding: "2px 4px",
-                      float: "left",
-                      border: "1px solid #ddd !important",
-                      margin: "3px 3px 3px 0",
-                      borderRadius: "5px !important",
-                      borderTop: "1px solid #e7e9eb ",
-                    }}
-                  >
-                    <i
-                      class="fa-regular fa-clock"
-                      style={{ position: "relative", top: "1px" }}
-                    ></i>{" "}
-                    Tải xuống
-                  </li>
-                </ul>
+                    <b>Trạng thái</b>{" "}
+                    <p class="float-right">{value.public_status}</p>
+                  </div>
+                  <a onClick={handleClick} class="btn btn-primary btn-block">
+                    <b>Ứng tuyển</b>
+                  </a>
+                </div>
               </div>
             </div>
           </>
@@ -150,13 +113,10 @@ function Example(props) {
             Đăng ký việc làm
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ height: "300px" }}>
-          <div className="job_cv">
-            <h3 style={{ paddingTop: 20 }}>CV của bạn</h3>
-            <div
-              className="row justify-content-between"
-              style={{ margin: "20px auto" }}
-            >
+        <Modal.Body >
+        <div className="job_cv">
+            <h3>CV của bạn</h3>
+            <div className="row" style={{ margin: "20px auto" }}>
               {renderResume()}
             </div>
           </div>

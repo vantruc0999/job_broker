@@ -56,19 +56,19 @@ function HandleCV() {
           style={{ width: "100%", textAlign: "center" }}
         >
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-dashboard" /> Bảng tin
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-primary"
           >
             <i className="fa fa-upload" /> Tải lên CV có sẵn
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-list-alt" /> Hoàn thiện CV
@@ -89,19 +89,19 @@ function HandleCV() {
             </div>
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-exclamation-triangle" /> Sửa lỗi CV
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-line-chart" /> CV của bạn
           </a>
           <a
-            href=""
+            href="/"
             target="_blank"
             className="border-primary text-uppercase text-bold btn  btn-default"
           >
@@ -129,7 +129,6 @@ function HandleCV() {
             <header>File Uploader</header>
             <form action="#" onSubmit={handleSubmit}>
               <i className="fas fa-cloud-upload-alt" />
-              {/* <p>Browse File to Upload</p> */}
               <input
                 name="file"
                 id="file"
@@ -156,20 +155,6 @@ function HandleCV() {
                 <span className="ladda-label text-uppercase">UPLOAD</span>
               </button>
             </form>
-            {/* <section className="progress-area">
-              <li className="row" style={{ margin: "10px 0" }}>
-                <i className="fas fa-file-alt" />
-                <div className="content">
-                  <div className="details">
-                    <span className="name">image_01.png - Uploading</span>
-                    <span className="percent">50%</span>
-                  </div>
-                  <div className="progress-bar">
-                    <div className="progress" />
-                  </div>
-                </div>
-              </li>
-            </section> */}
             {files ? (
               toggle === true ? (
                 <section className="upload-area">
@@ -189,38 +174,6 @@ function HandleCV() {
                 </section>
               ) : null
             ) : null}
-
-            {/* <section className="upload-area">
-              <li className="row">
-                <div className="content">
-                  <i className="fas fa-file-alt" />
-                  <div className="details">
-                    <span className="name">{files.name} - Uploaded</span>
-                    <span className="size">70 KB</span>
-                  </div>
-                </div>
-                <i class="fa-solid fa-trash"></i>
-              </li>
-            </section> */}
-            {/* (
-              toggle === true ? (
-                <section className="upload-area">
-                  <li className="row">
-                    <div className="content">
-                      <i className="fas fa-file-alt" />
-                      <div className="details">
-                        <span className="name">{files.name} - Uploaded</span>
-                        <span className="size">70 KB</span>
-                      </div>
-                    </div>
-                    <i
-                      class="fa-solid fa-trash"
-                      onClick={handleDelete(files.name)}
-                    ></i>
-                  </li>
-                </section>
-              ) : null
-            ) */}
           </div>
         </div>
       </div>

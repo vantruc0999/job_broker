@@ -55,7 +55,8 @@ const ListJob = () => {
                                 textOverflow: "ellipsis",
                               }}
                             >
-                              Web Developer - Lập Trình Web
+                              Web Developer - Lập Trình
+                              Webbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
                             </h6>
                             <p
                               className="card_text"
@@ -68,17 +69,38 @@ const ListJob = () => {
                               style={{
                                 display: "flex",
                                 justifyContent: "flex-start",
+                                overflow: "hidden",
+                                width: "100%",
+                                whiteSpace: "nowrap",
                               }}
                             >
-                              <li class="list-group-item list-group-item-action">
-                                <i class="fas fa-map-marker-alt"></i> Hà Nội...
+                              <li
+                                class="list-group-item list-group-item-action"
+                                style={{
+                                  width: "100px",
+                                  textOverflow: "ellipsis",
+                                }}
+                              >
+                                <p style={{ fontSize: "10px" }}>
+                                  <i class="fas fa-map-marker-alt mr-1"></i>
+                                  Hà
+                                  Nội...iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+                                </p>
                               </li>
-                              <li class="list-group-item list-group-item-action">
+                              {/* <li class="list-group-item list-group-item-action">
                                 <i class="fas fa-clock"></i> 21/05/2023
-                              </li>
-                              <li class="list-group-item list-group-item-action">
-                                <i class="fas fa-dollar-sign"></i> 9 - 11 triệu
-                                VNĐ
+                              </li> */}
+                              <li
+                                class="list-group-item list-group-item-action"
+                                style={{
+                                  width: "100px",
+                                  textOverflow: "ellipsis",
+                                }}
+                              >
+                                <p style={{ fontSize: "10px" }}>
+                                  <i class="fas fa-dollar-sign"></i>
+                                  Thỏa thuậnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+                                </p>
                               </li>
                             </ul>
                           </div>
@@ -120,7 +142,8 @@ const ListJob = () => {
                                 textOverflow: "ellipsis",
                               }}
                             >
-                              Web Developer - Lập Trình Web
+                              Web Developer - Lập Trình
+                              Webbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
                             </h6>
                             <p
                               className="card_text"
@@ -133,17 +156,38 @@ const ListJob = () => {
                               style={{
                                 display: "flex",
                                 justifyContent: "flex-start",
+                                overflow: "hidden",
+                                width: "100%",
+                                whiteSpace: "nowrap",
                               }}
                             >
-                              <li class="list-group-item list-group-item-action">
-                                <i class="fas fa-map-marker-alt"></i> Hà Nội...
+                              <li
+                                class="list-group-item list-group-item-action"
+                                style={{
+                                  width: "100px",
+                                  textOverflow: "ellipsis",
+                                }}
+                              >
+                                <p style={{ fontSize: "10px" }}>
+                                  <i class="fas fa-map-marker-alt mr-1"></i>
+                                  Hà
+                                  Nội...iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+                                </p>
                               </li>
-                              <li class="list-group-item list-group-item-action">
+                              {/* <li class="list-group-item list-group-item-action">
                                 <i class="fas fa-clock"></i> 21/05/2023
-                              </li>
-                              <li class="list-group-item list-group-item-action">
-                                <i class="fas fa-dollar-sign"></i> 9 - 11 triệu
-                                VNĐ
+                              </li> */}
+                              <li
+                                class="list-group-item list-group-item-action"
+                                style={{
+                                  width: "100px",
+                                  textOverflow: "ellipsis",
+                                }}
+                              >
+                                <p style={{ fontSize: "10px" }}>
+                                  <i class="fas fa-dollar-sign"></i>
+                                  Thỏa thuậnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+                                </p>
                               </li>
                             </ul>
                           </div>
@@ -185,7 +229,8 @@ const ListJob = () => {
                                 textOverflow: "ellipsis",
                               }}
                             >
-                              Web Developer - Lập Trình Web
+                              Web Developer - Lập Trình
+                              Webbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
                             </h6>
                             <p
                               className="card_text"
@@ -198,17 +243,38 @@ const ListJob = () => {
                               style={{
                                 display: "flex",
                                 justifyContent: "flex-start",
+                                overflow: "hidden",
+                                width: "100%",
+                                whiteSpace: "nowrap",
                               }}
                             >
-                              <li class="list-group-item list-group-item-action">
-                                <i class="fas fa-map-marker-alt"></i> Hà Nội...
+                              <li
+                                class="list-group-item list-group-item-action"
+                                style={{
+                                  width: "100px",
+                                  textOverflow: "ellipsis",
+                                }}
+                              >
+                                <p style={{ fontSize: "10px" }}>
+                                  <i class="fas fa-map-marker-alt mr-1"></i>
+                                  Hà
+                                  Nội...iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+                                </p>
                               </li>
-                              <li class="list-group-item list-group-item-action">
+                              {/* <li class="list-group-item list-group-item-action">
                                 <i class="fas fa-clock"></i> 21/05/2023
-                              </li>
-                              <li class="list-group-item list-group-item-action">
-                                <i class="fas fa-dollar-sign"></i> 9 - 11 triệu
-                                VNĐ
+                              </li> */}
+                              <li
+                                class="list-group-item list-group-item-action"
+                                style={{
+                                  width: "100px",
+                                  textOverflow: "ellipsis",
+                                }}
+                              >
+                                <p style={{ fontSize: "10px" }}>
+                                  <i class="fas fa-dollar-sign"></i>
+                                  Thỏa thuậnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+                                </p>
                               </li>
                             </ul>
                           </div>
@@ -250,7 +316,8 @@ const ListJob = () => {
                                 textOverflow: "ellipsis",
                               }}
                             >
-                              Web Developer - Lập Trình Web
+                              Web Developer - Lập Trình
+                              Webbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
                             </h6>
                             <p
                               className="card_text"
@@ -263,17 +330,38 @@ const ListJob = () => {
                               style={{
                                 display: "flex",
                                 justifyContent: "flex-start",
+                                overflow: "hidden",
+                                width: "100%",
+                                whiteSpace: "nowrap",
                               }}
                             >
-                              <li class="list-group-item list-group-item-action">
-                                <i class="fas fa-map-marker-alt"></i> Hà Nội...
+                              <li
+                                class="list-group-item list-group-item-action"
+                                style={{
+                                  width: "100px",
+                                  textOverflow: "ellipsis",
+                                }}
+                              >
+                                <p style={{ fontSize: "10px" }}>
+                                  <i class="fas fa-map-marker-alt mr-1"></i>
+                                  Hà
+                                  Nội...iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+                                </p>
                               </li>
-                              <li class="list-group-item list-group-item-action">
+                              {/* <li class="list-group-item list-group-item-action">
                                 <i class="fas fa-clock"></i> 21/05/2023
-                              </li>
-                              <li class="list-group-item list-group-item-action">
-                                <i class="fas fa-dollar-sign"></i> 9 - 11 triệu
-                                VNĐ
+                              </li> */}
+                              <li
+                                class="list-group-item list-group-item-action"
+                                style={{
+                                  width: "100px",
+                                  textOverflow: "ellipsis",
+                                }}
+                              >
+                                <p style={{ fontSize: "10px" }}>
+                                  <i class="fas fa-dollar-sign"></i>
+                                  Thỏa thuậnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+                                </p>
                               </li>
                             </ul>
                           </div>

@@ -250,7 +250,9 @@ function CreateCV() {
       <>
         <div className="content_form">
           <label class="form-label">Ngoại ngữ</label>
-          <AnimatedMulti2 parentCallback={handleLangInput}></AnimatedMulti2>
+          {/* <AnimatedMulti2 parentCallback={handleLangInput}></AnimatedMulti2>
+           */}
+          <input type="text" placeholder="Ngoại ngữ" />
         </div>
       </>
     );
@@ -357,14 +359,8 @@ function CreateCV() {
         {active.map((active, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
             <div className="addition">
-              <i
-                class="fa-regular fa-square-plus mr-1"
-                onClick={handleAddAct}
-              ></i>
-              <i
-                class="fa-regular fa-square-minus"
-                onClick={() => handleRemoveAct(index)}
-              ></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddExp}></i>
+              <i class="fa fa-minus" onClick={() => handleRemoveExp(index)}></i>
             </div>
             <div key={index} className="form-field">
               <input

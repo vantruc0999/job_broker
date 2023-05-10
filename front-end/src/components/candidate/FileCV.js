@@ -8,9 +8,9 @@ function FileCV() {
   let params = useParams();
   const [resume, setResume] = useState("");
   const [id, setId] = useState([]);
-  const [info, setInfo] = useState("")
+  const [info, setInfo] = useState("");
   console.log(resume);
- 
+
   let user = JSON.parse(localStorage.getItem("user"));
   let config = {
     headers: {
@@ -21,61 +21,98 @@ function FileCV() {
   };
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/api/candidate/show-detail/`+ params.id, config)
+      .get(
+        `http://127.0.0.1:8000/api/candidate/show-detail/` + params.id,
+        config
+      )
       .then((res) => {
         console.log(res.data);
         setResume(res.data);
       });
   }, []);
   useEffect(() => {
-   
     axios
       .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
       .then((res) => {
         setInfo(res.data);
       });
   }, []);
-  console.log("info",info);
+  console.log("info", info);
   const renderExp = () => {
     if (Object.keys(resume).length > 0) {
-      return  resume.experience_company.map((value, key)=>{
+      return resume.experience_company.map((value, key) => {
         return (
           <>
-              <ul>
-                <li>
-                  <div className="date">{ value.experience_start}</div>
-                  <div className="info">
-                    <p className="semi-bold">{value.company_name}</p>
-                    <p>Nhiệm vụ: {value.position}</p>
-                    {/* <p>Ngôn ngữ sử dụng: J2ME</p> */}
-                    <p>
-                      {value.achievement}
-                    </p>
-                  </div>
-                </li>
-                
-              </ul>
+            <ul>
+              <li>
+                <div className="date">
+                  Ngày bắt đầu: {value.experience_start}
+                </div>
+                <div className="date">
+                  Ngày kết thúc: {value.experience_end}
+                </div>
+                <div className="info">
+                  <p className="semi-bold">Tên công ty: {value.company_name}</p>
+                  <p className="semi-bold">Tên dự án: {value.project_name}</p>
+                  <p>Nhiệm vụ: {value.position}</p>
+                  <p>Chức vụ: {value.achievement}</p>
+                  <p>Trách nhiệm: {value.responsibility}</p>
+                  <p>Danh mục kinh nghiệm: {value.exp_category}</p>
+                </div>
+              </li>
+            </ul>
           </>
         );
-      })
+      });
     }
   };
-  const renderSkill = () => {
+  const renderExpProject = () => {
     if (Object.keys(resume).length > 0) {
-      return  resume.skill.map((value, key)=>{
+      return resume.experience_project.map((value, key) => {
         return (
           <>
-                      <li>
-                        <div className="skill_name">{resume.skill}</div>
-                        <div className="skill_progress">
-                          <span style={{ width: "80%" }} />
-                        </div>
-                        <div className="skill_per">80%</div>
-                      </li>
-                     
+            <ul>
+              <li>
+                <div className="date">
+                  Ngày bắt đầu: {value.experience_start}
+                </div>
+                <div className="date">
+                  Ngày kết thúc: {value.experience_end}
+                </div>
+                <div className="info">
+                  <p className="semi-bold">Tên công ty: {value.company_name}</p>
+                  <p className="semi-bold">Tên dự án: {value.project_name}</p>
+                  <p>Nhiệm vụ: {value.position}</p>
+                  <p>Chức vụ: {value.achievement}</p>
+                  <p>Trách nhiệm: {value.responsibility}</p>
+                  <p>Danh mục kinh nghiệm: {value.exp_category}</p>
+                </div>
+              </li>
+            </ul>
           </>
         );
-      })
+      });
+    }
+  };
+
+  const renderSkill = () => {
+    if (Object.keys(resume).length > 0) {
+      return resume.skill.map((value, key) => {
+        return (
+          <>
+            <li>
+              <div className="skill_name">{resume.skill}</div>
+              <div
+                className="skill_progress"
+                style={{ width: "100px", marginRight: "-40px" }}
+              >
+                <span style={{ width: "80%" }} />
+              </div>
+              <div className="skill_per">80%</div>
+            </li>
+          </>
+        );
+      });
     }
   };
   const renderResume = () => {
@@ -95,13 +132,16 @@ function FileCV() {
                 <div className="resume_content">
                   <div className="resume_item resume_info">
                     <div className="title">
-                      <p className="bold"> {info.last_name} {info.first_name}</p>
+                      <p className="bold">
+                        {" "}
+                        {info.last_name} {info.first_name}
+                      </p>
                       <p className="regular">Developer</p>
                     </div>
-                    <ul>
+                    <ul style={{ padding: "0" }}>
                       <li>
                         <div className="icon">
-                          <i className="fas fa-map-signs" />
+                          <i className="fas fa-map-marker-alt" />
                         </div>
                         <div className="data">
                           {info.address} <br />
@@ -110,7 +150,7 @@ function FileCV() {
                       </li>
                       <li>
                         <div className="icon">
-                          <i className="fas fa-mobile-alt" />
+                          <i className="fas fa-phone" />
                         </div>
                         <div className="data">{info.phone}</div>
                       </li>
@@ -118,9 +158,7 @@ function FileCV() {
                         <div className="icon">
                           <i className="fas fa-envelope" />
                         </div>
-                        <div className="data">
-                          {info.email}
-                        </div>
+                        <div className="data">{info.email}</div>
                       </li>
                       <li>
                         <div className="icon">
@@ -134,15 +172,13 @@ function FileCV() {
                     <div className="title">
                       <p className="bold">Các kỹ năng</p>
                     </div>
-                    <ul>
-                     {renderSkill()}
-                    </ul>
+                    <ul style={{ padding: "0" }}>{renderSkill()}</ul>
                   </div>
                   <div className="resume_item resume_social">
                     <div className="title">
                       <p className="bold">Mạng xã hội</p>
                     </div>
-                    <ul>
+                    <ul style={{ padding: "0" }}>
                       <li>
                         <div className="icon">
                           <i className="fab fa-facebook-square" />
@@ -212,9 +248,16 @@ function FileCV() {
                 </div>
                 <div className="resume_item resume_work">
                   <div className="title">
-                    <p className="bold">Kinh nghiệm làm việc</p>
+                    <p className="bold">Kinh nghiệm làm việc công ty</p>
                   </div>
-                 {renderExp()}
+                  {renderExp()}
+                </div>
+
+                <div className="resume_item resume_work">
+                  <div className="title">
+                    <p className="bold">Kinh nghiệm làm việc dự án</p>
+                  </div>
+                  {renderExpProject()}
                 </div>
                 <div className="resume_item resume_education">
                   <div className="title">
@@ -231,7 +274,7 @@ function FileCV() {
                     </li>
                   </ul>
                 </div>
-                <div className="resume_item resume_hobby">
+                {/* <div className="resume_item resume_hobby">
                   <div className="title">
                     <p className="bold">Sở thích</p>
                   </div>
@@ -249,7 +292,7 @@ function FileCV() {
                       <i className="fab fa-pagelines" />
                     </li>
                   </ul>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

@@ -245,16 +245,43 @@ function Homepage() {
                           {job.job_name}
                         </h5>
                         <p>{job.company_name}</p>
-                        <ul class="p-0">
-                          <li class="list-group-item list-group-item-action">
-                            <i class="fas fa-map-marker-alt mr-1"></i> Hà Nội...
+                        <ul
+                          class="p-0"
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            overflow: "hidden",
+                            width: "100%",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-map-marker-alt mr-1"></i>
+                              Hà
+                              Nội...iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+                            </p>
                           </li>
-                          <li class="list-group-item list-group-item-action">
-                            <i class="fa-regular fa-clock"></i> 21/05/2023
-                          </li>
-                          <li class="list-group-item list-group-item-action">
-                            <i class="fa-solid fa-sack-dollar"></i> 9 - 11 triệu
-                            VNĐ
+                          {/* <li class="list-group-item list-group-item-action">
+                                <i class="fas fa-clock"></i> 21/05/2023
+                              </li> */}
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-dollar-sign mr-1"></i>
+                              Thỏa thuậnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+                            </p>
                           </li>
                         </ul>
                       </div>

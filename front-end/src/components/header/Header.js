@@ -24,7 +24,7 @@ function Header() {
       localStorage.removeItem("user");
       navigate("/homeCandidate");
     } else if (user && user.role == "recruiter") {
-      alert("đã đăng xuất")
+      alert("đã đăng xuất");
       localStorage.removeItem("user");
       navigate("/homeCandidate");
     } else if (user && user.role == "admin") {
@@ -124,10 +124,7 @@ function Header() {
       );
     } else {
       return (
-        <Link
-          to="createCV"
-          className="dropdown-item"
-        >
+        <Link to="createCV" className="dropdown-item">
           Tạo CV
         </Link>
       );
@@ -303,6 +300,7 @@ function Header() {
                 <a
                   className="nav-link nav-profile d-flex align-items-center pe-0"
                   data-bs-toggle="dropdown"
+                  style={{ cursor: "pointer" }}
                 >
                   <img
                     src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
@@ -332,6 +330,7 @@ function Header() {
                     <Link to="/homeRecruiter">
                       <a
                         className="dropdown-item d-flex align-items-center"
+                        style={{ cursor: "pointer" }}
                       >
                         <i className="bi bi-person"></i>
                         <span>Trang hồ sơ</span>
@@ -345,6 +344,7 @@ function Header() {
                   <li>
                     <a
                       className="dropdown-item d-flex align-items-center"
+                      style={{ cursor: "pointer" }}
                     >
                       <i className="bi bi-box-arrow-right"></i>
                       <span onClick={logout}>Đăng xuất</span>

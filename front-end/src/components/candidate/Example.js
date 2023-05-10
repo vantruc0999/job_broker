@@ -30,6 +30,7 @@ function Example(props) {
       resume_id: e.currentTarget.id,
       job_id: job_id,
     };
+    console.log(id);
     console.log(typeof job_id);
     console.log(typeof jobId);
     axios

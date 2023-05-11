@@ -5,11 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JobRequest;
 use App\Models\Job;
+use App\Models\JobApplication;
 use App\Models\JobSkills;
+use App\Models\Package;
 use App\Models\Payment;
 use App\Models\ProgrammingSkills;
 use App\Models\Recruiter;
+use App\Models\Resume;
+use App\Models\ResumeSkills;
 use Carbon\Carbon;
+use Illuminate\Console\Application;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -20,7 +25,7 @@ class JobController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getAllJobsForAllUser()
+    public static function getAllJobsForAllUser()
     {
         $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
             ->where('status', '=', 'approved')
@@ -287,7 +292,11 @@ class JobController extends Controller
         //
     }
 
-    public function getJobsByProgrammingSkills($skill_id)
+    // private static function getSkillNameBySkillId($id){
+    //     return ProgrammingSkills::select('skill_name')->where('skill_id', '=', $id)->first()['skill_name'];
+    // }
+
+    public static function getJobsByProgrammingSkills($skill_id)
     {
 
         $jobs = Job::select('job.job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
@@ -301,9 +310,65 @@ class JobController extends Controller
                 $company_name = self::getAllCompanyName($job['recruiter_id']);
                 $job->company_name = $company_name;
                 unset($job->recruiter_id);
+
             }
         }
         return $jobs;
     }
 
+    public function viewAllAppliedCompany()
+    {
+        $jobs = JobApplication::select('job_application.job_id', 'job_name', 'job_location', 'recruiter_id', 'resume_id', 'status', 'application_id')
+            ->join('job', 'job.job_id', '=', 'job_application.job_id')
+            ->where('candidate_id', '=', auth()->user()['candidate_id'])
+            ->get();
+
+        if (count($jobs) != 0) {
+            foreach ($jobs as $job) {
+                $company_name = self::getAllCompanyName($job['recruiter_id']);
+                $job->company_name = $company_name;
+                unset($job->recruiter_id);
+            }
+        }
+
+        return $jobs;
+    }
+
+    public function cancelApplication($application_id)
+    {
+        $application = JobApplication::where('application_id', '=', $application_id)->first();
+
+        if ($application['status'] == 'approved')
+            return response([
+                "message" => 'Your application has been considered'
+            ]);
+
+        JobApplication::where('application_id', '=', $application_id)->delete();
+
+        return response([
+            "message" => 'Your application has been canceled'
+        ]);
+    }
+    
+    public function recommendJobForCandidate()
+    {
+        $main_cv_id = auth()->user()['main_cv_id'];
+
+        if ($main_cv_id == null)
+            return self::getAllJobsForAllUser();
+
+        $skills = ResumeSkills::select('skill_id')
+            ->where('resume_id', '=', $main_cv_id)
+            ->get();
+
+        $recJob = collect([]);   
+
+        foreach ($skills as $skill) {
+            $job_temp = self::getJobsByProgrammingSkills($skill->skill_id);
+            $recJob = $recJob->merge($job_temp);
+        }
+        return $recJob->unique('job_id');
+    }
+
+    
 }

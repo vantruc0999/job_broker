@@ -94,6 +94,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::get('categories', [CategoryExamController::class, 'index']);
 
+        Route::post('check-paid-package',[PaymentController::class, 'checkPaidPackage']);
+        Route::post('extend-package',[PaymentController::class, 'extendPackage']);
     });
 
     Route::prefix('candidate')->group(function () {
@@ -109,6 +111,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('apply-cv', [JobApplicationController::class, 'store']);
         Route::post('public-status-cv/{id}', [ResumeController::class, 'publicStatusResume']); 
         Route::post('private-status-cv/{id}', [ResumeController::class, 'privateStatusResume']); 
+
+        Route::post('view-all-application', [JobController::class, 'viewAllAppliedCompany']);
+        Route::post('cancel-application/{id}', [JobController::class, 'cancelApplication']);
+
+        Route::post('recommend-job',[JobController::class, 'recommendJobForCandidate']);
     });
 });
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Payment;
 use Carbon\Carbon;
 use App\Models\Package;
+use DateTime;
 
 class PaymentController extends Controller
 {
@@ -18,7 +19,9 @@ class PaymentController extends Controller
 
         Payment::create([
             'amount' => $package['price'],
-            'currency' => env('PAYPAL_CURRENCY'),
+            // 'currency' => env('PAYPAL_CURRENCY'),
+            'currency' => 'USD',
+            'package_id' => $request->package_id,
             'package_name' => $package['package_name'],
             'payment_id' => $request->payment_id,
             'payment_status' => $request->status,
@@ -34,12 +37,75 @@ class PaymentController extends Controller
             'message' => 'Payment success'
         ]);
     }
-    
-    public function getPaymentHistory(){
-        $payment_history = Payment::select('payment_id', 'package_name', 'amount', 'currency', 'created_at')
-                            ->where('recruiter_id', '=', auth()->user()['recruiter_id'])
-                            ->orderBy('id', 'desc')
-                            ->get();
+
+    public function getPaymentHistory()
+    {
+
+        $payment_history = Payment::select('payment_id', 'package_name', 'amount', 'created_at', 'currency', 'start_date', 'end_date')
+            ->where('recruiter_id', '=', auth()->user()['recruiter_id'])
+            ->orderBy('id', 'desc')
+            ->get();
+        // foreach ($payment_history as $item) {
+        //     // $item->created_at = Carbon::parse($item->created_at)->toDateTimeString();
+        //     // $item->created_at = Carbon::createFromFormat('Y-m-d',  $item->created_at)->toDateTime();
+        //     // $datetime = new DateTime($item->created_at);
+        //     // $item->created_at = $datetime->format('Y-m-d H:i:s');
+        //     $item->created_at = Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $item->created_at)->format('Y-m-d H:i:s');
+        // }
         return $payment_history;
+    }
+
+    public function checkPaidPackage(Request $request)
+    {
+        $paidPackage = Payment::where('recruiter_id', '=', auth()->user()['recruiter_id'])
+            ->orderBy('id', 'desc')
+            ->first();
+        $end_date = $paidPackage->end_date;
+        // return $paidPackage;
+        $curr_date = Carbon::now();
+
+        if ($curr_date->gt($end_date))
+            return response([
+                "message" => "Expired"
+            ]);
+        else {
+            if ($request->package_id === $paidPackage->package_id) {
+                return response([
+                    "message" => "Extend"
+                ]);
+            }
+        }
+    }
+
+    public function extendPackage(Request $request)
+    {
+        $payment = Payment::where('recruiter_id', '=', auth()->user()['recruiter_id'])
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $package = Package::where('package_id', '=', $payment['package_id'])->first();
+
+        $end_date = Carbon::parse($payment['end_date']);
+
+        Payment::create([
+            'amount' => $package['price'],
+            'currency' => 'USD',
+            'package_id' => $payment['package_id'],
+            'package_name' => $package['package_name'],
+            'payment_id' => $request->payment_id,
+            'payment_status' => $request->payment_status,
+            'payer_id' => $request->payer_id,
+            'payer_email' => $request->payer_email,
+            'recruiter_id' => auth()->user()['recruiter_id'],
+            'start_date' => $payment['end_date'],
+            'end_date' => $end_date->addMonths($package['exp_time']),
+        ]);
+
+        return response([
+            // 'curr_date' => Carbon::now(),
+            // 'end_date' => $payment['end_date'],
+            // 'exp_time' => $package['exp_time']
+            'Message' => 'Extend successfully'
+        ]);
     }
 }

@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             'email' => "vantrucadminvip99@gmail.com",
             'first_name' => "Truc",
             'last_name' => "Lionel",
-            'password' => Hash::make("123123")
+            'password' => Hash::make("@Dangvantruc123")
         ]);
     }
 }

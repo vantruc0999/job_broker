@@ -263,7 +263,7 @@ function Header() {
           className="header fixed-top d-flex align-items-center"
         >
           <div className="d-flex align-items-center justify-content-between">
-            <Link to="/homeRecruiter">
+            <Link to="/">
               <img
                 className="navbar-brand"
                 src={Logo}
@@ -293,6 +293,12 @@ function Header() {
 
           <nav className="header-nav ms-auto">
             <ul className="d-flex align-items-center">
+              {/* <li className="nav-item d-block d-lg-none">
+                <a className="nav-link nav-icon search-bar-toggle " href="/">
+                  <i className="fa fa-search"></i>
+                </a>
+              </li> */}
+
               <li className="nav-item dropdown pe-3">
                 <a
                   className="nav-link nav-profile d-flex align-items-center pe-0"
@@ -329,17 +335,6 @@ function Header() {
                       >
                         <i className="bi bi-person"></i>
                         <span>Trang hồ sơ</span>
-                      </a>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/">
-                      <a
-                        className="dropdown-item d-flex align-items-center"
-                        href="/"
-                      >
-                        <i className="bi bi-person"></i>
-                        <span>Quay lại trang chính</span>
                       </a>
                     </Link>
                   </li>

@@ -1,4 +1,5 @@
 import "../../assets/css/adminlte.min.css";
+// import "../../assets/newcss/fontawesome-free/css/all.min.css";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -61,15 +62,6 @@ function AdminJob() {
                   ) : (
                     <ModalViewJob id={value.job_id} />
                   )}
-
-                  <a className="btn btn-info btn-sm">
-                    <i className="fas fa-pencil-alt"> </i>
-                    Chỉnh sửa
-                  </a>
-                  <a className="btn btn-danger btn-sm">
-                    <i className="fas fa-trash"> </i>
-                    Xóa
-                  </a> */}
                 </td>
               </tr>
             </tbody>

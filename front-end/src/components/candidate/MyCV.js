@@ -24,44 +24,12 @@ function MyCV() {
         setCv(res.data.resume);
       });
   }, []);
-  console.log("allCV", cv);
+  console.log("allCV",cv);
   const renderResume = () => {
     if (Object.keys(cv).length > 0) {
       return cv.map((value, key) => {
         return (
           <>
-            {/* <div
-              className="allcv col d-flex"
-              style={{ padding: "0", height: "140px", width: "32%" }}
-            >
-              <div className="col-3">
-                <Link to={"/allCV/fileCV/" + value.resume_id}>
-                  <img
-                    src={Logo2}
-                    alt=""
-                    style={{
-                      width: "90px",
-                      height: "90px",
-                      margin: " 25px auto",
-                    }}
-                  />
-                </Link>
-              </div>
-
-              <div className="col-9 cv">
-                <h5 style={{ wordWrap: "break-word" }}>{value.resume_name}</h5>
-                <p>Tên CV:</p>
-                <p>Trạng thái: {value.public_status}</p>
-                <ul class="p-0">
-                  <li class="list-group-item list-group-item-action">
-                    <i class="fa-solid fa-location-dot"></i> Chỉnh sửa
-                  </li>
-                  <li class="list-group-item list-group-item-action">
-                    <i class="fa-regular fa-clock"></i> Tải xuống
-                  </li>
-                </ul>
-              </div>
-            </div> */}
             <div className="col-md-3">
               <div class="card card-primary card-outline">
                 <div class="card-body box-profile">
@@ -103,6 +71,39 @@ function MyCV() {
                 </div>
               </div>
             </div>
+
+            {/* <div
+              className="allcv col d-flex"
+              style={{ padding: "0", height: "140px", width: "32%" }}
+            >
+              <div className="col-3">
+                <Link to={"/allCV/fileCV/" + value.resume_id}>
+                  <img
+                    src={Logo2}
+                    alt=""
+                    style={{
+                      width: "90px",
+                      height: "90px",
+                      margin: " 25px auto",
+                    }}
+                  />
+                </Link>
+              </div>
+
+              <div className="col-9 cv">
+                <h5 style={{ wordWrap: "break-word" }}>{value.resume_name}</h5>
+                <p>Tên CV:</p>
+                <p>Trạng thái: {value.public_status}</p>
+                <ul class="p-0">
+                  <li class="list-group-item list-group-item-action">
+                    <i class="fa-solid fa-location-dot"></i> Chỉnh sửa
+                  </li>
+                  <li class="list-group-item list-group-item-action">
+                    <i class="fa-regular fa-clock"></i> Tải xuống
+                  </li>
+                </ul>
+              </div>
+            </div> */}
           </>
         );
       });
@@ -116,19 +117,19 @@ function MyCV() {
           style={{ width: "100%", textAlign: "center" }}
         >
           <a
-            href="/"
+            href=""
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-dashboard" /> Bảng tin
           </a>
           <a
-            href="/"
+            href=""
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-upload" /> Tải lên CV có sẵn
           </a>
           <a
-            href="/"
+            href=""
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-list-alt" /> Hoàn thiện CV
@@ -149,19 +150,19 @@ function MyCV() {
             </div>
           </a>
           <a
-            href="/"
+            href=""
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-exclamation-triangle" /> Sửa lỗi CV
           </a>
           <a
-            href="/"
+            href=""
             className="border-primary text-uppercase text-bold btn btn-primary"
           >
             <i className="fa fa-line-chart" /> CV của bạn
           </a>
           <a
-            href="/"
+            href=""
             target="_blank"
             className="border-primary text-uppercase text-bold btn  btn-default"
           >
@@ -175,7 +176,10 @@ function MyCV() {
         >
           <div className="job_cv">
             <h3 style={{ paddingTop: 20 }}>CV của bạn</h3>
-            <div className="row" style={{ margin: "20px auto" }}>
+            <div
+              className="row justify-content-between"
+              style={{ margin: "20px auto" }}
+            >
               {renderResume()}
             </div>
           </div>

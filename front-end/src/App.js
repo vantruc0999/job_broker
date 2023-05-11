@@ -11,7 +11,7 @@ import {
 // import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Sidebar from "./components/common/Sidebar";
 import HeaderRe from "./components/common/HeaderRe";
-import HomeRe from "./components/recruiter/HomeRe";
+// import HomeRe from "./components/recruiter/HomeRe";
 import ManageJob from "./components/recruiter/ManageJob";
 // import Header from "./components/header/Header";
 import Login from "./components/authen/Login";
@@ -46,6 +46,9 @@ import PrivateRoutesAdmin from "./components/authen/PrivateRoutesAdmin";
 import PrivateRoutesCandidate from "./components/authen/PrivateRoutesCandidate";
 import PrivateRoutesRecruiter from "./components/authen/PrivateRoutesRecruiter";
 import HomeRecruiter from "./components/recruiter/HomeRecruiter";
+import PackageRe from "./components/recruiter/PackageRe";
+import PaymentHistory from "./components/recruiter/PaymentHistory";
+import ListJob from "./components/candidate/ListJob";
 function App(props) {
   let param1 = useLocation();
   return (
@@ -71,7 +74,7 @@ function App(props) {
           <Route path="/allCV/fileCV/:id" element={<FileCV />} />
           <Route path="/handleCV" element={<HandleCV />} />
           <Route path="/uploadCV" element={<MyPdfReader />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/listJob" element={<ListJob />} />
         </Route>
         {/* ---------- */}
 
@@ -84,7 +87,9 @@ function App(props) {
           <Route path="/addJob" element={<AddJob />} />
           <Route path="/manageJob" element={<ManageJob />} />
           <Route path="/managecan" element={<ManageCan />} />
-
+          <Route path="/packageRecruiter" element={<PackageRe />} />
+          <Route path="/paymentHistory" element={<PaymentHistory />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Route>
 
         {/* ------------ */}

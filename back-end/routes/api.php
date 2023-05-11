@@ -111,6 +111,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('apply-cv', [JobApplicationController::class, 'store']);
         Route::post('public-status-cv/{id}', [ResumeController::class, 'publicStatusResume']); 
         Route::post('private-status-cv/{id}', [ResumeController::class, 'privateStatusResume']); 
+
+        Route::post('view-all-application', [JobController::class, 'viewAllAppliedCompany']);
+        Route::post('cancel-application/{id}', [JobController::class, 'cancelApplication']);
+
+        Route::post('recommend-job',[JobController::class, 'recommendJobForCandidate']);
     });
 });
 

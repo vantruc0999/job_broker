@@ -2,12 +2,12 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { json, useNavigate } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 function PayPalButton(props) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { product } = props;
   console.log(product);
-
+  let param1 = useLocation();
   const [paidFor, setPaidFor] = useState(false);
   const [error, setError] = useState(null);
   const [check, setCheck] = useState(false);
@@ -24,6 +24,7 @@ function PayPalButton(props) {
   return (
     <PayPalScriptProvider>
       <PayPalButtons
+        style={{ layout: "horizontal" }}
         onClick={(data, actions) => {
           const hasAlready = false;
           if (hasAlready) {
@@ -48,7 +49,7 @@ function PayPalButton(props) {
         onApprove={async (data, actions) => {
           const order = await actions.order.capture();
           console.log("order", order);
-         
+
           handleApprove(data.orderID);
           let formData = new FormData();
           formData.append("package_id", product.id);
@@ -56,7 +57,6 @@ function PayPalButton(props) {
           formData.append("status", order.status);
           formData.append("payer_id", order.payer.payer_id);
           formData.append("payer_email", order.payer.email_address);
-       
 
           let user = JSON.parse(localStorage.getItem("user"));
           let config = {
@@ -75,7 +75,11 @@ function PayPalButton(props) {
             )
             .then((res) => {
               console.log(res.data);
-              navigate('/addJob')
+              if(param1["pathname"].includes("packageRecruiter")){
+                navigate("/manageJob");
+              }else{
+                navigate("/addJob")
+              }
             });
         }}
         onCancel={() => {}}

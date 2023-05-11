@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Candidate;
 use App\Models\Experience;
 use App\Models\Job;
 use App\Models\JobApplication;
@@ -151,7 +152,7 @@ class ResumeController extends Controller
         ]);
     }
 
-    private static function getResumeById($resume_id)
+    private static function     getResumeById($resume_id)
     {
         $resume = Resume::where('resume_id', '=', $resume_id)->first();
         return $resume;
@@ -180,15 +181,15 @@ class ResumeController extends Controller
 
     private static function getResumeSkillById($resume_id)
     {
-        $skills = ResumeSkills::select('skill_name')
+        $skills = ResumeSkills::select('skill_name', 'resume_skills.skill_id')
             ->join('programming_skills', 'programming_skills.skill_id', '=', 'resume_skills.skill_id')
             ->where('resume_id', '=', $resume_id)
             ->get();
-        $skill_name = [];
-        $skills->each(function ($item) use (&$skill_name) {
-            $skill_name[] = $item->skill_name;
-        });
-        return $skill_name;
+        // $skill_name = [];
+        // $skills->each(function ($item) use (&$skill_name) {
+        //     $skill_name[] = $item->skill_name;
+        // });
+        return $skills;
     }
 
     /**
@@ -324,25 +325,48 @@ class ResumeController extends Controller
         ]);
     }
 
+    private static function getMainCvId()
+    {
+        return Candidate::where('candidate_id', '=', auth()->user()['candidate_id'])->first()['main_cv_id'];
+    }
+
     public function publicStatusResume($resume_id)
     {
+        $cv_id = self::getMainCvId();
+
+        if ($cv_id != null)
+            self::privateStatusResume($cv_id, 1);
+
+        // return self::getMainCvId();
         Resume::where('resume_id', '=', $resume_id)
             ->update([
                 'public_status' => 1
+            ]);
+        Candidate::where('candidate_id', '=', auth()->user()['candidate_id'])
+            ->update([
+                'main_cv_id' => $resume_id
             ]);
         return response([
             'message' => 'Now recruiter can see your CV'
         ]);
     }
 
-    public function privateStatusResume($resume_id)
+    public static function privateStatusResume($resume_id, $updatePublic = 0)
     {
         Resume::where('resume_id', '=', $resume_id)
             ->update([
                 'public_status' => 0
             ]);
+        Candidate::where('candidate_id', '=', auth()->user()['candidate_id'])
+            ->update([
+                'main_cv_id' => NULL
+            ]);
+        if ($updatePublic != 0)
+            return 1;
         return response([
             'message' => 'Your resume is private'
         ]);
     }
+
+    
 }

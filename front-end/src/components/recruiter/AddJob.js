@@ -59,7 +59,7 @@ const AddJob = () => {
         console.log(res.data);
         if (res.data.message === "You have not bought any package") {
           alert(res.data.message);
-          navigate("/checkout");
+          navigate("/packageRecruiter");
         } else if (res.data.message === "Job has been created successfully") {
           alert(res.data.message);
           navigate("/homeRecruiter");
@@ -139,7 +139,7 @@ const AddJob = () => {
                           setJob({ ...job, salary: e.target.value });
                         }}
                       />
-                      {/* <span className="input-group-text">triệu</span> */}
+                      <span className="input-group-text">triệu</span>
                     </div>
                   </div>
 

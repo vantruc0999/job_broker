@@ -23,7 +23,7 @@ function Homepage() {
       setJobs(res.data.jobs);
     });
   }, []);
- 
+
   function handleModalClose(showValue) {
     setShow(showValue);
   }
@@ -38,7 +38,7 @@ function Homepage() {
               setShow(true);
             }}
           >
-            <i className="fa-sharp fa-regular fa-plus mr-3" />
+            <i className="fas fa-regular fa-plus mr-2" />
             Tạo CV ngay!
           </button>
           <Example2 show={show} onCloseModal={handleModalClose} />
@@ -48,7 +48,7 @@ function Homepage() {
       return (
         <Link to="/createCV">
           <button className="btn btn-primary" type="button">
-            <i className="fa-sharp fa-regular fa-plus mr-3" />
+            <i className="fas fa-regular fa-plus mr-2" />
             Tạo CV ngay!
           </button>
         </Link>
@@ -186,7 +186,7 @@ function Homepage() {
               <p>Tạo CV online xin việc chuẩn, đẹp miễn phí.</p>
               {/* <Link to="/createCV">
                 <button className="btn btn-primary" type="button">
-                  <i className="fas fa-regular fa-plus mr-2" />
+                  <i className="fa-sharp fa-regular fa-plus mr-3" />
                   Tạo CV ngay!
                 </button>
               </Link> */}
@@ -214,7 +214,7 @@ function Homepage() {
         }}
       >
         <div className="job_urgent">
-          <h4 style={{ paddingTop: 20, fontWeight: "bold" }}>Việc tuyển gấp</h4>
+          <h3 style={{ paddingTop: 20, marginLeft: 33 }}>Việc tuyển gấp</h3>
           <div className="row d-flex " style={{ margin: "0 auto" }}>
             {/* List Job */}
             {jobs.length > 0 &&
@@ -246,22 +246,13 @@ function Homepage() {
                         </h5>
                         <p>{job.company_name}</p>
                         <ul class="p-0">
-                          <li
-                            class="list-group-item list-group-item-action"
-                            style={{ width: "35%" }}
-                          >
+                          <li class="list-group-item list-group-item-action">
                             <i class="fas fa-map-marker-alt mr-1"></i> Hà Nội...
                           </li>
-                          <li
-                            class="list-group-item list-group-item-action"
-                            style={{ width: "35%" }}
-                          >
+                          <li class="list-group-item list-group-item-action">
                             <i class="fa-regular fa-clock"></i> 21/05/2023
                           </li>
-                          <li
-                            class="list-group-item list-group-item-action"
-                            style={{ width: "35%" }}
-                          >
+                          <li class="list-group-item list-group-item-action">
                             <i class="fa-solid fa-sack-dollar"></i> 9 - 11 triệu
                             VNĐ
                           </li>
@@ -274,7 +265,8 @@ function Homepage() {
           </div>
         </div>
       </div>
-
+      {/* Typical Employers */}
+      {/* infinite loop */}
       <div className="container-fluid" style={{ padding: "0 40px" }}>
         <h4 style={{ paddingTop: 20, fontWeight: "bold" }}>
           Nhà Tuyển Dụng Tiêu Biểu

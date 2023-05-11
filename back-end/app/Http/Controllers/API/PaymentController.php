@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Payment;
 use Carbon\Carbon;
 use App\Models\Package;
+use DateTime;
 
 class PaymentController extends Controller
 {
@@ -39,10 +40,18 @@ class PaymentController extends Controller
 
     public function getPaymentHistory()
     {
-        $payment_history = Payment::select('payment_id', 'package_name', 'amount', 'currency', 'created_at')
+
+        $payment_history = Payment::select('payment_id', 'package_name', 'amount', 'created_at', 'currency', 'start_date', 'end_date')
             ->where('recruiter_id', '=', auth()->user()['recruiter_id'])
             ->orderBy('id', 'desc')
             ->get();
+        // foreach ($payment_history as $item) {
+        //     // $item->created_at = Carbon::parse($item->created_at)->toDateTimeString();
+        //     // $item->created_at = Carbon::createFromFormat('Y-m-d',  $item->created_at)->toDateTime();
+        //     // $datetime = new DateTime($item->created_at);
+        //     // $item->created_at = $datetime->format('Y-m-d H:i:s');
+        //     $item->created_at = Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $item->created_at)->format('Y-m-d H:i:s');
+        // }
         return $payment_history;
     }
 

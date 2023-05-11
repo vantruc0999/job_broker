@@ -1,6 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  BrowserRouter,
+} from "react-router-dom";
 import App from "./App";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import reportWebVitals from "./reportWebVitals";
@@ -16,7 +22,7 @@ import MyPdfReader from "./components/candidate/MyPdfReader";
 import Checkout from "./components/payment/Checkout";
 import AddJob from "./components/recruiter/AddJob";
 import LoginRecruiter from "./components/authen/LoginCruiter";
-import HomeRecruiter from "./components/recruiter/HomeRecruiter";
+import HomeRe from "./components/recruiter/HomeRecruiter";
 // import HeaderRe from "./components/common/Header";
 import Showjob from "./components/recruiter/Showjob";
 import Test from "./components/candidate/Test";
@@ -33,11 +39,9 @@ import AdminHome from "./components/admin/AdminHome";
 import AdminJob from "./components/admin/AdminJob";
 import AdminCV from "./components/admin/AdminCV";
 import Package from "./components/admin/Package";
-import PrivateRoutesAdmin from "./components/authen/PrivateRoutesAdmin";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <BrowserRouter> */}
     <PayPalScriptProvider
       deferLoading={true}
       options={{
@@ -46,8 +50,8 @@ root.render(
       }}
     >
       <Router>
-      <App/>
-       {/* <App>
+        <App />
+        {/* <App>
        
           <Routes>
             <Route index path="/" element={<Homepage />} />
@@ -63,32 +67,25 @@ root.render(
             <Route path="/handleCV" element={<HandleCV />} />
             <Route path="/uploadCV" element={<MyPdfReader />} />
             <Route path="/checkout" element={<Checkout />} />
-            <Route path="/list" element={<ListJob />} />
             <Route path="/addJob" element={<AddJob />} />
-            <Route path="/homeRecruiter" element={<HomeRecruiter />} />
+            <Route path="/homeRecruiter" element={<HomeRe />} />
             <Route path="/manageJob" element={<ManageJob />} />
             <Route path="/job/:id" element={<Test />} />
             <Route path="/managecan" element={<ManageCan />} />
-       
-            <Route path="/loginadmin" element={<LoginAdmin />} />
-            <Route element={<PrivateRoutesAdmin/>}>
-              <Route path="/adminhome" element={<AdminHome />} />
-              <Route path="/adminjob" element={<AdminJob />} />
-              <Route path="/adminjob/job/:id" element={<Test />} />
-              <Route path="/admincv" element={<AdminCV />} />
-              <Route path="/admincv/fileCV/:id" element={<FileCV />} />
-              <Route path="/package" element={<Package />} />
-            </Route>
-            
+            {/* admin */}
+            {/* <Route path="/loginadmin" element={<LoginAdmin />} />
+            <Route path="/adminhome" element={<AdminHome />} />
+            <Route path="/adminjob" element={<AdminJob />} />
+            <Route path="/adminjob/job/:id" element={<Test />} />
+            <Route path="/admincv" element={<AdminCV />} />
+            <Route path="/admincv/fileCV/:id" element={<FileCV />} />
+            <Route path="/package" element={<Package />} /> */}
 
-          </Routes>
-       
-      </App> */}
+          {/* </Routes> */}
+        {/* </App> */}
       </Router>
-
     </PayPalScriptProvider>
     {/* </BrowserRouter> */}
-   
   </React.StrictMode>
 );
 

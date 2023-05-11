@@ -7,9 +7,6 @@ import PayPalButton from "./PaypalCheckout";
 import axios from "axios";
 import "../../assets/css/package.css";
 
-// import "swiper/css";
-// import "swiper/css/pagination";
-// import "swiper/css/navigation";
 function Checkout() {
   const [swiperRef, setSwiperRef] = useState(null);
   const [packageall, setPackageall] = useState("");
@@ -26,8 +23,7 @@ function Checkout() {
     };
     axios.get("http://127.0.0.1:8000/api/recruiter/package",config).then((res) => {
       setPackageall(res.data);
-
-      console.log(res);
+      console.log(res.data);
     });
   }, []);
   const renPackage = () => {

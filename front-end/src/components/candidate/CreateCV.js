@@ -102,6 +102,7 @@ function CreateCV() {
     let nameInput = e.target.name;
     let value = e.target.value;
     setInputs((state) => ({ ...state, [nameInput]: value }));
+    setSummary((state) => ({ ...state, [nameInput]: value }));
   };
   const handleAwardInputChange = (index, field, value) => {
     const newAwards = [...awards];
@@ -118,7 +119,7 @@ function CreateCV() {
       position: item.position,
       achievement: item.description,
       experience_start: item.time,
-      experience_end: "",
+      experience_end: "2040",
     };
   });
   let experience_project = active.map((item) => {
@@ -127,7 +128,7 @@ function CreateCV() {
       responsibility: item.position,
       achievement: item.description,
       experience_start: item.time,
-      experience_end: "",
+      experience_end: "2099",
     };
   });
 
@@ -567,12 +568,12 @@ function CreateCV() {
       </>
     );
   };
-
+  console.log(inputs);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(education);
     let resume = {
-      resume_name: "Intern Software",
+      resume_name: inputs.resume_name, 
       education: education[0].school,
       education_year: education[0].time,
       education_major: education[0].specialize,
@@ -755,14 +756,25 @@ function CreateCV() {
                   <h1 style={{ fontWeight: "700" }}>
                     {summary.last_name} {summary.first_name}
                   </h1>
+                  <div style={{ display: "inline-block" }}>
                   <input
-                    type="text"
-                    placeholder="Vị trí mong muốn"
-                    value={summary.position}
-                    name="position"
-                    onChange={handleInput}
-                    style={{ padding: "5px", border: "none", color: "#000" }}
-                  />
+                      type="text"
+                      placeholder="Tên CV "
+                      value={summary.namecv}
+                      name="namecv"
+                      onChange={handleInput}
+                      style={{ padding: "5px", border: "none", color: "#000" }}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Vị trí mong muốn"
+                      value={summary.position}
+                      name="position"
+                      onChange={handleInput}
+                      style={{ padding: "5px", border: "none", color: "#000" }}
+                    />
+                   
+                  </div>
                 </section>
                 <section className="experience">
                   <h4>

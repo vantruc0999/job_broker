@@ -65,8 +65,7 @@ const ManageJob = () => {
                 <td>{value.job_end_date}</td>
                 <td>{user.recruiter_name}</td>
                 <td style={{ display: "grid" }}>
-                  <a
-                    href="/"
+                  <Link to={"/manageJob/updateJob/" +value.job_id}
                     className="btn btn-outline-success"
                     style={{
                       margin: "2px",
@@ -75,9 +74,8 @@ const ManageJob = () => {
                     }}
                   >
                     Chỉnh Sửa
-                  </a>
+                  </Link>
                   <a
-                    href="/"
                     className="btn btn-outline-danger"
                     style={{
                       margin: "2px",
@@ -88,7 +86,6 @@ const ManageJob = () => {
                     Xóa
                   </a>
                   <a
-                    href="/"
                     className="btn btn-outline-info"
                     style={{
                       margin: "2px",
@@ -99,7 +96,6 @@ const ManageJob = () => {
                     Chia sẻ
                   </a>
                   <a
-                    href="/"
                     className="btn btn-outline-secondary"
                     style={{
                       margin: "2px",

@@ -9,6 +9,7 @@ const ManageCan = () => {
   const [candidate, setCandidate] = useState("");
 
   let user = JSON.parse(localStorage.getItem("user"));
+  console.log(user.token);
   let config = {
     headers: {
       Authorization: "Bearer " + user.token,
@@ -50,9 +51,21 @@ const ManageCan = () => {
       });
     }
   };
+  const handleApply=(e)=>{
+    let id =e.currentTarget.id;
+    // console.log(e.currentTarget.id);
+    console.log(id);
+    axios
+      .post(`http://127.0.0.1:8000/api/recruiter/resume-accept/` + id, config)
+      .then((res) => {
+        console.log(res.data);
+      });
+
+  }
   const renderCanofJobID = () => {
     if (Object.keys(candidate).length > 0) {
       return candidate.map((value, key) => {
+        console.log(value);
         return (
           <>
             <tbody>
@@ -71,17 +84,17 @@ const ManageCan = () => {
                 <a href="/">{value.fullname}</a>
                 <td>Nguyenkimthang@gmail.com</td>
                 <td>{value.skills}</td>
-                <td>Chưa duyệt</td>
+                <td>{value.status}</td>
                 <td class="project-actions text-right">
-                  <a class="btn btn-primary btn-sm" href="/">
+                  <a class="btn btn-primary btn-sm" >
                     <i class="fas fa-eye"></i>
                     Xem
                   </a>
-                  <a class="btn btn-info btn-sm" href="/">
+                  <a class="btn btn-info btn-sm" id={value.resume_id} onClick={handleApply}>
                     <i class="fas fa-check"></i>
                     Duyệt
                   </a>
-                  <a class="btn btn-danger btn-sm" href="/">
+                  <a class="btn btn-danger btn-sm" >
                     <i class="fas fa-trash"></i>
                     Xóa
                   </a>

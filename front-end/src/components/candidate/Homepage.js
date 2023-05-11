@@ -247,13 +247,13 @@ function Homepage() {
                         <p>{job.company_name}</p>
                         <ul class="p-0">
                           <li class="list-group-item list-group-item-action">
-                            <i class="fas fa-map-marker-alt mr-1"></i> Hà Nội...
+                            <i class="fas fa-map-marker-alt mr-1"></i> {job.job_location}
                           </li>
                           <li class="list-group-item list-group-item-action">
                             <i class="fa-regular fa-clock"></i> 21/05/2023
                           </li>
                           <li class="list-group-item list-group-item-action">
-                            <i class="fa-solid fa-sack-dollar"></i> 9 - 11 triệu
+                            <i class="fa-solid fa-sack-dollar"></i> {job.salary}
                             VNĐ
                           </li>
                         </ul>

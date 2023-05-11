@@ -24,10 +24,11 @@ function MyCV() {
         setCv(res.data.resume);
       });
   }, []);
-  console.log("allCV",cv);
+  console.log("allCV", cv);
   const renderResume = () => {
     if (Object.keys(cv).length > 0) {
       return cv.map((value, key) => {
+        console.log(value);
         return (
           <>
             <div className="col-md-3">
@@ -44,13 +45,13 @@ function MyCV() {
                   <h3 class="profile-username text-center">
                     {value.resume_name}
                   </h3>
-                  <p class=" text-center">Tên CV</p>
+                  {/* <p class=" text-center"> {value.resume_name}</p> */}
                   <div
                     class="list-group-item"
                     style={{ fontSize: "14px", marginBottom: "10px" }}
                   >
                     <b>Trạng thái</b>{" "}
-                    <p class="float-right">{value.public_status}</p>
+                    <p class="float-right">{value.public_status == "0" ? <>private</>: <>public</>}</p>
                   </div>
                   <Link to={"/allCV/fileCV/" + value.resume_id}>
                     <a
@@ -61,10 +62,12 @@ function MyCV() {
                       <b>Xem</b>
                     </a>
                   </Link>
+                  <Link to={"/allCV/UpdateCv/" + value.resume_id}>
+                    <a href="/" class="btn btn-success btn-block">
+                      <b>Chỉnh sửa</b>
+                    </a>
+                  </Link>
 
-                  <a href="/" class="btn btn-success btn-block">
-                    <b>Chỉnh sửa</b>
-                  </a>
                   <a href="/" class="btn btn-danger btn-block">
                     <b>Xóa</b>
                   </a>
@@ -72,38 +75,7 @@ function MyCV() {
               </div>
             </div>
 
-            {/* <div
-              className="allcv col d-flex"
-              style={{ padding: "0", height: "140px", width: "32%" }}
-            >
-              <div className="col-3">
-                <Link to={"/allCV/fileCV/" + value.resume_id}>
-                  <img
-                    src={Logo2}
-                    alt=""
-                    style={{
-                      width: "90px",
-                      height: "90px",
-                      margin: " 25px auto",
-                    }}
-                  />
-                </Link>
-              </div>
-
-              <div className="col-9 cv">
-                <h5 style={{ wordWrap: "break-word" }}>{value.resume_name}</h5>
-                <p>Tên CV:</p>
-                <p>Trạng thái: {value.public_status}</p>
-                <ul class="p-0">
-                  <li class="list-group-item list-group-item-action">
-                    <i class="fa-solid fa-location-dot"></i> Chỉnh sửa
-                  </li>
-                  <li class="list-group-item list-group-item-action">
-                    <i class="fa-regular fa-clock"></i> Tải xuống
-                  </li>
-                </ul>
-              </div>
-            </div> */}
+           
           </>
         );
       });

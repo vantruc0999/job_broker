@@ -39,9 +39,6 @@ const Test = () => {
         });
     }
   }, []);
-
-  
-console.log(user);
   return (
     <div>
       <div className="container" style={{ margin: "0 auto", width: "1250px" }}>

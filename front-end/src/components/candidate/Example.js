@@ -3,7 +3,11 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { json, useNavigate } from "react-router-dom";
+
 function Example(props) {
+  const navigate = useNavigate();
+
   console.log(props.jobId);
   const [show, setShow] = useState(false);
   const [cv, setCv] = useState("");
@@ -19,23 +23,31 @@ function Example(props) {
     axios
       .get(`http://127.0.0.1:8000/api/candidate/show-all`, config)
       .then((res) => {
-        console.log(res.data.resume);
+        // console.log(res.data.resume);
         setCv(res.data.resume);
       });
   }, []);
   const handleClick = (e) => {
     let jobId = props.jobId;
     let job_id = jobId.toString();
+    console.log(e.target.id);
+    console.log(e.currentTarget.id);
     let id = {
       resume_id: e.currentTarget.id,
       job_id: job_id,
     };
+    console.log(id);
     console.log(typeof job_id);
     console.log(typeof jobId);
     axios
       .post("http://127.0.0.1:8000/api/candidate/apply-cv", id, config)
       .then((res) => {
         console.log(res.data);
+        if(res.data.message.includes("application")){
+          alert("Bạn đã ứng tuyển thành công")
+        }else if(res.data.message.includes("already ")){
+          alert("Bạn đã ứng tuyển vui lòng chờ kết quả")
+        }
       });
   };
   const renderResume = () => {
@@ -66,7 +78,7 @@ function Example(props) {
                     <b>Trạng thái</b>{" "}
                     <p class="float-right">{value.public_status}</p>
                   </div>
-                  <a href="/" class="btn btn-primary btn-block">
+                  <a class="btn btn-primary btn-block" id={value.resume_id} onClick={handleClick}>
                     <b>Ứng tuyển</b>
                   </a>
                 </div>

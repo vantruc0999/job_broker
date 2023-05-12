@@ -9,6 +9,8 @@ function ModalViewJob(props) {
   const [openModal, setOpenModal] = useState(false);
   const [show, setShow] = useState(false);
   const [success, setSuccess] = useState("");
+  const [jobwait, setJobwait] = useState("");
+
   let user = JSON.parse(localStorage.getItem("user"));
   let config = {
     headers: {
@@ -35,27 +37,32 @@ function ModalViewJob(props) {
         });
     }
   }, []);
-  const handleDetailCV = (e) => {
+  const handleDetailCV = async (e) => {
     let id = e.target.id;
-    let url = "http://127.0.0.1:8000/api/admin/accept-job/" + e.target.id
-    console.log(url,config);
-    axios
-      .post("http://127.0.0.1:8000/api/admin/accept-job/" + id, config)
+    await axios
+      .post("http://127.0.0.1:8000/api/admin/accept-job/" + id, null, config)
       .then((res) => {
-        console.log(res.data.message);
         setSuccess(res.data);
-        if(res.data.message.includes("approved")){
-          console.log("oke");
-          alert(res.data.message)
+        if (res.data.message.includes("approved")) {
+          alert(res.data.message);
         }
+      });
+    axios
+      .get(`http://127.0.0.1:8000/api/admin/waiting-jobs`, config)
+      .then((res) => {
+        console.log(res.data);
+        props.setJobwait(res.data.jobs);
       });
   };
   return (
     <>
-      <a className="btn btn-primary btn-sm" onClick={() => setShow(true)}>
+      <span className="btn btn-primary btn-sm" onClick={(e) => {
+        e.preventDefault()
+        setShow(true)
+      }}>
         <i className="fas fa-folder"> </i>
         Xem
-      </a>
+      </span>
 
       <Modal
         size={"lg"}
@@ -70,7 +77,7 @@ function ModalViewJob(props) {
           <Modal.Title id="example-custom-modal-styling-title">
           </Modal.Title>
         </Modal.Header> */}
-        <Modal.Body style={{  overflowX: "hidden" }}>
+        <Modal.Body style={{ overflowX: "hidden" }}>
           <div className="container" style={{ width: "1250px" }}>
             <section className="section">
               <div className="row">
@@ -295,7 +302,13 @@ function ModalViewJob(props) {
                   </div>
                 </div>
               </div>
-              <button className="btn btn-success" id={detailJob.job_id} onClick={(e)=>handleDetailCV(e)}>Duyệt</button>
+              <button
+                className="btn btn-success"
+                id={detailJob.job_id}
+                onClick={(e) => handleDetailCV(e)}
+              >
+                Duyệt
+              </button>
             </section>
           </div>
         </Modal.Body>

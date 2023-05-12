@@ -7,6 +7,18 @@ function MyCV() {
   let navigate = useNavigate();
   const [cv, setCv] = useState("");
   const [selectedCV, setSelectedCV] = useState(null);
+  const [status, setStatus] = useState("")
+  const arr = [
+    {
+      public_status: 0,
+      name:"private",
+    },
+    {
+      public_status: 1,
+      name:"public",
+    },
+    
+  ];
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
     let config = {
@@ -24,7 +36,34 @@ function MyCV() {
         setCv(res.data.resume);
       });
   }, []);
-  console.log("allCV", cv);
+  const handleChange = (e) => {
+    console.log(e.target.value);
+    console.log(e.target.id);
+
+    let user = JSON.parse(localStorage.getItem("user"));
+    let config = {
+      headers: {
+        Authorization: "Bearer " + user.token,
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
+    };
+    if(e.target.value == 1){
+      axios
+        .post(`http://127.0.0.1:8000/api/candidate/public-status-cv/`+e.target.id ,null, config)
+        .then((res) => {
+          console.log(res.data);
+          setStatus(res.data);
+        });
+    }else if(e.target.value == 0){
+      axios
+        .post(`http://127.0.0.1:8000/api/candidate/private-status-cv/`+e.target.id ,null, config)
+        .then((res) => {
+          console.log(res.data);
+          setStatus(res.data);
+        });
+    }
+  };
   const renderResume = () => {
     if (Object.keys(cv).length > 0) {
       return cv.map((value, key) => {
@@ -51,7 +90,14 @@ function MyCV() {
                     style={{ fontSize: "14px", marginBottom: "10px" }}
                   >
                     <b>Trạng thái</b>{" "}
-                    <p class="float-right">{value.public_status == "0" ? <>private</>: <>public</>}</p>
+                    {/* <p class="float-right">{value.public_status == "0" ? <>private</>: <>public</>}</p> */}
+                    <select value={value.public_status} id={value.resume_id} onChange={handleChange}>
+                    {arr.map((key, item) => (
+                      <option  name={key.name} value={key.public_status}>
+                        {key.name}
+                      </option>
+                    ))}
+                  </select>
                   </div>
                   <Link to={"/allCV/fileCV/" + value.resume_id}>
                     <a

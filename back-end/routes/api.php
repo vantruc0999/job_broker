@@ -50,14 +50,14 @@ Route::get('skills', [SkillController::class, 'index']);
 
 
 Route::get('jobs-by-skills/{id}', [JobController::class, 'getJobsByProgrammingSkills']);
-Route::post('admin/accept-job/{id}', [JobController::class, 'approveJobRequest']);
-Route::post('admin/decline-job/{id}', [JobController::class, 'declineJobRequest']);
+
 Route::post('recruiter/resume-accept/{id}', [JobApplicationController::class, 'acceptApplicationRequest']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::post('logout', [AdminAuthController::class, 'logout']);
-
+        Route::post('accept-job/{id}', [JobController::class, 'approveJobRequest']);
+        Route::post('decline-job/{id}', [JobController::class, 'declineJobRequest']);
         Route::post('add-package', [PackageController::class, 'store']);
         Route::post('update-package/{id}', [PackageController::class, 'update']);
         Route::get('package-detail/{id}', [PackageController::class, 'show']);

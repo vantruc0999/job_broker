@@ -63,7 +63,7 @@ function UpdateCV() {
   const [skill, setSkill] = useState([]);
   const [softSkill, setSoftSkill] = useState([]);
   const [awards, setAwards] = useState([]);
-  const [language, setLanguage] = useState([]);
+  const [language, setLanguage] = useState('');
   const [inputs, setInputs] = useState("");
   const [summary, setSummary] = useState("");
 
@@ -106,17 +106,11 @@ function UpdateCV() {
         ];
         setCertificate(cer);
         setSummary({
-          resume_name : res.data.resume.resume_name,
-        })
+          resume_name: res.data.resume.resume_name,
+        });
       });
   }, []);
-  useEffect(() => {
-    axios
-      .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
-      .then((res) => {
-        setInfo(res.data);
-      });
-  }, []);
+  
   useEffect(() => {
     const textarea = document.getElementById("emailSummary");
     const placeholder = "Email";
@@ -146,7 +140,7 @@ function UpdateCV() {
       .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
       .then((res) => {
         console.log(res.data);
-        setSummary({
+        setInputs({
           first_name: res.data.first_name,
           last_name: res.data.last_name,
           address: res.data.address,
@@ -308,8 +302,23 @@ function UpdateCV() {
     return (
       <>
         <div className="content_form">
-          <label class="form-label">Ngoại ngữ</label>
-          <AnimatedMulti2 parentCallback={handleLangInput}></AnimatedMulti2>
+          <textarea
+                // rows={rows}
+                className="exp_input"
+                id="exp_input2"
+                placeholder="Ngoại ngữ..."
+                style={{
+                  border: "none",
+                  width: "100%",
+                  overflow: "hidden",
+                }}
+                value={active.achievement}
+                onChange={(e) => {
+                  setLanguage(e.target.value);
+                }}
+                minRows={1}
+                maxRows={6}
+              />
         </div>
       </>
     );
@@ -416,14 +425,8 @@ function UpdateCV() {
         {active.map((active, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
             <div className="addition">
-              <i
-                class="fa fa-plus mr-1"
-                onClick={handleAddAct}
-              ></i>
-              <i
-                class="fa fa-minus"
-                onClick={() => handleRemoveAct(index)}
-              ></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddAct}></i>
+              <i class="fa fa-minus" onClick={() => handleRemoveAct(index)}></i>
             </div>
             <div key={index} className="form-field">
               <input
@@ -637,9 +640,14 @@ function UpdateCV() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(education);
     let resume = {
-      resume_name: summary.resume_name,
+      first_name: inputs.first_name,
+      last_name: inputs.last_name,
+      phone: inputs.phone,
+      birth_day: inputs.birth_day,
+      email: inputs.email,
+      address: inputs.address,
+      resume_name: inputs.namecv,
       education: education[0].school,
       education_year: education[0].time,
       education_major: education[0].specialize,
@@ -670,15 +678,15 @@ function UpdateCV() {
         config
       )
       .then((res) => {
-        if (res.data.message == "considered") {
-          alert("CV đang được xem xét trong mục công việc, không thể chỉnh sửa");
-          navigate("/allCV");
-        } 
         console.log(res.data);
-        // if (res.data.errCode == 0) {
-
-        //   alert("Update succesful");
-        // }
+        if (res.data.message == "considered") {
+          alert(
+            "CV đang được xem xét trong mục công việc, không thể chỉnh sửa"
+          );
+          // navigate("/allCV");
+        }
+        console.log(res.data);
+      
       });
   };
 
@@ -766,7 +774,7 @@ function UpdateCV() {
                           <input
                             type="text"
                             placeholder="dd-mm-yyyy"
-                            name="birthday"
+                            name="birth_day"
                             value={summary.birth_day}
                             onChange={handleInput}
                             style={{ width: "60%" }}
@@ -793,14 +801,15 @@ function UpdateCV() {
                     {showForm && showForm.includes(5) ? (
                       addSkill()
                     ) : (
-                      <div
-                        className="content_form"
-                        onClick={(e) => handleShow(5, e)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <div id="content-suggest-skill"></div>
-                        <i className="fas fa-plus" />
-                      </div>
+                      addSkill()
+                      // <div
+                      //   className="content_form"
+                      //   onClick={(e) => handleShow(5, e)}
+                      //   style={{ cursor: "pointer" }}
+                      // >
+                      //   <div id="content-suggest-skill"></div>
+                      //   <i className="fas fa-plus" />
+                      // </div>
                     )}
                   </section>
 
@@ -1042,33 +1051,118 @@ function UpdateCV() {
   );
 }
 const AnimatedMulti = (props) => {
+  let params = useParams();
   const sendData = (selected) => {
+    setSkillSelected(selected);
     props.parentCallback(selected.map((skill) => skill.value));
   };
+  const [skillSelected, setSkillSelected] = useState([]);
+  const [skill, setSkill] = useState([]);
+
+  useEffect(() => {
+    const getSkillSelect = async () => {
+      let user = JSON.parse(localStorage.getItem("user"));
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      await axios
+        .get(`http://127.0.0.1:8000/api/candidate/show-detail/${params.id}`, config)
+        .then((res) => {
+          if (res.data.skill.length > 0) {
+            const arraySkillSelected = res.data.skill.map((item) => {
+              return { value: item.skill_id, label: item.skill_name };
+            });
+            setSkillSelected(arraySkillSelected);
+          }
+        });
+    };
+
+    const getListSkill = async () => {
+      let user = JSON.parse(localStorage.getItem("user"));
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      await axios
+        .get(`http://127.0.0.1:8000/api/skills`, config)
+        .then((res) => {
+          if (res && res.data.length > 0) {
+            console.log(">>>>>>>>", res.data);
+            const arraySkill = res.data.map((item) => {
+              return { value: item.skill_id, label: item.skill_name };
+            });
+            setSkill(arraySkill);
+          }
+        });
+    };
+    getListSkill()
+    getSkillSelect();
+  }, [params.id]);
   return (
     <Select
+      value={[...skillSelected]}
       closeMenuOnSelect={false}
       components={animatedComponents}
       isMulti
-      options={arraySkill}
+      options={skill}
       onChange={sendData}
     />
   );
 };
 
-const AnimatedMulti2 = (props) => {
-  const sendData = (selected) => {
-    props.parentCallback(selected.map((language) => language.value));
-  };
-  return (
-    <Select
-      closeMenuOnSelect={false}
-      components={animatedComponents}
-      isMulti
-      options={arraySkill2}
-      onChange={sendData}
-    />
-  );
-};
+// const AnimatedMulti2 = (props) => {
+//   let params = useParams();
+//   console.log(arraySkill);
+//   const sendData = (selected) => {
+//     setLanguageSelected(selected);
+//     props.parentCallback(selected.map((language) => language.value));
+//   };
+//   const [languageSelected, setLanguageSelected] = useState([]);
+//   const [language, setLanguage] = useState([]);
+
+//   useEffect(() => {
+//     const getLanguageSelect = async () => {
+//       let user = JSON.parse(localStorage.getItem("user"));
+//       let config = {
+//         headers: {
+//           Authorization: "Bearer " + user.token,
+//           "Content-Type": "application/x-www-form-urlencoded",
+//           Accept: "application/json",
+//         },
+//       };
+//       await axios
+//         .get(
+//           `http://127.0.0.1:8000/api/candidate/show-detail/${params.id}`,
+//           config
+//         )
+//         .then((res) => {
+//           if (res.data.skill.length > 0) {
+//             const arrayLanguage = res.data.skill.map((item, index) => {
+//               return { value: index + 1, label: item };
+//             });
+//             setLanguageSelected(arrayLanguage);
+//           }
+//         });
+//     };
+//     getLanguageSelect();
+//   }, [params.id]);
+//   return (
+//     <Select
+//       value={[...languageSelected]}
+//       closeMenuOnSelect={false}
+//       components={animatedComponents}
+//       isMulti
+//       options={language}
+//       onChange={sendData}
+//     />
+//   );
+// };
 
 export default UpdateCV;

@@ -45,6 +45,14 @@ class ResumeController extends Controller
     {
         //
         // $idCandidate = auth()->user()['candidate_id'];
+        $first_name = $request->resume['first_name'];
+        $last_name = $request->resume['last_name'];
+        $phone = $request->resume['phone'];
+        $birth_day = $request->resume['birth_day'];
+        $email = $request->resume['email'];
+        $address = $request->resume['address'];
+        $hobby = $request->resume['hobby'];
+        $activity = $request->resume['activity'];
         $resume_name = $request->resume['resume_name'];
         $education = $request->resume['education'];
         $education_year = $request->resume['education_year'];
@@ -57,7 +65,7 @@ class ResumeController extends Controller
         $experience_company = $request->resume['experience_company'];
         $skills = $request->resume['skills'];
 
-        $id_resume = self::storeResume($resume_name, $education, $education_year, $education_major, $education_description, $certificate, $image, $template);
+        $id_resume = self::storeResume($first_name, $last_name, $phone, $birth_day, $email, $address, $hobby, $activity, $resume_name, $education, $education_year, $education_major, $education_description, $certificate, $image, $template);
         self::storeExperience($experience_project, $id_resume, "experience_project");
         self::storeExperience($experience_company, $id_resume, "experience_company");
         self::storeResumeSkills($skills, $id_resume);
@@ -116,9 +124,17 @@ class ResumeController extends Controller
         }
     }
 
-    private static function storeResume($resume_name, $education, $education_year, $education_major, $education_description, $certificate, $image, $template)
+    private static function storeResume($first_name, $last_name, $phone, $birth_day, $email, $address, $hobby, $activity, $resume_name, $education, $education_year, $education_major, $education_description, $certificate, $image, $template)
     {
         $resume = Resume::create([
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'phone' => $phone,
+            'birth_day' => $birth_day,
+            'email' => $email,
+            'address' => $address,
+            'hobby' => $hobby,
+            'activity' => $activity,
             'resume_name' => $resume_name,
             'education' => $education,
             'education_year' => $education_year,
@@ -152,7 +168,7 @@ class ResumeController extends Controller
         ]);
     }
 
-    private static function     getResumeById($resume_id)
+    private static function getResumeById($resume_id)
     {
         $resume = Resume::where('resume_id', '=', $resume_id)->first();
         return $resume;
@@ -239,6 +255,14 @@ class ResumeController extends Controller
                 'message' => 'Your resume has been considered in a job',
             ]);
         }
+        $first_name = $request->resume['first_name'];
+        $last_name = $request->resume['last_name'];
+        $phone = $request->resume['phone'];
+        $birth_day = $request->resume['birth_day'];
+        $email = $request->resume['email'];
+        $address = $request->resume['address'];
+        $hobby = $request->resume['hobby'];
+        $activity = $request->resume['activity'];
         $resume_name = $request->resume['resume_name'];
         $education = $request->resume['education'];
         $education_year = $request->resume['education_year'];
@@ -252,6 +276,14 @@ class ResumeController extends Controller
         $skills = $request->resume['skills'];
 
         self::updateResume(
+            $first_name,
+            $last_name,
+            $phone,
+            $birth_day,
+            $email,
+            $address,
+            $hobby,
+            $activity,
             $resume_name,
             $education,
             $education_year,
@@ -276,6 +308,14 @@ class ResumeController extends Controller
     }
 
     private static function updateResume(
+        $first_name,
+        $last_name,
+        $phone,
+        $birth_day,
+        $email,
+        $address,
+        $hobby,
+        $activity,
         $resume_name,
         $education,
         $education_year,
@@ -286,6 +326,14 @@ class ResumeController extends Controller
         $id
     ) {
         $resume = Resume::where('resume_id', '=', $id)->update([
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'phone' => $phone,
+            'birth_day' => $birth_day,
+            'email' => $email,
+            'address' => $address,
+            'hobby' => $hobby,
+            'activity' => $activity,
             'resume_name' => $resume_name,
             'education' => $education,
             'education_year' => $education_year,
@@ -367,6 +415,4 @@ class ResumeController extends Controller
             'message' => 'Your resume is private'
         ]);
     }
-
-    
 }

@@ -45,47 +45,12 @@ function FileCV() {
           <>
             <ul>
               <li>
-                <div className="date">
-                  Ngày bắt đầu: {value.experience_start}
-                </div>
-                <div className="date">
-                  Ngày kết thúc: {value.experience_end}
-                </div>
+                <div className="date">{value.experience_start}</div>
                 <div className="info">
-                  <p className="semi-bold">Tên công ty: {value.company_name}</p>
-                  <p className="semi-bold">Tên dự án: {value.project_name}</p>
+                  <p className="semi-bold">{value.company_name}</p>
                   <p>Nhiệm vụ: {value.position}</p>
-                  <p>Chức vụ: {value.achievement}</p>
-                  <p>Trách nhiệm: {value.responsibility}</p>
-                  <p>Danh mục kinh nghiệm: {value.exp_category}</p>
-                </div>
-              </li>
-            </ul>
-          </>
-        );
-      });
-    }
-  };
-  const renderExpProject = () => {
-    if (Object.keys(resume).length > 0) {
-      return resume.experience_project.map((value, key) => {
-        return (
-          <>
-            <ul>
-              <li>
-                <div className="date">
-                  Ngày bắt đầu: {value.experience_start}
-                </div>
-                <div className="date">
-                  Ngày kết thúc: {value.experience_end}
-                </div>
-                <div className="info">
-                  <p className="semi-bold">Tên công ty: {value.company_name}</p>
-                  <p className="semi-bold">Tên dự án: {value.project_name}</p>
-                  <p>Nhiệm vụ: {value.position}</p>
-                  <p>Chức vụ: {value.achievement}</p>
-                  <p>Trách nhiệm: {value.responsibility}</p>
-                  <p>Danh mục kinh nghiệm: {value.exp_category}</p>
+                  {/* <p>Ngôn ngữ sử dụng: J2ME</p> */}
+                  <p>{value.achievement}</p>
                 </div>
               </li>
             </ul>
@@ -98,17 +63,11 @@ function FileCV() {
   const renderSkill = () => {
     if (Object.keys(resume).length > 0) {
       return resume.skill.map((value, key) => {
+        console.log(value);
         return (
           <>
             <li>
-              <div className="skill_name">{resume.skill}</div>
-              <div
-                className="skill_progress"
-                style={{ width: "100px", marginRight: "-40px" }}
-              >
-                <span style={{ width: "80%" }} />
-              </div>
-              <div className="skill_per">80%</div>
+              <div className="skill_name">{value.skill_name}</div>
             </li>
           </>
         );
@@ -172,64 +131,7 @@ function FileCV() {
                     <div className="title">
                       <p className="bold">Các kỹ năng</p>
                     </div>
-                    <ul style={{ padding: "0" }}>{renderSkill()}</ul>
-                  </div>
-                  <div className="resume_item resume_social">
-                    <div className="title">
-                      <p className="bold">Mạng xã hội</p>
-                    </div>
-                    <ul style={{ padding: "0" }}>
-                      <li>
-                        <div className="icon">
-                          <i className="fab fa-facebook-square" />
-                        </div>
-                        <div className="data">
-                          <p className="semi-bold">Facebook</p>
-                          <p>
-                            <a href="" target="_blank">
-                              kim.thang.26
-                            </a>
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="icon">
-                          <i className="fab fa-skype" />
-                        </div>
-                        <div className="data">
-                          <p className="semi-bold">Skype</p>
-                          <p>
-                            <a href="#">kim.thang.26</a>
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="icon">
-                          <i className="fab fa-youtube" />
-                        </div>
-                        <div className="data">
-                          <p className="semi-bold">Youtube</p>
-                          <p>
-                            <a href="" target="_blank">
-                              kimthang
-                            </a>
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="icon">
-                          <i className="fab fa-linkedin" />
-                        </div>
-                        <div className="data">
-                          <p className="semi-bold">Linkedin</p>
-                          <p>
-                            <a href="" target="_blank">
-                              kim-thang
-                            </a>
-                          </p>
-                        </div>
-                      </li>
-                    </ul>
+                    <ul>{renderSkill()}</ul>
                   </div>
                 </div>
               </div>
@@ -257,7 +159,7 @@ function FileCV() {
                   <div className="title">
                     <p className="bold">Kinh nghiệm làm việc dự án</p>
                   </div>
-                  {renderExpProject()}
+                  {/* {renderExpProject()} */}
                 </div>
                 <div className="resume_item resume_education">
                   <div className="title">
@@ -274,25 +176,6 @@ function FileCV() {
                     </li>
                   </ul>
                 </div>
-                {/* <div className="resume_item resume_hobby">
-                  <div className="title">
-                    <p className="bold">Sở thích</p>
-                  </div>
-                  <ul>
-                    <li>
-                      <i className="fas fa-book" />
-                    </li>
-                    <li>
-                      <i className="fas fa-gamepad" />
-                    </li>
-                    <li>
-                      <i className="fas fa-music" />
-                    </li>
-                    <li>
-                      <i className="fab fa-pagelines" />
-                    </li>
-                  </ul>
-                </div> */}
               </div>
             </div>
           </div>

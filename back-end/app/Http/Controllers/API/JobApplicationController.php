@@ -111,7 +111,56 @@ class JobApplicationController extends Controller
 
     public function getAllCandidateByJob($job_id)
     {
-        $candidates = JobApplication::where('job_id', '=', $job_id)->get();
+        $candidates = JobApplication::where('job_id', '=', $job_id)
+            ->where('status', '=', 'pending')
+            ->get();
+        $candidates_list = [];
+
+        if (count($candidates) != 0) {
+            foreach ($candidates as $candidate) {
+                $candidate_infor = self::getCandidateInfor($candidate['candidate_id']);
+                $skills = self::getCandidateSkills($candidate['resume_id']);
+
+                $candidate_infor->skills = $skills;
+                $candidate_infor->resume_id = $candidate['resume_id'];
+                $candidate_infor->status = $candidate['status'];
+                $candidate_infor->application_id = $candidate['application_id'];
+                $candidates_list[] = $candidate_infor;
+            }
+        }
+
+        return $candidates_list;
+    }
+
+    public function getAllApprovedCandidateByJob($job_id)
+    {
+        $candidates = JobApplication::where('job_id', '=', $job_id)
+            ->where('status', '=', 'approved')
+            ->get();
+        $candidates_list = [];
+
+        if (count($candidates) != 0) {
+            foreach ($candidates as $candidate) {
+                $candidate_infor = self::getCandidateInfor($candidate['candidate_id']);
+                $skills = self::getCandidateSkills($candidate['resume_id']);
+
+                $candidate_infor->skills = $skills;
+                $candidate_infor->resume_id = $candidate['resume_id'];
+                $candidate_infor->status = $candidate['status'];
+                $candidate_infor->application_id = $candidate['application_id'];
+                $candidates_list[] = $candidate_infor;
+            }
+        }
+
+        return $candidates_list;
+    }
+
+
+    public function getAllDeclinedCandidateByJob($job_id)
+    {
+        $candidates = JobApplication::where('job_id', '=', $job_id)
+            ->where('status', '=', 'declined')
+            ->get();
         $candidates_list = [];
 
         if (count($candidates) != 0) {
@@ -162,8 +211,4 @@ class JobApplicationController extends Controller
     {
         //
     }
-
-
-
-    
 }

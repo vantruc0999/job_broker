@@ -17,7 +17,8 @@ function AdminJob() {
       Accept: "application/json",
     },
   };
-  useEffect(() => {
+  
+  const render = () => {
     console.log("http://127.0.0.1:8000/api/admin/waiting-jobs",config);
     axios
       .get(`http://127.0.0.1:8000/api/admin/waiting-jobs`,config)
@@ -26,34 +27,51 @@ function AdminJob() {
         setJobwait(res.data.jobs);
         
       });
+  }
+
+  useEffect(() => {
+    render()
   }, []);
-  const handleDetailCV = (e) => {
+  const handleDetailCV = async(e) => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    const config2 = {
+      headers: {
+        Authorization: "Bearer " + user.token,
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
+    };
     let id = e.target.id;
     let url = "http://127.0.0.1:8000/api/admin/accept-job/" + e.target.id
-    console.log(url,config);
-    axios
-      .post("http://127.0.0.1:8000/api/admin/accept-job/" + id, config)
+    console.log(url,config2);
+    await axios
+      .post("http://127.0.0.1:8000/api/admin/accept-job/" + id,null, config2)
       .then((res) => {
         console.log(res.data.message);
         setSuccess(res.data);
         if(res.data.message.includes("approved")){
-          console.log("oke");
           alert(res.data.message)
+
         }
       });
+      render()
   };
-  const handleDelete = (e) => {
+  const handleDelete = async(e) => {
     let id = e.target.id;
     let url = "http://127.0.0.1:8000/api/admin/accept-job/" + e.target.id
     console.log(url,config);
     console.log(id);
-    axios
-      .post("http://127.0.0.1:8000/api/admin/decline-job/" + id, config)
+    await axios
+      .post("http://127.0.0.1:8000/api/admin/decline-job/" + id,null, config)
       .then((res) => {
         console.log(res.data);
-        setSuccess(res.data);
+        if(res.data.message.includes("declined")){
+          alert(res.data.message)
+        }
       });
+    render()
   };
+
   console.log(openModal);
   const renderJobWait = () => {
     if (Object.keys(jobwait).length > 0) {
@@ -72,21 +90,22 @@ function AdminJob() {
                 <td className="project_progress">00/00/0000</td>
                 <td className="project-state">Hoạt động</td>
                 <td className="project-actions text-right">
-                  {openModal == false ? (
+                  {openModal === false ? (
                     <>
-                      <a
+                      <span
                         className="btn btn-primary btn-sm"
                         id={value.job_id}
                         onClick={(e) => {
+                          e.preventDefault()
                           setOpenModal(true);
                         }}
                       >
                         <i className="fas fa-folder"> </i>
                         Xem
-                      </a>
+                      </span>
                     </>
                   ) : (
-                    <ModalViewJob id={value.job_id} />
+                    <ModalViewJob setJobwait={setJobwait} id={value.job_id} />
                   )}
                   <button
                     id={value.job_id}
@@ -179,7 +198,7 @@ function AdminJob() {
                           <th>Tính năng</th>
                         </tr>
                       </thead>
-                      {renderJobWait()}
+                      { renderJobWait()}
                     </table>
                   </div>
                 </div>

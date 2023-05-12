@@ -106,6 +106,7 @@ function CreateCV() {
         });
       });
   }, []);
+
   const handleInput = (e) => {
     let nameInput = e.target.name;
     let value = e.target.value;
@@ -283,9 +284,12 @@ function CreateCV() {
       <>
         {certificate.map((certificate, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div className="addition">
-              <i class="fa fa-plus mr-1" onClick={handleAddCer}></i>
+            <div
+              className="addition"
+              style={{ cursor: "pointer", fontSize: "18px" }}
+            >
               <i class="fa fa-minus" onClick={() => handleRemoveCer(index)}></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddCer}></i>
             </div>
             <div key={index} className="form-field">
               <input
@@ -311,15 +315,15 @@ function CreateCV() {
       <>
         {softSkill.map((softSkill, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div className="addition">
+            <div
+              className="addition"
+              style={{ cursor: "pointer", fontSize: "18px" }}
+            >
               <i
-                class="fa-regular fa-square-plus mr-1"
-                onClick={handleAddSoft}
-              ></i>
-              <i
-                class="fa-regular fa-square-minus"
+                class="fa fa-minus"
                 onClick={() => handleRemoveSoft(index)}
               ></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddSoft}></i>
             </div>
             <div key={index} className="form-field">
               <input
@@ -345,15 +349,15 @@ function CreateCV() {
       <>
         {awards.map((award, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div className="addition">
+            <div
+              className="addition"
+              style={{ cursor: "pointer", fontSize: "18px" }}
+            >
               <i
-                class="fa-regular fa-square-plus mr-1"
-                onClick={handleAddAward}
-              ></i>
-              <i
-                class="fa-regular fa-square-minus"
+                class="fa fa-minus"
                 onClick={() => handleRemoveAward(index)}
               ></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddAward}></i>
             </div>
             <div key={index} className="form-field">
               <input
@@ -379,15 +383,12 @@ function CreateCV() {
       <>
         {active.map((active, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div className="addition">
-              <i
-                class="fa-regular fa-square-plus mr-1"
-                onClick={handleAddAct}
-              ></i>
-              <i
-                class="fa-regular fa-square-minus"
-                onClick={() => handleRemoveAct(index)}
-              ></i>
+            <div
+              className="addition"
+              style={{ cursor: "pointer", fontSize: "18px" }}
+            >
+              <i class="fa fa-minus" onClick={() => handleRemoveAct(index)}></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddAct}></i>
             </div>
             <div key={index} className="form-field">
               <input
@@ -451,15 +452,12 @@ function CreateCV() {
       <>
         {education.map((education, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div className="addition">
-              <i
-                class="fa-regular fa-square-plus mr-1"
-                onClick={handleAddEdu}
-              ></i>
-              <i
-                class="fa-regular fa-square-minus"
-                onClick={() => handleRemoveEdu(index)}
-              ></i>
+            <div
+              className="addition"
+              style={{ cursor: "pointer", fontSize: "18px" }}
+            >
+              <i class="fa fa-minus" onClick={() => handleRemoveEdu(index)}></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddEdu}></i>
             </div>
             <div key={index} className="form-field">
               <table className="edu_form">
@@ -525,9 +523,12 @@ function CreateCV() {
       <>
         {exp.map((exp, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div className="addition">
-              <i class="fa fa-plus mr-1" onClick={handleAddExp}></i>
+            <div
+              className="addition"
+              style={{ cursor: "pointer", fontSize: "18px" }}
+            >
               <i class="fa fa-minus" onClick={() => handleRemoveExp(index)}></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddExp}></i>
             </div>
             <div key={index} className="form-field">
               <input
@@ -601,6 +602,8 @@ function CreateCV() {
       phone: inputs.phone,
       birth_day: inputs.birth_day,
       email: inputs.email,
+      hobby: softSkill[0].title,
+      activity: awards[0].title,
       address: inputs.address,
       resume_name: inputs.namecv,
       education: education[0].school,
@@ -719,7 +722,7 @@ function CreateCV() {
                         <i className="fas fa-birthday-cake mr-2" />
                         <input
                           type="text"
-                          placeholder="dd-mm-yyyy"
+                          placeholder="yyyy-mm-dd"
                           name="birth_day"
                           value={inputs.birth_day}
                           onChange={handleInput}
@@ -758,7 +761,7 @@ function CreateCV() {
                   )}
                 </section>
 
-                <section className="experience">
+                {/* <section className="experience">
                   <h4>
                     <i className="fas fa-language" /> Ngoại ngữ
                   </h4>
@@ -774,7 +777,7 @@ function CreateCV() {
                       <i className="fas fa-plus" />
                     </div>
                   )}
-                </section>
+                </section> */}
               </div>
               <div className="col-8">
                 <section className="experience">

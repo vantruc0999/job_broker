@@ -50,14 +50,14 @@ Route::get('skills', [SkillController::class, 'index']);
 
 
 Route::get('jobs-by-skills/{id}', [JobController::class, 'getJobsByProgrammingSkills']);
-Route::post('admin/accept-job/{id}', [JobController::class, 'approveJobRequest']);
-Route::post('admin/decline-job/{id}', [JobController::class, 'declineJobRequest']);
+
 Route::post('recruiter/resume-accept/{id}', [JobApplicationController::class, 'acceptApplicationRequest']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::post('logout', [AdminAuthController::class, 'logout']);
-
+        Route::post('accept-job/{id}', [JobController::class, 'approveJobRequest']);
+        Route::post('decline-job/{id}', [JobController::class, 'declineJobRequest']);
         Route::post('add-package', [PackageController::class, 'store']);
         Route::post('update-package/{id}', [PackageController::class, 'update']);
         Route::get('package-detail/{id}', [PackageController::class, 'show']);
@@ -68,6 +68,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
         Route::get('waiting-jobs', [JobController::class, 'getAllJobsOnWaiting']);
+        Route::get('view-accept-jobs', [JobController::class, 'getAllApprovedJobs']);
+        Route::get('view-declined-jobs', [JobController::class, 'getAllDeclinedJobs']);
     });
 
     Route::prefix('recruiter')->group(function () {
@@ -83,6 +85,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('resume-decline/{id}', [JobApplicationController::class, 'declineApplicationRequest']);
 
         Route::get('get-candidates/{id}', [JobApplicationController::class, 'getAllCandidateByJob']);
+        Route::get('get-approved-candidates/{id}', [JobApplicationController::class, 'getAllApprovedCandidateByJob']);
+        Route::get('get-declined-candidates/{id}', [JobApplicationController::class, 'getAllDeclinedCandidateByJob']);
 
         Route::get('package', [PackageController::class, 'index']);
         Route::post('add-question', [CompanyQuestionController::class, 'store']);

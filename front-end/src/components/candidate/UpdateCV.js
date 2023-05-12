@@ -63,7 +63,7 @@ function UpdateCV() {
   const [skill, setSkill] = useState([]);
   const [softSkill, setSoftSkill] = useState([]);
   const [awards, setAwards] = useState([]);
-  const [language, setLanguage] = useState([]);
+  const [language, setLanguage] = useState("");
   const [inputs, setInputs] = useState("");
   const [summary, setSummary] = useState("");
 
@@ -87,6 +87,7 @@ function UpdateCV() {
         config
       )
       .then((res) => {
+        console.log("data", res.data);
         setResume(res.data);
         setExp(res.data.experience_company);
         setActive(res.data.experience_project);
@@ -106,17 +107,28 @@ function UpdateCV() {
         ];
         setCertificate(cer);
         setSummary({
-          resume_name : res.data.resume.resume_name,
-        })
+          resume_name: res.data.resume.resume_name,
+        });
+        setAwards({
+          activity: res.data.resume.activity,
+        });
+        setSoftSkill({
+          hobby: res.data.resume.hobby,
+        });
+        setInputs({
+          first_name: res.data.resume.first_name,
+          last_name: res.data.resume.last_name,
+          address: res.data.resume.address,
+          birth_day: res.data.resume.birth_day,
+          email: res.data.resume.email,
+          phone: res.data.resume.phone,
+        });
       });
   }, []);
-  useEffect(() => {
-    axios
-      .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
-      .then((res) => {
-        setInfo(res.data);
-      });
-  }, []);
+  console.log("inputs", awards);
+  console.log("inputs", softSkill);
+  console.log("cer", certificate);
+
   useEffect(() => {
     const textarea = document.getElementById("emailSummary");
     const placeholder = "Email";
@@ -142,19 +154,19 @@ function UpdateCV() {
         Accept: "application/json",
       },
     };
-    axios
-      .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
-      .then((res) => {
-        console.log(res.data);
-        setSummary({
-          first_name: res.data.first_name,
-          last_name: res.data.last_name,
-          address: res.data.address,
-          birth_day: res.data.birth_day,
-          email: res.data.email,
-          phone: res.data.phone,
-        });
-      });
+    // axios
+    //   .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     setInputs({
+    //       first_name: res.data.first_name,
+    //       last_name: res.data.last_name,
+    //       address: res.data.address,
+    //       birth_day: res.data.birth_day,
+    //       email: res.data.email,
+    //       phone: res.data.phone,
+    //     });
+    //   });
   }, []);
   const handleInput = (e) => {
     let nameInput = e.target.name;
@@ -308,8 +320,23 @@ function UpdateCV() {
     return (
       <>
         <div className="content_form">
-          <label class="form-label">Ngoại ngữ</label>
-          <AnimatedMulti2 parentCallback={handleLangInput}></AnimatedMulti2>
+          <textarea
+            // rows={rows}
+            className="exp_input"
+            id="exp_input2"
+            placeholder="Ngoại ngữ..."
+            style={{
+              border: "none",
+              width: "100%",
+              overflow: "hidden",
+            }}
+            value={active.achievement}
+            onChange={(e) => {
+              setLanguage(e.target.value);
+            }}
+            minRows={1}
+            maxRows={6}
+          />
         </div>
       </>
     );
@@ -362,9 +389,9 @@ function UpdateCV() {
                 className="form_input"
                 type="text"
                 placeholder=" "
-                value={softSkill.title}
+                value={softSkill.hobby}
                 onChange={(e) =>
-                  handleSoftInputChange(index, "title", e.target.value)
+                  handleSoftInputChange(index, "hobby", e.target.value)
                 }
               />
               <label for="name" className="form-label">
@@ -396,13 +423,13 @@ function UpdateCV() {
                 className="form_input"
                 type="text"
                 placeholder=" "
-                value={award.title}
+                value={award.activity}
                 onChange={(e) =>
-                  handleAwardInputChange(index, "title", e.target.value)
+                  handleAwardInputChange(index, "activity", e.target.value)
                 }
               />
               <label for="name" className="form-label">
-                Giải thưởng
+                Hoạt động
               </label>
             </div>
           </div>
@@ -416,12 +443,9 @@ function UpdateCV() {
         {active.map((active, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
             <div className="addition">
+              <i class="fas fa-plus mr-1" onClick={handleAddAct}></i>
               <i
-                class="fa fa-plus mr-1"
-                onClick={handleAddAct}
-              ></i>
-              <i
-                class="fa fa-minus"
+                class="fas fa-minus"
                 onClick={() => handleRemoveAct(index)}
               ></i>
             </div>
@@ -634,12 +658,19 @@ function UpdateCV() {
       </>
     );
   };
-
+  console.log(inputs);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(education);
     let resume = {
-      resume_name: summary.resume_name,
+      first_name: inputs.first_name,
+      last_name: inputs.last_name,
+      phone: inputs.phone,
+      birth_day: inputs.birth_day,
+      email: inputs.email,
+      address: inputs.address,
+      // hobby:softSkill[0].title,
+      // activity:awards[0].title,
+      resume_name: inputs.resume_name,
       education: education[0].school,
       education_year: education[0].time,
       education_major: education[0].specialize,
@@ -670,15 +701,16 @@ function UpdateCV() {
         config
       )
       .then((res) => {
-        if (res.data.message == "considered") {
-          alert("CV đang được xem xét trong mục công việc, không thể chỉnh sửa");
-          navigate("/allCV");
-        } 
         console.log(res.data);
-        // if (res.data.errCode == 0) {
-
-        //   alert("Update succesful");
-        // }
+        if (res.data.message == "considered") {
+          alert(
+            "CV đang được xem xét trong mục công việc, không thể chỉnh sửa"
+          );
+          // navigate("/allCV");
+        } else if ((res.data.status = 200)) {
+          alert("Bạn đã cập nhật thành công");
+        }
+        console.log(res.data);
       });
   };
 
@@ -736,7 +768,7 @@ function UpdateCV() {
                             name="email"
                             placeholder="Email"
                             rows="1"
-                            value={summary.email}
+                            value={inputs.email}
                             onChange={handleInput}
                             style={{
                               width: "60%",
@@ -755,7 +787,7 @@ function UpdateCV() {
                           <input
                             type="text"
                             name="phone"
-                            value={summary.phone}
+                            value={inputs.phone}
                             placeholder="Số điện thoại"
                             onChange={handleInput}
                             style={{ width: "60%" }}
@@ -766,8 +798,8 @@ function UpdateCV() {
                           <input
                             type="text"
                             placeholder="dd-mm-yyyy"
-                            name="birthday"
-                            value={summary.birth_day}
+                            name="birth_day"
+                            value={inputs.birth_day}
                             onChange={handleInput}
                             style={{ width: "60%" }}
                           />
@@ -777,7 +809,7 @@ function UpdateCV() {
                           <input
                             type="text"
                             placeholder="Địa chỉ"
-                            value={summary.address}
+                            value={inputs.address}
                             name="address"
                             onChange={handleInput}
                             style={{ width: "60%" }}
@@ -790,21 +822,21 @@ function UpdateCV() {
                     <h4>
                       <i className="fas fa-laptop-code" /> Kỹ năng
                     </h4>
-                    {showForm && showForm.includes(5) ? (
-                      addSkill()
-                    ) : (
-                      <div
-                        className="content_form"
-                        onClick={(e) => handleShow(5, e)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <div id="content-suggest-skill"></div>
-                        <i className="fas fa-plus" />
-                      </div>
-                    )}
+                    {showForm && showForm.includes(5)
+                      ? addSkill()
+                      : addSkill()
+                        // <div
+                        //   className="content_form"
+                        //   onClick={(e) => handleShow(5, e)}
+                        //   style={{ cursor: "pointer" }}
+                        // >
+                        //   <div id="content-suggest-skill"></div>
+                        //   <i className="fas fa-plus" />
+                        // </div>
+                    }
                   </section>
 
-                  <section className="experience">
+                  {/* <section className="experience">
                     <h4>
                       <i className="fas fa-language" /> Ngoại ngữ
                     </h4>
@@ -820,12 +852,12 @@ function UpdateCV() {
                         <i className="fas fa-plus" />
                       </div>
                     )}
-                  </section>
+                  </section> */}
                 </div>
                 <div className="col-8">
                   <section className="experience">
                     <h1 style={{ fontWeight: "700" }}>
-                      {summary.last_name} {summary.first_name}
+                      {inputs.last_name} {inputs.first_name}
                     </h1>
                     <input
                       type="text"
@@ -838,7 +870,7 @@ function UpdateCV() {
                     <input
                       type="text"
                       placeholder="Vị trí mong muốn"
-                      value={summary.position}
+                      value={inputs.position}
                       name="position"
                       onChange={handleInput}
                       style={{ padding: "5px", border: "none", color: "#000" }}
@@ -915,7 +947,7 @@ function UpdateCV() {
                   </section>
                   <section className="experience">
                     <h4>
-                      <i className="fas fa-feather" /> Kĩ năng mềm
+                      <i className="fas fa-feather" /> Sở thích
                     </h4>
 
                     {softSkill.length > 0 ? (
@@ -933,7 +965,7 @@ function UpdateCV() {
                   </section>
                   <section className="experience">
                     <h4>
-                      <i className="fas fa-medal" /> Giải thưởng
+                      <i className="fas fa-medal" /> Hoạt động
                     </h4>
                     {awards.length > 0 ? (
                       addContentAward()
@@ -1042,33 +1074,121 @@ function UpdateCV() {
   );
 }
 const AnimatedMulti = (props) => {
+  let params = useParams();
   const sendData = (selected) => {
+    setSkillSelected(selected);
     props.parentCallback(selected.map((skill) => skill.value));
   };
+  const [skillSelected, setSkillSelected] = useState([]);
+  const [skill, setSkill] = useState([]);
+
+  useEffect(() => {
+    const getSkillSelect = async () => {
+      let user = JSON.parse(localStorage.getItem("user"));
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      await axios
+        .get(
+          `http://127.0.0.1:8000/api/candidate/show-detail/${params.id}`,
+          config
+        )
+        .then((res) => {
+          if (res.data.skill.length > 0) {
+            const arraySkillSelected = res.data.skill.map((item) => {
+              return { value: item.skill_id, label: item.skill_name };
+            });
+            setSkillSelected(arraySkillSelected);
+          }
+        });
+    };
+
+    const getListSkill = async () => {
+      let user = JSON.parse(localStorage.getItem("user"));
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      await axios
+        .get(`http://127.0.0.1:8000/api/skills`, config)
+        .then((res) => {
+          if (res && res.data.length > 0) {
+            console.log(">>>>>>>>", res.data);
+            const arraySkill = res.data.map((item) => {
+              return { value: item.skill_id, label: item.skill_name };
+            });
+            setSkill(arraySkill);
+          }
+        });
+    };
+    getListSkill();
+    getSkillSelect();
+  }, [params.id]);
   return (
     <Select
+      value={[...skillSelected]}
       closeMenuOnSelect={false}
       components={animatedComponents}
       isMulti
-      options={arraySkill}
+      options={skill}
       onChange={sendData}
     />
   );
 };
 
-const AnimatedMulti2 = (props) => {
-  const sendData = (selected) => {
-    props.parentCallback(selected.map((language) => language.value));
-  };
-  return (
-    <Select
-      closeMenuOnSelect={false}
-      components={animatedComponents}
-      isMulti
-      options={arraySkill2}
-      onChange={sendData}
-    />
-  );
-};
+// const AnimatedMulti2 = (props) => {
+//   let params = useParams();
+//   console.log(arraySkill);
+//   const sendData = (selected) => {
+//     setLanguageSelected(selected);
+//     props.parentCallback(selected.map((language) => language.value));
+//   };
+//   const [languageSelected, setLanguageSelected] = useState([]);
+//   const [language, setLanguage] = useState([]);
+
+//   useEffect(() => {
+//     const getLanguageSelect = async () => {
+//       let user = JSON.parse(localStorage.getItem("user"));
+//       let config = {
+//         headers: {
+//           Authorization: "Bearer " + user.token,
+//           "Content-Type": "application/x-www-form-urlencoded",
+//           Accept: "application/json",
+//         },
+//       };
+//       await axios
+//         .get(
+//           `http://127.0.0.1:8000/api/candidate/show-detail/${params.id}`,
+//           config
+//         )
+//         .then((res) => {
+//           if (res.data.skill.length > 0) {
+//             const arrayLanguage = res.data.skill.map((item, index) => {
+//               return { value: index + 1, label: item };
+//             });
+//             setLanguageSelected(arrayLanguage);
+//           }
+//         });
+//     };
+//     getLanguageSelect();
+//   }, [params.id]);
+//   return (
+//     <Select
+//       value={[...languageSelected]}
+//       closeMenuOnSelect={false}
+//       components={animatedComponents}
+//       isMulti
+//       options={language}
+//       onChange={sendData}
+//     />
+//   );
+// };
 
 export default UpdateCV;

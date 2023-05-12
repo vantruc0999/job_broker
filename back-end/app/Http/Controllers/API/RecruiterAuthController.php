@@ -49,6 +49,7 @@ class RecruiterAuthController extends Controller
             return response([
                 'status' => 200,
                 'recruiter_name' => $recruiter->recruiter_name,
+                'recruiter_company' => $recruiter->company_name,
                 'message' => 'Logged In Successfully',
                 'role' => 'recruiter',
                 'token' => $token

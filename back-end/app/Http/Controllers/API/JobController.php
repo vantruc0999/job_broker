@@ -100,6 +100,40 @@ class JobController extends Controller
         ]);
     }
 
+    public function getAllApprovedJobs(){
+        $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
+            ->where('status', '=', 'approved')
+            ->orderBy('job_id', 'desc')
+            ->get();
+        if (count($jobs) != 0) {
+            foreach ($jobs as $job) {
+                $company_name = self::getAllCompanyName($job['recruiter_id']);
+                $job->company_name = $company_name;
+                unset($job->recruiter_id);
+            }
+        }
+        return response([
+            'jobs' => $jobs
+        ]);
+    }
+
+    public function getAllDeclinedJobs(){
+        $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
+            ->where('status', '=', 'declined')
+            ->orderBy('job_id', 'desc')
+            ->get();
+        if (count($jobs) != 0) {
+            foreach ($jobs as $job) {
+                $company_name = self::getAllCompanyName($job['recruiter_id']);
+                $job->company_name = $company_name;
+                unset($job->recruiter_id);
+            }
+        }
+        return response([
+            'jobs' => $jobs
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

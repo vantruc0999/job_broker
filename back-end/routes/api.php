@@ -67,6 +67,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('decline-job/{id}', [JobController::class, 'declineJobRequest']);
 
         Route::get('waiting-jobs', [JobController::class, 'getAllJobsOnWaiting']);
+        Route::get('view-accept-jobs', [JobController::class, 'getAllApprovedJobs']);
+        Route::get('view-declined-jobs', [JobController::class, 'getAllDeclinedJobs']);
     });
 
     Route::prefix('recruiter')->group(function () {
@@ -83,6 +85,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('resume-decline/{id}', [JobApplicationController::class, 'declineApplicationRequest']);
 
         Route::get('get-candidates/{id}', [JobApplicationController::class, 'getAllCandidateByJob']);
+        Route::get('get-approved-candidates/{id}', [JobApplicationController::class, 'getAllApprovedCandidateByJob']);
+        Route::get('get-declined-candidates/{id}', [JobApplicationController::class, 'getAllDeclinedCandidateByJob']);
 
         Route::get('package', [PackageController::class, 'index']);
         Route::post('add-question', [CompanyQuestionController::class, 'store']);

@@ -80,6 +80,7 @@ function App(props) {
           <Route path="/listJob" element={<ListJob />} />
           <Route path="/allCV/UpdateCv/:id" element={<UpdateCv />} />
           <Route path="/applyJob" element={<ApplyJob />} />
+          <Route path="/listJob/job/:id" element={<Test />} />
         </Route>
         {/* ---------- */}
 

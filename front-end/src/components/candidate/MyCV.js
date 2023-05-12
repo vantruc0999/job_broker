@@ -18,27 +18,25 @@ function MyCV() {
       name: "public",
     },
   ];
-  useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user"));
-    let config = {
-      headers: {
-        Authorization: "Bearer " + user.token,
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
-    };
-    console.log(user.token);
+  let user = JSON.parse(localStorage.getItem("user"));
+  let config = {
+    headers: {
+      Authorization: "Bearer " + user.token,
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+  };
+  const render = () => {
     axios
       .get(`http://127.0.0.1:8000/api/candidate/show-all`, config)
       .then((res) => {
-        console.log(res.data.resume);
         setCv(res.data.resume);
       });
+  };
+  useEffect(() => {
+    render();
   }, []);
-  const handleChange = (e) => {
-    console.log(e.target.value);
-    console.log(e.target.id);
-
+  const handleChange = async (e) => {
     let user = JSON.parse(localStorage.getItem("user"));
     let config = {
       headers: {
@@ -48,18 +46,18 @@ function MyCV() {
       },
     };
     if (e.target.value == 1) {
-      axios
+      await axios
         .post(
           `http://127.0.0.1:8000/api/candidate/public-status-cv/` + e.target.id,
           null,
           config
         )
         .then((res) => {
-          console.log(res.data);
           setStatus(res.data);
         });
+      render();
     } else if (e.target.value == 0) {
-      axios
+      await axios
         .post(
           `http://127.0.0.1:8000/api/candidate/private-status-cv/` +
             e.target.id,
@@ -67,15 +65,14 @@ function MyCV() {
           config
         )
         .then((res) => {
-          console.log(res.data);
           setStatus(res.data);
         });
+      render();
     }
   };
   const renderResume = () => {
     if (Object.keys(cv).length > 0) {
       return cv.map((value, key) => {
-        console.log(value);
         return (
           <>
             <div className="col-md-3">

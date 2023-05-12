@@ -51,6 +51,7 @@ const ManageCan = () => {
       });
     }
   };
+
   const handleApply = (e) => {
     let id = e.currentTarget.id;
     // console.log(e.currentTarget.id);
@@ -180,17 +181,18 @@ const ManageCan = () => {
                               </select>
                             </div>
                             <div className="col-md-3 margin">
-                              <label>Kỹ năng mềm</label>
-                              <select
+                              <label>Các ứng viên đã duyệt</label>
+
+                              {/* <select
                                 className="form-select"
                                 aria-label="Default select example"
                                 style={{ fontSize: "13px" }}
                               >
-                                <option selected="">chọn kỹ năng mềm</option>
-                                <option value="1">One</option>
+                                <option selected="">Danh mục</option>
+                                <option value="1"></option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
-                              </select>
+                              </select> */}
                             </div>
                             <div className="col-md-3 margin">
                               <label>Ngôn ngữ</label>
@@ -231,13 +233,6 @@ const ManageCan = () => {
                           >
                             <label>Hiển thị: </label>
                             <div className="checkbox">
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name="gridRadios"
-                                id="gridRadios1"
-                                value="option1"
-                              />
                               <label
                                 className="form-check-label"
                                 for="gridRadios1"
@@ -257,7 +252,7 @@ const ManageCan = () => {
                                 className="form-check-label"
                                 for="gridRadios1"
                               >
-                                Chỉ ứng viên đã xem
+                                Ứng viên đã duyệt
                               </label>
                             </div>
                             <div className="checkbox">
@@ -272,13 +267,12 @@ const ManageCan = () => {
                                 className="form-check-label"
                                 for="gridRadios1"
                               >
-                                Chỉ ứng viên chưa xem
+                                Ứng viên bị từ chối
                               </label>
                             </div>
                           </div>
 
                           <button
-                            href="/"
                             className="btn btn-primary"
                             style={{
                               fontSize: "14px",

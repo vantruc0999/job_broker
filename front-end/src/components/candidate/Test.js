@@ -27,19 +27,26 @@ const Test = () => {
       axios
         .get(`http://127.0.0.1:8000/api/job-detail/` + params.id, config)
         .then((res) => {
-          console.log("1");
           setJobDetail(res.data.job_detail);
         });
     } else {
       axios
         .get(`http://127.0.0.1:8000/api/job-detail/` + params.id)
         .then((res) => {
-          console.log("2");
           setJobDetail(res.data.job_detail);
         });
     }
   }, []);
+  const skills = detailJob && detailJob.skills ? detailJob.skills.join(", ") : "";
+  function renderSkill() {
+    return (
+      <div>
+        <p> {skills}</p>
+      </div>
+    );
+  }
   return (
+    
     <div>
       <div
         className="container"
@@ -213,7 +220,7 @@ const Test = () => {
                         className="content-detail"
                         title="Xem thêm các việc làm Full-time"
                       >
-                        {detailJob.skills}
+                        {renderSkill()}
                         {/* {JSON.stringify(detailJob.skills)} */}
                       </div>
                     </div>

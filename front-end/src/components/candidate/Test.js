@@ -39,12 +39,12 @@ const Test = () => {
         });
     }
   }, []);
-
-  
-console.log(user);
   return (
     <div>
-      <div className="container" style={{ margin: "0 auto", width: "1250px" }}>
+      <div
+        className="container"
+        style={{ margin: "0 auto", width: "1250px", marginTop: "24px" }}
+      >
         <section className="section">
           <div className="row">
             <div className="col-lg-8">
@@ -53,7 +53,7 @@ console.log(user);
                   <h3 className="job_name" style={{ fontWeight: "bold" }}>
                     {detailJob.job_name}
                   </h3>
-                  { user && role !== "recruiter"  ? (
+                  {user && role !== "recruiter" ? (
                     <>
                       <div className="button" style={{ margin: "20px 0" }}>
                         {openModal == false ? (

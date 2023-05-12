@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Candidate;
+use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\ProgrammingSkills;
 use App\Models\Resume;
@@ -34,14 +35,14 @@ class JobApplicationController extends Controller
         // $candidate = "";
         // One account can apply for 1 job post
         $candidate = JobApplication::where([
-                    ['candidate_id', '=', auth()->user()['candidate_id']],
-                    ['job_id', '=', $request->job_id]
-                    ])
-                    ->first();
+            ['candidate_id', '=', auth()->user()['candidate_id']],
+            ['job_id', '=', $request->job_id]
+        ])
+            ->first();
 
-            // return response([
-            //     'candidate' => $candidate
-            // ]); 
+        // return response([
+        //     'candidate' => $candidate
+        // ]); 
 
         if ($candidate == null) {
             JobApplication::create([
@@ -121,6 +122,7 @@ class JobApplicationController extends Controller
                 $candidate_infor->skills = $skills;
                 $candidate_infor->resume_id = $candidate['resume_id'];
                 $candidate_infor->status = $candidate['status'];
+                $candidate_infor->application_id = $candidate['application_id'];
                 $candidates_list[] = $candidate_infor;
             }
         }
@@ -160,4 +162,8 @@ class JobApplicationController extends Controller
     {
         //
     }
+
+
+
+    
 }

@@ -42,7 +42,7 @@
 .experience input::placeholder {
   color: #000;
 }
-.experience input:hover{
+.experience input:hover {
   border-radius: 3px;
   border: 1px dashed green !important;
 }
@@ -61,7 +61,7 @@
   position: relative;
 }
 .content_form:hover {
-  border: 1px dashed green;
+  border: 1px dashed rgb(224, 224, 224);
   /* display: block; */
 }
 /* .content_form:hover {
@@ -74,7 +74,7 @@ textarea#story {
   max-width: 100%;
   line-height: 1.5;
   border-radius: 5px;
-  border: 1px dashed #c7c7c7;
+  border: 1px dashed #eeeeee;
 }
 
 textarea#story:focus {
@@ -88,15 +88,18 @@ textarea#story:focus {
   /* border: 1px dashed green; */
 }
 
-
 .addition {
   font-size: 25px;
   position: absolute;
-  top: -30px;
+  top: -15px;
   right: 0;
   display: none;
 }
 
-.content_form:hover > .addition{
+.fa-plus {
+  padding-left: 10px;
+}
+
+.content_form:hover > .addition {
   display: block;
 }

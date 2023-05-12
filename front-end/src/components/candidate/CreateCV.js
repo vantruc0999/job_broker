@@ -94,14 +94,23 @@ function CreateCV() {
     axios
       .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
       .then((res) => {
-        setSummary(res.data);
-        console.log(summary);
+        // setSummary(res.data);
+        setInputs({
+          first_name: res.data.first_name,
+          last_name: res.data.last_name,
+          address: res.data.address,
+          birth_day: res.data.birth_day,
+          email: res.data.email,
+          phone: res.data.phone,
+          namecv: res.data.first_name,
+        });
       });
   }, []);
   const handleInput = (e) => {
     let nameInput = e.target.name;
     let value = e.target.value;
     setInputs((state) => ({ ...state, [nameInput]: value }));
+    setSummary((state) => ({ ...state, [nameInput]: value }));
   };
   const handleAwardInputChange = (index, field, value) => {
     const newAwards = [...awards];
@@ -118,7 +127,7 @@ function CreateCV() {
       position: item.position,
       achievement: item.description,
       experience_start: item.time,
-      experience_end: "",
+      experience_end: "2040",
     };
   });
   let experience_project = active.map((item) => {
@@ -127,7 +136,7 @@ function CreateCV() {
       responsibility: item.position,
       achievement: item.description,
       experience_start: item.time,
-      experience_end: "",
+      experience_end: "2099",
     };
   });
 
@@ -249,10 +258,22 @@ function CreateCV() {
     return (
       <>
         <div className="content_form">
-          <label class="form-label">Ngoại ngữ</label>
-          {/* <AnimatedMulti2 parentCallback={handleLangInput}></AnimatedMulti2>
-           */}
-          <input type="text" placeholder="Ngoại ngữ" />
+          <textarea
+            className="exp_input"
+            id="exp_input2"
+            placeholder="Ngoại ngữ..."
+            style={{
+              border: "none",
+              width: "100%",
+              overflow: "hidden",
+            }}
+            value={active.achievement}
+            onChange={(e) => {
+              setLanguage(e.target.value);
+            }}
+            minRows={1}
+            maxRows={6}
+          />
         </div>
       </>
     );
@@ -359,8 +380,14 @@ function CreateCV() {
         {active.map((active, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
             <div className="addition">
-              <i class="fa fa-plus mr-1" onClick={handleAddExp}></i>
-              <i class="fa fa-minus" onClick={() => handleRemoveExp(index)}></i>
+              <i
+                class="fa-regular fa-square-plus mr-1"
+                onClick={handleAddAct}
+              ></i>
+              <i
+                class="fa-regular fa-square-minus"
+                onClick={() => handleRemoveAct(index)}
+              ></i>
             </div>
             <div key={index} className="form-field">
               <input
@@ -563,12 +590,19 @@ function CreateCV() {
       </>
     );
   };
-
+  console.log(inputs);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(education);
+    console.log(awards);
+    console.log(softSkill);
     let resume = {
-      resume_name: "Intern Software",
+      first_name: inputs.first_name,
+      last_name: inputs.last_name,
+      phone: inputs.phone,
+      birth_day: inputs.birth_day,
+      email: inputs.email,
+      address: inputs.address,
+      resume_name: inputs.namecv,
       education: education[0].school,
       education_year: education[0].time,
       education_major: education[0].specialize,
@@ -580,7 +614,7 @@ function CreateCV() {
       experience_company: experience_company,
       skills: skill.job_skill,
     };
-    console.log(typeof experience_project);
+    // console.log(typeof experience_project);
     let object = {};
     object.resume = resume;
     let user = JSON.parse(localStorage.getItem("user"));
@@ -599,10 +633,6 @@ function CreateCV() {
           navigate("/homeCandidate");
         }
         console.log(res.data.status);
-        // if (res.data.errCode == 0) {
-
-        //   alert("Update succesful");
-        // }
       });
 
     console.log(resume);
@@ -660,7 +690,7 @@ function CreateCV() {
                           name="email"
                           placeholder="Email"
                           rows="1"
-                          value={summary.email}
+                          value={inputs.email}
                           onChange={handleInput}
                           style={{
                             width: "60%",
@@ -679,7 +709,7 @@ function CreateCV() {
                         <input
                           type="text"
                           name="phone"
-                          value={summary.phone}
+                          value={inputs.phone}
                           placeholder="Số điện thoại"
                           onChange={handleInput}
                           style={{ width: "60%" }}
@@ -690,8 +720,8 @@ function CreateCV() {
                         <input
                           type="text"
                           placeholder="dd-mm-yyyy"
-                          name="birthday"
-                          value={summary.birth_day}
+                          name="birth_day"
+                          value={inputs.birth_day}
                           onChange={handleInput}
                           style={{ width: "60%" }}
                         />
@@ -701,7 +731,7 @@ function CreateCV() {
                         <input
                           type="text"
                           placeholder="Địa chỉ"
-                          value={summary.address}
+                          value={inputs.address}
                           name="address"
                           onChange={handleInput}
                           style={{ width: "60%" }}
@@ -749,16 +779,26 @@ function CreateCV() {
               <div className="col-8">
                 <section className="experience">
                   <h1 style={{ fontWeight: "700" }}>
-                    {summary.last_name} {summary.first_name}
+                    {inputs.last_name} {inputs.first_name}
                   </h1>
-                  <input
-                    type="text"
-                    placeholder="Vị trí mong muốn"
-                    value={summary.position}
-                    name="position"
-                    onChange={handleInput}
-                    style={{ padding: "5px", border: "none", color: "#000" }}
-                  />
+                  <div style={{ display: "inline-block" }}>
+                    <input
+                      type="text"
+                      placeholder="Tên CV "
+                      value={inputs.namecv}
+                      name="namecv"
+                      onChange={handleInput}
+                      style={{ padding: "5px", border: "none", color: "#000" }}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Vị trí mong muốn"
+                      value={inputs.position}
+                      name="position"
+                      onChange={handleInput}
+                      style={{ padding: "5px", border: "none", color: "#000" }}
+                    />
+                  </div>
                 </section>
                 <section className="experience">
                   <h4>
@@ -831,7 +871,7 @@ function CreateCV() {
                 </section>
                 <section className="experience">
                   <h4>
-                    <i className="fas fa-feather" /> Kĩ năng mềm
+                    <i className="fas fa-feather" /> Sở thích
                   </h4>
 
                   {softSkill.length > 0 ? (
@@ -849,7 +889,7 @@ function CreateCV() {
                 </section>
                 <section className="experience">
                   <h4>
-                    <i className="fas fa-medal" /> Giải thưởng
+                    <i className="fas fa-medal" /> Hoạt động
                   </h4>
                   {awards.length > 0 ? (
                     addContentAward()

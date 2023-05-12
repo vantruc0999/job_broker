@@ -8,8 +8,9 @@ function AdminJob() {
   const [jobwait, setJobwait] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [id, setId] = useState("");
+  const [success, setSuccess] = useState("");
   let user = JSON.parse(localStorage.getItem("user"));
-  let config = {
+  const config = {
     headers: {
       Authorization: "Bearer " + user.token,
       "Content-Type": "application/x-www-form-urlencoded",
@@ -17,17 +18,42 @@ function AdminJob() {
     },
   };
   useEffect(() => {
+    console.log("http://127.0.0.1:8000/api/admin/waiting-jobs",config);
     axios
-      .get(`http://127.0.0.1:8000/api/admin/waiting-jobs`, config)
+      .get(`http://127.0.0.1:8000/api/admin/waiting-jobs`,config)
       .then((res) => {
         console.log(res.data);
         setJobwait(res.data.jobs);
+        
       });
   }, []);
-  // const handleDetailCV = (e) => {
-  //   alert(e.target.id);
-  //   setId(e.target.id);
-  // };
+  const handleDetailCV = (e) => {
+    let id = e.target.id;
+    let url = "http://127.0.0.1:8000/api/admin/accept-job/" + e.target.id
+    console.log(url,config);
+    axios
+      .post("http://127.0.0.1:8000/api/admin/accept-job/" + id, config)
+      .then((res) => {
+        console.log(res.data.message);
+        setSuccess(res.data);
+        if(res.data.message.includes("approved")){
+          console.log("oke");
+          alert(res.data.message)
+        }
+      });
+  };
+  const handleDelete = (e) => {
+    let id = e.target.id;
+    let url = "http://127.0.0.1:8000/api/admin/accept-job/" + e.target.id
+    console.log(url,config);
+    console.log(id);
+    axios
+      .post("http://127.0.0.1:8000/api/admin/decline-job/" + id, config)
+      .then((res) => {
+        console.log(res.data);
+        setSuccess(res.data);
+      });
+  };
   console.log(openModal);
   const renderJobWait = () => {
     if (Object.keys(jobwait).length > 0) {
@@ -62,6 +88,20 @@ function AdminJob() {
                   ) : (
                     <ModalViewJob id={value.job_id} />
                   )}
+                  <button
+                    id={value.job_id}
+                    className="btn btn-success ml-2"
+                    onClick={(e) => handleDetailCV(e)}
+                  >
+                    Duyệt
+                  </button>
+                  <button
+                    id={value.job_id}
+                    className="btn btn-success ml-2"
+                    onClick={(e) => handleDelete(e)}
+                  >
+                    Xóa
+                  </button>
                 </td>
               </tr>
             </tbody>

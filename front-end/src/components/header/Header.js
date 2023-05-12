@@ -71,7 +71,7 @@ function Header() {
                 </Link>
               </div>
               <div style={{ borderBottom: "1px solid #e7e9eb" }}>
-                <Link className="dropdown-item" href="#">
+                <Link to="/applyJob" className="dropdown-item" href="#">
                   Việc làm đã ứng tuyển
                 </Link>
                 <Link className="dropdown-item" href="#">
@@ -157,20 +157,9 @@ function Header() {
                       Việc làm
                     </Link>
                     <div className="dropdown-menu">
-                      <table className="dropdown-item" id="menu-listjob">
-                        <tbody>
-                          <tr>
-                            <th>Việc làm theo chuyên ngành ngành</th>
-                            <th>Việc làm theo địa điểm</th>
-                            <th>Việc làm theo nhu cầu</th>
-                          </tr>
-                          <tr>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                      <Link to="/listJob" className="dropdown-item">
+                        Danh sách công việc
+                      </Link>
                     </div>
                   </li>
                   <li className="nav-item dropdown">
@@ -211,7 +200,7 @@ function Header() {
                       </a>
                     </div>
                   </li>
-                  <li className="nav-item dropdown">
+                  {/* <li className="nav-item dropdown">
                     <Link
                       className="nav-link dropdown-toggle text-dark"
                       data-toggle="dropdown"
@@ -230,7 +219,7 @@ function Header() {
                         Tra cứu lương
                       </Link>
                     </div>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
               <div className="pt-2">
@@ -257,7 +246,7 @@ function Header() {
       <div>
         <header
           id="header"
-          className="header fixed-top d-flex align-items-center"
+          className="header fixed-top d-flex align-items-center container-fluid"
         >
           <div className="d-flex align-items-center justify-content-between">
             <Link to="/">

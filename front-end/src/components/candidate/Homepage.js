@@ -213,8 +213,15 @@ function Homepage() {
           paddingBottom: 20,
         }}
       >
+        <h4
+          style={{
+            paddingTop: 20,
+            fontWeight: "bold",
+          }}
+        >
+          Việc tuyển gấp
+        </h4>
         <div className="job_urgent">
-          <h3 style={{ paddingTop: 20, marginLeft: 33 }}>Việc tuyển gấp</h3>
           <div className="row d-flex " style={{ margin: "0 auto" }}>
             {/* List Job */}
             {jobs.length > 0 &&
@@ -264,13 +271,9 @@ function Homepage() {
                           >
                             <p style={{ fontSize: "10px" }}>
                               <i class="fas fa-map-marker-alt mr-1"></i>
-                              Hà
-                              Nội...iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+                              {job.job_location}
                             </p>
                           </li>
-                          {/* <li class="list-group-item list-group-item-action">
-                                <i class="fas fa-clock"></i> 21/05/2023
-                              </li> */}
                           <li
                             class="list-group-item list-group-item-action"
                             style={{
@@ -280,7 +283,7 @@ function Homepage() {
                           >
                             <p style={{ fontSize: "10px" }}>
                               <i class="fas fa-dollar-sign mr-1"></i>
-                              Thỏa thuậnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+                              {job.salary}
                             </p>
                           </li>
                         </ul>
@@ -293,6 +296,7 @@ function Homepage() {
         </div>
       </div>
       {/* Typical Employers */}
+
       {/* infinite loop */}
       <div className="container-fluid" style={{ padding: "0 40px" }}>
         <h4 style={{ paddingTop: 20, fontWeight: "bold" }}>
@@ -546,6 +550,105 @@ function Homepage() {
         </Swiper>
       </div>
       {/* infinite loop */}
+
+      {/* Việc làm gợi ý */}
+      <div
+        className="container-fluid"
+        style={{
+          backgroundColor: "#f8f9fa",
+          paddingLeft: "124.5px",
+          paddingBottom: 20,
+        }}
+      >
+        <h4
+          style={{
+            paddingTop: 20,
+            fontWeight: "bold",
+          }}
+        >
+          Việc làm liên quan đến ngôn ngữ
+        </h4>
+
+        <div className="job_urgent">
+          <div
+            className="row d-flex "
+            style={{
+              margin: "0 auto",
+            }}
+          >
+            {/* List Job */}
+            {jobs.length > 0 &&
+              jobs.map((job) => {
+                console.log(job);
+                return (
+                  <div
+                    className="urgentHiring mr-3"
+                    style={{
+                      padding: "0",
+                      width: 400,
+                    }}
+                  >
+                    <Link
+                      to={"/job/" + job.job_id}
+                      style={{ display: "flex", textDecoration: "none" }}
+                    >
+                      <div className="col-3">
+                        <img
+                          src={Logo}
+                          alt=""
+                          style={{
+                            width: "90px",
+                            height: "90px",
+                            margin: " 25px auto",
+                          }}
+                        />
+                      </div>
+                      <div className="col-9 urgent">
+                        <h5>{job.job_name}</h5>
+                        <p>{job.company_name}</p>
+                        <ul
+                          class="p-0"
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            overflow: "hidden",
+                            width: "100%",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-map-marker-alt mr-1"></i>
+                              {job.job_location}
+                            </p>
+                          </li>
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-dollar-sign mr-1"></i>
+                              {job.salary}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      </div>
     </>
   );
 }

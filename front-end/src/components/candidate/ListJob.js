@@ -3,7 +3,10 @@ import React from "react";
 const ListJob = () => {
   return (
     <div>
-      <div className="container" style={{ margin: "0 auto", width: "1250px" }}>
+      <div
+        className="container"
+        style={{ margin: "0 auto", width: "1250px", height: "655px" }}
+      >
         <section className="section">
           <div className="row">
             <div className="col-lg-9">

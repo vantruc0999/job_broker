@@ -49,6 +49,9 @@ import HomeRecruiter from "./components/recruiter/HomeRecruiter";
 import PackageRe from "./components/recruiter/PackageRe";
 import PaymentHistory from "./components/recruiter/PaymentHistory";
 import ListJob from "./components/candidate/ListJob";
+import UpdateCv from "./components/candidate/UpdateCV";
+import UpdateJob from "./components/recruiter/UpdateJob";
+import ApplyJob from "./components/candidate/ApplyJob";
 function App(props) {
   let param1 = useLocation();
   return (
@@ -74,8 +77,9 @@ function App(props) {
           <Route path="/allCV/fileCV/:id" element={<FileCV />} />
           <Route path="/handleCV" element={<HandleCV />} />
           <Route path="/uploadCV" element={<MyPdfReader />} />
-          <Route path="/checkout" element={<Checkout />} />
           <Route path="/listJob" element={<ListJob />} />
+          <Route path="/allCV/UpdateCv/:id" element={<UpdateCv />} />
+          <Route path="/applyJob" element={<ApplyJob />} />
         </Route>
         {/* ---------- */}
 
@@ -87,9 +91,11 @@ function App(props) {
         <Route element={<PrivateRoutesRecruiter />}>
           <Route path="/addJob" element={<AddJob />} />
           <Route path="/manageJob" element={<ManageJob />} />
+          <Route path="/manageJob/updateJob/:id" element={<UpdateJob />} />
           <Route path="/managecan" element={<ManageCan />} />
           <Route path="/packageRecruiter" element={<PackageRe />} />
           <Route path="/paymentHistory" element={<PaymentHistory />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Route>
 
         {/* ------------ */}

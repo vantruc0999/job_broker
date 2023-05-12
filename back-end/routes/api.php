@@ -50,6 +50,9 @@ Route::get('skills', [SkillController::class, 'index']);
 
 
 Route::get('jobs-by-skills/{id}', [JobController::class, 'getJobsByProgrammingSkills']);
+Route::post('admin/accept-job/{id}', [JobController::class, 'approveJobRequest']);
+Route::post('admin/decline-job/{id}', [JobController::class, 'declineJobRequest']);
+Route::post('recruiter/resume-accept/{id}', [JobApplicationController::class, 'acceptApplicationRequest']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -63,8 +66,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('add-skill', [SkillController::class, 'store']);
         Route::post('update-skill/{id}', [SkillController::class, 'update']);
 
-        Route::post('accept-job/{id}', [JobController::class, 'approveJobRequest']);
-        Route::post('decline-job/{id}', [JobController::class, 'declineJobRequest']);
 
         Route::get('waiting-jobs', [JobController::class, 'getAllJobsOnWaiting']);
     });
@@ -79,7 +80,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('add-job', [JobController::class, 'handleCreateJob']);
         Route::post('job-update/{id}', [JobController::class, 'handleUpdateJob']);
 
-        Route::post('resume-accept/{id}', [JobApplicationController::class, 'acceptApplicationRequest']);
         Route::post('resume-decline/{id}', [JobApplicationController::class, 'declineApplicationRequest']);
 
         Route::get('get-candidates/{id}', [JobApplicationController::class, 'getAllCandidateByJob']);
@@ -94,6 +94,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::get('categories', [CategoryExamController::class, 'index']);
 
+        Route::post('check-paid-package',[PaymentController::class, 'checkPaidPackage']);
+        Route::post('extend-package',[PaymentController::class, 'extendPackage']);
     });
 
     Route::prefix('candidate')->group(function () {
@@ -109,6 +111,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('apply-cv', [JobApplicationController::class, 'store']);
         Route::post('public-status-cv/{id}', [ResumeController::class, 'publicStatusResume']); 
         Route::post('private-status-cv/{id}', [ResumeController::class, 'privateStatusResume']); 
+
+        Route::post('view-all-application', [JobController::class, 'viewAllAppliedCompany']);
+        Route::post('cancel-application/{id}', [JobController::class, 'cancelApplication']);
+
+        Route::post('recommend-job',[JobController::class, 'recommendJobForCandidate']);
     });
 });
 

@@ -55,18 +55,19 @@ const ManageJob = () => {
 
                     {/* <li className="title-list">{job.jobs[0].company_name}</li> */}
                     <li className="title-list">Cập nhật lúc</li>
-                    <li className="title-list">{value.job_location}</li>
-                    <a href="/" className="title-list">
-                      Xem danh sách phù hợp
-                    </a>
+
+                    <li className="title-list">
+                      <i class="fas fa-map-marker-alt mr-1"></i>{" "}
+                      {value.job_location}
+                    </li>
                   </ul>
                 </td>
                 <td>{value.job_start_date}</td>
                 <td>{value.job_end_date}</td>
                 <td>{user.recruiter_name}</td>
                 <td style={{ display: "grid" }}>
-                  <a
-                    href="/"
+                  <Link
+                    to={"/manageJob/updateJob/" + value.job_id}
                     className="btn btn-outline-success"
                     style={{
                       margin: "2px",
@@ -75,9 +76,9 @@ const ManageJob = () => {
                     }}
                   >
                     Chỉnh Sửa
-                  </a>
-                  <a
-                    href="/"
+                  </Link>
+                  <Link
+                    to={"/" + value.job_id}
                     className="btn btn-outline-danger"
                     style={{
                       margin: "2px",
@@ -86,9 +87,8 @@ const ManageJob = () => {
                     }}
                   >
                     Xóa
-                  </a>
-                  <a
-                    href="/"
+                  </Link>
+                  <Link
                     className="btn btn-outline-info"
                     style={{
                       margin: "2px",
@@ -96,19 +96,8 @@ const ManageJob = () => {
                       padding: "2px 5px",
                     }}
                   >
-                    Chia sẻ
-                  </a>
-                  <a
-                    href="/"
-                    className="btn btn-outline-secondary"
-                    style={{
-                      margin: "2px",
-                      fontSize: "13px",
-                      padding: "2px 5px",
-                    }}
-                  >
-                    Tạm dừng
-                  </a>
+                    Xem chi tiết
+                  </Link>
                 </td>
               </tr>
             </tbody>
@@ -157,10 +146,18 @@ const ManageJob = () => {
                       >
                         <th scope="col"></th>
                         <th scope="col">Tiêu đề việc làm</th>
-                        <th scope="col">Ngày bắt đầu</th>
-                        <th scope="col">Ngày kết thúc</th>
-                        <th scope="col">Người phụ trách</th>
-                        <th scope="col">Hành động</th>
+                        <th scope="col" style={{ width: "15%" }}>
+                          Ngày bắt đầu
+                        </th>
+                        <th scope="col" style={{ width: "15%" }}>
+                          Ngày kết thúc
+                        </th>
+                        <th scope="col" style={{ width: "15%" }}>
+                          Người phụ trách
+                        </th>
+                        <th scope="col" style={{ width: "10%" }}>
+                          Hành động
+                        </th>
                       </tr>
                     </thead>
                     {renderAllJob()}

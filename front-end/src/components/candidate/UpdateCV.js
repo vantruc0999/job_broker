@@ -87,6 +87,7 @@ function UpdateCV() {
         config
       )
       .then((res) => {
+        console.log("data",res.data);
         setResume(res.data);
         setExp(res.data.experience_company);
         setActive(res.data.experience_project);
@@ -108,9 +109,26 @@ function UpdateCV() {
         setSummary({
           resume_name: res.data.resume.resume_name,
         });
+        setAwards({
+          activity:res.data.resume.activity,
+        })
+        setSoftSkill({
+         hobby: res.data.resume.hobby,
+        })
+        setInputs({
+          first_name: res.data.resume.first_name,
+          last_name: res.data.resume.last_name,
+          address: res.data.resume.address,
+          birth_day: res.data.resume.birth_day,
+          email: res.data.resume.email,
+          phone: res.data.resume.phone,
+        });
       });
   }, []);
-  
+  console.log("inputs",awards);
+  console.log("inputs",softSkill);
+  console.log("cer",certificate);
+
   useEffect(() => {
     const textarea = document.getElementById("emailSummary");
     const placeholder = "Email";
@@ -136,19 +154,19 @@ function UpdateCV() {
         Accept: "application/json",
       },
     };
-    axios
-      .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
-      .then((res) => {
-        console.log(res.data);
-        setInputs({
-          first_name: res.data.first_name,
-          last_name: res.data.last_name,
-          address: res.data.address,
-          birth_day: res.data.birth_day,
-          email: res.data.email,
-          phone: res.data.phone,
-        });
-      });
+    // axios
+    //   .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     setInputs({
+    //       first_name: res.data.first_name,
+    //       last_name: res.data.last_name,
+    //       address: res.data.address,
+    //       birth_day: res.data.birth_day,
+    //       email: res.data.email,
+    //       phone: res.data.phone,
+    //     });
+    //   });
   }, []);
   const handleInput = (e) => {
     let nameInput = e.target.name;
@@ -371,9 +389,9 @@ function UpdateCV() {
                 className="form_input"
                 type="text"
                 placeholder=" "
-                value={softSkill.title}
+                value={softSkill.hobby}
                 onChange={(e) =>
-                  handleSoftInputChange(index, "title", e.target.value)
+                  handleSoftInputChange(index, "hobby", e.target.value)
                 }
               />
               <label for="name" className="form-label">
@@ -405,13 +423,13 @@ function UpdateCV() {
                 className="form_input"
                 type="text"
                 placeholder=" "
-                value={award.title}
+                value={award.activity}
                 onChange={(e) =>
-                  handleAwardInputChange(index, "title", e.target.value)
+                  handleAwardInputChange(index, "activity", e.target.value)
                 }
               />
               <label for="name" className="form-label">
-                Giải thưởng
+                Hoạt động
               </label>
             </div>
           </div>
@@ -425,8 +443,8 @@ function UpdateCV() {
         {active.map((active, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
             <div className="addition">
-              <i class="fa fa-plus mr-1" onClick={handleAddAct}></i>
-              <i class="fa fa-minus" onClick={() => handleRemoveAct(index)}></i>
+              <i class="fas fa-plus mr-1" onClick={handleAddAct}></i>
+              <i class="fas fa-minus" onClick={() => handleRemoveAct(index)}></i>
             </div>
             <div key={index} className="form-field">
               <input
@@ -637,7 +655,7 @@ function UpdateCV() {
       </>
     );
   };
-
+  console.log(inputs);
   const handleSubmit = (e) => {
     e.preventDefault();
     let resume = {
@@ -647,7 +665,9 @@ function UpdateCV() {
       birth_day: inputs.birth_day,
       email: inputs.email,
       address: inputs.address,
-      resume_name: inputs.namecv,
+      // hobby:softSkill[0].title,
+      // activity:awards[0].title,
+      resume_name: inputs.resume_name,
       education: education[0].school,
       education_year: education[0].time,
       education_major: education[0].specialize,
@@ -684,6 +704,8 @@ function UpdateCV() {
             "CV đang được xem xét trong mục công việc, không thể chỉnh sửa"
           );
           // navigate("/allCV");
+        } else if(res.data.status = 200){
+            alert("Bạn đã cập nhật thành công")
         }
         console.log(res.data);
       
@@ -744,7 +766,7 @@ function UpdateCV() {
                             name="email"
                             placeholder="Email"
                             rows="1"
-                            value={summary.email}
+                            value={inputs.email}
                             onChange={handleInput}
                             style={{
                               width: "60%",
@@ -763,7 +785,7 @@ function UpdateCV() {
                           <input
                             type="text"
                             name="phone"
-                            value={summary.phone}
+                            value={inputs.phone}
                             placeholder="Số điện thoại"
                             onChange={handleInput}
                             style={{ width: "60%" }}
@@ -775,7 +797,7 @@ function UpdateCV() {
                             type="text"
                             placeholder="dd-mm-yyyy"
                             name="birth_day"
-                            value={summary.birth_day}
+                            value={inputs.birth_day}
                             onChange={handleInput}
                             style={{ width: "60%" }}
                           />
@@ -785,7 +807,7 @@ function UpdateCV() {
                           <input
                             type="text"
                             placeholder="Địa chỉ"
-                            value={summary.address}
+                            value={inputs.address}
                             name="address"
                             onChange={handleInput}
                             style={{ width: "60%" }}
@@ -834,7 +856,7 @@ function UpdateCV() {
                 <div className="col-8">
                   <section className="experience">
                     <h1 style={{ fontWeight: "700" }}>
-                      {summary.last_name} {summary.first_name}
+                      {inputs.last_name} {inputs.first_name}
                     </h1>
                     <input
                       type="text"
@@ -847,7 +869,7 @@ function UpdateCV() {
                     <input
                       type="text"
                       placeholder="Vị trí mong muốn"
-                      value={summary.position}
+                      value={inputs.position}
                       name="position"
                       onChange={handleInput}
                       style={{ padding: "5px", border: "none", color: "#000" }}
@@ -924,7 +946,7 @@ function UpdateCV() {
                   </section>
                   <section className="experience">
                     <h4>
-                      <i className="fas fa-feather" /> Kĩ năng mềm
+                      <i className="fas fa-feather" /> Sở thích
                     </h4>
 
                     {softSkill.length > 0 ? (
@@ -942,7 +964,7 @@ function UpdateCV() {
                   </section>
                   <section className="experience">
                     <h4>
-                      <i className="fas fa-medal" /> Giải thưởng
+                      <i className="fas fa-medal" /> Hoạt động
                     </h4>
                     {awards.length > 0 ? (
                       addContentAward()

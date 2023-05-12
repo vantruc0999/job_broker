@@ -102,9 +102,11 @@ function CreateCV() {
           birth_day: res.data.birth_day,
           email: res.data.email,
           phone: res.data.phone,
+          namecv: res.data.first_name
         });
       });
   }, []);
+  
   const handleInput = (e) => {
     let nameInput = e.target.name;
     let value = e.target.value;
@@ -600,6 +602,8 @@ function CreateCV() {
       phone: inputs.phone,
       birth_day: inputs.birth_day,
       email: inputs.email,
+      hobby:softSkill[0].title,
+      activity:awards[0].title,
       address: inputs.address,
       resume_name: inputs.namecv,
       education: education[0].school,

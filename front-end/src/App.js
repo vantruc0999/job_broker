@@ -52,6 +52,8 @@ import ListJob from "./components/candidate/ListJob";
 import UpdateCv from "./components/candidate/UpdateCV";
 import UpdateJob from "./components/recruiter/UpdateJob";
 import ApplyJob from "./components/candidate/ApplyJob";
+import ManageApproved from "./components/recruiter/ManageApproved";
+import ManageDeClined from "./components/recruiter/ManageDeclined";
 function App(props) {
   let param1 = useLocation();
   return (
@@ -97,6 +99,9 @@ function App(props) {
           <Route path="/packageRecruiter" element={<PackageRe />} />
           <Route path="/paymentHistory" element={<PaymentHistory />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/manageApproved" element={<ManageApproved />} />
+          <Route path="/manageDeclined" element={<ManageDeClined />} />
+
         </Route>
 
         {/* ------------ */}

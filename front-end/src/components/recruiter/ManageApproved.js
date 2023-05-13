@@ -1,11 +1,11 @@
 import Sidebar from "./Sidebar";
 import { useEffect, useRef, useState } from "react";
 import axios, { all } from "axios";
-import { Link } from "react-router-dom";
-
-const ManageCan = () => {
+function ManageApproved() {
+  const [id, setId] = useState("");
+  const [job, setJob] = useState("");
   const [allJob, setAllJob] = useState("");
-  const [candidate, setCandidate] = useState("");
+  const [approved, setApproved] = useState("");
 
   let user = JSON.parse(localStorage.getItem("user"));
   console.log(user.token);
@@ -23,24 +23,40 @@ const ManageCan = () => {
         setAllJob(res.data);
       });
   }, []);
+  useEffect(() => {
+  }, [approved]);
 
-  const handleGetID = (e) => {
+  const handleGetID = async (e) => {
     let id = e.target.value;
-    axios
-      .get(`http://127.0.0.1:8000/api/recruiter/get-candidates/` + id, config)
+    setId(id);
+    await axios
+      .get(
+        `http://127.0.0.1:8000/api/recruiter/get-approved-candidates/` + id,
+        config
+      )
       .then((res) => {
-        console.log(res);
-        if (res.data.length === 0) {
-          alert("Không có ứng viên ứng tuyển")
-        } else {
-          console.log("có");
-          setCandidate(res.data);
-        }
+        setApproved(res.data);
       });
   };
-  useEffect(() => {
-  }, [candidate]);
-
+  const handleCancle = (e) => {
+    let id = e.currentTarget.id;
+    console.log(id);
+    axios
+      .post(
+        `http://127.0.0.1:8000/api/recruiter/resume-decline/` + id,
+        null,
+        config
+      )
+      .then((res) => {
+        if (res.data.message.includes("declined")) {
+          alert("Xóa ứng viên thành công");
+        }
+        const afterDelte = approved.filter((object) => {
+          return object.application_id.toString() !== id;
+        });
+        setApproved(afterDelte)
+      });
+  };
   const renderJob = () => {
     if (Object.keys(allJob).length > 0) {
       return allJob.jobs.map((value, key) => {
@@ -53,43 +69,10 @@ const ManageCan = () => {
     }
   };
 
-  const handleApply = (e) => {
-    let id = e.currentTarget.id;
-    console.log(id);
-    axios
-      .post(`http://127.0.0.1:8000/api/recruiter/resume-accept/` + id,null, config)
-      .then((res) => {
-        if (res.data.message.includes("approved")) {
-          alert("Duyệt ứng viên thành công");
-        }
-        const afterDelte = candidate.filter((object) => {
-          return object.application_id.toString() !== id;
-        });
-        setCandidate(afterDelte)
-      });
-  };
-  const handleCancle = (e) => {
-    let id = e.currentTarget.id;
-    console.log(id);
-    axios
-      .post(
-        `http://127.0.0.1:8000/api/recruiter/resume-decline/` + id,null,
-        config
-      )
-      .then((res) => {
-        if (res.data.message.includes("declined")) {
-          alert("Xóa ứng viên thành công");
-        }
-        const afterDelte = candidate.filter((object) => {
-          return object.application_id.toString() !== id;
-        });
-        setCandidate(afterDelte)
-      });
-  };
-  console.log(candidate);
   const renderCanofJobID = () => {
-    if (Object.keys(candidate).length > 0) {
-      return candidate.map((value, key) => {
+    if (Object.keys(approved).length > 0) {
+      return approved.map((value, key) => {
+        console.log(value);
         return (
           <>
             <tbody>
@@ -113,15 +96,6 @@ const ManageCan = () => {
                   <a class="btn btn-primary btn-sm">
                     <i class="fas fa-eye"></i>
                     Xem
-                  </a>
-                  <a
-                    class="btn btn-info btn-sm"
-                    id={value.application_id}
-                    onClick={handleApply}
-                    style={{ margin: "0 5px" }}
-                  >
-                    <i class="fas fa-check"></i>
-                    Duyệt
                   </a>
                   <a
                     id={value.application_id}
@@ -342,6 +316,5 @@ const ManageCan = () => {
       </main>
     </div>
   );
-};
-
-export default ManageCan;
+}
+export default ManageApproved;

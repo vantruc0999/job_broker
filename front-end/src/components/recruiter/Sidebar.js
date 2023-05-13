@@ -22,6 +22,22 @@ function Sidebar() {
                 </a>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/manageApproved">
+                <a className="nav-link " href="/">
+                  <i className="bi bi-circle"></i>
+                  <span>Ứng viên đã phê duyệt</span>
+                </a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/manageDeclined">
+                <a className="nav-link " href="/">
+                  <i className="bi bi-circle"></i>
+                  <span>Ứng viên bị từ chối</span>
+                </a>
+              </Link>
+            </li>
             <li class="nav-item">
               <Link to="/packageRecruiter">
                 <a class="nav-link " href="index.html">

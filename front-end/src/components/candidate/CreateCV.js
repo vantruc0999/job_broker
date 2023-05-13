@@ -302,7 +302,7 @@ function CreateCV() {
                 }
               />
               <label for="name" className="form-label">
-                Chứng chỉ
+                Chứng chỉ ngoại ngữ
               </label>
             </div>
           </div>

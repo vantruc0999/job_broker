@@ -94,10 +94,10 @@ function MyCV() {
                   </h3>
                   {/* <p class=" text-center"> {value.resume_name}</p> */}
                   <div
-                    class="list-group-item"
+                    class="list-group-itemm"
                     style={{ fontSize: "14px", marginBottom: "10px" }}
                   >
-                    <b>Trạng thái</b>{" "}
+                    <b style={{ marginRight: "10px" }}>Trạng thái: </b>{" "}
                     {/* <p class="float-right">{value.public_status == "0" ? <>private</>: <>public</>}</p> */}
                     <select
                       value={value.public_status}
@@ -208,10 +208,7 @@ function MyCV() {
         >
           <div className="job_cv">
             <h3 style={{ paddingTop: 20 }}>CV của bạn</h3>
-            <div
-              className="row justify-content-between"
-              style={{ margin: "20px auto" }}
-            >
+            <div className="row" style={{ margin: "20px auto" }}>
               {renderResume()}
             </div>
           </div>

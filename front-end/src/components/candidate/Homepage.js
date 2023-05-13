@@ -93,7 +93,7 @@ function Homepage() {
             </div>
           </div>
         </div>
-        <div className="menu-job">
+        {/* <div className="menu-job">
           <ul
             className="col-11 list-group list-group-horizontal d-flex justify-content-center"
             style={{ margin: "30px auto", textAlign: "center" }}
@@ -149,7 +149,7 @@ function Homepage() {
               </button>
             </li>
           </ul>
-        </div>
+        </div> */}
 
         <div
           className="row d-flex justify-content-around"

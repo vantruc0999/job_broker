@@ -180,15 +180,19 @@ const ManageCan = () => {
                               </select>
                             </div>
                             <div className="col-md-3 margin">
-                              <label>Kỹ năng mềm</label>
+                              <label>Lọc ứng viên theo</label>
                               <select
                                 className="form-select"
                                 aria-label="Default select example"
                                 style={{ fontSize: "13px" }}
                               >
-                                <option selected="">chọn kỹ năng mềm</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
+                                <option selected="">Chọn theo loại</option>
+                                <option value="1">
+                                  Ứng viên đã được phê duyệt
+                                </option>
+                                <option value="2">
+                                  Ứng viên đã bị từ chối
+                                </option>
                                 <option value="3">Three</option>
                               </select>
                             </div>

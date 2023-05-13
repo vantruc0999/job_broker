@@ -52,6 +52,7 @@ import ListJob from "./components/candidate/ListJob";
 import UpdateCv from "./components/candidate/UpdateCV";
 import UpdateJob from "./components/recruiter/UpdateJob";
 import ApplyJob from "./components/candidate/ApplyJob";
+import HistoryBuyPackage from "./components/admin/HistoryBuyPackage";
 function App(props) {
   let param1 = useLocation();
   return (
@@ -108,6 +109,7 @@ function App(props) {
           <Route path="/admincv" element={<AdminCV />} />
           <Route path="/admincv/fileCV/:id" element={<FileCV />} />
           <Route path="/package" element={<Package />} />
+          <Route path="/historyBuy" element={<HistoryBuyPackage />} />
         </Route>
       </Routes>
       {/* {props.children} */}

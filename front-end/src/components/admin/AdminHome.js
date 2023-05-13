@@ -29,7 +29,7 @@ function AdminHome() {
                 <div className="icon">
                   <i className="ion ion-bag" />
                 </div>
-                <a href="ManageJob.html" className="small-box-footer">
+                <a href="/adminjob" className="small-box-footer">
                   Xem chi tiết <i className="fas fa-arrow-circle-right" />
                 </a>
               </div>
@@ -45,7 +45,7 @@ function AdminHome() {
                 <div className="icon">
                   <i className="ion ion-stats-bars" />
                 </div>
-                <a href="ManageCV.html" className="small-box-footer">
+                <a href="/admincv" className="small-box-footer">
                   Xem chi tiết <i className="fas fa-arrow-circle-right" />
                 </a>
               </div>
@@ -61,7 +61,7 @@ function AdminHome() {
                 <div className="icon">
                   <i className="ion ion-person-add" />
                 </div>
-                <a href="Package.html" className="small-box-footer">
+                <a href="/package" className="small-box-footer">
                   Xem chi tiết <i className="fas fa-arrow-circle-right" />
                 </a>
               </div>

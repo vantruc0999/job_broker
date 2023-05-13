@@ -8,7 +8,6 @@ import "../../assets/css/inputCV.css";
 
 const animatedComponents = makeAnimated();
 
-
 function UpdateCV() {
   const navigate = useNavigate();
   const tx = document.getElementById("exp_input");
@@ -93,15 +92,19 @@ function UpdateCV() {
           },
         ];
         setCertificate(cer);
-        if(res.data.resume.activity){
-          setAwards([{
-            activity: res.data.resume.activity,
-          }]);
+        if (res.data.resume.activity) {
+          setAwards([
+            {
+              activity: res.data.resume.activity,
+            },
+          ]);
         }
-        if(res.data.resume.hobby){
-          setSoftSkill([{
-            hobby: res.data.resume.hobby,
-          }]);
+        if (res.data.resume.hobby) {
+          setSoftSkill([
+            {
+              hobby: res.data.resume.hobby,
+            },
+          ]);
         }
         setInputs({
           first_name: res.data.resume.first_name,
@@ -568,20 +571,37 @@ function UpdateCV() {
               <i class="fa fa-minus" onClick={() => handleRemoveExp(index)}></i>
             </div>
             <div key={index} className="form-field">
-              <input
-                className="exp_input"
-                type="text"
-                placeholder="1900 - 2001"
-                value={exp.experience_start}
-                style={{ border: "none" }}
-                onChange={(e) =>
-                  handleExpInputChange(
-                    index,
-                    "experience_start",
-                    e.target.value
-                  )
-                }
-              />
+              <div style={{ display: "flex" }}>
+                <input
+                  className="exp_input"
+                  type="text"
+                  placeholder="Thời gian bắt đầu"
+                  value={exp.experience_start}
+                  style={{ border: "none" }}
+                  onChange={(e) =>
+                    handleExpInputChange(
+                      index,
+                      "experience_start",
+                      e.target.value
+                    )
+                  }
+                />
+                <input
+                  className="exp_input"
+                  type="text"
+                  placeholder="Thời gian bắt đầu"
+                  value={exp.experience_end}
+                  style={{ border: "none" }}
+                  onChange={(e) =>
+                    handleExpInputChange(
+                      index,
+                      "experience_end",
+                      e.target.value
+                    )
+                  }
+                />
+              </div>
+
               <input
                 className="exp_input"
                 type="text"
@@ -642,8 +662,8 @@ function UpdateCV() {
       birth_day: inputs.birth_day,
       email: inputs.email,
       address: inputs.address,
-      hobby:softSkill[0].hobby,
-      activity:awards[0].activity,
+      hobby: softSkill[0].hobby,
+      activity: awards[0].activity,
       resume_name: inputs.resume_name,
       education: education[0].school,
       education_year: education[0].time,
@@ -797,17 +817,16 @@ function UpdateCV() {
                     <h4>
                       <i className="fas fa-laptop-code" /> Kỹ năng
                     </h4>
-                    {showForm && showForm.includes(5)
-                      ? addSkill()
-                      : addSkill()
-                        // <div
-                        //   className="content_form"
-                        //   onClick={(e) => handleShow(5, e)}
-                        //   style={{ cursor: "pointer" }}
-                        // >
-                        //   <div id="content-suggest-skill"></div>
-                        //   <i className="fas fa-plus" />
-                        // </div>
+                    {
+                      showForm && showForm.includes(5) ? addSkill() : addSkill()
+                      // <div
+                      //   className="content_form"
+                      //   onClick={(e) => handleShow(5, e)}
+                      //   style={{ cursor: "pointer" }}
+                      // >
+                      //   <div id="content-suggest-skill"></div>
+                      //   <i className="fas fa-plus" />
+                      // </div>
                     }
                   </section>
 
@@ -1107,8 +1126,8 @@ const AnimatedMulti = (props) => {
     getSkillSelect();
   }, [params.id]);
 
-  useEffect(()=> {
-    sendData(skillSelected)
+  useEffect(() => {
+    sendData(skillSelected);
   }, [JSON.stringify(skillSelected)]);
   return (
     <Select

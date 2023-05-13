@@ -90,17 +90,20 @@ function App(props) {
         <Route path="/loginCruiter" element={<LoginRecruiter />} />
         <Route path="/registerCruiter" element={<RegisterCruiter />} />
         <Route path="/job/:id" element={<Test />} />
-
         <Route element={<PrivateRoutesRecruiter />}>
           <Route path="/addJob" element={<AddJob />} />
           <Route path="/manageJob" element={<ManageJob />} />
           <Route path="/manageJob/updateJob/:id" element={<UpdateJob />} />
           <Route path="/managecan" element={<ManageCan />} />
+          <Route path="/managecan/fileCV/:id" element={<FileCV />} />
           <Route path="/packageRecruiter" element={<PackageRe />} />
           <Route path="/paymentHistory" element={<PaymentHistory />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/manageApproved" element={<ManageApproved />} />
+          <Route path="/manageApproved/fileCV/:id" element={<FileCV />} />
           <Route path="/manageDeclined" element={<ManageDeClined />} />
+          <Route path="/manageDeclined/fileCV/:id" element={<FileCV />} />
+
 
         </Route>
 

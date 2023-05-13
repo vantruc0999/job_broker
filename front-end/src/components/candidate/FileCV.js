@@ -11,6 +11,7 @@ function FileCV() {
   const [info, setInfo] = useState("");
   console.log(resume);
 
+  console.log(params.id);
   let user = JSON.parse(localStorage.getItem("user"));
   let config = {
     headers: {

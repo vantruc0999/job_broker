@@ -42,7 +42,6 @@ import AdminHome from "./components/admin/AdminHome";
 import AdminJob from "./components/admin/AdminJob";
 import AdminCV from "./components/admin/AdminCV";
 import Package from "./components/admin/Package";
-import HistoryBuyPackage from "./components/admin/HistoryBuyPackage";
 import PrivateRoutesAdmin from "./components/authen/PrivateRoutesAdmin";
 import PrivateRoutesCandidate from "./components/authen/PrivateRoutesCandidate";
 import PrivateRoutesRecruiter from "./components/authen/PrivateRoutesRecruiter";
@@ -104,6 +103,8 @@ function App(props) {
           <Route path="/manageApproved/fileCV/:id" element={<FileCV />} />
           <Route path="/manageDeclined" element={<ManageDeClined />} />
           <Route path="/manageDeclined/fileCV/:id" element={<FileCV />} />
+
+
         </Route>
 
         {/* ------------ */}
@@ -116,7 +117,6 @@ function App(props) {
           <Route path="/admincv" element={<AdminCV />} />
           <Route path="/admincv/fileCV/:id" element={<FileCV />} />
           <Route path="/package" element={<Package />} />
-          <Route path="/historyBuy" element={<HistoryBuyPackage />} />
         </Route>
       </Routes>
       {/* {props.children} */}

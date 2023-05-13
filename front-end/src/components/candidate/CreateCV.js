@@ -303,7 +303,7 @@ function CreateCV() {
                 }
               />
               <label for="name" className="form-label">
-                Chứng chỉ ngoại ngữ
+                Chứng chỉ
               </label>
             </div>
           </div>
@@ -403,7 +403,7 @@ function CreateCV() {
                     handleActInputChange(index, "timestart", e.target.value)
                   }
                 />
-                <input
+                 <input
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian kết thúc "

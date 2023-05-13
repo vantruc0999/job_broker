@@ -31,14 +31,15 @@ const ManageCan = () => {
       .then((res) => {
         console.log(res);
         if (res.data.length === 0) {
-          alert("Không có ứng viên ứng tuyển");
+          alert("Không có ứng viên ứng tuyển")
         } else {
           console.log("có");
           setCandidate(res.data);
         }
       });
   };
-  useEffect(() => {}, [candidate]);
+  useEffect(() => {
+  }, [candidate]);
 
   const renderJob = () => {
     if (Object.keys(allJob).length > 0) {
@@ -56,11 +57,7 @@ const ManageCan = () => {
     let id = e.currentTarget.id;
     console.log(id);
     axios
-      .post(
-        `http://127.0.0.1:8000/api/recruiter/resume-accept/` + id,
-        null,
-        config
-      )
+      .post(`http://127.0.0.1:8000/api/recruiter/resume-accept/` + id,null, config)
       .then((res) => {
         if (res.data.message.includes("approved")) {
           alert("Duyệt ứng viên thành công");
@@ -68,7 +65,7 @@ const ManageCan = () => {
         const afterDelte = candidate.filter((object) => {
           return object.application_id.toString() !== id;
         });
-        setCandidate(afterDelte);
+        setCandidate(afterDelte)
       });
   };
   const handleCancle = (e) => {
@@ -76,8 +73,7 @@ const ManageCan = () => {
     console.log(id);
     axios
       .post(
-        `http://127.0.0.1:8000/api/recruiter/resume-decline/` + id,
-        null,
+        `http://127.0.0.1:8000/api/recruiter/resume-decline/` + id,null,
         config
       )
       .then((res) => {
@@ -87,7 +83,7 @@ const ManageCan = () => {
         const afterDelte = candidate.filter((object) => {
           return object.application_id.toString() !== id;
         });
-        setCandidate(afterDelte);
+        setCandidate(afterDelte)
       });
   };
   console.log(candidate);

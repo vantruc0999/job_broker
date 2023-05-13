@@ -8,12 +8,7 @@ import makeAnimated from "react-select/animated";
 
 const animatedComponents = makeAnimated();
 
-const arraySkill = [
-  { value: 1, label: ".NET" },
-  { value: 2, label: "Java" },
-  { value: 3, label: "PHP" },
-  { value: 4, label: "Python" },
-];
+// 
 function UpdateJob() {
   let params = useParams();
   const navigate = useNavigate();
@@ -22,8 +17,9 @@ function UpdateJob() {
   const editorRequirement = useRef(null);
   const editorDescription = useRef(null);
   const editorBenefit = useRef(null);
-  const callbackFunction = (childData) => {
-    setInputs({ ...inputs, job_skill: [...childData] });
+  const [skill, setSkill] = useState([]);
+  const handleSkillInput = (childData) => {
+    setSkill({ ...skill, job_skill: [...childData] });
   };
 
   const handleInput = (e) => {
@@ -81,13 +77,13 @@ function UpdateJob() {
       job_requirement: inputs.job_requirement,
       job_description: inputs.job_description,
       benefit: inputs.benefit,
-      job_skill: inputs.job_skills,
+      job_skill: skill.job_skill,
     };
     console.log(job_update);
     axios
       .post(
         "http://127.0.0.1:8000/api/recruiter/job-update/" + params.id,
-        inputs,
+        job_update,
         config
       )
       .then((res) => {
@@ -205,8 +201,7 @@ function UpdateJob() {
                   <div className="col-md-6">
                     <label>Kỹ năng</label>
                     <AnimatedMulti
-                      parentCallback={callbackFunction}
-                      skill={inputs.skills}
+                      parentCallback={handleSkillInput}
                     ></AnimatedMulti>
                   </div>
 
@@ -283,16 +278,74 @@ function UpdateJob() {
   );
 }
 const AnimatedMulti = (props) => {
+  let params = useParams();
   const sendData = (selected) => {
+    setSkillSelected(selected);
     props.parentCallback(selected.map((skill) => skill.value));
   };
- 
+  const [skillSelected, setSkillSelected] = useState([]);
+  const [skill, setSkill] = useState([]);
+
+  useEffect(() => {
+    const getSkillSelect = async () => {
+      let user = JSON.parse(localStorage.getItem("user"));
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      await axios
+        .get(
+          `http://127.0.0.1:8000/api/candidate/show-detail/${params.id}`,
+          config
+        )
+        .then((res) => {
+          if (res.data.skill.length > 0) {
+            const arraySkillSelected = res.data.skill.map((item) => {
+              return { value: item.skill_id, label: item.skill_name };
+            });
+            setSkillSelected(arraySkillSelected);
+          }
+        });
+    };
+
+    const getListSkill = async () => {
+      let user = JSON.parse(localStorage.getItem("user"));
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      await axios
+        .get(`http://127.0.0.1:8000/api/skills`, config)
+        .then((res) => {
+          if (res && res.data.length > 0) {
+            console.log(">>>>>>>>", res.data);
+            const arraySkill = res.data.map((item) => {
+              return { value: item.skill_id, label: item.skill_name };
+            });
+            setSkill(arraySkill);
+          }
+        });
+    };
+    getListSkill();
+    getSkillSelect();
+  }, [params.id]);
+
+  useEffect(()=> {
+    sendData(skillSelected)
+  }, [JSON.stringify(skillSelected)]);
   return (
     <Select
+      value={[...skillSelected]}
       closeMenuOnSelect={false}
       components={animatedComponents}
       isMulti
-      options={arraySkill}
+      options={skill}
       onChange={sendData}
     />
   );

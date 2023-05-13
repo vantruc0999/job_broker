@@ -82,7 +82,10 @@ function AdminJob() {
                 <td>
                   <a> {value.job_name} </a>
                   <br />
-                  <small> Ngày tạo 01.01.2019 </small>
+                  <small>
+                    <i class="fas fa-map-marker-alt mr-1"></i>{" "}
+                    {value.job_location}{" "}
+                  </small>
                 </td>
                 <td>00/00/0000</td>
                 <td className="project_progress">00/00/0000</td>
@@ -193,7 +196,7 @@ function AdminJob() {
                           <th>Ngày bắt đầu</th>
                           <th>Ngày kết thúc</th>
                           <th>Trạng thái</th>
-                          <th>Tính năng</th>
+                          <th style={{ width: "20%" }}>Tính năng</th>
                         </tr>
                       </thead>
                       {renderJobWait()}

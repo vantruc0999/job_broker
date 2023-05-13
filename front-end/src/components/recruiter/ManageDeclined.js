@@ -1,14 +1,14 @@
 import Sidebar from "./Sidebar";
 import { useEffect, useRef, useState } from "react";
 import axios, { all } from "axios";
-import { Link } from "react-router-dom";
-
-const ManageCan = () => {
+function ManageDeClined() {
+  const [id, setId] = useState("");
+  const [job, setJob] = useState("");
   const [allJob, setAllJob] = useState("");
   const [candidate, setCandidate] = useState("");
+  const [declined, setDeclined] = useState("");
 
   let user = JSON.parse(localStorage.getItem("user"));
-  console.log(user.token);
   let config = {
     headers: {
       Authorization: "Bearer " + user.token,
@@ -23,22 +23,26 @@ const ManageCan = () => {
         setAllJob(res.data);
       });
   }, []);
-
-  const handleGetID = (e) => {
+  useEffect(() => {
+  }, [declined]);
+  useEffect(() => {
+    axios.get(`http://127.0.0.1:8000/api/jobs`, config).then((res) => {
+      // console.log(res.data);
+      setJob(res.data);
+    });
+  }, []);
+  const handleGetID = async (e) => {
     let id = e.target.value;
-    axios
-      .get(`http://127.0.0.1:8000/api/recruiter/get-candidates/` + id, config)
+    setId(id)
+    await axios
+      .get(
+        `http://127.0.0.1:8000/api/recruiter/get-declined-candidates/` + id,
+        config
+      )
       .then((res) => {
-        console.log(res);
-        if (res.data.length === 0) {
-          alert("Không có ứng viên ứng tuyển");
-        } else {
-          console.log("có");
-          setCandidate(res.data);
-        }
+        setDeclined(res.data);
       });
   };
-  useEffect(() => {}, [candidate]);
 
   const renderJob = () => {
     if (Object.keys(allJob).length > 0) {
@@ -54,46 +58,23 @@ const ManageCan = () => {
 
   const handleApply = (e) => {
     let id = e.currentTarget.id;
+    // console.log(e.currentTarget.id);
     console.log(id);
     axios
-      .post(
-        `http://127.0.0.1:8000/api/recruiter/resume-accept/` + id,
-        null,
-        config
-      )
+      .post(`http://127.0.0.1:8000/api/recruiter/resume-accept/` + id, config)
       .then((res) => {
         if (res.data.message.includes("approved")) {
           alert("Duyệt ứng viên thành công");
         }
-        const afterDelte = candidate.filter((object) => {
-          return object.application_id.toString() !== id;
+        const afterDelte = declined.filter((object) => {
+            return object.application_id.toString() !== id;
         });
-        setCandidate(afterDelte);
+        console.log(afterDelte);
       });
   };
-  const handleCancle = (e) => {
-    let id = e.currentTarget.id;
-    console.log(id);
-    axios
-      .post(
-        `http://127.0.0.1:8000/api/recruiter/resume-decline/` + id,
-        null,
-        config
-      )
-      .then((res) => {
-        if (res.data.message.includes("declined")) {
-          alert("Xóa ứng viên thành công");
-        }
-        const afterDelte = candidate.filter((object) => {
-          return object.application_id.toString() !== id;
-        });
-        setCandidate(afterDelte);
-      });
-  };
-  console.log(candidate);
   const renderCanofJobID = () => {
-    if (Object.keys(candidate).length > 0) {
-      return candidate.map((value, key) => {
+    if (Object.keys(declined).length > 0) {
+      return declined.map((value, key) => {
         return (
           <>
             <tbody>
@@ -126,14 +107,6 @@ const ManageCan = () => {
                   >
                     <i class="fas fa-check"></i>
                     Duyệt
-                  </a>
-                  <a
-                    id={value.application_id}
-                    onClick={handleCancle}
-                    class="btn btn-danger btn-sm"
-                  >
-                    <i class="fas fa-trash"></i>
-                    Từ chối
                   </a>
                 </td>
               </tr>
@@ -346,6 +319,5 @@ const ManageCan = () => {
       </main>
     </div>
   );
-};
-
-export default ManageCan;
+}
+export default ManageDeClined;

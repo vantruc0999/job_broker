@@ -14,16 +14,21 @@ import Example2 from "./Example2";
 function Homepage() {
   const [swiperRef, setSwiperRef] = useState(null);
   const [jobs, setJobs] = useState([]);
+  const [jobSkill, setJobSkill] = useState([]);
   const [show, setShow] = useState(false);
   let user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/jobs").then((res) => {
-      console.log(res.data);
       setJobs(res.data.jobs);
     });
   }, []);
-
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/api/jobs-by-skills/4").then((res) => {
+      console.log(res.data);
+      setJobSkill(res.data);
+    });
+  }, []);
   function handleModalClose(showValue) {
     setShow(showValue);
   }
@@ -226,7 +231,6 @@ function Homepage() {
             {/* List Job */}
             {jobs.length > 0 &&
               jobs.map((job) => {
-                console.log(job);
                 return (
                   <div
                     className="urgentHiring mr-3"
@@ -577,9 +581,8 @@ function Homepage() {
             }}
           >
             {/* List Job */}
-            {jobs.length > 0 &&
-              jobs.map((job) => {
-                console.log(job);
+            {jobSkill.length > 0 &&
+              jobSkill.map((job) => {
                 return (
                   <div
                     className="urgentHiring mr-3"

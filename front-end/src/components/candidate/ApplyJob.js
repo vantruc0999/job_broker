@@ -1,6 +1,185 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 const ApplyJob = () => {
+  const [profile, setProfile] = useState("");
+  let user = JSON.parse(localStorage.getItem("user"));
+  let config = {
+    headers: {
+      Authorization: "Bearer " + user.token,
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+  };
+  const render = () => {
+    axios
+      .post(
+        `http://127.0.0.1:8000/api/candidate/view-all-application`,
+        null,
+        config
+      )
+      .then((res) => {
+        console.log(res.data);
+        setProfile(res.data);
+      });
+  };
+  useEffect(() => {
+    render();
+  }, []);
+  const cancelApply = async (e) => {
+    console.log(e.target.id);
+    let id = e.target.id;
+    await axios
+      .post(
+        `http://127.0.0.1:8000/api/candidate/cancel-application/` + id,
+        null,
+        config
+      )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.message.includes("canceled")) {
+          alert("Bạn đã thu hồi ứng tuyển thành công");
+        } else if (res.data.message.includes("considered")) {
+          alert("Hồ sơ của bạn đã được duyệt không thể thu hồi");
+        }
+      });
+    render();
+  };
+  const renderApply = () => {
+    if (Object.keys(profile).length > 0) {
+      return profile.map((value, key) => {
+        console.log(value.job_id);
+        return (
+          <>
+              <div className="card">
+                <div className="row g-0">
+                  <div className="col-md-2">
+                    <img
+                      src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                      className="img-fluid rounded-start"
+                      alt="..."
+                      style={{
+                        padding: "25px",
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-8">
+                    <div
+                      className="card_body"
+                      style={{
+                        display: "grid",
+                        marginLeft: "-10px",
+                        overflow: "hidden",
+                        width: "100%",
+                        whiteSpace: "nowrap",
+                        paddingTop: "15px",
+                      }}
+                    >
+                      <h6
+                        className="card_title"
+                        style={{
+                          paddingTop: "8px",
+                          color: "#1E88E5",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {value.job_name}
+                      </h6>
+                      <ul
+                        class="p-0"
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          overflow: "hidden",
+                          width: "100%",
+                          whiteSpace: "nowrap",
+                          color: "#333",
+                          margin: "0",
+                        }}
+                      >
+                        <li
+                          class="listnew"
+                          style={{
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          <p style={{ fontSize: "13px" }}>
+                            <i class="fas fa-map-marker-alt mr-1"></i>
+                            {value.job_location}
+                          </p>
+                        </li>
+                        <li
+                          class="listnew"
+                          style={{
+                            width: "100px",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          <p
+                            style={{
+                              fontSize: "13px",
+                              marginLeft: "10px",
+                            }}
+                          >
+                            <i class="fas fa-dollar-sign mr-1"></i>
+                            {value.company_name}
+                          </p>
+                        </li>
+                      </ul>
+                      <p
+                        className="decription"
+                        style={{
+                          fontSize: "13px",
+                          color: "#333",
+                          wordWrap: "break-word",
+                        }}
+                      >
+                        Trở thành 1 trong 20 Chuyên Viên Quản Lý khách hàng cấp
+                        cao của kênh De La Sól tại Hà Nội Tại sao không? DE LA
+                        SÓL by Sun Life Việt Nam dự án fullime mang tính cách
+                        mạng của thị trường tài chính. * TƯ VẤN TÀI CHÍNH Cung
+                        cấp và hỗ trợ các giải pháp tài chính chuyên nghiệp cho
+                        khách hàng Tìm kiếm, mở rộng và xây dựng nguồn khách
+                        hàng tiềm năng * DỊCH VỤ KHÁCH HÀNG Hỗ trợ khách hàng
+                        làm dịc...
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    className="col-md-2"
+                    style={{
+                      display: "grid",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <p
+                      className="btn btn-primary"
+                      style={{ fontSize: "10px", cursor: "none" }}
+                    >
+                      {value.status}
+                    </p>
+                    <button
+                      className="btn btn-danger"
+                      style={{ fontSize: "12px", marginTop: "-100px" }}
+                      id={value.application_id}
+                      onClick={(e) => cancelApply(e)}
+                    >
+                      <i
+                        id={value.application_id}
+                        onClick={(e) => cancelApply(e)}
+                        className="fas fa-trash"
+                      ></i>{" "}
+                      HỦY BỎ
+                    </button>
+                  </div>
+                </div>
+              </div>
+          </>
+        );
+      });
+    }
+  };
   return (
     <div>
       <div
@@ -12,10 +191,7 @@ const ApplyJob = () => {
             <div className="col-lg-12">
               <div className="card">
                 <div className="card_body" style={{ padding: "10px" }}>
-                  <div
-                    className="related-job row"
-                    // style={{ border: "1px solid #000" }}
-                  >
+                  <div className="related-job row">
                     <h6
                       style={{
                         fontWeight: "bold",
@@ -26,129 +202,10 @@ const ApplyJob = () => {
                       Danh sách việc làm đã ứng tuyển
                     </h6>
                     <div
-                      href="/"
                       style={{ textDecoration: "none" }}
                       className="col-lg-12"
                     >
-                      <div className="card">
-                        <div className="row g-0">
-                          <div className="col-md-2">
-                            <img
-                              src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                              className="img-fluid rounded-start"
-                              alt="..."
-                              style={{
-                                padding: "25px",
-                              }}
-                            />
-                          </div>
-                          <div className="col-md-8">
-                            <div
-                              className="card_body"
-                              style={{
-                                display: "grid",
-                                marginLeft: "-10px",
-                                overflow: "hidden",
-                                width: "100%",
-                                whiteSpace: "nowrap",
-                                paddingTop: "15px",
-                              }}
-                            >
-                              <h6
-                                className="card_title"
-                                style={{
-                                  paddingTop: "8px",
-                                  color: "#1E88E5",
-                                  textOverflow: "ellipsis",
-                                }}
-                              >
-                                Card with an image onnnnnnnnnnnnnnnnnnn
-                                ttttttttttttttttttttttttttttttttttttttttttttttttt
-                              </h6>
-                              <ul
-                                class="p-0"
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "flex-start",
-                                  overflow: "hidden",
-                                  width: "100%",
-                                  whiteSpace: "nowrap",
-                                  color: "#333",
-                                  margin: "0",
-                                }}
-                              >
-                                <li
-                                  class="listnew"
-                                  style={{
-                                    textOverflow: "ellipsis",
-                                  }}
-                                >
-                                  <p style={{ fontSize: "13px" }}>
-                                    <i class="fas fa-map-marker-alt mr-1"></i>
-                                    Đà Nẵng
-                                  </p>
-                                </li>
-                                <li
-                                  class="listnew"
-                                  style={{
-                                    width: "100px",
-                                    textOverflow: "ellipsis",
-                                  }}
-                                >
-                                  <p
-                                    style={{
-                                      fontSize: "13px",
-                                      marginLeft: "10px",
-                                    }}
-                                  >
-                                    <i class="fas fa-dollar-sign mr-1"></i>
-                                    Thỏa thuận
-                                  </p>
-                                </li>
-                              </ul>
-                              <p
-                                className="decription"
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#333",
-                                  wordWrap: "break-word",
-                                }}
-                              >
-                                Trở thành 1 trong 20 Chuyên Viên Quản Lý khách
-                                hàng cấp cao của kênh De La Sól tại Hà Nội Tại
-                                sao không? DE LA SÓL by Sun Life Việt Nam dự án
-                                fullime mang tính cách mạng của thị trường tài
-                                chính. * TƯ VẤN TÀI CHÍNH Cung cấp và hỗ trợ các
-                                giải pháp tài chính chuyên nghiệp cho khách hàng
-                                Tìm kiếm, mở rộng và xây dựng nguồn khách hàng
-                                tiềm năng * DỊCH VỤ KHÁCH HÀNG Hỗ trợ khách hàng
-                                làm dịc...
-                              </p>
-                            </div>
-                          </div>
-                          <div
-                            className="col-md-2"
-                            style={{
-                              display: "grid",
-                              justifyContent: "center",
-                              alignItems: "center",
-                            }}
-                          >
-                            <p
-                              className="btn btn-primary"
-                              style={{ fontSize: "10px", cursor: "none" }}
-                            >
-                              MỚI ỨNG TUYỂN
-                            </p>
-                            <button
-                              className="btn btn-danger"
-                              style={{ fontSize: "12px", marginTop: "-100px" }}
-                            >
-                              <i className="fas fa-trash"></i> HỦY BỎ
-                            </button>
-                          </div>
-                        </div>
-                      </div>
+                      {renderApply()}
                     </div>
                   </div>
                 </div>

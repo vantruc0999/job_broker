@@ -23,7 +23,10 @@ function Example(props) {
     axios
       .get(`http://127.0.0.1:8000/api/candidate/show-all`, config)
       .then((res) => {
-        // console.log(res.data.resume);
+        if(res.data.resume === 0){
+          alert("Bạn cần tạo hồ sơ")
+          navigate("/createCV")
+        }
         setCv(res.data.resume);
       });
   }, []);

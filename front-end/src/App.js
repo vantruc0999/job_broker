@@ -42,6 +42,7 @@ import AdminHome from "./components/admin/AdminHome";
 import AdminJob from "./components/admin/AdminJob";
 import AdminCV from "./components/admin/AdminCV";
 import Package from "./components/admin/Package";
+import HistoryBuyPackage from "./components/admin/HistoryBuyPackage";
 import PrivateRoutesAdmin from "./components/authen/PrivateRoutesAdmin";
 import PrivateRoutesCandidate from "./components/authen/PrivateRoutesCandidate";
 import PrivateRoutesRecruiter from "./components/authen/PrivateRoutesRecruiter";
@@ -52,7 +53,8 @@ import ListJob from "./components/candidate/ListJob";
 import UpdateCv from "./components/candidate/UpdateCV";
 import UpdateJob from "./components/recruiter/UpdateJob";
 import ApplyJob from "./components/candidate/ApplyJob";
-import HistoryBuyPackage from "./components/admin/HistoryBuyPackage";
+import ManageApproved from "./components/recruiter/ManageApproved";
+import ManageDeClined from "./components/recruiter/ManageDeclined";
 function App(props) {
   let param1 = useLocation();
   return (
@@ -81,6 +83,7 @@ function App(props) {
           <Route path="/listJob" element={<ListJob />} />
           <Route path="/allCV/UpdateCv/:id" element={<UpdateCv />} />
           <Route path="/applyJob" element={<ApplyJob />} />
+          <Route path="/listJob/job/:id" element={<Test />} />
         </Route>
         {/* ---------- */}
 
@@ -97,6 +100,8 @@ function App(props) {
           <Route path="/packageRecruiter" element={<PackageRe />} />
           <Route path="/paymentHistory" element={<PaymentHistory />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/manageApproved" element={<ManageApproved />} />
+          <Route path="/manageDeclined" element={<ManageDeClined />} />
         </Route>
 
         {/* ------------ */}

@@ -62,28 +62,28 @@ function FileCV() {
     }
   };
 
-  const renderExpProject = () => {
-    if (Object.keys(resume).length > 0) {
-      return resume.experience_project.map((value, key) => {
-        return (
-          <>
-            <ul>
-              <li>
-                <div className="date">
-                  {value.experience_start} - {value.experience_end}
-                </div>
-                <div className="info">
-                  <p className="semi-bold">Dự án: {value.project_name}</p>
-                  <p>Nhiệm vụ: {value.responsibility}</p>
-                  <p>{value.achievement}</p>
-                </div>
-              </li>
-            </ul>
-          </>
-        );
-      });
-    }
-  };
+  // const renderExpProject = () => {
+  //   if (Object.keys(resume).length > 0) {
+  //     return resume.experience_project.map((value, key) => {
+  //       return (
+  //         <>
+  //           <ul>
+  //             <li>
+  //               <div className="date">
+  //                 {value.experience_start} - {value.experience_end}
+  //               </div>
+  //               <div className="info">
+  //                 <p className="semi-bold">Dự án: {value.project_name}</p>
+  //                 <p>Nhiệm vụ: {value.responsibility}</p>
+  //                 <p>{value.achievement}</p>
+  //               </div>
+  //             </li>
+  //           </ul>
+  //         </>
+  //       );
+  //     });
+  //   }
+  // };
 
   const renderSkill = () => {
     if (Object.keys(resume).length > 0) {
@@ -94,6 +94,27 @@ function FileCV() {
             <li>
               <div className="skill_name">{value.skill_name}</div>
             </li>
+          </>
+        );
+      });
+    }
+  };
+  const renderExpProject = () => {
+    if (Object.keys(resume).length > 0) {
+      return resume.experience_project.map((value, key) => {
+        return (
+          <>
+            <ul>
+              <li>
+                <div className="date">{value.experience_start}</div>
+                <div className="info">
+                  <p className="semi-bold">Dự án: {value.project_name}</p>
+                  <p>Vị trí: {value.responsibility}</p>
+                  {/* <p>Ngôn ngữ sử dụng: J2ME</p> */}
+                  <p>{value.achievement}</p>
+                </div>
+              </li>
+            </ul>
           </>
         );
       });

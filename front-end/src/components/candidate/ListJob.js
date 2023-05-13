@@ -18,10 +18,13 @@ const ListJob = () => {
         setSuitable(res.data);
       });
   }, []);
+  console.log(suitable);
 
   const renderSuitable = () => {
-    if (Object.keys(suitable).length > 0) {
+    if ( Object.keys(suitable).length > 0) {
       const suitableArr = Array.from(Object.values(suitable));
+      // suitable && suitable.jobs &&
+      console.log(suitableArr);
       return suitableArr.map((value, key) => {
         return (
           <>

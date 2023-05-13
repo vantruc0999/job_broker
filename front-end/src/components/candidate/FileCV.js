@@ -74,6 +74,27 @@ function FileCV() {
       });
     }
   };
+  const renderExpProject = ()=>{
+    if (Object.keys(resume).length > 0) {
+      return resume.experience_project.map((value, key) => {
+        return (
+          <>
+            <ul>
+              <li>
+                <div className="date">{value.experience_start}</div>
+                <div className="info">
+                  <p className="semi-bold">Dự án: {value.project_name}</p>
+                  <p>Vị trí: {value.responsibility}</p>
+                  {/* <p>Ngôn ngữ sử dụng: J2ME</p> */}
+                  <p>{value.achievement}</p>
+                </div>
+              </li>
+            </ul>
+          </>
+        );
+      });
+    }
+  }
   const renderResume = () => {
     if (Object.keys(resume).length > 0) {
       console.log("resume", resume);
@@ -159,7 +180,7 @@ function FileCV() {
                   <div className="title">
                     <p className="bold">Kinh nghiệm làm việc dự án</p>
                   </div>
-                  {/* {renderExpProject()} */}
+                  {renderExpProject()}
                 </div>
                 <div className="resume_item resume_education">
                   <div className="title">

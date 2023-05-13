@@ -9,10 +9,11 @@ import "../../assets/css/inputCV.css";
 const animatedComponents = makeAnimated();
 
 const arraySkill = [
-  { value: 1, label: ".NET" },
-  { value: 2, label: "Java" },
-  { value: 3, label: "PHP" },
-  { value: 4, label: "Python" },
+  { value: 1, label: "Javascript" },
+  { value: 2, label: "PHP" },
+  { value: 3, label: "NodeJS" },
+  { value: 4, label: "ReactJS" },
+    { value: 4, label: "RUST123" },
 ];
 const arraySkill2 = [
   { value: 1, label: "Tiếng Anh" },
@@ -633,7 +634,7 @@ function CreateCV() {
       .then((res) => {
         if (res.data.status == "200") {
           alert("Bạn đã tạo CV thành công");
-          navigate("/homeCandidate");
+          navigate("/allCV");
         }
         console.log(res.data.status);
       });

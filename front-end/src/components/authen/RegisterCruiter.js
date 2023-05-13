@@ -28,7 +28,7 @@ function RegisterCruiter() {
     const re =
       /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-    var regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
+    var regexPass =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
     let flag = true;
 

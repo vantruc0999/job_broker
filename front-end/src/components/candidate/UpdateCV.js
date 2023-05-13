@@ -8,18 +8,6 @@ import "../../assets/css/inputCV.css";
 
 const animatedComponents = makeAnimated();
 
-const arraySkill = [
-  { value: 1, label: ".NET" },
-  { value: 2, label: "Java" },
-  { value: 3, label: "PHP" },
-  { value: 4, label: "Python" },
-];
-const arraySkill2 = [
-  { value: 1, label: "Tiếng Anh" },
-  { value: 2, label: "Tiếng Nhật" },
-  { value: 3, label: "Tiếng Trung" },
-  { value: 4, label: "Tiếng Nga" },
-];
 
 function UpdateCV() {
   const navigate = useNavigate();
@@ -87,7 +75,6 @@ function UpdateCV() {
         config
       )
       .then((res) => {
-        console.log("data", res.data);
         setResume(res.data);
         setExp(res.data.experience_company);
         setActive(res.data.experience_project);
@@ -106,15 +93,16 @@ function UpdateCV() {
           },
         ];
         setCertificate(cer);
-        setSummary({
-          resume_name: res.data.resume.resume_name,
-        });
-        setAwards({
-          activity: res.data.resume.activity,
-        });
-        setSoftSkill({
-          hobby: res.data.resume.hobby,
-        });
+        if(res.data.resume.activity){
+          setAwards([{
+            activity: res.data.resume.activity,
+          }]);
+        }
+        if(res.data.resume.hobby){
+          setSoftSkill([{
+            hobby: res.data.resume.hobby,
+          }]);
+        }
         setInputs({
           first_name: res.data.resume.first_name,
           last_name: res.data.resume.last_name,
@@ -122,12 +110,10 @@ function UpdateCV() {
           birth_day: res.data.resume.birth_day,
           email: res.data.resume.email,
           phone: res.data.resume.phone,
+          resume_name: res.data.resume.resume_name,
         });
       });
   }, []);
-  console.log("inputs", awards);
-  console.log("inputs", softSkill);
-  console.log("cer", certificate);
 
   useEffect(() => {
     const textarea = document.getElementById("emailSummary");
@@ -154,19 +140,6 @@ function UpdateCV() {
         Accept: "application/json",
       },
     };
-    // axios
-    //   .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setInputs({
-    //       first_name: res.data.first_name,
-    //       last_name: res.data.last_name,
-    //       address: res.data.address,
-    //       birth_day: res.data.birth_day,
-    //       email: res.data.email,
-    //       phone: res.data.phone,
-    //     });
-    //   });
   }, []);
   const handleInput = (e) => {
     let nameInput = e.target.name;
@@ -222,6 +195,7 @@ function UpdateCV() {
   };
   const handleAddSoft = () => {
     setSoftSkill([...softSkill, ""]);
+    console.log(softSkill);
   };
   const handleRemoveSoft = (index) => {
     const newAwards = [...softSkill];
@@ -389,7 +363,7 @@ function UpdateCV() {
                 className="form_input"
                 type="text"
                 placeholder=" "
-                value={softSkill.hobby}
+                value={softSkill?.hobby}
                 onChange={(e) =>
                   handleSoftInputChange(index, "hobby", e.target.value)
                 }
@@ -423,7 +397,7 @@ function UpdateCV() {
                 className="form_input"
                 type="text"
                 placeholder=" "
-                value={award.activity}
+                value={award?.activity}
                 onChange={(e) =>
                   handleAwardInputChange(index, "activity", e.target.value)
                 }
@@ -668,8 +642,8 @@ function UpdateCV() {
       birth_day: inputs.birth_day,
       email: inputs.email,
       address: inputs.address,
-      // hobby:softSkill[0].title,
-      // activity:awards[0].title,
+      hobby:softSkill[0].hobby,
+      activity:awards[0].activity,
       resume_name: inputs.resume_name,
       education: education[0].school,
       education_year: education[0].time,
@@ -682,6 +656,7 @@ function UpdateCV() {
       experience_company: experience_company,
       skills: skill.job_skill,
     };
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", resume);
     console.log(typeof experience_project);
     let object = {};
     object.resume = resume;
@@ -862,7 +837,7 @@ function UpdateCV() {
                     <input
                       type="text"
                       placeholder="tên cv"
-                      value={summary.resume_name}
+                      value={inputs.resume_name}
                       name="resume_name"
                       onChange={handleInput}
                       style={{ padding: "5px", border: "none", color: "#000" }}
@@ -950,7 +925,7 @@ function UpdateCV() {
                       <i className="fas fa-feather" /> Sở thích
                     </h4>
 
-                    {softSkill.length > 0 ? (
+                    {softSkill?.length > 0 ? (
                       addContentSoftSkill()
                     ) : (
                       <div
@@ -1131,6 +1106,10 @@ const AnimatedMulti = (props) => {
     getListSkill();
     getSkillSelect();
   }, [params.id]);
+
+  useEffect(()=> {
+    sendData(skillSelected)
+  }, [JSON.stringify(skillSelected)]);
   return (
     <Select
       value={[...skillSelected]}
@@ -1142,53 +1121,5 @@ const AnimatedMulti = (props) => {
     />
   );
 };
-
-// const AnimatedMulti2 = (props) => {
-//   let params = useParams();
-//   console.log(arraySkill);
-//   const sendData = (selected) => {
-//     setLanguageSelected(selected);
-//     props.parentCallback(selected.map((language) => language.value));
-//   };
-//   const [languageSelected, setLanguageSelected] = useState([]);
-//   const [language, setLanguage] = useState([]);
-
-//   useEffect(() => {
-//     const getLanguageSelect = async () => {
-//       let user = JSON.parse(localStorage.getItem("user"));
-//       let config = {
-//         headers: {
-//           Authorization: "Bearer " + user.token,
-//           "Content-Type": "application/x-www-form-urlencoded",
-//           Accept: "application/json",
-//         },
-//       };
-//       await axios
-//         .get(
-//           `http://127.0.0.1:8000/api/candidate/show-detail/${params.id}`,
-//           config
-//         )
-//         .then((res) => {
-//           if (res.data.skill.length > 0) {
-//             const arrayLanguage = res.data.skill.map((item, index) => {
-//               return { value: index + 1, label: item };
-//             });
-//             setLanguageSelected(arrayLanguage);
-//           }
-//         });
-//     };
-//     getLanguageSelect();
-//   }, [params.id]);
-//   return (
-//     <Select
-//       value={[...languageSelected]}
-//       closeMenuOnSelect={false}
-//       components={animatedComponents}
-//       isMulti
-//       options={language}
-//       onChange={sendData}
-//     />
-//   );
-// };
 
 export default UpdateCV;

@@ -128,8 +128,8 @@ function CreateCV() {
       company_name: item.company,
       position: item.position,
       achievement: item.description,
-      experience_start: item.time,
-      experience_end: "2040",
+      experience_start: item.timestart,
+      experience_end: item.timeend,
     };
   });
   let experience_project = active.map((item) => {
@@ -137,8 +137,8 @@ function CreateCV() {
       project_name: item.company,
       responsibility: item.position,
       achievement: item.description,
-      experience_start: item.time,
-      experience_end: "2099",
+      experience_start: item.timestart,
+      experience_end: item.timeend,
     };
   });
 
@@ -392,26 +392,28 @@ function CreateCV() {
               <i class="fa fa-plus mr-1" onClick={handleAddAct}></i>
             </div>
             <div key={index} className="form-field">
-              <input
-                className="exp_input"
-                type="text"
-                placeholder="Năm bắt đàu"
-                value={active.time}
-                style={{ border: "none" }}
-                onChange={(e) =>
-                  handleActInputChange(index, "time", e.target.value)
-                }
-              />
-              {/* <input
-                className="exp_input"
-                type="text"
-                placeholder="Năm kết thúc"
-                value={active.time}
-                style={{ border: "none" }}
-                onChange={(e) =>
-                  handleActInputChange(index, "time", e.target.value)
-                }
-              /> */}
+              <div style={{ display: "flex" }}>
+                <input
+                  className="exp_input"
+                  type="text"
+                  placeholder="Thời gian bắt đầu"
+                  value={exp.timestart}
+                  style={{ border: "none" }}
+                  onChange={(e) =>
+                    handleActInputChange(index, "timestart", e.target.value)
+                  }
+                />
+                <input
+                  className="exp_input"
+                  type="text"
+                  placeholder="Thời gian kết thúc "
+                  value={exp.timeend}
+                  style={{ border: "none" }}
+                  onChange={(e) =>
+                    handleActInputChange(index, "timeend", e.target.value)
+                  }
+                />
+              </div>
               <input
                 className="exp_input"
                 type="text"
@@ -530,6 +532,7 @@ function CreateCV() {
     );
   };
   const addContentExp = () => {
+    console.log("exp", exp);
     return (
       <>
         {exp.map((exp, index) => (
@@ -542,26 +545,28 @@ function CreateCV() {
               <i class="fa fa-plus mr-1" onClick={handleAddExp}></i>
             </div>
             <div key={index} className="form-field">
-              <input
-                className="exp_input"
-                type="text"
-                placeholder="Năm bắt đầu"
-                value={exp.time}
-                style={{ border: "none" }}
-                onChange={(e) =>
-                  handleExpInputChange(index, "time", e.target.value)
-                }
-              />
-              {/* <input
-                className="exp_input"
-                type="text"
-                placeholder="Năm kết thúc"
-                value={exp.time}
-                style={{ border: "none" }}
-                onChange={(e) =>
-                  handleExpInputChange(index, "time", e.target.value)
-                }
-              /> */}
+              <div style={{ display: "flex" }}>
+                <input
+                  className="exp_input"
+                  type="text"
+                  placeholder="Thời gian bắt đầu"
+                  value={exp.timestart}
+                  style={{ border: "none" }}
+                  onChange={(e) =>
+                    handleExpInputChange(index, "timestart", e.target.value)
+                  }
+                />
+                <input
+                  className="exp_input"
+                  type="text"
+                  placeholder="Thời gian kết thúc "
+                  value={exp.timeend}
+                  style={{ border: "none" }}
+                  onChange={(e) =>
+                    handleExpInputChange(index, "timeend", e.target.value)
+                  }
+                />
+              </div>
               <input
                 className="exp_input"
                 type="text"

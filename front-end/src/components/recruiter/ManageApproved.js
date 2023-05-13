@@ -1,6 +1,7 @@
 import Sidebar from "./Sidebar";
 import { useEffect, useRef, useState } from "react";
 import axios, { all } from "axios";
+import { Link } from "react-router-dom";
 function ManageApproved() {
   const [id, setId] = useState("");
   const [job, setJob] = useState("");
@@ -23,8 +24,7 @@ function ManageApproved() {
         setAllJob(res.data);
       });
   }, []);
-  useEffect(() => {
-  }, [approved]);
+  useEffect(() => {}, [approved]);
 
   const handleGetID = async (e) => {
     let id = e.target.value;
@@ -54,7 +54,7 @@ function ManageApproved() {
         const afterDelte = approved.filter((object) => {
           return object.application_id.toString() !== id;
         });
-        setApproved(afterDelte)
+        setApproved(afterDelte);
       });
   };
   const renderJob = () => {
@@ -93,10 +93,13 @@ function ManageApproved() {
                 <td>{value.skills}</td>
                 <td>{value.status}</td>
                 <td class="project-actions text-right">
-                  <a class="btn btn-primary btn-sm">
+                  <Link
+                    to={"/manageApproved/fileCV/" + value.resume_id}
+                    class="btn btn-primary btn-sm"
+                  >
                     <i class="fas fa-eye"></i>
                     Xem
-                  </a>
+                  </Link>
                   <a
                     id={value.application_id}
                     onClick={handleCancle}

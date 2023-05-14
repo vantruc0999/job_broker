@@ -9,9 +9,7 @@ function FileCV() {
   const [resume, setResume] = useState("");
   const [id, setId] = useState([]);
   const [info, setInfo] = useState("");
-  console.log(resume);
 
-  console.log(params.id);
   let user = JSON.parse(localStorage.getItem("user"));
   let config = {
     headers: {
@@ -38,7 +36,6 @@ function FileCV() {
         setInfo(res.data);
       });
   }, []);
-  console.log("info", info);
   const renderExp = () => {
     if (Object.keys(resume).length > 0) {
       return resume.experience_company.map((value, key) => {
@@ -66,7 +63,6 @@ function FileCV() {
   const renderSkill = () => {
     if (Object.keys(resume).length > 0) {
       return resume.skill.map((value, key) => {
-        console.log(value);
         return (
           <>
             <li>
@@ -102,7 +98,9 @@ function FileCV() {
   };
   const renderResume = () => {
     if (Object.keys(resume).length > 0) {
-      console.log("resume", resume);
+      const email = resume.resume.email;
+      let nameEmail = email.split("@", 1);
+      console.log(nameEmail);
       return (
         <>
           <div id="vn">
@@ -130,6 +128,7 @@ function FileCV() {
                         </div>
                         <div className="data">
                           {resume.resume.address} <br />
+                          {/* Tp. Đà Nẵng, Đà Nẵng */}
                         </div>
                       </li>
                       <li>
@@ -142,7 +141,11 @@ function FileCV() {
                         <div className="icon">
                           <i className="fas fa-envelope" />
                         </div>
-                        <div className="data">{resume.resume.email}</div>
+                        <div className="data">
+                          {nameEmail}
+                          <br />
+                          @gmail.com
+                        </div>
                       </li>
                       <li>
                         <div className="icon">

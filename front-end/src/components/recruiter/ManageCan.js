@@ -2,11 +2,11 @@ import Sidebar from "./Sidebar";
 import { useEffect, useRef, useState } from "react";
 import axios, { all } from "axios";
 import { Link } from "react-router-dom";
-
+import ModalCV from "./ModalCV";
 const ManageCan = () => {
   const [allJob, setAllJob] = useState("");
   const [candidate, setCandidate] = useState("");
-
+  const [openModal, setOpenModal] = useState(false);
   let user = JSON.parse(localStorage.getItem("user"));
   console.log(user.token);
   let config = {
@@ -114,13 +114,16 @@ const ManageCan = () => {
                 <td>{value.skills}</td>
                 <td>{value.status}</td>
                 <td class="project-actions text-right">
-                  <Link
-                    to={"/manageCan/fileCV/" + value.resume_id}
+                  <a
+                    onClick={() => {
+                      setOpenModal(true);
+                    }}
                     class="btn btn-primary btn-sm"
                   >
                     <i class="fas fa-eye"></i>
                     Xem
-                  </Link>
+                  </a>
+                  {openModal && <ModalCV closeModal={setOpenModal} />}
                   <a
                     class="btn btn-info btn-sm"
                     id={value.application_id}

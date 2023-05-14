@@ -124,7 +124,7 @@ function Header() {
       );
     } else {
       return (
-        <Link to="createCV" className="dropdown-item">
+        <Link to="/chooseCV" className="dropdown-item">
           Tạo CV
         </Link>
       );

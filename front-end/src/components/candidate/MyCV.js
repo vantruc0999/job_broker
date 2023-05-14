@@ -94,7 +94,7 @@ function MyCV() {
                     class="list-group-itemm"
                     style={{ fontSize: "14px", marginBottom: "10px" }}
                   >
-                    <b>Trạng thái</b>{" "}
+                    <b style={{ marginRight: "10px" }}>Trạng thái: </b>{" "}
                     {/* <p class="float-right">{value.public_status == "0" ? <>private</>: <>public</>}</p> */}
                     <select
                       value={value.public_status}

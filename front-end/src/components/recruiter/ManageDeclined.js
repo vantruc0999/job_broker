@@ -2,13 +2,18 @@ import Sidebar from "./Sidebar";
 import { useEffect, useRef, useState } from "react";
 import axios, { all } from "axios";
 import { Link } from "react-router-dom";
+import ModalCV from "./ModalCV";
 function ManageDeClined() {
   const [id, setId] = useState("");
   const [job, setJob] = useState("");
   const [allJob, setAllJob] = useState("");
   const [candidate, setCandidate] = useState("");
   const [declined, setDeclined] = useState("");
-
+  const [openModal, setOpenModal] = useState(false);
+  const [modalId, setModalId] = useState(null);
+  const handleOpenModal = (id) => {
+    setModalId(id);
+  };
   let user = JSON.parse(localStorage.getItem("user"));
   let config = {
     headers: {
@@ -95,13 +100,18 @@ function ManageDeClined() {
                 <td>{value.skills}</td>
                 <td>{value.status}</td>
                 <td class="project-actions text-right">
-                  <Link
-                    to={"/manageDeclined/fileCV/" + value.resume_id}
+                  <a
+                    onClick={() => {
+                      setOpenModal(true);
+                      handleOpenModal(value.resume_id);
+                    }}
+                    id={value.resume_id}
                     class="btn btn-primary btn-sm"
                   >
                     <i class="fas fa-eye"></i>
                     Xem
-                  </Link>
+                  </a>
+
                   <a
                     class="btn btn-info btn-sm"
                     id={value.application_id}
@@ -121,6 +131,7 @@ function ManageDeClined() {
   };
   return (
     <div>
+      {openModal && <ModalCV closeModal={setOpenModal} modalId={modalId} />}
       <Sidebar />
       <main id="main" className="main" style={{ minHeight: "665px" }}>
         <section className="section">

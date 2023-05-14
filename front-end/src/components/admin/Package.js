@@ -70,7 +70,7 @@ function Package() {
                         <i className="fas fa-edit" />
                       </a>
                     ) : (
-                      <UpdatePackage idPack={id} parentCallBack={packageAll} resetId={getId}  />
+                      <UpdatePackage idPack={id} parentCallBack={packageAll} resetId={() => setId(null)}  />
                     )}
                     
                     <a href="#" className="btn btn-danger">

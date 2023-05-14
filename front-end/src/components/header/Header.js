@@ -108,7 +108,6 @@ function Header() {
   }
   const checkLogin = () => {
     if (!user) {
-      console.log("oke");
       return (
         <>
           <a

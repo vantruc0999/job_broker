@@ -70,6 +70,20 @@ function MyCV() {
       render();
     }
   };
+  const handleDelte = async(e) => {
+    console.log(e.target.id);
+    await axios
+      .post(
+        `http://127.0.0.1:8000/api/candidate/delete-cv/` + e.target.id,
+        null,
+        config
+      )
+      .then((res) => {
+        console.log(res.data);
+        setStatus(res.data);
+      });
+      render()
+  };
   const renderResume = () => {
     if (Object.keys(cv).length > 0) {
       return cv.map((value, key) => {
@@ -127,7 +141,13 @@ function MyCV() {
                     </a>
                   </Link>
 
-                  <a href="/" class="btn btn-danger btn-block">
+                  <a
+                    onClick={(e) => {
+                      handleDelte(e);
+                    }}
+                    id={value.resume_id}
+                    class="btn btn-danger btn-block"
+                  >
                     <b>Xóa</b>
                   </a>
                 </div>

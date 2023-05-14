@@ -37,6 +37,7 @@ const Test = () => {
         });
     }
   }, []);
+  console.log(detailJob);
   const skills = detailJob && detailJob.skills ? detailJob.skills.join(", ") : "";
   function renderSkill() {
     return (
@@ -364,7 +365,7 @@ const Test = () => {
                             ttttttttttttttttttttttttttttttttttttttttttttttttt
                           </h6>
                           <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
+                            {/* {detailJob.company_name} */}
                           </p>
                         </div>
                       </div>

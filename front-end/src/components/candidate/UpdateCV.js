@@ -165,7 +165,7 @@ function UpdateCV() {
       position: item.position,
       achievement: item.achievement,
       experience_start: item.experience_start,
-      experience_end: "2040",
+      experience_end: item.experience_end,
     };
   });
   let experience_project = active.map((item) => {
@@ -174,7 +174,7 @@ function UpdateCV() {
       responsibility: item.responsibility,
       achievement: item.achievement,
       experience_start: item.experience_start,
-      experience_end: "2099",
+      experience_end: item.experience_end,
     };
   });
 
@@ -427,20 +427,36 @@ function UpdateCV() {
               ></i>
             </div>
             <div key={index} className="form-field">
-              <input
-                className="exp_input"
-                type="text"
-                placeholder="1900 - 2001"
-                value={active.experience_start}
-                style={{ border: "none" }}
-                onChange={(e) =>
-                  handleActInputChange(
-                    index,
-                    "experience_start",
-                    e.target.value
-                  )
-                }
-              />
+              <div style={{ display: "flex" }}>
+                <input
+                  className="exp_input"
+                  type="text"
+                  placeholder="Thời gian bắt đầu"
+                  value={active.experience_start}
+                  style={{ border: "none" }}
+                  onChange={(e) =>
+                    handleActInputChange(
+                      index,
+                      "experience_start",
+                      e.target.value
+                    )
+                  }
+                />
+                <input
+                  className="exp_input"
+                  type="text"
+                  placeholder="Thời gian kết thúc"
+                  value={active.experience_end}
+                  style={{ border: "none" }}
+                  onChange={(e) =>
+                    handleActInputChange(
+                      index,
+                      "experience_end",
+                      e.target.value
+                    )
+                  }
+                />
+              </div>
               <input
                 className="exp_input"
                 type="text"
@@ -589,7 +605,7 @@ function UpdateCV() {
                 <input
                   className="exp_input"
                   type="text"
-                  placeholder="Thời gian bắt đầu"
+                  placeholder="Thời gian kết thúc"
                   value={exp.experience_end}
                   style={{ border: "none" }}
                   onChange={(e) =>

@@ -22,10 +22,10 @@ const ListJob = () => {
 
   const renderSuitable = () => {
     if ( Object.keys(suitable).length > 0) {
-      console.log(typeof(suitable.jobs));
-      // const suitableArr = Array.from(Object.values(suitable));
+      console.log(typeof(suitable));
+      const suitableArr = Array.from(Object.values(suitable));
       // suitable && suitable.jobs &&
-      return suitable.jobs.map((value, key) => {
+      return suitableArr.map((value, key) => {
         return (
           <>
              <Link to={"/listJob/job/" + value.job_id} style={{ textDecoration: "none", margin: "5px 0" }}

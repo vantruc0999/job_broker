@@ -23,7 +23,8 @@ function Register() {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
     
     var regexBirth =
-      /^(0?[1-9]|[12]\d|3[01])[/](0?[1-9]|1[012])[/](19\d{2}|20\d{2})$/;
+      // /^(0?[1-9]|[12]\d|3[01])[/](0?[1-9]|1[012])[/](19\d{2}|20\d{2})$/;
+      /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12]\d|3[01])$/;
 
     let flag = true;
     if (!re.test(inputs.email)) {
@@ -139,6 +140,7 @@ function Register() {
         address: inputs.address,
         birthday: inputs.birthday,
       };
+      console.log(inputs);
       let url = "http://127.0.0.1:8000/api/candidate/register";
       axios
         .post(url, data)

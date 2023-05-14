@@ -2,12 +2,17 @@ import Sidebar from "./Sidebar";
 import { useEffect, useRef, useState } from "react";
 import axios, { all } from "axios";
 import { Link } from "react-router-dom";
+import ModalCV from "./ModalCV";
 function ManageApproved() {
   const [id, setId] = useState("");
   const [job, setJob] = useState("");
   const [allJob, setAllJob] = useState("");
   const [approved, setApproved] = useState("");
-
+  const [openModal, setOpenModal] = useState(false);
+  const [modalId, setModalId] = useState(null);
+  const handleOpenModal = (id) => {
+    setModalId(id);
+  };
   let user = JSON.parse(localStorage.getItem("user"));
   console.log(user.token);
   let config = {
@@ -89,17 +94,21 @@ function ManageApproved() {
                   />
                 </td>
                 <td>{value.fullname}</td>
-                <td>Nguyenkimthang@gmail.com</td>
+                <td>{value.email}</td>
                 <td>{value.skills}</td>
                 <td>{value.status}</td>
                 <td class="project-actions text-right">
-                  <Link
-                    to={"/manageApproved/fileCV/" + value.resume_id}
+                <a
+                    onClick={() => {
+                      setOpenModal(true);
+                      handleOpenModal(value.resume_id);
+                    }}
+                    id={value.resume_id}
                     class="btn btn-primary btn-sm"
                   >
                     <i class="fas fa-eye"></i>
                     Xem
-                  </Link>
+                  </a>
                   <a
                     id={value.application_id}
                     onClick={handleCancle}
@@ -118,6 +127,7 @@ function ManageApproved() {
   };
   return (
     <div>
+          {openModal && <ModalCV closeModal={setOpenModal} modalId={modalId} />}
       <Sidebar />
       <main id="main" className="main" style={{ minHeight: "665px" }}>
         <section className="section">

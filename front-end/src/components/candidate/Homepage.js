@@ -17,7 +17,7 @@ function Homepage() {
   const [jobSkill, setJobSkill] = useState([]);
   const [show, setShow] = useState(false);
   let user = JSON.parse(localStorage.getItem("user"));
-
+  console.log(jobs);
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/jobs").then((res) => {
       setJobs(res.data.jobs);
@@ -224,7 +224,7 @@ function Homepage() {
             fontWeight: "bold",
           }}
         >
-          Việc tuyển gấp
+          Việc làm mới nhất
         </h4>
         <div className="job_urgent">
           <div className="row d-flex " style={{ margin: "0 auto" }}>
@@ -571,6 +571,102 @@ function Homepage() {
           }}
         >
           Việc làm liên quan đến ngôn ngữ
+        </h4>
+
+        <div className="job_urgent">
+          <div
+            className="row d-flex "
+            style={{
+              margin: "0 auto",
+            }}
+          >
+            {/* List Job */}
+            {jobSkill.length > 0 &&
+              jobSkill.map((job) => {
+                return (
+                  <div
+                    className="urgentHiring mr-3"
+                    style={{
+                      padding: "0",
+                      width: 400,
+                    }}
+                  >
+                    <Link
+                      to={"/job/" + job.job_id}
+                      style={{ display: "flex", textDecoration: "none" }}
+                    >
+                      <div className="col-3">
+                        <img
+                          src={Logo}
+                          alt=""
+                          style={{
+                            width: "90px",
+                            height: "90px",
+                            margin: " 25px auto",
+                          }}
+                        />
+                      </div>
+                      <div className="col-9 urgent">
+                        <h5>{job.job_name}</h5>
+                        <p>{job.company_name}</p>
+                        <ul
+                          class="p-0"
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            overflow: "hidden",
+                            width: "100%",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-map-marker-alt mr-1"></i>
+                              {job.job_location}
+                            </p>
+                          </li>
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-dollar-sign mr-1"></i>
+                              {job.salary}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      </div>
+      <div
+        className="container-fluid"
+        style={{
+          backgroundColor: "#f8f9fa",
+          paddingLeft: "124.5px",
+          paddingBottom: 20,
+        }}
+      >
+        <h4
+          style={{
+            paddingTop: 20,
+            fontWeight: "bold",
+          }}
+        >
+          Việc làm nổi bật
         </h4>
 
         <div className="job_urgent">

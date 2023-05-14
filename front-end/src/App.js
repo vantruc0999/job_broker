@@ -54,6 +54,7 @@ import UpdateJob from "./components/recruiter/UpdateJob";
 import ApplyJob from "./components/candidate/ApplyJob";
 import ManageApproved from "./components/recruiter/ManageApproved";
 import ManageDeClined from "./components/recruiter/ManageDeclined";
+import ChooseTemplate from "./components/candidate/ChooseTempalte";
 function App(props) {
   let param1 = useLocation();
   return (
@@ -78,6 +79,8 @@ function App(props) {
           <Route path="/allCV" element={<MyCV />} />
           <Route path="/allCV/fileCV/:id" element={<FileCV />} />
           <Route path="/handleCV" element={<HandleCV />} />
+          <Route path="/chooseCV" element={<ChooseTemplate />} />
+          <Route path="/chooseCV/createCV/:id" element={<CreateCV />} />
           <Route path="/uploadCV" element={<MyPdfReader />} />
           <Route path="/listJob" element={<ListJob />} />
           <Route path="/allCV/UpdateCv/:id" element={<UpdateCv />} />

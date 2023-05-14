@@ -24,8 +24,7 @@ function ManageDeClined() {
         setAllJob(res.data);
       });
   }, []);
-  useEffect(() => {
-  }, [declined]);
+  useEffect(() => {}, [declined]);
   useEffect(() => {
     axios.get(`http://127.0.0.1:8000/api/jobs`, config).then((res) => {
       // console.log(res.data);
@@ -34,7 +33,7 @@ function ManageDeClined() {
   }, []);
   const handleGetID = async (e) => {
     let id = e.target.value;
-    setId(id)
+    setId(id);
     await axios
       .get(
         `http://127.0.0.1:8000/api/recruiter/get-declined-candidates/` + id,
@@ -68,7 +67,7 @@ function ManageDeClined() {
           alert("Duyệt ứng viên thành công");
         }
         const afterDelte = declined.filter((object) => {
-            return object.application_id.toString() !== id;
+          return object.application_id.toString() !== id;
         });
         console.log(afterDelte);
       });
@@ -92,11 +91,14 @@ function ManageDeClined() {
                   />
                 </td>
                 <td>{value.fullname}</td>
-                <td>Nguyenkimthang@gmail.com</td>
+                <td>{value.email}</td>
                 <td>{value.skills}</td>
                 <td>{value.status}</td>
                 <td class="project-actions text-right">
-                  <Link to={"/manageDeclined/fileCV/"+value.resume_id} class="btn btn-primary btn-sm">
+                  <Link
+                    to={"/manageDeclined/fileCV/" + value.resume_id}
+                    class="btn btn-primary btn-sm"
+                  >
                     <i class="fas fa-eye"></i>
                     Xem
                   </Link>

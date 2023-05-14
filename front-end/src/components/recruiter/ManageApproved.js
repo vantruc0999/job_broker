@@ -89,7 +89,7 @@ function ManageApproved() {
                   />
                 </td>
                 <td>{value.fullname}</td>
-                <td>Nguyenkimthang@gmail.com</td>
+                <td>{value.email}</td>
                 <td>{value.skills}</td>
                 <td>{value.status}</td>
                 <td class="project-actions text-right">
@@ -133,7 +133,7 @@ function ManageApproved() {
                     }}
                   >
                     <h5 className="card-title" style={{ fontSize: "25px" }}>
-                      Quản lý ứng viên
+                      Quản lý ứng viên dã phê duyệt
                     </h5>
                   </div>
 

@@ -403,7 +403,7 @@ function CreateCV() {
                     handleActInputChange(index, "timestart", e.target.value)
                   }
                 />
-                 <input
+                <input
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian kết thúc "

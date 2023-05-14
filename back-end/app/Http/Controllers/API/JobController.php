@@ -352,7 +352,7 @@ class JobController extends Controller
 
     public function viewAllAppliedCompany()
     {
-        $jobs = JobApplication::select('job_application.job_id', 'job_name', 'job_location', 'recruiter_id', 'resume_id', 'status', 'application_id')
+        $jobs = JobApplication::select('job_application.job_id', 'job_name', 'job_location', 'recruiter_id', 'resume_id', 'job_application.status', 'application_id')
             ->join('job', 'job.job_id', '=', 'job_application.job_id')
             ->where('candidate_id', '=', auth()->user()['candidate_id'])
             ->get();

@@ -16,8 +16,15 @@ function Homepage() {
   const [jobs, setJobs] = useState([]);
   const [jobSkill, setJobSkill] = useState([]);
   const [show, setShow] = useState(false);
+  const [suitable, setSuitable] = useState([]);
   let user = JSON.parse(localStorage.getItem("user"));
-
+  let config = {
+    headers: {
+      Authorization: "Bearer " + user.token,
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+  };
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/jobs").then((res) => {
       setJobs(res.data.jobs);
@@ -32,7 +39,15 @@ function Homepage() {
   function handleModalClose(showValue) {
     setShow(showValue);
   }
-  console.log(jobs);
+  useEffect(() => {
+  
+    axios
+      .post(`http://127.0.0.1:8000/api/candidate/recommend-job`, null, config)
+      .then((res) => {
+        setSuitable(res.data);
+      });
+  }, []);
+  console.log(suitable);
   const checkLogin = () => {
     if (!user) {
       return (
@@ -582,8 +597,8 @@ function Homepage() {
             }}
           >
             {/* List Job */}
-            {jobSkill.length > 0 &&
-              jobSkill.map((job) => {
+            {suitable.length > 0 &&
+              suitable.map((job) => {
                 return (
                   <div
                     className="urgentHiring mr-3"

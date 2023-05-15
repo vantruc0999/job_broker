@@ -19,8 +19,8 @@ function Register() {
     var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     var regexFN = /^[a-zA-ZÀ-ỹ]+(([',. -][a-zA-ZÀ-ỹ ])?[a-zA-ZÀ-ỹ]*)*$/;
     var regexLN = /^[a-zA-ZÀ-ỹ]+(([',. -][a-zA-ZÀ-ỹ ])?[a-zA-ZÀ-ỹ]*)*$/;
-    var regexPass =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+    // var regexPass =
+    // /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
     
     var regexBirth =
       // /^(0?[1-9]|[12]\d|3[01])[/](0?[1-9]|1[012])[/](19\d{2}|20\d{2})$/;
@@ -40,10 +40,10 @@ function Register() {
       errorSubmit.email = "Please enter your email";
     }
 
-    if (!regexPass.test(inputs.password)) {
-      flag = false;
-      errorSubmit.password = "Invalid password format";
-    }
+    // if (!regexPass.test(inputs.password)) {
+    //   flag = false;
+    //   errorSubmit.password = "Invalid password format";
+    // }
     if (inputs.password === undefined) {
       flag = false;
       errorSubmit.password = "Please enter your password";

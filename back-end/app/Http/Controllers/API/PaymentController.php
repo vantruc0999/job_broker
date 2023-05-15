@@ -13,7 +13,7 @@ class PaymentController extends Controller
 {
     //
     //
-    public function pay(Request $request)
+    private static function pay(Request $request)
     {
         $package = Package::find($request->package_id);
 
@@ -32,10 +32,10 @@ class PaymentController extends Controller
             'end_date' => Carbon::now()->addMonths($package['exp_time']),
         ]);
 
-        return response([
-            'status' => 200,
-            'message' => 'Payment success'
-        ]);
+        // return response([
+        //     'status' => 200,
+        //     'message' => 'Payment success'
+        // ]);
     }
 
     public function getPaymentHistory()
@@ -55,57 +55,62 @@ class PaymentController extends Controller
         return $payment_history;
     }
 
-    public function checkPaidPackage(Request $request)
+    public function handlePayment(Request $request)
     {
         $paidPackage = Payment::where('recruiter_id', '=', auth()->user()['recruiter_id'])
             ->orderBy('id', 'desc')
             ->first();
-        $end_date = $paidPackage->end_date;
+
+        $end_date = $paidPackage->end_date ?? null;
         // return $paidPackage;
         $curr_date = Carbon::now();
 
-        if ($curr_date->gt($end_date))
+        if ($curr_date->gt($end_date) || $paidPackage == null) {
+            self::pay($request);
             return response([
-                "message" => "Expired"
+                "message" => "Payment success"
             ]);
-        else {
-            if ($request->package_id === $paidPackage->package_id) {
-                return response([
-                    "message" => "Extend"
-                ]);
-            }
+        } else {
+            self::extendPackage($request);
+
+            return response([
+                "message" => "Payment success",
+                "message 2" => "Your new package will start when your old package expires"
+            ]);
         }
     }
 
-    public function extendPackage(Request $request)
+    private static function extendPackage(Request $request)
     {
+        $package_id = $request->package_id;
+
         $payment = Payment::where('recruiter_id', '=', auth()->user()['recruiter_id'])
             ->orderBy('id', 'desc')
             ->first();
 
-        $package = Package::where('package_id', '=', $payment['package_id'])->first();
+        $package = Package::where('package_id', '=', $package_id)->first();
 
         $end_date = Carbon::parse($payment['end_date']);
 
         Payment::create([
             'amount' => $package['price'],
             'currency' => 'USD',
-            'package_id' => $payment['package_id'],
+            'package_id' => $package['package_id'],
             'package_name' => $package['package_name'],
             'payment_id' => $request->payment_id,
             'payment_status' => $request->payment_status,
             'payer_id' => $request->payer_id,
             'payer_email' => $request->payer_email,
             'recruiter_id' => auth()->user()['recruiter_id'],
-            'start_date' => $payment['end_date'],
-            'end_date' => $end_date->addMonths($package['exp_time']),
+            'start_date' => Carbon::parse($payment['end_date'])->addSecond(),
+            'end_date' => $end_date->addMonths($package['exp_time'])->addSecond(),
         ]);
 
-        return response([
-            // 'curr_date' => Carbon::now(),
-            // 'end_date' => $payment['end_date'],
-            // 'exp_time' => $package['exp_time']
-            'Message' => 'Extend successfully'
-        ]);
+        // return response([
+        //     // 'curr_date' => Carbon::now(),
+        //     // 'end_date' => $payment['end_date'],
+        //     // 'exp_time' => $package['exp_time']
+        //     'Message' => 'Extend successfully'
+        // ]);
     }
 }

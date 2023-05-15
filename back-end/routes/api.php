@@ -47,6 +47,7 @@ Route::get('jobs', [JobController::class, 'getAllJobsForAllUser']);
 
 //View all programming skills
 Route::get('skills', [SkillController::class, 'index']);
+//Route::get('skills', [SkillController::class, 'index']);
 
 
 Route::get('jobs-by-skills/{id}', [JobController::class, 'getJobsByProgrammingSkills']);

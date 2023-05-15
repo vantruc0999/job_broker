@@ -100,7 +100,8 @@ class JobController extends Controller
         ]);
     }
 
-    public function getAllApprovedJobs(){
+    public function getAllApprovedJobs()
+    {
         $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
             ->where('status', '=', 'approved')
             ->orderBy('job_id', 'desc')
@@ -117,7 +118,8 @@ class JobController extends Controller
         ]);
     }
 
-    public function getAllDeclinedJobs(){
+    public function getAllDeclinedJobs()
+    {
         $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
             ->where('status', '=', 'declined')
             ->orderBy('job_id', 'desc')
@@ -143,11 +145,22 @@ class JobController extends Controller
 
     private static function getExpiredDate()
     {
-        $expire_date = Payment::select('end_date')
+        $expire_date = Payment::select('end_date', 'package_name', 'start_date')
             ->where('recruiter_id', '=', auth()->user()['recruiter_id'])
             ->orderBy('id', 'desc')
-            ->first();
-        return $expire_date;
+            ->get();
+        $expire = null;
+        // $skills->each(function ($skill) use (&$skills_name) {
+        //     $skills_name[] = $skill['skill_name'];
+        // });
+        $expire_date->each(function($item) use (&$expire){
+            if(Carbon::now()->gte($item['start_date']) ){
+                $expire = $item;
+                return false;
+            }
+            // if(|| Carbon::now()->gte($item['end_date']))
+        });
+        return $expire;
     }
 
     public function handleCreateJob(Request $request)
@@ -156,7 +169,7 @@ class JobController extends Controller
         // dd($request);
 
         $expire_date = self::getExpiredDate();
-
+        // return $expire_date;
         if (!$expire_date) {
             return response([
                 "message" => 'You have not bought any package'
@@ -170,7 +183,7 @@ class JobController extends Controller
                 ]);
             } else {
                 if (Carbon::createFromDate($request->job_start_date)->gte($curr_date)) {
-                    $job_id = self::storeJob($request);
+                    $job_id = self::storeJob($request, $expire_date['package_name']);
                     self::storeSkill($request->job_skill, $job_id);
                     return response([
                         "message" => 'Job has been created successfully',
@@ -187,8 +200,9 @@ class JobController extends Controller
         // Job::create($request->all());
     }
 
-    private static function storeJob($request)
+    private static function storeJob($request, $package_name)
     {
+
         $job = Job::create(
             [
                 'job_name' => $request->job_name,
@@ -202,7 +216,8 @@ class JobController extends Controller
                 'job_description' => $request->job_description,
                 'benefit' => $request->benefit,
                 'recruiter_id' => auth()->user()['recruiter_id'],
-                'status' => 'waiting'
+                'status' => 'waiting',
+                'job_package_name' => $package_name
             ]
         );
         return $job['job_id'];
@@ -344,7 +359,6 @@ class JobController extends Controller
                 $company_name = self::getAllCompanyName($job['recruiter_id']);
                 $job->company_name = $company_name;
                 unset($job->recruiter_id);
-
             }
         }
         return $jobs;
@@ -352,7 +366,7 @@ class JobController extends Controller
 
     public function viewAllAppliedCompany()
     {
-        $jobs = JobApplication::select('job_application.job_id', 'job_name', 'job_location', 'recruiter_id', 'resume_id', 'status', 'application_id')
+        $jobs = JobApplication::select('job_application.job_id', 'job_name', 'job_location', 'recruiter_id', 'resume_id', 'job_application.status', 'application_id')
             ->join('job', 'job.job_id', '=', 'job_application.job_id')
             ->where('candidate_id', '=', auth()->user()['candidate_id'])
             ->get();
@@ -383,7 +397,7 @@ class JobController extends Controller
             "message" => 'Your application has been canceled'
         ]);
     }
-    
+
     public function recommendJobForCandidate()
     {
         $main_cv_id = auth()->user()['main_cv_id'];
@@ -395,7 +409,7 @@ class JobController extends Controller
             ->where('resume_id', '=', $main_cv_id)
             ->get();
 
-        $recJob = collect([]);   
+        $recJob = collect([]);
 
         foreach ($skills as $skill) {
             $job_temp = self::getJobsByProgrammingSkills($skill->skill_id);
@@ -404,5 +418,22 @@ class JobController extends Controller
         return $recJob->unique('job_id');
     }
 
-    
+    public function getHighLightJobs()
+    {
+        $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
+            ->where('status', '=', 'approved')
+            ->where('job_package_name', '=', 'PREMIUM')
+            ->orderBy('job_id', 'desc')
+            ->get();
+        if (count($jobs) != 0) {
+            foreach ($jobs as $job) {
+                $company_name = self::getAllCompanyName($job['recruiter_id']);
+                $job->company_name = $company_name;
+                unset($job->recruiter_id);
+            }
+        }
+        return response([
+            'jobs' => $jobs
+        ]);
+    }
 }

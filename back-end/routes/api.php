@@ -74,7 +74,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('recruiter')->group(function () {
         Route::post('logout', [RecruiterAuthController::class, 'logout']);
 
-        Route::post('payment', [PaymentController::class, 'pay']);
+        Route::post('payment', [PaymentController::class, 'handlePayment']);
         Route::get('payment-history', [PaymentController::class, 'getPaymentHistory']);
 
         Route::get('jobs', [JobController::class, 'index']);

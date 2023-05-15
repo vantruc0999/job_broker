@@ -22,7 +22,7 @@ function LoginAdmin() {
       /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
     var regexPass =
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+~`\-={}[\]:\\|;\"',<.>/?]).{8,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
 
     let flag = true;
     if (!re.test(inputs.email)) {

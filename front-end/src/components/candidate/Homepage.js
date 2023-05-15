@@ -14,19 +14,25 @@ import Example2 from "./Example2";
 function Homepage() {
   const [swiperRef, setSwiperRef] = useState(null);
   const [jobs, setJobs] = useState([]);
+  const [jobSkill, setJobSkill] = useState([]);
   const [show, setShow] = useState(false);
   let user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/jobs").then((res) => {
-      console.log(res.data);
       setJobs(res.data.jobs);
     });
   }, []);
-
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/api/jobs-by-skills/4").then((res) => {
+      console.log(res.data);
+      setJobSkill(res.data);
+    });
+  }, []);
   function handleModalClose(showValue) {
     setShow(showValue);
   }
+  console.log(jobs);
   const checkLogin = () => {
     if (!user) {
       return (
@@ -46,7 +52,7 @@ function Homepage() {
       );
     } else {
       return (
-        <Link to="/createCV">
+        <Link to="/chooseCV">
           <button className="btn btn-primary" type="button">
             <i className="fas fa-regular fa-plus mr-2" />
             Tạo CV ngay!
@@ -93,7 +99,7 @@ function Homepage() {
             </div>
           </div>
         </div>
-        <div className="menu-job">
+        {/* <div className="menu-job">
           <ul
             className="col-11 list-group list-group-horizontal d-flex justify-content-center"
             style={{ margin: "30px auto", textAlign: "center" }}
@@ -149,7 +155,7 @@ function Homepage() {
               </button>
             </li>
           </ul>
-        </div>
+        </div> */}
 
         <div
           className="row d-flex justify-content-around"
@@ -213,13 +219,19 @@ function Homepage() {
           paddingBottom: 20,
         }}
       >
+        <h4
+          style={{
+            paddingTop: 20,
+            fontWeight: "bold",
+          }}
+        >
+          Việc làm mới nhất
+        </h4>
         <div className="job_urgent">
-          <h3 style={{ paddingTop: 20, marginLeft: 33 }}>Việc tuyển gấp</h3>
           <div className="row d-flex " style={{ margin: "0 auto" }}>
             {/* List Job */}
             {jobs.length > 0 &&
               jobs.map((job) => {
-                console.log(job);
                 return (
                   <div
                     className="urgentHiring mr-3"
@@ -245,16 +257,39 @@ function Homepage() {
                           {job.job_name}
                         </h5>
                         <p>{job.company_name}</p>
-                        <ul class="p-0">
-                          <li class="list-group-item list-group-item-action">
-                            <i class="fas fa-map-marker-alt mr-1"></i> Hà Nội...
+                        <ul
+                          class="p-0"
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            overflow: "hidden",
+                            width: "100%",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-map-marker-alt mr-1"></i>
+                              {job.job_location}
+                            </p>
                           </li>
-                          <li class="list-group-item list-group-item-action">
-                            <i class="fa-regular fa-clock"></i> 21/05/2023
-                          </li>
-                          <li class="list-group-item list-group-item-action">
-                            <i class="fa-solid fa-sack-dollar"></i> 9 - 11 triệu
-                            VNĐ
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-dollar-sign mr-1"></i>
+                              {job.salary}
+                            </p>
                           </li>
                         </ul>
                       </div>
@@ -266,9 +301,10 @@ function Homepage() {
         </div>
       </div>
       {/* Typical Employers */}
+
       {/* infinite loop */}
-      <div className="container-fluid" style={{ padding: "0 40px" }}>
-        <h4 style={{ paddingTop: 20, fontWeight: "bold" }}>
+      <div className="container-fluid" style={{ padding: "0 110px" }}>
+        <h4 style={{ paddingTop: 20, fontWeight: "bold", paddingLeft: "10px" }}>
           Nhà Tuyển Dụng Tiêu Biểu
         </h4>
 
@@ -519,6 +555,502 @@ function Homepage() {
         </Swiper>
       </div>
       {/* infinite loop */}
+
+      {/* Việc làm gợi ý */}
+      <div
+        className="container-fluid"
+        style={{
+          backgroundColor: "#f8f9fa",
+          paddingLeft: "124.5px",
+          paddingBottom: 20,
+        }}
+      >
+        <h4
+          style={{
+            paddingTop: 20,
+            fontWeight: "bold",
+          }}
+        >
+          Việc làm theo kỹ năng lập trình
+        </h4>
+
+        <div className="job_urgent">
+          <div
+            className="row d-flex "
+            style={{
+              margin: "0 auto",
+            }}
+          >
+            {/* List Job */}
+            {jobSkill.length > 0 &&
+              jobSkill.map((job) => {
+                return (
+                  <div
+                    className="urgentHiring mr-3"
+                    style={{
+                      padding: "0",
+                      width: 400,
+                    }}
+                  >
+                    <Link
+                      to={"/job/" + job.job_id}
+                      style={{ display: "flex", textDecoration: "none" }}
+                    >
+                      <div className="col-3">
+                        <img
+                          src={Logo}
+                          alt=""
+                          style={{
+                            width: "90px",
+                            height: "90px",
+                            margin: " 25px auto",
+                          }}
+                        />
+                      </div>
+                      <div className="col-9 urgent">
+                        <h5>{job.job_name}</h5>
+                        <p>{job.company_name}</p>
+                        <ul
+                          class="p-0"
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            overflow: "hidden",
+                            width: "100%",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-map-marker-alt mr-1"></i>
+                              {job.job_location}
+                            </p>
+                          </li>
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-dollar-sign mr-1"></i>
+                              {job.salary}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      </div>
+
+      {/* Tin tức */}
+      <div class="teks-section" style={{ padding: "15px 70px" }}>
+        <div class="teks-section-title">
+          <h4
+            class="title"
+            style={{ paddingTop: 10, fontWeight: "bold", paddingLeft: "50px" }}
+          >
+            Tin tức
+          </h4>
+          {/* <a href="/blog/">
+            Xem thêm <i class="bx bx-right-arrow-alt"></i>
+          </a> */}
+        </div>
+        <div class="teks-section-content teks-swiper">
+          <div
+            id="carousel8"
+            class="carousel slide"
+            data-bs-interval="999999"
+            data-bs-ride="carousel"
+          >
+            <div class="carousel-inner pb-1">
+              <div class="carousel-item active teks-list">
+                <div
+                  class="row row-cols-5 g-3 g-sm-4 teks-news"
+                  style={{ padding: "10px 60px" }}
+                >
+                  <div class="col">
+                    <a
+                      href="https://jobsgo.vn/blog/nghi-viec-can-lay-nhung-giay-to-gi/"
+                      class="d-block border-0 p-0 teks-item text-dark"
+                    >
+                      <img
+                        class="lazy w-100 rounded-4 mb-2 img-thumbnail"
+                        src="https://jobsgo.vn/blog/wp-content/uploads/2023/05/nghi-viec-can-lay-giay-to-gi-600x400.jpg"
+                        width="600"
+                        height="400"
+                        alt="Nghỉ việc cần lấy những giấy tờ gì để không mất quyền lợi?"
+                      />
+                      <div class="h5 fw-bold" style={{ fontSize: "13px" }}>
+                        Nghỉ việc cần lấy những giấy tờ gì để không mất quyền
+                        lợi?
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col">
+                    <a
+                      href="https://jobsgo.vn/blog/yeu-cau-tuyen-dung-ke-toan/"
+                      class="d-block border-0 p-0 teks-item text-dark"
+                    >
+                      <img
+                        class="lazy w-100 rounded-4 mb-2 img-thumbnail"
+                        src="https://jobsgo.vn/blog/wp-content/uploads/2023/05/yeu-cau-tuyen-dung-ke-toan-600x400.jpg"
+                        width="600"
+                        height="400"
+                        alt="Yêu cầu tuyển dụng kế toán gồm những gì?"
+                      />
+                      <div class="h5 fw-bold" style={{ fontSize: "13px" }}>
+                        Yêu cầu tuyển dụng kế toán gồm những gì?
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col">
+                    <a
+                      href="https://jobsgo.vn/blog/kpi-cua-chuyen-vien-phan-tich-tai-chinh/"
+                      class="d-block border-0 p-0 teks-item text-dark"
+                    >
+                      <img
+                        class="lazy w-100 rounded-4 mb-2 img-thumbnail"
+                        src="https://jobsgo.vn/blog/wp-content/uploads/2023/05/mau-kpi-cua-chuyen-vien-phan-tich-tai-chinh-600x400.jpg"
+                        width="600"
+                        height="400"
+                        alt="KPI của chuyên viên phân tích tài chính mới &amp; chuẩn nhất"
+                      />
+                      <div class="h5 fw-bold" style={{ fontSize: "13px" }}>
+                        KPI của chuyên viên phân tích tài chính mới &amp; chuẩn
+                        nhất
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col">
+                    <a
+                      href="https://jobsgo.vn/blog/bo-phan-tham-dinh-ngan-hang/"
+                      class="d-block border-0 p-0 teks-item text-dark"
+                    >
+                      <img
+                        class="lazy w-100 rounded-4 mb-2 img-thumbnail"
+                        src="https://jobsgo.vn/blog/wp-content/uploads/2023/05/bo-phan-tham-dinh-ngan-hang-la-gi-600x400.jpg"
+                        width="600"
+                        height="400"
+                        alt="Bộ phận thẩm định ngân hàng &amp; những quy tắc trong công việc"
+                      />
+                      <div class="h5 fw-bold" style={{ fontSize: "13px" }}>
+                        Bộ phận thẩm định ngân hàng &amp; những quy tắc trong
+                        công việc
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col">
+                    <a
+                      href="https://jobsgo.vn/blog/tu-ngu-chuyen-nganh-ngan-hang/"
+                      class="d-block border-0 p-0 teks-item text-dark"
+                    >
+                      <img
+                        class="lazy w-100 rounded-4 mb-2 img-thumbnail"
+                        src="https://jobsgo.vn/blog/wp-content/uploads/2023/05/tu-ngu-chuyen-nganh-ngan-hang-600x400.jpg"
+                        width="600"
+                        height="400"
+                        alt="200+ từ ngữ chuyên ngành ngân hàng bằng tiếng Anh"
+                      />
+                      <div class="h5 fw-bold" style={{ fontSize: "13px" }}>
+                        200+ từ ngữ chuyên ngành ngân hàng bằng tiếng Anh
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Việc làm nổi bật */}
+      <div
+        className="container-fluid "
+        style={{
+          backgroundColor: "#f8f9fa",
+          paddingLeft: "124.5px",
+          paddingBottom: 20,
+        }}
+      >
+        <h4
+          style={{
+            paddingTop: 20,
+            fontWeight: "bold",
+          }}
+        >
+          Việc làm nổi bật
+        </h4>
+
+        <div className="job_urgent ">
+          <div
+            className="row d-flex "
+            style={{
+              margin: "0 auto",
+            }}
+          >
+            {jobSkill.length > 0 &&
+              jobSkill.map((job) => {
+                return (
+                  <div
+                    className="urgentHiring mr-3"
+                    style={{
+                      padding: "0",
+                      width: 400,
+                    }}
+                  >
+                    <Link
+                      to={"/job/" + job.job_id}
+                      style={{ display: "flex", textDecoration: "none" }}
+                      className="position-relative"
+                    >
+                      <div class="ribbon-wrapper">
+                        <div class="ribbon bg-danger">hot</div>
+                      </div>
+                      <div className="col-3">
+                        <img
+                          src={Logo}
+                          alt=""
+                          style={{
+                            width: "90px",
+                            height: "90px",
+                            margin: " 25px auto",
+                          }}
+                        />
+                      </div>
+                      <div className="col-9 urgent">
+                        <h5>{job.job_name}</h5>
+                        <p>{job.company_name}</p>
+                        <ul
+                          class="p-0"
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            overflow: "hidden",
+                            width: "100%",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-map-marker-alt mr-1"></i>
+                              {job.job_location}
+                            </p>
+                          </li>
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-dollar-sign mr-1"></i>
+                              {job.salary}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="containerr"
+        style={{ width: "1250px", margin: "0 auto", marginBottom: "20px" }}
+      >
+        <div class="teks-section bg-white shadow-xs-none shadow p-sm-4 rounded-4">
+          <div class="row align-items-center row-cols-sm-2">
+            <div class="col-sm-3 teks-section-title px-3 d-none d-sm-block">
+              <img
+                width="241"
+                height="237"
+                class="lazy w-100 m-auto m-sm-0 d-block"
+                src="https://jobsgo.vn/teks/img/viec-lam.svg"
+                alt="Jobs"
+              />
+            </div>
+            <div class="col-sm-9 teks-section-content">
+              <h6 class="text-primary text-capitalize mt-1 mb-3 fw-bold">
+                Việc theo kinh nghiệm
+              </h6>
+              <div class="row row-cols-sm-4 g-3 mb-4">
+                <div class="col-6 col-sm-3">
+                  <a
+                    href="/viec-lam-khong-can-kinh-nghiem.html"
+                    class="d-flex border-primary teks-box-shadow align-items-center teks-item text-dark"
+                    style={{
+                      padding: "10px",
+                      border: "1px solid #333",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <div class="flex-grow-1" style={{ fontSize: "13px" }}>
+                      <div class="text-dark" style={{ fontWeight: "bold" }}>
+                        Không cần kinh nghiệm
+                      </div>
+                      <div class="text-muted">10K+ Việc »</div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-6 col-sm-3">
+                  <a
+                    href="/viec-lam-khong-can-kinh-nghiem.html"
+                    class="d-flex border-primary teks-box-shadow align-items-center teks-item text-dark"
+                    style={{
+                      padding: "10px",
+                      border: "1px solid #333",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <div class="flex-grow-1" style={{ fontSize: "13px" }}>
+                      <div class="text-dark" style={{ fontWeight: "bold" }}>
+                        Không cần kinh nghiệm
+                      </div>
+                      <div class="text-muted">10K+ Việc »</div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-6 col-sm-3">
+                  <a
+                    href="/viec-lam-khong-can-kinh-nghiem.html"
+                    class="d-flex border-primary teks-box-shadow align-items-center teks-item text-dark"
+                    style={{
+                      padding: "10px",
+                      border: "1px solid #333",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <div class="flex-grow-1" style={{ fontSize: "13px" }}>
+                      <div class="text-dark" style={{ fontWeight: "bold" }}>
+                        1 - 2 năm kinh nghiệm
+                      </div>
+                      <div class="text-muted">2.1K+ Việc »</div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-6 col-sm-3">
+                  <a
+                    href="/viec-lam-khong-can-kinh-nghiem.html"
+                    class="d-flex border-primary teks-box-shadow align-items-center teks-item text-dark"
+                    style={{
+                      padding: "10px",
+                      border: "1px solid #333",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <div class="flex-grow-1" style={{ fontSize: "13px" }}>
+                      <div class="text-dark" style={{ fontWeight: "bold" }}>
+                        3 - 5 năm kinh nghiệm
+                      </div>
+                      <div class="text-muted">1.1K+ Việc »</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <h6 class="text-primary text-capitalize mt-1 mb-3 fw-bold">
+                Việc theo chức vụ
+              </h6>
+              <div class="row row-cols-sm-4 mb-4 g-3">
+                <div class="col-6 col-sm-3">
+                  <a
+                    href="/viec-lam-khong-can-kinh-nghiem.html"
+                    class="d-flex border-primary teks-box-shadow align-items-center teks-item text-dark"
+                    style={{
+                      padding: "10px",
+                      border: "1px solid #333",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <div class="flex-grow-1" style={{ fontSize: "13px" }}>
+                      <div class="text-dark" style={{ fontWeight: "bold" }}>
+                        Thực tập
+                      </div>
+                      <div class="text-muted">500+ Việc »</div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-6 col-sm-3">
+                  <a
+                    href="/viec-lam-khong-can-kinh-nghiem.html"
+                    class="d-flex border-primary teks-box-shadow align-items-center teks-item text-dark"
+                    style={{
+                      padding: "10px",
+                      border: "1px solid #333",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <div class="flex-grow-1" style={{ fontSize: "13px" }}>
+                      <div class="text-dark" style={{ fontWeight: "bold" }}>
+                        Nhân viên
+                      </div>
+                      <div class="text-muted">20K+ Việc »</div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-6 col-sm-3">
+                  <a
+                    href="/viec-lam-khong-can-kinh-nghiem.html"
+                    class="d-flex border-primary teks-box-shadow align-items-center teks-item text-dark"
+                    style={{
+                      padding: "10px",
+                      border: "1px solid #333",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <div class="flex-grow-1" style={{ fontSize: "13px" }}>
+                      <div class="text-dark" style={{ fontWeight: "bold" }}>
+                        Trưởng phòng
+                      </div>
+                      <div class="text-muted">2.2K+ Việc »</div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-6 col-sm-3">
+                  <a
+                    href="/viec-lam-khong-can-kinh-nghiem.html"
+                    class="d-flex border-primary teks-box-shadow align-items-center teks-item text-dark"
+                    style={{
+                      padding: "10px",
+                      border: "1px solid #333",
+                      borderRadius: "5px",
+                    }}
+                  >
+                    <div class="flex-grow-1" style={{ fontSize: "13px" }}>
+                      <div class="text-dark" style={{ fontWeight: "bold" }}>
+                        Giám đốc
+                      </div>
+                      <div class="text-muted">190+ Việc »</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

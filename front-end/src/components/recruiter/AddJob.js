@@ -51,8 +51,7 @@ const AddJob = () => {
         Accept: "application/json",
       },
     };
-
-    console.log(job);
+    
     axios
       .post("http://127.0.0.1:8000/api/recruiter/add-job", job, config)
       .then((res) => {
@@ -139,7 +138,6 @@ const AddJob = () => {
                           setJob({ ...job, salary: e.target.value });
                         }}
                       />
-                      <span className="input-group-text">triệu</span>
                     </div>
                   </div>
 

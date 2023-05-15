@@ -29,7 +29,10 @@ const Showjob = () => {
   console.log(detailJob.job_requirement);
   return (
     <div>
-      <div className="container" style={{ margin: "0 auto" }}>
+      <div
+        className="container"
+        style={{ margin: "0 auto", marginTop: "24px" }}
+      >
         <section className="section">
           <div className="row">
             <div className="col-lg-8">

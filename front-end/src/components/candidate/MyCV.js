@@ -7,7 +7,36 @@ function MyCV() {
   let navigate = useNavigate();
   const [cv, setCv] = useState("");
   const [selectedCV, setSelectedCV] = useState(null);
+  const [status, setStatus] = useState("");
+  const arr = [
+    {
+      public_status: 0,
+      name: "private",
+    },
+    {
+      public_status: 1,
+      name: "public",
+    },
+  ];
+  let user = JSON.parse(localStorage.getItem("user"));
+  let config = {
+    headers: {
+      Authorization: "Bearer " + user.token,
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+  };
+  const render = () => {
+    axios
+      .get(`http://127.0.0.1:8000/api/candidate/show-all`, config)
+      .then((res) => {
+        setCv(res.data.resume);
+      });
+  };
   useEffect(() => {
+    render();
+  }, []);
+  const handleChange = async (e) => {
     let user = JSON.parse(localStorage.getItem("user"));
     let config = {
       headers: {
@@ -16,15 +45,45 @@ function MyCV() {
         Accept: "application/json",
       },
     };
-    console.log(user.token);
-    axios
-      .get(`http://127.0.0.1:8000/api/candidate/show-all`, config)
+    if (e.target.value == 1) {
+      await axios
+        .post(
+          `http://127.0.0.1:8000/api/candidate/public-status-cv/` + e.target.id,
+          null,
+          config
+        )
+        .then((res) => {
+          setStatus(res.data);
+        });
+      render();
+    } else if (e.target.value == 0) {
+      await axios
+        .post(
+          `http://127.0.0.1:8000/api/candidate/private-status-cv/` +
+            e.target.id,
+          null,
+          config
+        )
+        .then((res) => {
+          setStatus(res.data);
+        });
+      render();
+    }
+  };
+  const handleDelte = async(e) => {
+    console.log(e.target.id);
+    await axios
+      .post(
+        `http://127.0.0.1:8000/api/candidate/delete-cv/` + e.target.id,
+        null,
+        config
+      )
       .then((res) => {
-        console.log(res.data.resume);
-        setCv(res.data.resume);
+        console.log(res.data);
+        setStatus(res.data);
       });
-  }, []);
-  console.log("allCV",cv);
+      render()
+  };
   const renderResume = () => {
     if (Object.keys(cv).length > 0) {
       return cv.map((value, key) => {
@@ -44,13 +103,24 @@ function MyCV() {
                   <h3 class="profile-username text-center">
                     {value.resume_name}
                   </h3>
-                  <p class=" text-center">Tên CV</p>
+                  {/* <p class=" text-center"> {value.resume_name}</p> */}
                   <div
-                    class="list-group-item"
+                    class="list-group-itemm"
                     style={{ fontSize: "14px", marginBottom: "10px" }}
                   >
-                    <b>Trạng thái</b>{" "}
-                    <p class="float-right">{value.public_status}</p>
+                    <b style={{ marginRight: "10px" }}>Trạng thái: </b>{" "}
+                    {/* <p class="float-right">{value.public_status == "0" ? <>private</>: <>public</>}</p> */}
+                    <select
+                      value={value.public_status}
+                      id={value.resume_id}
+                      onChange={handleChange}
+                    >
+                      {arr.map((key, item) => (
+                        <option name={key.name} value={key.public_status}>
+                          {key.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <Link to={"/allCV/fileCV/" + value.resume_id}>
                     <a
@@ -61,49 +131,28 @@ function MyCV() {
                       <b>Xem</b>
                     </a>
                   </Link>
+                  <Link to={"/allCV/UpdateCv/" + value.resume_id}>
+                    <a
+                      href="/"
+                      class="btn btn-success btn-block"
+                      style={{ margin: "10px 0" }}
+                    >
+                      <b>Chỉnh sửa</b>
+                    </a>
+                  </Link>
 
-                  <a href="/" class="btn btn-success btn-block">
-                    <b>Chỉnh sửa</b>
-                  </a>
-                  <a href="/" class="btn btn-danger btn-block">
+                  <a
+                    onClick={(e) => {
+                      handleDelte(e);
+                    }}
+                    id={value.resume_id}
+                    class="btn btn-danger btn-block"
+                  >
                     <b>Xóa</b>
                   </a>
                 </div>
               </div>
             </div>
-
-            {/* <div
-              className="allcv col d-flex"
-              style={{ padding: "0", height: "140px", width: "32%" }}
-            >
-              <div className="col-3">
-                <Link to={"/allCV/fileCV/" + value.resume_id}>
-                  <img
-                    src={Logo2}
-                    alt=""
-                    style={{
-                      width: "90px",
-                      height: "90px",
-                      margin: " 25px auto",
-                    }}
-                  />
-                </Link>
-              </div>
-
-              <div className="col-9 cv">
-                <h5 style={{ wordWrap: "break-word" }}>{value.resume_name}</h5>
-                <p>Tên CV:</p>
-                <p>Trạng thái: {value.public_status}</p>
-                <ul class="p-0">
-                  <li class="list-group-item list-group-item-action">
-                    <i class="fa-solid fa-location-dot"></i> Chỉnh sửa
-                  </li>
-                  <li class="list-group-item list-group-item-action">
-                    <i class="fa-regular fa-clock"></i> Tải xuống
-                  </li>
-                </ul>
-              </div>
-            </div> */}
           </>
         );
       });

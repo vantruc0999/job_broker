@@ -24,7 +24,7 @@ function Header() {
       localStorage.removeItem("user");
       navigate("/homeCandidate");
     } else if (user && user.role == "recruiter") {
-      alert("đã đăng xuất")
+      alert("đã đăng xuất");
       localStorage.removeItem("user");
       navigate("/homeCandidate");
     } else if (user && user.role == "admin") {
@@ -71,7 +71,7 @@ function Header() {
                 </Link>
               </div>
               <div style={{ borderBottom: "1px solid #e7e9eb" }}>
-                <Link className="dropdown-item" href="#">
+                <Link to="/applyJob" className="dropdown-item" href="#">
                   Việc làm đã ứng tuyển
                 </Link>
                 <Link className="dropdown-item" href="#">
@@ -108,7 +108,6 @@ function Header() {
   }
   const checkLogin = () => {
     if (!user) {
-      console.log("oke");
       return (
         <>
           <a
@@ -124,10 +123,7 @@ function Header() {
       );
     } else {
       return (
-        <Link
-          to="createCV"
-          className="dropdown-item"
-        >
+        <Link to="/chooseCV" className="dropdown-item">
           Tạo CV
         </Link>
       );
@@ -160,20 +156,9 @@ function Header() {
                       Việc làm
                     </Link>
                     <div className="dropdown-menu">
-                      <table className="dropdown-item" id="menu-listjob">
-                        <tbody>
-                          <tr>
-                            <th>Việc làm theo chuyên ngành ngành</th>
-                            <th>Việc làm theo địa điểm</th>
-                            <th>Việc làm theo nhu cầu</th>
-                          </tr>
-                          <tr>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                      <Link to="/listJob" className="dropdown-item">
+                        Việc làm phù hợp
+                      </Link>
                     </div>
                   </li>
                   <li className="nav-item dropdown">
@@ -214,7 +199,7 @@ function Header() {
                       </a>
                     </div>
                   </li>
-                  <li className="nav-item dropdown">
+                  {/* <li className="nav-item dropdown">
                     <Link
                       className="nav-link dropdown-toggle text-dark"
                       data-toggle="dropdown"
@@ -233,7 +218,7 @@ function Header() {
                         Tra cứu lương
                       </Link>
                     </div>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
               <div className="pt-2">
@@ -260,7 +245,7 @@ function Header() {
       <div>
         <header
           id="header"
-          className="header fixed-top d-flex align-items-center"
+          className="header fixed-top d-flex align-items-center container-fluid"
         >
           <div className="d-flex align-items-center justify-content-between">
             <Link to="/">
@@ -303,6 +288,7 @@ function Header() {
                 <a
                   className="nav-link nav-profile d-flex align-items-center pe-0"
                   data-bs-toggle="dropdown"
+                  style={{ cursor: "pointer" }}
                 >
                   <img
                     src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
@@ -332,6 +318,7 @@ function Header() {
                     <Link to="/homeRecruiter">
                       <a
                         className="dropdown-item d-flex align-items-center"
+                        style={{ cursor: "pointer" }}
                       >
                         <i className="bi bi-person"></i>
                         <span>Trang hồ sơ</span>
@@ -345,6 +332,7 @@ function Header() {
                   <li>
                     <a
                       className="dropdown-item d-flex align-items-center"
+                      style={{ cursor: "pointer" }}
                     >
                       <i className="bi bi-box-arrow-right"></i>
                       <span onClick={logout}>Đăng xuất</span>

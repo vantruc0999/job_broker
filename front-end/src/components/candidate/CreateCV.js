@@ -5,14 +5,15 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useNavigate } from "react-router-dom";
 import "../../assets/css/inputCV.css";
-
+import { useParams } from "react-router-dom";
 const animatedComponents = makeAnimated();
 
 const arraySkill = [
-  { value: 1, label: ".NET" },
-  { value: 2, label: "Java" },
-  { value: 3, label: "PHP" },
-  { value: 4, label: "Python" },
+  { value: 1, label: "Javascript" },
+  { value: 2, label: "PHP" },
+  { value: 3, label: "NodeJS" },
+  { value: 4, label: "ReactJS" },
+  { value: 4, label: "RUST123" },
 ];
 const arraySkill2 = [
   { value: 1, label: "Tiếng Anh" },
@@ -21,8 +22,10 @@ const arraySkill2 = [
   { value: 4, label: "Tiếng Nga" },
 ];
 function CreateCV() {
+  let params = useParams();
   const navigate = useNavigate();
   const tx = document.getElementById("exp_input");
+  console.log(params.id);
   if (tx) {
     tx.setAttribute(
       "style",
@@ -94,14 +97,24 @@ function CreateCV() {
     axios
       .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
       .then((res) => {
-        setSummary(res.data);
-        console.log(summary);
+        // setSummary(res.data);
+        setInputs({
+          first_name: res.data.first_name,
+          last_name: res.data.last_name,
+          address: res.data.address,
+          birth_day: res.data.birth_day,
+          email: res.data.email,
+          phone: res.data.phone,
+          namecv: res.data.first_name,
+        });
       });
   }, []);
+
   const handleInput = (e) => {
     let nameInput = e.target.name;
     let value = e.target.value;
     setInputs((state) => ({ ...state, [nameInput]: value }));
+    setSummary((state) => ({ ...state, [nameInput]: value }));
   };
   const handleAwardInputChange = (index, field, value) => {
     const newAwards = [...awards];
@@ -117,8 +130,8 @@ function CreateCV() {
       company_name: item.company,
       position: item.position,
       achievement: item.description,
-      experience_start: item.time,
-      experience_end: "",
+      experience_start: item.timestart,
+      experience_end: item.timeend,
     };
   });
   let experience_project = active.map((item) => {
@@ -126,8 +139,8 @@ function CreateCV() {
       project_name: item.company,
       responsibility: item.position,
       achievement: item.description,
-      experience_start: item.time,
-      experience_end: "",
+      experience_start: item.timestart,
+      experience_end: item.timeend,
     };
   });
 
@@ -240,7 +253,7 @@ function CreateCV() {
       <>
         <div className="content_form">
           <label class="form-label">Kỹ năng</label>
-          <AnimatedMulti parentCallback={handleSkillInput}></AnimatedMulti>
+          <AnimatedMulti style={{width:300}} parentCallback={handleSkillInput}></AnimatedMulti>
         </div>
       </>
     );
@@ -249,8 +262,22 @@ function CreateCV() {
     return (
       <>
         <div className="content_form">
-          <label class="form-label">Ngoại ngữ</label>
-          <AnimatedMulti2 parentCallback={handleLangInput}></AnimatedMulti2>
+          <textarea
+            className="exp_input"
+            id="exp_input2"
+            placeholder="Ngoại ngữ..."
+            style={{
+              border: "none",
+              width: "100%",
+              overflow: "hidden",
+            }}
+            value={active.achievement}
+            onChange={(e) => {
+              setLanguage(e.target.value);
+            }}
+            minRows={1}
+            maxRows={6}
+          />
         </div>
       </>
     );
@@ -260,9 +287,12 @@ function CreateCV() {
       <>
         {certificate.map((certificate, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div className="addition">
-              <i class="fa fa-plus mr-1" onClick={handleAddCer}></i>
+            <div
+              className="addition"
+              style={{ cursor: "pointer", fontSize: "18px" }}
+            >
               <i class="fa fa-minus" onClick={() => handleRemoveCer(index)}></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddCer}></i>
             </div>
             <div key={index} className="form-field">
               <input
@@ -288,15 +318,15 @@ function CreateCV() {
       <>
         {softSkill.map((softSkill, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div className="addition">
+            <div
+              className="addition"
+              style={{ cursor: "pointer", fontSize: "18px" }}
+            >
               <i
-                class="fa-regular fa-square-plus mr-1"
-                onClick={handleAddSoft}
-              ></i>
-              <i
-                class="fa-regular fa-square-minus"
+                class="fa fa-minus"
                 onClick={() => handleRemoveSoft(index)}
               ></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddSoft}></i>
             </div>
             <div key={index} className="form-field">
               <input
@@ -322,15 +352,15 @@ function CreateCV() {
       <>
         {awards.map((award, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div className="addition">
+            <div
+              className="addition"
+              style={{ cursor: "pointer", fontSize: "18px" }}
+            >
               <i
-                class="fa-regular fa-square-plus mr-1"
-                onClick={handleAddAward}
-              ></i>
-              <i
-                class="fa-regular fa-square-minus"
+                class="fa fa-minus"
                 onClick={() => handleRemoveAward(index)}
               ></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddAward}></i>
             </div>
             <div key={index} className="form-field">
               <input
@@ -356,27 +386,36 @@ function CreateCV() {
       <>
         {active.map((active, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div className="addition">
-              <i
-                class="fa-regular fa-square-plus mr-1"
-                onClick={handleAddAct}
-              ></i>
-              <i
-                class="fa-regular fa-square-minus"
-                onClick={() => handleRemoveAct(index)}
-              ></i>
+            <div
+              className="addition"
+              style={{ cursor: "pointer", fontSize: "18px" }}
+            >
+              <i class="fa fa-minus" onClick={() => handleRemoveAct(index)}></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddAct}></i>
             </div>
             <div key={index} className="form-field">
-              <input
-                className="exp_input"
-                type="text"
-                placeholder="1900 - 2001"
-                value={active.time}
-                style={{ border: "none" }}
-                onChange={(e) =>
-                  handleActInputChange(index, "time", e.target.value)
-                }
-              />
+              <div style={{ display: "flex" }}>
+                <input
+                  className="exp_input"
+                  type="text"
+                  placeholder="Thời gian bắt đầu"
+                  value={exp.timestart}
+                  style={{ border: "none" }}
+                  onChange={(e) =>
+                    handleActInputChange(index, "timestart", e.target.value)
+                  }
+                />
+                 <input
+                  className="exp_input"
+                  type="text"
+                  placeholder="Thời gian kết thúc "
+                  value={exp.timeend}
+                  style={{ border: "none" }}
+                  onChange={(e) =>
+                    handleActInputChange(index, "timeend", e.target.value)
+                  }
+                />
+              </div>
               <input
                 className="exp_input"
                 type="text"
@@ -428,15 +467,12 @@ function CreateCV() {
       <>
         {education.map((education, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div className="addition">
-              <i
-                class="fa-regular fa-square-plus mr-1"
-                onClick={handleAddEdu}
-              ></i>
-              <i
-                class="fa-regular fa-square-minus"
-                onClick={() => handleRemoveEdu(index)}
-              ></i>
+            <div
+              className="addition"
+              style={{ cursor: "pointer", fontSize: "18px" }}
+            >
+              <i class="fa fa-minus" onClick={() => handleRemoveEdu(index)}></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddEdu}></i>
             </div>
             <div key={index} className="form-field">
               <table className="edu_form">
@@ -498,25 +534,41 @@ function CreateCV() {
     );
   };
   const addContentExp = () => {
+    console.log("exp", exp);
     return (
       <>
         {exp.map((exp, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div className="addition">
-              <i class="fa fa-plus mr-1" onClick={handleAddExp}></i>
+            <div
+              className="addition"
+              style={{ cursor: "pointer", fontSize: "18px" }}
+            >
               <i class="fa fa-minus" onClick={() => handleRemoveExp(index)}></i>
+              <i class="fa fa-plus mr-1" onClick={handleAddExp}></i>
             </div>
             <div key={index} className="form-field">
-              <input
-                className="exp_input"
-                type="text"
-                placeholder="1900 - 2001"
-                value={exp.time}
-                style={{ border: "none" }}
-                onChange={(e) =>
-                  handleExpInputChange(index, "time", e.target.value)
-                }
-              />
+              <div style={{ display: "flex" }}>
+                <input
+                  className="exp_input"
+                  type="text"
+                  placeholder="Thời gian bắt đầu"
+                  value={exp.timestart}
+                  style={{ border: "none" }}
+                  onChange={(e) =>
+                    handleExpInputChange(index, "timestart", e.target.value)
+                  }
+                />
+                <input
+                  className="exp_input"
+                  type="text"
+                  placeholder="Thời gian kết thúc "
+                  value={exp.timeend}
+                  style={{ border: "none" }}
+                  onChange={(e) =>
+                    handleExpInputChange(index, "timeend", e.target.value)
+                  }
+                />
+              </div>
               <input
                 className="exp_input"
                 type="text"
@@ -567,24 +619,33 @@ function CreateCV() {
       </>
     );
   };
-
+  console.log(inputs);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(education);
+    console.log(awards);
+    console.log(softSkill);
     let resume = {
-      resume_name: "Intern Software",
+      first_name: inputs.first_name,
+      last_name: inputs.last_name,
+      phone: inputs.phone,
+      birth_day: inputs.birth_day,
+      email: inputs.email,
+      hobby: softSkill[0].title,
+      activity: awards[0].title,
+      address: inputs.address,
+      resume_name: inputs.namecv,
       education: education[0].school,
       education_year: education[0].time,
       education_major: education[0].specialize,
       education_description: education[0].rank,
       certificate: certificate[0].title,
-      template: 1,
+      template: params.id,
       image: "",
       experience_project: experience_project,
       experience_company: experience_company,
       skills: skill.job_skill,
     };
-    console.log(typeof experience_project);
+    // console.log(typeof experience_project);
     let object = {};
     object.resume = resume;
     let user = JSON.parse(localStorage.getItem("user"));
@@ -600,13 +661,9 @@ function CreateCV() {
       .then((res) => {
         if (res.data.status == "200") {
           alert("Bạn đã tạo CV thành công");
-          navigate("/homeCandidate");
+          navigate("/allCV");
         }
         console.log(res.data.status);
-        // if (res.data.errCode == 0) {
-
-        //   alert("Update succesful");
-        // }
       });
 
     console.log(resume);
@@ -664,7 +721,7 @@ function CreateCV() {
                           name="email"
                           placeholder="Email"
                           rows="1"
-                          value={summary.email}
+                          value={inputs.email}
                           onChange={handleInput}
                           style={{
                             width: "60%",
@@ -683,7 +740,7 @@ function CreateCV() {
                         <input
                           type="text"
                           name="phone"
-                          value={summary.phone}
+                          value={inputs.phone}
                           placeholder="Số điện thoại"
                           onChange={handleInput}
                           style={{ width: "60%" }}
@@ -693,9 +750,9 @@ function CreateCV() {
                         <i className="fas fa-birthday-cake mr-2" />
                         <input
                           type="text"
-                          placeholder="dd-mm-yyyy"
-                          name="birthday"
-                          value={summary.birth_day}
+                          placeholder="yyyy-mm-dd"
+                          name="birth_day"
+                          value={inputs.birth_day}
                           onChange={handleInput}
                           style={{ width: "60%" }}
                         />
@@ -705,7 +762,7 @@ function CreateCV() {
                         <input
                           type="text"
                           placeholder="Địa chỉ"
-                          value={summary.address}
+                          value={inputs.address}
                           name="address"
                           onChange={handleInput}
                           style={{ width: "60%" }}
@@ -732,7 +789,7 @@ function CreateCV() {
                   )}
                 </section>
 
-                <section className="experience">
+                {/* <section className="experience">
                   <h4>
                     <i className="fas fa-language" /> Ngoại ngữ
                   </h4>
@@ -748,21 +805,31 @@ function CreateCV() {
                       <i className="fas fa-plus" />
                     </div>
                   )}
-                </section>
+                </section> */}
               </div>
               <div className="col-8">
                 <section className="experience">
                   <h1 style={{ fontWeight: "700" }}>
-                    {summary.last_name} {summary.first_name}
+                    {inputs.last_name} {inputs.first_name}
                   </h1>
-                  <input
-                    type="text"
-                    placeholder="Vị trí mong muốn"
-                    value={summary.position}
-                    name="position"
-                    onChange={handleInput}
-                    style={{ padding: "5px", border: "none", color: "#000" }}
-                  />
+                  <div style={{ display: "inline-block" }}>
+                    <input
+                      type="text"
+                      placeholder="Tên CV "
+                      value={inputs.namecv}
+                      name="namecv"
+                      onChange={handleInput}
+                      style={{ padding: "5px", border: "none", color: "#000" }}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Vị trí mong muốn"
+                      value={inputs.position}
+                      name="position"
+                      onChange={handleInput}
+                      style={{ padding: "5px", border: "none", color: "#000" }}
+                    />
+                  </div>
                 </section>
                 <section className="experience">
                   <h4>
@@ -835,7 +902,7 @@ function CreateCV() {
                 </section>
                 <section className="experience">
                   <h4>
-                    <i className="fas fa-feather" /> Kĩ năng mềm
+                    <i className="fas fa-feather" /> Sở thích
                   </h4>
 
                   {softSkill.length > 0 ? (
@@ -853,7 +920,7 @@ function CreateCV() {
                 </section>
                 <section className="experience">
                   <h4>
-                    <i className="fas fa-medal" /> Giải thưởng
+                    <i className="fas fa-medal" /> Hoạt động
                   </h4>
                   {awards.length > 0 ? (
                     addContentAward()

@@ -2,13 +2,13 @@ import Sidebar from "./Sidebar";
 import { useEffect, useRef, useState } from "react";
 import axios, { all } from "axios";
 import { Link } from "react-router-dom";
-
+import ModalCV from "./ModalCV";
 const ManageCan = () => {
-  const [job, setJob] = useState("");
   const [allJob, setAllJob] = useState("");
   const [candidate, setCandidate] = useState("");
-
+  const [openModal,setOpenModal] =useState(false)
   let user = JSON.parse(localStorage.getItem("user"));
+  console.log(user.token);
   let config = {
     headers: {
       Authorization: "Bearer " + user.token,
@@ -24,21 +24,23 @@ const ManageCan = () => {
       });
   }, []);
 
-  useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/api/jobs`, config).then((res) => {
-      // console.log(res.data);
-      setJob(res.data);
-    });
-  }, []);
   const handleGetID = (e) => {
     let id = e.target.value;
     axios
       .get(`http://127.0.0.1:8000/api/recruiter/get-candidates/` + id, config)
       .then((res) => {
-        console.log(res.data);
-        setCandidate(res.data);
+        console.log(res);
+        if (res.data.length === 0) {
+          alert("Không có ứng viên ứng tuyển")
+        } else {
+          console.log("có");
+          setCandidate(res.data);
+        }
       });
   };
+  useEffect(() => {
+  }, [candidate]);
+
   const renderJob = () => {
     if (Object.keys(allJob).length > 0) {
       return allJob.jobs.map((value, key) => {
@@ -50,6 +52,41 @@ const ManageCan = () => {
       });
     }
   };
+
+  const handleApply = (e) => {
+    let id = e.currentTarget.id;
+    console.log(id);
+    axios
+      .post(`http://127.0.0.1:8000/api/recruiter/resume-accept/` + id,null, config)
+      .then((res) => {
+        if (res.data.message.includes("approved")) {
+          alert("Duyệt ứng viên thành công");
+        }
+        const afterDelte = candidate.filter((object) => {
+          return object.application_id.toString() !== id;
+        });
+        setCandidate(afterDelte)
+      });
+  };
+  const handleCancle = (e) => {
+    let id = e.currentTarget.id;
+    console.log(id);
+    axios
+      .post(
+        `http://127.0.0.1:8000/api/recruiter/resume-decline/` + id,null,
+        config
+      )
+      .then((res) => {
+        if (res.data.message.includes("declined")) {
+          alert("Xóa ứng viên thành công");
+        }
+        const afterDelte = candidate.filter((object) => {
+          return object.application_id.toString() !== id;
+        });
+        setCandidate(afterDelte)
+      });
+  };
+  console.log(candidate);
   const renderCanofJobID = () => {
     if (Object.keys(candidate).length > 0) {
       return candidate.map((value, key) => {
@@ -68,22 +105,32 @@ const ManageCan = () => {
                     style={{ maxWidth: "80px", borderRadius: "50%" }}
                   />
                 </td>
-                <a href="/">{value.fullname}</a>
-                <td>Nguyenkimthang@gmail.com</td>
+                <td>{value.fullname}</td>
+                <td>{value.email}</td>
                 <td>{value.skills}</td>
-                <td>Chưa duyệt</td>
+                <td>{value.status}</td>
                 <td class="project-actions text-right">
-                  <a class="btn btn-primary btn-sm" href="/">
+                  <a onClick={()=>{setOpenModal(true)}} class="btn btn-primary btn-sm">
                     <i class="fas fa-eye"></i>
                     Xem
                   </a>
-                  <a class="btn btn-info btn-sm" href="/">
+                 {openModal&& <ModalCV closeModal={setOpenModal}/>}
+                  <a
+                    class="btn btn-info btn-sm"
+                    id={value.application_id}
+                    onClick={handleApply}
+                    style={{ margin: "0 5px" }}
+                  >
                     <i class="fas fa-check"></i>
                     Duyệt
                   </a>
-                  <a class="btn btn-danger btn-sm" href="/">
+                  <a
+                    id={value.application_id}
+                    onClick={handleCancle}
+                    class="btn btn-danger btn-sm"
+                  >
                     <i class="fas fa-trash"></i>
-                    Xóa
+                    Từ chối
                   </a>
                 </td>
               </tr>
@@ -163,16 +210,14 @@ const ManageCan = () => {
                               </select>
                             </div>
                             <div className="col-md-3 margin">
-                              <label>Kỹ năng mềm</label>
+                              <label>Chọn theo loại</label>
+
                               <select
                                 className="form-select"
                                 aria-label="Default select example"
                                 style={{ fontSize: "13px" }}
                               >
-                                <option selected="">chọn kỹ năng mềm</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                {renderJob()}
                               </select>
                             </div>
                             <div className="col-md-3 margin">
@@ -214,13 +259,6 @@ const ManageCan = () => {
                           >
                             <label>Hiển thị: </label>
                             <div className="checkbox">
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name="gridRadios"
-                                id="gridRadios1"
-                                value="option1"
-                              />
                               <label
                                 className="form-check-label"
                                 for="gridRadios1"
@@ -240,7 +278,7 @@ const ManageCan = () => {
                                 className="form-check-label"
                                 for="gridRadios1"
                               >
-                                Chỉ ứng viên đã xem
+                                Ứng viên đã duyệt
                               </label>
                             </div>
                             <div className="checkbox">
@@ -255,13 +293,12 @@ const ManageCan = () => {
                                 className="form-check-label"
                                 for="gridRadios1"
                               >
-                                Chỉ ứng viên chưa xem
+                                Ứng viên bị từ chối
                               </label>
                             </div>
                           </div>
 
                           <button
-                            href="/"
                             className="btn btn-primary"
                             style={{
                               fontSize: "14px",

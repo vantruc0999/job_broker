@@ -8,9 +8,8 @@ function FileCV() {
   let params = useParams();
   const [resume, setResume] = useState("");
   const [id, setId] = useState([]);
-  const [info, setInfo] = useState("")
-  console.log(resume);
- 
+  const [info, setInfo] = useState("");
+
   let user = JSON.parse(localStorage.getItem("user"));
   let config = {
     headers: {
@@ -21,66 +20,87 @@ function FileCV() {
   };
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/api/candidate/show-detail/`+ params.id, config)
+      .get(
+        `http://127.0.0.1:8000/api/candidate/show-detail/` + params.id,
+        config
+      )
       .then((res) => {
         console.log(res.data);
         setResume(res.data);
       });
   }, []);
   useEffect(() => {
-   
     axios
       .get(`http://127.0.0.1:8000/api/candidate/get-candidate-infor`, config)
       .then((res) => {
         setInfo(res.data);
       });
   }, []);
-  console.log("info",info);
   const renderExp = () => {
     if (Object.keys(resume).length > 0) {
-      return  resume.experience_company.map((value, key)=>{
+      return resume.experience_company.map((value, key) => {
         return (
           <>
-              <ul>
-                <li>
-                  <div className="date">{ value.experience_start}</div>
-                  <div className="info">
-                    <p className="semi-bold">{value.company_name}</p>
-                    <p>Nhiệm vụ: {value.position}</p>
-                    {/* <p>Ngôn ngữ sử dụng: J2ME</p> */}
-                    <p>
-                      {value.achievement}
-                    </p>
-                  </div>
-                </li>
-                
-              </ul>
+            <ul>
+              <li>
+                <div className="date">
+                  {value.experience_start}-{value.experience_end}
+                </div>
+                <div className="info">
+                  <p className="semi-bold">{value.company_name}</p>
+                  <p>Nhiệm vụ: {value.position}</p>
+                  {/* <p>Ngôn ngữ sử dụng: J2ME</p> */}
+                  <p>{value.achievement}</p>
+                </div>
+              </li>
+            </ul>
           </>
         );
-      })
+      });
     }
   };
+
   const renderSkill = () => {
     if (Object.keys(resume).length > 0) {
-      return  resume.skill.map((value, key)=>{
+      return resume.skill.map((value, key) => {
         return (
           <>
-                      <li>
-                        <div className="skill_name">{resume.skill}</div>
-                        <div className="skill_progress">
-                          <span style={{ width: "80%" }} />
-                        </div>
-                        <div className="skill_per">80%</div>
-                      </li>
-                     
+            <li>
+              <div className="skill_name">{value.skill_name}</div>
+            </li>
           </>
         );
-      })
+      });
+    }
+  };
+  const renderExpProject = () => {
+    if (Object.keys(resume).length > 0) {
+      return resume.experience_project.map((value, key) => {
+        return (
+          <>
+            <ul>
+              <li>
+                <div className="date">
+                  {value.experience_start}-{value.experience_end}
+                </div>
+                <div className="info">
+                  <p className="semi-bold">Dự án: {value.project_name}</p>
+                  <p>Vị trí: {value.responsibility}</p>
+                  {/* <p>Ngôn ngữ sử dụng: J2ME</p> */}
+                  <p>{value.achievement}</p>
+                </div>
+              </li>
+            </ul>
+          </>
+        );
+      });
     }
   };
   const renderResume = () => {
     if (Object.keys(resume).length > 0) {
-      console.log("resume", resume);
+      const email = resume.resume.email;
+      let nameEmail = email.split("@",1);
+      console.log(nameEmail);
       return (
         <>
           <div id="vn">
@@ -95,38 +115,40 @@ function FileCV() {
                 <div className="resume_content">
                   <div className="resume_item resume_info">
                     <div className="title">
-                      <p className="bold"> {info.last_name} {info.first_name}</p>
+                      <p className="bold">
+                        {" "}
+                        {resume.resume.last_name} {resume.resume.first_name}
+                      </p>
                       <p className="regular">Developer</p>
                     </div>
-                    <ul>
+                    <ul style={{ padding: "0" }}>
                       <li>
                         <div className="icon">
-                          <i className="fas fa-map-signs" />
+                          <i className="fas fa-map-marker-alt" />
                         </div>
                         <div className="data">
-                          {info.address} <br />
-                          Tp. Đà Nẵng, Đà Nẵng
+                          {resume.resume.address} <br />
+                          {/* Tp. Đà Nẵng, Đà Nẵng */}
                         </div>
                       </li>
                       <li>
                         <div className="icon">
-                          <i className="fas fa-mobile-alt" />
+                          <i className="fas fa-phone" />
                         </div>
-                        <div className="data">{info.phone}</div>
+                        <div className="data">{resume.resume.phone}</div>
                       </li>
                       <li>
                         <div className="icon">
                           <i className="fas fa-envelope" />
                         </div>
-                        <div className="data">
-                          {info.email}
-                        </div>
+                        <div className="data">{nameEmail}<br/>
+                        @gmail.com</div>
                       </li>
                       <li>
                         <div className="icon">
-                          <i className="fab fa-weebly" />
+                          <i className="fas fa-birthday-cake" />
                         </div>
-                        <div className="data">www.thangnk.cf</div>
+                        <div className="data">{resume.resume.birth_day}</div>
                       </li>
                     </ul>
                   </div>
@@ -134,65 +156,20 @@ function FileCV() {
                     <div className="title">
                       <p className="bold">Các kỹ năng</p>
                     </div>
-                    <ul>
-                     {renderSkill()}
-                    </ul>
+                    <ul>{renderSkill()}</ul>
                   </div>
-                  <div className="resume_item resume_social">
+                  <div className="resume_item resume_skills">
                     <div className="title">
-                      <p className="bold">Mạng xã hội</p>
+                      <p className="bold">Sở thích</p>
                     </div>
-                    <ul>
-                      <li>
-                        <div className="icon">
-                          <i className="fab fa-facebook-square" />
-                        </div>
-                        <div className="data">
-                          <p className="semi-bold">Facebook</p>
-                          <p>
-                            <a href="" target="_blank">
-                              kim.thang.26
-                            </a>
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="icon">
-                          <i className="fab fa-skype" />
-                        </div>
-                        <div className="data">
-                          <p className="semi-bold">Skype</p>
-                          <p>
-                            <a href="#">kim.thang.26</a>
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="icon">
-                          <i className="fab fa-youtube" />
-                        </div>
-                        <div className="data">
-                          <p className="semi-bold">Youtube</p>
-                          <p>
-                            <a href="" target="_blank">
-                              kimthang
-                            </a>
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="icon">
-                          <i className="fab fa-linkedin" />
-                        </div>
-                        <div className="data">
-                          <p className="semi-bold">Linkedin</p>
-                          <p>
-                            <a href="" target="_blank">
-                              kim-thang
-                            </a>
-                          </p>
-                        </div>
-                      </li>
+                    <ul style={{ color: "#b1eaff" }}>{resume.resume.hobby}</ul>
+                  </div>
+                  <div className="resume_item resume_skills">
+                    <div className="title">
+                      <p className="bold">Giải thưởng</p>
+                    </div>
+                    <ul style={{ color: "#b1eaff" }}>
+                      {resume.resume.activity}
                     </ul>
                   </div>
                 </div>
@@ -212,9 +189,16 @@ function FileCV() {
                 </div>
                 <div className="resume_item resume_work">
                   <div className="title">
-                    <p className="bold">Kinh nghiệm làm việc</p>
+                    <p className="bold">Kinh nghiệm làm việc công ty</p>
                   </div>
-                 {renderExp()}
+                  {renderExp()}
+                </div>
+
+                <div className="resume_item resume_work">
+                  <div className="title">
+                    <p className="bold">Kinh nghiệm làm việc dự án</p>
+                  </div>
+                  {renderExpProject()}
                 </div>
                 <div className="resume_item resume_education">
                   <div className="title">
@@ -222,31 +206,32 @@ function FileCV() {
                   </div>
                   <ul>
                     <li>
-                      <div className="date">{resume.resume.education_year}</div>
-                      <div className="info">
-                        <p className="semi-bold">{resume.resume.education}</p>
+                      <div
+                        className="info"
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          fontWeight: "bold",
+                        }}
+                      >
                         <p>Ngành: {resume.resume.education_major}</p>
-                        <p>{resume.resume.education_description}</p>
+                        <p>Học vấn: {resume.resume.education}</p>
+                        <p>Niên khóa: {resume.resume.education_year}</p>
+                        <p>Xếp loại: {resume.resume.education_description}</p>
                       </div>
                     </li>
                   </ul>
                 </div>
-                <div className="resume_item resume_hobby">
+                <div className="resume_item resume_education">
                   <div className="title">
-                    <p className="bold">Sở thích</p>
+                    <p className="bold">Chứng chỉ ngoại ngữ</p>
                   </div>
                   <ul>
                     <li>
-                      <i className="fas fa-book" />
-                    </li>
-                    <li>
-                      <i className="fas fa-gamepad" />
-                    </li>
-                    <li>
-                      <i className="fas fa-music" />
-                    </li>
-                    <li>
-                      <i className="fab fa-pagelines" />
+                      <div className="info" style={{ fontWeight: "bold" }}>
+                        <p>Chứng chỉ: {resume.resume.certificate}</p>
+                      </div>
                     </li>
                   </ul>
                 </div>

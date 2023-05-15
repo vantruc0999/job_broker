@@ -4,20 +4,28 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 function ModalViewJob(props) {
-  console.log(props.id);
   const [detailJob, setJobDetail] = useState("");
   const [role, setRole] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [show, setShow] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [jobwait, setJobwait] = useState("");
 
   let user = JSON.parse(localStorage.getItem("user"));
+  let config = {
+    headers: {
+      Authorization: "Bearer " + user.token,
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+  };
 
   useEffect(() => {
     if (user) {
       let config = {
         headers: {
           Authorization: "Bearer " + user.token,
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
           Accept: "application/json",
         },
       };
@@ -29,13 +37,32 @@ function ModalViewJob(props) {
         });
     }
   }, []);
-  console.log(show);
+  const handleDetailCV = async (e) => {
+    let id = e.target.id;
+    await axios
+      .post("http://127.0.0.1:8000/api/admin/accept-job/" + id, null, config)
+      .then((res) => {
+        setSuccess(res.data);
+        if (res.data.message.includes("approved")) {
+          alert(res.data.message);
+        }
+      });
+    axios
+      .get(`http://127.0.0.1:8000/api/admin/waiting-jobs`, config)
+      .then((res) => {
+        console.log(res.data);
+        props.setJobwait(res.data.jobs);
+      });
+  };
   return (
     <>
-      <a className="btn btn-primary btn-sm" onClick={() => setShow(true)}>
+      <span className="btn btn-primary btn-sm" onClick={(e) => {
+        e.preventDefault()
+        setShow(true)
+      }}>
         <i className="fas fa-folder"> </i>
         Xem
-      </a>
+      </span>
 
       <Modal
         size={"lg"}
@@ -44,17 +71,14 @@ function ModalViewJob(props) {
         onHide={() => setShow(false)}
         dialogClassName="modal-90w"
         aria-labelledby="example-custom-modal-styling-title"
-        style={{ padding:0,position:"fixed" }}
+        style={{ padding: 0, position: "fixed" }}
       >
         {/* <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
           </Modal.Title>
         </Modal.Header> */}
-        <Modal.Body style={{ height: "100vh",overflowX:"hidden" }}>
-          <div
-            className="container"
-            style={{ width: "1250px" }}
-          >
+        <Modal.Body style={{ overflowX: "hidden" }}>
+          <div className="container" style={{ width: "1250px" }}>
             <section className="section">
               <div className="row">
                 <div className="col-lg-8">
@@ -276,9 +300,15 @@ function ModalViewJob(props) {
                       </div>
                     </div>
                   </div>
-                 
                 </div>
               </div>
+              <button
+                className="btn btn-success"
+                id={detailJob.job_id}
+                onClick={(e) => handleDetailCV(e)}
+              >
+                Duyệt
+              </button>
             </section>
           </div>
         </Modal.Body>

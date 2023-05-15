@@ -27,24 +27,32 @@ const Test = () => {
       axios
         .get(`http://127.0.0.1:8000/api/job-detail/` + params.id, config)
         .then((res) => {
-          console.log("1");
           setJobDetail(res.data.job_detail);
         });
     } else {
       axios
         .get(`http://127.0.0.1:8000/api/job-detail/` + params.id)
         .then((res) => {
-          console.log("2");
           setJobDetail(res.data.job_detail);
         });
     }
   }, []);
-
-  
-console.log(user);
+  console.log(detailJob);
+  const skills = detailJob && detailJob.skills ? detailJob.skills.join(", ") : "";
+  function renderSkill() {
+    return (
+      <div>
+        <p> {skills}</p>
+      </div>
+    );
+  }
   return (
+    
     <div>
-      <div className="container" style={{ margin: "0 auto", width: "1250px" }}>
+      <div
+        className="container"
+        style={{ margin: "0 auto", width: "1250px", marginTop: "24px" }}
+      >
         <section className="section">
           <div className="row">
             <div className="col-lg-8">
@@ -53,7 +61,7 @@ console.log(user);
                   <h3 className="job_name" style={{ fontWeight: "bold" }}>
                     {detailJob.job_name}
                   </h3>
-                  { user && role !== "recruiter"  ? (
+                  {user && role !== "recruiter" ? (
                     <>
                       <div className="button" style={{ margin: "20px 0" }}>
                         {openModal == false ? (
@@ -213,7 +221,7 @@ console.log(user);
                         className="content-detail"
                         title="Xem thêm các việc làm Full-time"
                       >
-                        {detailJob.skills}
+                        {renderSkill()}
                         {/* {JSON.stringify(detailJob.skills)} */}
                       </div>
                     </div>
@@ -357,7 +365,7 @@ console.log(user);
                             ttttttttttttttttttttttttttttttttttttttttttttttttt
                           </h6>
                           <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
+                            {/* {detailJob.company_name} */}
                           </p>
                         </div>
                       </div>

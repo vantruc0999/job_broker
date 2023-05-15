@@ -3,27 +3,41 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import AddPackage from "./AddPackage";
+import UpdatePackage from "./UpdatePackage";
 function Package() {
   const [packageall, setPackageall] = useState("");
-
-  const [product, setProduct] = useState("");
-
+  const [show, setShow] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [id, setId] = useState(null);
+  let user = JSON.parse(localStorage.getItem("user"));
+  let config = {
+    headers: {
+      Authorization: "Bearer " + user.token,
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+  };
   useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user"));
-    let config = {
-      headers: {
-        Authorization: "Bearer " + user.token,
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
-    };
-    axios
+      console.log(packageall);
+    render();
+  }, []);
+  useEffect(() => {
+    console.log(packageall);
+    console.log(id);
+  }, [packageall]);
+  const render = () => {
+     axios
       .get("http://127.0.0.1:8000/api/recruiter/package", config)
       .then((res) => {
-        console.log(res.data);
         setPackageall(res.data);
       });
-  }, []);
+  };
+  const packageAll = (packageall) => {
+    setPackageall(packageall);
+  };
+  const getId = (e) => {
+    setId(e.currentTarget.id)
+  };
 
   const renderPackage = () => {
     if (Object.keys(packageall).length > 0) {
@@ -41,9 +55,24 @@ function Package() {
                     <a href="#" className="btn btn-info">
                       <i className="fas fa-eye" />
                     </a>
-                    <a href="/" className="btn btn-primary">
+                    {/* <a className="btn btn-primary">
                       <i className="fas fa-edit" />
-                    </a>
+                    </a> */}
+                    {openModal == false ? (
+                      <a
+                        className="btn btn-primary"
+                        id={value.package_id}
+                        onClick={(e) => {
+                          getId(e)
+                          setOpenModal(true);
+                        }}
+                      >
+                        <i className="fas fa-edit" />
+                      </a>
+                    ) : (
+                      <UpdatePackage idPack={id} parentCallBack={packageAll} resetId={() => setId(null)}  />
+                    )}
+                    
                     <a href="#" className="btn btn-danger">
                       <i className="fas fa-trash" />
                     </a>

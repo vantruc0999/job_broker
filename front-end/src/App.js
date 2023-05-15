@@ -49,6 +49,12 @@ import HomeRecruiter from "./components/recruiter/HomeRecruiter";
 import PackageRe from "./components/recruiter/PackageRe";
 import PaymentHistory from "./components/recruiter/PaymentHistory";
 import ListJob from "./components/candidate/ListJob";
+import UpdateCv from "./components/candidate/UpdateCV";
+import UpdateJob from "./components/recruiter/UpdateJob";
+import ApplyJob from "./components/candidate/ApplyJob";
+import ManageApproved from "./components/recruiter/ManageApproved";
+import ManageDeClined from "./components/recruiter/ManageDeclined";
+import ChooseTemplate from "./components/candidate/ChooseTempalte";
 function App(props) {
   let param1 = useLocation();
   return (
@@ -73,8 +79,13 @@ function App(props) {
           <Route path="/allCV" element={<MyCV />} />
           <Route path="/allCV/fileCV/:id" element={<FileCV />} />
           <Route path="/handleCV" element={<HandleCV />} />
+          <Route path="/chooseCV" element={<ChooseTemplate />} />
+          <Route path="/chooseCV/createCV/:id" element={<CreateCV />} />
           <Route path="/uploadCV" element={<MyPdfReader />} />
           <Route path="/listJob" element={<ListJob />} />
+          <Route path="/allCV/UpdateCv/:id" element={<UpdateCv />} />
+          <Route path="/applyJob" element={<ApplyJob />} />
+          <Route path="/listJob/job/:id" element={<Test />} />
         </Route>
         {/* ---------- */}
 
@@ -82,14 +93,21 @@ function App(props) {
         <Route path="/loginCruiter" element={<LoginRecruiter />} />
         <Route path="/registerCruiter" element={<RegisterCruiter />} />
         <Route path="/job/:id" element={<Test />} />
-
         <Route element={<PrivateRoutesRecruiter />}>
           <Route path="/addJob" element={<AddJob />} />
           <Route path="/manageJob" element={<ManageJob />} />
+          <Route path="/manageJob/updateJob/:id" element={<UpdateJob />} />
           <Route path="/managecan" element={<ManageCan />} />
+          <Route path="/managecan/fileCV/:id" element={<FileCV />} />
           <Route path="/packageRecruiter" element={<PackageRe />} />
           <Route path="/paymentHistory" element={<PaymentHistory />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/manageApproved" element={<ManageApproved />} />
+          <Route path="/manageApproved/fileCV/:id" element={<FileCV />} />
+          <Route path="/manageDeclined" element={<ManageDeClined />} />
+          <Route path="/manageDeclined/fileCV/:id" element={<FileCV />} />
+
+
         </Route>
 
         {/* ------------ */}

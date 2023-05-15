@@ -51,10 +51,13 @@ Route::get('skills', [SkillController::class, 'index']);
 
 Route::get('jobs-by-skills/{id}', [JobController::class, 'getJobsByProgrammingSkills']);
 
+Route::post('recruiter/resume-accept/{id}', [JobApplicationController::class, 'acceptApplicationRequest']);
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::post('logout', [AdminAuthController::class, 'logout']);
-
+        Route::post('accept-job/{id}', [JobController::class, 'approveJobRequest']);
+        Route::post('decline-job/{id}', [JobController::class, 'declineJobRequest']);
         Route::post('add-package', [PackageController::class, 'store']);
         Route::post('update-package/{id}', [PackageController::class, 'update']);
         Route::get('package-detail/{id}', [PackageController::class, 'show']);
@@ -63,8 +66,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('add-skill', [SkillController::class, 'store']);
         Route::post('update-skill/{id}', [SkillController::class, 'update']);
 
-        Route::post('accept-job/{id}', [JobController::class, 'approveJobRequest']);
-        Route::post('decline-job/{id}', [JobController::class, 'declineJobRequest']);
 
         Route::get('waiting-jobs', [JobController::class, 'getAllJobsOnWaiting']);
         Route::get('view-accept-jobs', [JobController::class, 'getAllApprovedJobs']);
@@ -81,7 +82,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('add-job', [JobController::class, 'handleCreateJob']);
         Route::post('job-update/{id}', [JobController::class, 'handleUpdateJob']);
 
-        Route::post('resume-accept/{id}', [JobApplicationController::class, 'acceptApplicationRequest']);
         Route::post('resume-decline/{id}', [JobApplicationController::class, 'declineApplicationRequest']);
 
         Route::get('get-candidates/{id}', [JobApplicationController::class, 'getAllCandidateByJob']);

@@ -44,6 +44,7 @@ Route::post('recruiter/register', [RecruiterAuthController::class, 'register']);
 //View all job and view detail a job post
 Route::get('job-detail/{id}', [JobController::class, 'show']);
 Route::get('jobs', [JobController::class, 'getAllJobsForAllUser']);
+Route::get('highlight-job', [JobController::class, 'getHighLightJobs']);
 
 //View all programming skills
 Route::get('skills', [SkillController::class, 'index']);

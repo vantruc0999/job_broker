@@ -80,6 +80,9 @@ function MyCV() {
       )
       .then((res) => {
         console.log(res.data);
+        if(res.data.message.includes("succesfully")){
+          alert(res.data.message)
+        }
         setStatus(res.data);
       });
       render()

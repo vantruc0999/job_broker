@@ -21,18 +21,15 @@ const ListJob = () => {
   console.log(suitable);
 
   const renderSuitable = () => {
-    if (Object.keys(suitable).length > 0) {
-      console.log(typeof suitable);
-      const suitableArr = Array.from(Object.values(suitable));
+    if ( Object.keys(suitable).length > 0) {
+      console.log(typeof(suitable.jobs));
+      // const suitableArr = Array.from(Object.values(suitable));
       // suitable && suitable.jobs &&
-      return suitableArr.map((value, key) => {
+      return suitable.jobs.map((value, key) => {
         return (
           <>
-            <Link
-              to={"/listJob/job/" + value.job_id}
-              style={{ textDecoration: "none", margin: "5px 0" }}
-              className="col-lg-6"
-            >
+             <Link to={"/listJob/job/" + value.job_id} style={{ textDecoration: "none", margin: "5px 0" }}
+              className="col-lg-6">
               <div className="card mb-0">
                 <div className="row g-0">
                   <div className="col-3">

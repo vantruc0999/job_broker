@@ -18,7 +18,7 @@ function Package() {
     },
   };
   useEffect(() => {
-    console.log(packageall);
+      console.log(packageall);
     render();
   }, []);
   useEffect(() => {
@@ -26,7 +26,7 @@ function Package() {
     console.log(id);
   }, [packageall]);
   const render = () => {
-    axios
+     axios
       .get("http://127.0.0.1:8000/api/recruiter/package", config)
       .then((res) => {
         setPackageall(res.data);
@@ -36,7 +36,7 @@ function Package() {
     setPackageall(packageall);
   };
   const getId = (e) => {
-    setId(e.currentTarget.id);
+    setId(e.currentTarget.id)
   };
 
   const renderPackage = () => {
@@ -63,20 +63,16 @@ function Package() {
                         className="btn btn-primary"
                         id={value.package_id}
                         onClick={(e) => {
-                          getId(e);
+                          getId(e)
                           setOpenModal(true);
                         }}
                       >
                         <i className="fas fa-edit" />
                       </a>
                     ) : (
-                      <UpdatePackage
-                        idPack={id}
-                        parentCallBack={packageAll}
-                        resetId={getId}
-                      />
+                      <UpdatePackage idPack={id} parentCallBack={packageAll} resetId={() => setId(null)}  />
                     )}
-
+                    
                     <a href="#" className="btn btn-danger">
                       <i className="fas fa-trash" />
                     </a>

@@ -99,63 +99,6 @@ function Homepage() {
             </div>
           </div>
         </div>
-        {/* <div className="menu-job">
-          <ul
-            className="col-11 list-group list-group-horizontal d-flex justify-content-center"
-            style={{ margin: "30px auto", textAlign: "center" }}
-          >
-            <li>
-              <button
-                style={{ padding: 8 }}
-                type="button"
-                className="list-group-item list-group-item-action align-items-center"
-              >
-                <i class="fa-solid fa-location-dot mr-2"></i>
-                Việc tại Đà Nẵng
-              </button>
-            </li>
-            <li>
-              <button
-                style={{ padding: 8 }}
-                type="button"
-                className="list-group-item list-group-item-action align-items-center"
-              >
-                <i class="fa-solid fa-microchip mr-2"></i>
-                Công nghệ thông tin
-              </button>
-            </li>
-            <li>
-              <button
-                style={{ padding: 8 }}
-                type="button"
-                className="list-group-item list-group-item-action align-items-center"
-              >
-                <i class="fa-solid fa-diamond mr-2"></i>
-                Kỹ thuật
-              </button>
-            </li>
-            <li>
-              <button
-                style={{ padding: 8 }}
-                type="button"
-                className="list-group-item list-group-item-action align-items-center"
-              >
-                <i class="fa-solid fa-sitemap mr-2"></i>
-                Kỹ thuật mạng
-              </button>
-            </li>
-            <li>
-              <button
-                style={{ padding: 8 }}
-                type="button"
-                className="list-group-item list-group-item-action align-items-center"
-              >
-                <i class="fa-solid fa-memory mr-2"></i>
-                Lập Trình
-              </button>
-            </li>
-          </ul>
-        </div> */}
 
         <div
           className="row d-flex justify-content-around"
@@ -225,17 +168,26 @@ function Homepage() {
             fontWeight: "bold",
           }}
         >
-          Việc làm mới nhất
+          Việc làm phù hợp
         </h4>
+
         <div className="job_urgent">
-          <div className="row d-flex " style={{ margin: "0 auto" }}>
+          <div
+            className="row d-flex "
+            style={{
+              margin: "0 auto",
+            }}
+          >
             {/* List Job */}
-            {jobs.length > 0 &&
-              jobs.map((job) => {
+            {jobSkill.length > 0 &&
+              jobSkill.map((job) => {
                 return (
                   <div
                     className="urgentHiring mr-3"
-                    style={{ padding: "0", width: 400 }}
+                    style={{
+                      padding: "0",
+                      width: 400,
+                    }}
                   >
                     <Link
                       to={"/job/" + job.job_id}
@@ -253,9 +205,7 @@ function Homepage() {
                         />
                       </div>
                       <div className="col-9 urgent">
-                        <h5 style={{ wordWrap: "break-word" }}>
-                          {job.job_name}
-                        </h5>
+                        <h5>{job.job_name}</h5>
                         <p>{job.company_name}</p>
                         <ul
                           class="p-0"
@@ -300,6 +250,7 @@ function Homepage() {
           </div>
         </div>
       </div>
+
       {/* Typical Employers */}
 
       {/* infinite loop */}
@@ -322,10 +273,13 @@ function Homepage() {
         >
           <SwiperSlide>
             <div className="col" style={{ padding: "10px 10px" }}>
-              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
+              <div
+                className="card"
+                style={{ width: "80%", margin: "0 auto", height: "220px" }}
+              >
                 <img
                   className="card-img-top img-thumbnail"
-                  src={Logo2}
+                  src="https://jobsgo.vn/media/img/employer/66341-200x200.jpg?v=1625567586"
                   alt=""
                   style={{
                     width: "100px",
@@ -339,11 +293,11 @@ function Homepage() {
                   style={{ textAlign: "center", padding: "10px" }}
                 >
                   <h6 className="card_title" style={{ fontSize: "15px" }}>
-                    Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
+                    Công Ty TNHH Công Nghệ VOOC
                   </h6>
                   <p className="card-text">
                     <i className="fas fa-map-marker-alt mr-2" />
-                    Hà Nội
+                    Đà Nẵng
                   </p>
                 </div>
               </div>
@@ -351,10 +305,13 @@ function Homepage() {
           </SwiperSlide>
           <SwiperSlide>
             <div className="col" style={{ padding: "10px 10px" }}>
-              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
+              <div
+                className="card"
+                style={{ width: "80%", margin: "0 auto", height: "220px" }}
+              >
                 <img
                   className="card-img-top img-thumbnail"
-                  src={Logo2}
+                  src="https://jobsgo.vn/media/img/employer/1127-200x200.jpg?v=1673407921"
                   alt=""
                   style={{
                     width: "100px",
@@ -368,11 +325,11 @@ function Homepage() {
                   style={{ textAlign: "center", padding: "10px" }}
                 >
                   <h6 className="card_title" style={{ fontSize: "15px" }}>
-                    Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
+                    Công Ty TNHH Yakult Việt Nam
                   </h6>
                   <p className="card-text">
                     <i className="fas fa-map-marker-alt mr-2" />
-                    Hà Nội
+                    Đà Nẵng
                   </p>
                 </div>
               </div>
@@ -380,10 +337,13 @@ function Homepage() {
           </SwiperSlide>
           <SwiperSlide>
             <div className="col" style={{ padding: "10px 10px" }}>
-              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
+              <div
+                className="card"
+                style={{ width: "80%", margin: "0 auto", height: "220px" }}
+              >
                 <img
                   className="card-img-top img-thumbnail"
-                  src={Logo2}
+                  src="https://jobsgo.vn/media/img/employer/2570-200x200.jpg?v=1650429438"
                   alt=""
                   style={{
                     width: "100px",
@@ -397,11 +357,11 @@ function Homepage() {
                   style={{ textAlign: "center", padding: "10px" }}
                 >
                   <h6 className="card_title" style={{ fontSize: "15px" }}>
-                    Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
+                    Công Ty Cổ Phần Tara
                   </h6>
                   <p className="card-text">
                     <i className="fas fa-map-marker-alt mr-2" />
-                    Hà Nội
+                    Đà Nẵng
                   </p>
                 </div>
               </div>
@@ -409,10 +369,13 @@ function Homepage() {
           </SwiperSlide>
           <SwiperSlide>
             <div className="col" style={{ padding: "10px 10px" }}>
-              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
+              <div
+                className="card"
+                style={{ width: "80%", margin: "0 auto", height: "220px" }}
+              >
                 <img
                   className="card-img-top img-thumbnail"
-                  src={Logo2}
+                  src="https://jobsgo.vn/media/img/employer/110-200x200.jpg?v=1649150486"
                   alt=""
                   style={{
                     width: "100px",
@@ -426,11 +389,11 @@ function Homepage() {
                   style={{ textAlign: "center", padding: "10px" }}
                 >
                   <h6 className="card_title" style={{ fontSize: "15px" }}>
-                    Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
+                    Công Ty Cổ Phần FPT
                   </h6>
                   <p className="card-text">
                     <i className="fas fa-map-marker-alt mr-2" />
-                    Hà Nội
+                    Đà Nẵng
                   </p>
                 </div>
               </div>
@@ -438,10 +401,13 @@ function Homepage() {
           </SwiperSlide>
           <SwiperSlide>
             <div className="col" style={{ padding: "10px 10px" }}>
-              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
+              <div
+                className="card"
+                style={{ width: "80%", margin: "0 auto", height: "220px" }}
+              >
                 <img
                   className="card-img-top img-thumbnail"
-                  src={Logo2}
+                  src="https://jobsgo.vn/media/img/employer/53425-200x200.jpg?v=1657894629"
                   alt=""
                   style={{
                     width: "100px",
@@ -455,11 +421,11 @@ function Homepage() {
                   style={{ textAlign: "center", padding: "10px" }}
                 >
                   <h6 className="card_title" style={{ fontSize: "15px" }}>
-                    Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
+                    Công Ty Cổ Phần One Mount Group
                   </h6>
                   <p className="card-text">
                     <i className="fas fa-map-marker-alt mr-2" />
-                    Hà Nội
+                    Đà Nẵng
                   </p>
                 </div>
               </div>
@@ -467,10 +433,13 @@ function Homepage() {
           </SwiperSlide>
           <SwiperSlide>
             <div className="col" style={{ padding: "10px 10px" }}>
-              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
+              <div
+                className="card"
+                style={{ width: "80%", margin: "0 auto", height: "220px" }}
+              >
                 <img
                   className="card-img-top img-thumbnail"
-                  src={Logo2}
+                  src="https://jobsgo.vn/media/img/employer/63850-200x200.jpg?v=1632221134"
                   alt=""
                   style={{
                     width: "100px",
@@ -484,11 +453,11 @@ function Homepage() {
                   style={{ textAlign: "center", padding: "10px" }}
                 >
                   <h6 className="card_title" style={{ fontSize: "15px" }}>
-                    Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
+                    Công Ty Cổ Phần Getbee
                   </h6>
                   <p className="card-text">
                     <i className="fas fa-map-marker-alt mr-2" />
-                    Hà Nội
+                    Đà Nẵng
                   </p>
                 </div>
               </div>
@@ -496,10 +465,13 @@ function Homepage() {
           </SwiperSlide>
           <SwiperSlide>
             <div className="col" style={{ padding: "10px 10px" }}>
-              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
+              <div
+                className="card"
+                style={{ width: "80%", margin: "0 auto", height: "220px" }}
+              >
                 <img
                   className="card-img-top img-thumbnail"
-                  src={Logo2}
+                  src="https://jobsgo.vn/media/img/employer/5442-200x200.jpg?v=1668400682"
                   alt=""
                   style={{
                     width: "100px",
@@ -513,40 +485,11 @@ function Homepage() {
                   style={{ textAlign: "center", padding: "10px" }}
                 >
                   <h6 className="card_title" style={{ fontSize: "15px" }}>
-                    Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
+                    Công Ty Cổ Phần Vinhomes
                   </h6>
                   <p className="card-text">
                     <i className="fas fa-map-marker-alt mr-2" />
-                    Hà Nội
-                  </p>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="col" style={{ padding: "10px 10px" }}>
-              <div className="card" style={{ width: "80%", margin: "0 auto" }}>
-                <img
-                  className="card-img-top img-thumbnail"
-                  src={Logo2}
-                  alt=""
-                  style={{
-                    width: "100px",
-                    height: "100px",
-                    margin: "0 auto",
-                    objectFit: "cover",
-                  }}
-                />
-                <div
-                  className="card_body"
-                  style={{ textAlign: "center", padding: "10px" }}
-                >
-                  <h6 className="card_title" style={{ fontSize: "15px" }}>
-                    Công Ty TNHH Bảo Hiểm Nhân Thọ Prudential Việt Nam
-                  </h6>
-                  <p className="card-text">
-                    <i className="fas fa-map-marker-alt mr-2" />
-                    Hà Nội
+                    Đà Nẵng
                   </p>
                 </div>
               </div>
@@ -558,7 +501,7 @@ function Homepage() {
 
       {/* Việc làm gợi ý */}
       <div
-        className="container-fluid"
+        className="container-fluid "
         style={{
           backgroundColor: "#f8f9fa",
           paddingLeft: "124.5px",
@@ -571,17 +514,16 @@ function Homepage() {
             fontWeight: "bold",
           }}
         >
-          Việc làm theo kỹ năng lập trình
+          Việc làm nổi bật
         </h4>
 
-        <div className="job_urgent">
+        <div className="job_urgent ">
           <div
             className="row d-flex "
             style={{
               margin: "0 auto",
             }}
           >
-            {/* List Job */}
             {jobSkill.length > 0 &&
               jobSkill.map((job) => {
                 return (
@@ -595,7 +537,11 @@ function Homepage() {
                     <Link
                       to={"/job/" + job.job_id}
                       style={{ display: "flex", textDecoration: "none" }}
+                      className="position-relative"
                     >
+                      <div class="ribbon-wrapper">
+                        <div class="ribbon bg-danger">hot</div>
+                      </div>
                       <div className="col-3">
                         <img
                           src={Logo}
@@ -775,9 +721,8 @@ function Homepage() {
         </div>
       </div>
 
-      {/* Việc làm nổi bật */}
       <div
-        className="container-fluid "
+        className="container-fluid"
         style={{
           backgroundColor: "#f8f9fa",
           paddingLeft: "124.5px",
@@ -790,34 +735,22 @@ function Homepage() {
             fontWeight: "bold",
           }}
         >
-          Việc làm nổi bật
+          Việc làm mới nhất
         </h4>
-
-        <div className="job_urgent ">
-          <div
-            className="row d-flex "
-            style={{
-              margin: "0 auto",
-            }}
-          >
-            {jobSkill.length > 0 &&
-              jobSkill.map((job) => {
+        <div className="job_urgent">
+          <div className="row d-flex " style={{ margin: "0 auto" }}>
+            {/* List Job */}
+            {jobs.length > 0 &&
+              jobs.map((job) => {
                 return (
                   <div
                     className="urgentHiring mr-3"
-                    style={{
-                      padding: "0",
-                      width: 400,
-                    }}
+                    style={{ padding: "0", width: 400 }}
                   >
                     <Link
                       to={"/job/" + job.job_id}
                       style={{ display: "flex", textDecoration: "none" }}
-                      className="position-relative"
                     >
-                      <div class="ribbon-wrapper">
-                        <div class="ribbon bg-danger">hot</div>
-                      </div>
                       <div className="col-3">
                         <img
                           src={Logo}
@@ -830,7 +763,9 @@ function Homepage() {
                         />
                       </div>
                       <div className="col-9 urgent">
-                        <h5>{job.job_name}</h5>
+                        <h5 style={{ wordWrap: "break-word" }}>
+                          {job.job_name}
+                        </h5>
                         <p>{job.company_name}</p>
                         <ul
                           class="p-0"
@@ -875,6 +810,7 @@ function Homepage() {
           </div>
         </div>
       </div>
+      {/* Việc làm nổi bật */}
 
       <div
         class="containerr"

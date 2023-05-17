@@ -713,7 +713,7 @@ function UpdateCV() {
       )
       .then((res) => {
         console.log(res.data);
-        if (res.data.message == "considered") {
+        if (res.data.message.includes("considered")) {
           alert(
             "CV đang được xem xét trong mục công việc, không thể chỉnh sửa"
           );

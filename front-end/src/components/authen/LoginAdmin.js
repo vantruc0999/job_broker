@@ -21,8 +21,7 @@ function LoginAdmin() {
     const re =
       /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-    var regexPass =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+    var regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
     let flag = true;
     if (!re.test(inputs.email)) {
@@ -38,10 +37,10 @@ function LoginAdmin() {
       errorSubmit.email = "Please enter your email";
     }
 
-    if (!regexPass.test(inputs.password)) {
-      flag = false;
-      errorSubmit.password = "Invalid password format";
-    }
+    // if (!regexPass.test(inputs.password)) {
+    //   flag = false;
+    //   errorSubmit.password = "Invalid password format";
+    // }
     if (inputs.password === undefined) {
       flag = false;
       errorSubmit.password = "Please enter your password";

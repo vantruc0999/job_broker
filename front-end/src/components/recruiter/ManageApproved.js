@@ -143,7 +143,7 @@ function ManageApproved() {
                     }}
                   >
                     <h5 className="card-title" style={{ fontSize: "25px" }}>
-                      Quản lý ứng viên dã phê duyệt
+                      Quản lý ứng viên
                     </h5>
                   </div>
 

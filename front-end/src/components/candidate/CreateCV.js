@@ -5,7 +5,7 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useNavigate } from "react-router-dom";
 import "../../assets/css/inputCV.css";
-import { useParams } from "react-router-dom";
+
 const animatedComponents = makeAnimated();
 
 const arraySkill = [
@@ -22,10 +22,8 @@ const arraySkill2 = [
   { value: 4, label: "Tiếng Nga" },
 ];
 function CreateCV() {
-  let params = useParams();
   const navigate = useNavigate();
   const tx = document.getElementById("exp_input");
-  console.log(params.id);
   if (tx) {
     tx.setAttribute(
       "style",
@@ -253,10 +251,7 @@ function CreateCV() {
       <>
         <div className="content_form">
           <label class="form-label">Kỹ năng</label>
-          <AnimatedMulti
-            style={{ width: 300 }}
-            parentCallback={handleSkillInput}
-          ></AnimatedMulti>
+          <AnimatedMulti parentCallback={handleSkillInput}></AnimatedMulti>
         </div>
       </>
     );
@@ -484,7 +479,7 @@ function CreateCV() {
                     <input
                       className="form_input"
                       type="text"
-                      placeholder="Ngành học"
+                      placeholder="Trường học"
                       value={education.specialize}
                       onChange={(e) =>
                         handleEduInputChange(
@@ -499,7 +494,7 @@ function CreateCV() {
                     <input
                       className="form_input"
                       type="text"
-                      placeholder="Học vấn"
+                      placeholder="Ngành học"
                       value={education.school}
                       onChange={(e) =>
                         handleEduInputChange(index, "school", e.target.value)
@@ -642,7 +637,7 @@ function CreateCV() {
       education_major: education[0].specialize,
       education_description: education[0].rank,
       certificate: certificate[0].title,
-      template: params.id,
+      template: 1,
       image: "",
       experience_project: experience_project,
       experience_company: experience_company,

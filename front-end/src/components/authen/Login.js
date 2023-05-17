@@ -19,10 +19,9 @@ function Login() {
     let errorSubmit = {};
     const re =
       /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    
-    var regexPass =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
-   
+
+    var regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
     let flag = true;
     if (!re.test(inputs.email)) {
       flag = false;
@@ -37,10 +36,10 @@ function Login() {
       errorSubmit.email = "Please enter your email";
     }
 
-    if (!regexPass.test(inputs.password)) {
-      flag = false;
-      errorSubmit.password = "Invalid password format";
-    }
+    // if (!regexPass.test(inputs.password)) {
+    //   flag = false;
+    //   errorSubmit.password = "Invalid password format";
+    // }
     if (inputs.password === undefined) {
       flag = false;
       errorSubmit.password = "Please enter your password";
@@ -49,7 +48,6 @@ function Login() {
       flag = false;
       errorSubmit.password = "Please enter your password";
     }
-    
 
     if (!flag) {
       setErrors(errorSubmit);
@@ -73,12 +71,12 @@ function Login() {
               email: "",
               password: "",
             });
-            localStorage.setItem("user",JSON.stringify(res.data))
+            localStorage.setItem("user", JSON.stringify(res.data));
             alert(res.data.message);
-            if(res.data.role === "candidate"){
-              navigate("/homeCandidate")
-            }else if(res.data.role === "recruiter"){
-              navigate("/homeRecruiter")
+            if (res.data.role === "candidate") {
+              navigate("/homeCandidate");
+            } else if (res.data.role === "recruiter") {
+              navigate("/homeRecruiter");
             }
           }
         })
@@ -123,7 +121,7 @@ function Login() {
                   value={inputs.password}
                   onChange={handleInput}
                 />
-                 <p style={{ color: "red" }}>{errors.password}</p>
+                <p style={{ color: "red" }}>{errors.password}</p>
               </div>
             </div>
             <div className="auth-form__aside">
@@ -139,7 +137,9 @@ function Login() {
             </div>
             <div className="auth-form__controls">
               <Link to="/register">
-              <button className="btn auth-form__controls-back">SIGN UP</button>
+                <button className="btn auth-form__controls-back">
+                  SIGN UP
+                </button>
               </Link>
               <button className="btn btn--primary ">LOGIN</button>
             </div>

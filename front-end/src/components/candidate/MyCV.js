@@ -70,6 +70,23 @@ function MyCV() {
       render();
     }
   };
+  const handleDelte = async (e) => {
+    console.log(e.target.id);
+    await axios
+      .post(
+        `http://127.0.0.1:8000/api/candidate/delete-cv/` + e.target.id,
+        null,
+        config
+      )
+      .then((res) => {
+        console.log(res.data);
+        setStatus(res.data);
+        if (res.data.message.includes("succesfully")) {
+          alert(res.data.message);
+        }
+      });
+    render();
+  };
   const renderResume = () => {
     if (Object.keys(cv).length > 0) {
       return cv.map((value, key) => {
@@ -127,9 +144,15 @@ function MyCV() {
                     </a>
                   </Link>
 
-                  <a href="/" class="btn btn-danger btn-block">
+                  <p
+                    onClick={(e) => {
+                      handleDelte(e);
+                    }}
+                    id={value.resume_id}
+                    class="btn btn-danger btn-block"
+                  >
                     <b>Xóa</b>
-                  </a>
+                  </p>
                 </div>
               </div>
             </div>
@@ -146,19 +169,19 @@ function MyCV() {
           style={{ width: "100%", textAlign: "center" }}
         >
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-dashboard" /> Bảng tin
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-upload" /> Tải lên CV có sẵn
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-list-alt" /> Hoàn thiện CV
@@ -179,19 +202,19 @@ function MyCV() {
             </div>
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-exclamation-triangle" /> Sửa lỗi CV
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-primary"
           >
             <i className="fa fa-line-chart" /> CV của bạn
           </a>
           <a
-            href=""
+            href="/"
             target="_blank"
             className="border-primary text-uppercase text-bold btn  btn-default"
           >

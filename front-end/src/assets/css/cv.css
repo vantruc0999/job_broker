@@ -31,7 +31,7 @@
   height: auto;
   display: flex;
   margin: 50px auto;
- border: 1px solid;
+  border: 1px solid;
 }
 
 .resume .resume_left {
@@ -68,6 +68,11 @@
 .resume .resume_item {
   padding: 25px 0;
   border-bottom: 2px solid #b1eaff;
+}
+
+.resume_item2 {
+  padding: 25px 0;
+  border-bottom: 2px solid #434e5e;
 }
 
 .resume .resume_left .resume_item:last-child,
@@ -391,9 +396,8 @@
   color: #fff;
 }
 .summary-child textarea {
-  padding: 0 10px ;
+  padding: 0 10px;
   border: none;
   background: #0bb5f4;
   color: #fff;
 }
-

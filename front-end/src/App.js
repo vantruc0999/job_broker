@@ -54,7 +54,9 @@ import UpdateJob from "./components/recruiter/UpdateJob";
 import ApplyJob from "./components/candidate/ApplyJob";
 import ManageApproved from "./components/recruiter/ManageApproved";
 import ManageDeClined from "./components/recruiter/ManageDeclined";
-import ChooseTemplate from "./components/candidate/ChooseTempalte";
+import ChooseTemplate from "./components/candidate/ChooseTemplate";
+import HistoryBuyPackage from "./components/admin/HistoryBuyPackage";
+import FileCV2 from "./components/candidate/FileCV2";
 function App(props) {
   let param1 = useLocation();
   return (
@@ -86,6 +88,7 @@ function App(props) {
           <Route path="/allCV/UpdateCv/:id" element={<UpdateCv />} />
           <Route path="/applyJob" element={<ApplyJob />} />
           <Route path="/listJob/job/:id" element={<Test />} />
+          <Route path="/fileCV2" element={<FileCV2 />} />
         </Route>
         {/* ---------- */}
 
@@ -118,6 +121,7 @@ function App(props) {
           <Route path="/admincv" element={<AdminCV />} />
           <Route path="/admincv/fileCV/:id" element={<FileCV />} />
           <Route path="/package" element={<Package />} />
+          <Route path="/historyBuy" element={<HistoryBuyPackage />} />
         </Route>
       </Routes>
       {/* {props.children} */}

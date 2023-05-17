@@ -108,7 +108,6 @@ function Header() {
   }
   const checkLogin = () => {
     if (!user) {
-      console.log("oke");
       return (
         <>
           <a
@@ -474,6 +473,12 @@ function Header() {
                   <Link to="/package" className="nav-link">
                     <i className="nav-icon fas fa-th" />
                     <p>Gói dịch vụ</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/historyBuy" className="nav-link">
+                    <i className="nav-icon fas fa-th" />
+                    <p>Lịch sử giao dịch</p>
                   </Link>
                 </li>
                 <li className="nav-item" onClick={logout}>

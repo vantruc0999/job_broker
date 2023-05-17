@@ -131,7 +131,7 @@ function ManageDeClined() {
   };
   return (
     <div>
-          {openModal && <ModalCV closeModal={setOpenModal} modalId={modalId} />}
+      {openModal && <ModalCV closeModal={setOpenModal} modalId={modalId} />}
       <Sidebar />
       <main id="main" className="main" style={{ minHeight: "665px" }}>
         <section className="section">

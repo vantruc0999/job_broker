@@ -103,3 +103,25 @@ textarea#story:focus {
 .content_form:hover > .addition {
   display: block;
 }
+
+.avatar {
+  position: relative;
+}
+.avatar .round {
+  position: absolute;
+  bottom: 11%;
+  right: 38%;
+  background: #e5dcdc;
+  /* background: greenyellow; */
+  width: 32px;
+  height: 32px;
+  line-height: 33px;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 50%;
+}
+.avatar .round input[type="file"] {
+  position: absolute;
+  transform: scale(2);
+  opacity: 0;
+}

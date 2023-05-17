@@ -3,24 +3,63 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "../../assets/css/loginCruiter.css";
 
+import "../../assets/css/inputCV.css";
+import {
+  ref,
+  uploadBytes,
+  listAll,
+  list,
+  getDownloadURL,
+} from "firebase/storage";
+import { v4 } from "uuid";
+import { storage } from "../Firebase";
+
 function RegisterCruiter() {
   const [inputs, setInputs] = useState("");
   const [errors, setErrors] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [file, setFile] = useState("");
+  // const [file, setFile] = useState("");
+
+  const [urlImage, setUrlImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+  const imageListRef = ref(storage, "image/");
   const handleInput = (e) => {
     let nameInput = e.target.name;
     let value = e.target.value;
     setInputs((state) => ({ ...state, [nameInput]: value }));
   };
-  const handleInputFile = (e) => {
-    let file = e.target.files;
-    let reader = new FileReader();
-    reader.onload = (e) => {
-      setAvatar(e.target.result);
-      setFile(file[0]);
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>",file);
+    // setImageUpload(file);
+
+    const reader = new FileReader();
+
+    console.log("oke");
+    console.log(reader);
+    reader.onload = () => {
+      setImagePreview(reader.result);
+      console.log(reader.result);
+      uploadFile(file);
     };
-    reader.readAsDataURL(file[0]);
+    reader.readAsDataURL(file);
+  };
+  const uploadFile = async (imageUpload) => {
+    if (imageUpload == null) return;
+    const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+    await uploadBytes(imageRef, imageUpload).then((snaphsot) => {
+      getDownloadURL(snaphsot.ref).then((url) => {
+        console.log("----------------");
+        console.log("3");
+        console.log(snaphsot);
+        console.log(imageRef);
+        console.log(url);
+        console.log(imageUpload);
+        console.log("----------------");
+        setUrlImage(url);
+      });
+    });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +67,7 @@ function RegisterCruiter() {
     const re =
       /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-    // var regexPass =/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    var regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
     let flag = true;
 
@@ -50,10 +89,10 @@ function RegisterCruiter() {
       errorSubmit.recruiter_name = "Please enter your recruiter ";
     }
 
-    if (!re.test(inputs.email)) {
-      flag = false;
-      errorSubmit.email = "Invalid email format";
-    }
+    // if (!re.test(inputs.email)) {
+    //   flag = false;
+    //   errorSubmit.email = "Invalid email format";
+    // }
     if (inputs.email === undefined) {
       flag = false;
       errorSubmit.email = "Please enter your email";
@@ -63,10 +102,10 @@ function RegisterCruiter() {
       errorSubmit.email = "Please enter your email";
     }
 
-    // if (!regexPass.test(inputs.password)) {
-    //   flag = false;
-    //   errorSubmit.password = "Invalid password format";
-    // }
+    if (!regexPass.test(inputs.password)) {
+      flag = false;
+      errorSubmit.password = "Invalid password format";
+    }
     if (inputs.password === undefined) {
       flag = false;
       errorSubmit.password = "Please enter your password";
@@ -101,19 +140,19 @@ function RegisterCruiter() {
       errorSubmit.phone = "Invalid phone number";
     }
 
-    if (!file) {
-      // flag = false;
-      errorSubmit.avatar = "file not uploaded yet";
-    } else {
-      let img = ["png", "jpg", "jpeg", "PNG", "JPG"];
-      if (file.size > 1024 * 1024) {
-        // flag = false;
-        errorSubmit.avatar = "File quá dung lượng";
-      } else if (!img.includes(file.name.split(".").pop())) {
-        // flag = false;
-        errorSubmit.avatar("This not image");
-      }
-    }
+    // if (!file) {
+    //   // flag = false;
+    //   errorSubmit.avatar = "file not uploaded yet";
+    // } else {
+    //   let img = ["png", "jpg", "jpeg", "PNG", "JPG"];
+    //   if (file.size > 1024 * 1024) {
+    //     // flag = false;
+    //     errorSubmit.avatar = "File quá dung lượng";
+    //   } else if (!img.includes(file.name.split(".").pop())) {
+    //     // flag = false;
+    //     errorSubmit.avatar("This not image");
+    //   }
+    // }
 
     if (!flag) {
       setErrors(errorSubmit);
@@ -126,8 +165,9 @@ function RegisterCruiter() {
         email: inputs.email,
         password: inputs.password,
         phone: inputs.phone,
-        image: inputs.image,
+        image: urlImage,
       };
+      console.log("<<<<<<<<<<<<<<", data);
       let url = "http://127.0.0.1:8000/api/recruiter/register";
       axios
         .post(url, data)
@@ -265,7 +305,7 @@ function RegisterCruiter() {
                         className="form-control"
                         id="avatar"
                         multiple
-                        onChange={handleInputFile}
+                        onChange={handleImageUpload}
                       />
                       <p style={{ color: "red" }}>{errors.avatar}</p>
                       {/* <label for="floatingInput">Số điện thoại</label> */}

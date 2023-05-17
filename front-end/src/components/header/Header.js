@@ -475,6 +475,12 @@ function Header() {
                     <p>Gói dịch vụ</p>
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link to="/historyBuy" className="nav-link">
+                    <i className="nav-icon fas fa-th" />
+                    <p>Lịch sử giao dịch</p>
+                  </Link>
+                </li>
                 <li className="nav-item" onClick={logout}>
                   <a className="nav-link" style={{ cursor: "pointer" }}>
                     <i className="nav-icon fas fa-th" />

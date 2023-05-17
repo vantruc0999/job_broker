@@ -4,7 +4,7 @@ import axios from "axios";
 import "../../assets/css/cv.css";
 import "../../assets/css/modalCV.css";
 
-function ModalCV({ closeModal,modalId}) {
+function ModalCV({ closeModal, modalId }) {
   const [resume, setResume] = useState("");
   const [id, setId] = useState([]);
   const [info, setInfo] = useState("");
@@ -18,10 +18,7 @@ function ModalCV({ closeModal,modalId}) {
   };
   useEffect(() => {
     axios
-      .get(
-        `http://127.0.0.1:8000/api/candidate/show-detail/`+modalId ,
-        config
-      )
+      .get(`http://127.0.0.1:8000/api/candidate/show-detail/` + modalId, config)
       .then((res) => {
         console.log(res.data);
         setResume(res.data);
@@ -102,7 +99,7 @@ function ModalCV({ closeModal,modalId}) {
       return (
         <>
           <div id="vn">
-            <div className="resume" style={{width: '100%', margin: 0}}>
+            <div className="resume" style={{ width: "100%", margin: 0 }}>
               <div className="lang">
                 <img src="en.png" alt="" />
               </div>
@@ -247,8 +244,8 @@ function ModalCV({ closeModal,modalId}) {
     <>
       <div className="modalBackground" onClick={() => closeModal(false)}>
         <div className="modalContainer" onClick={(e) => e.stopPropagation()}>
-            {/* <button onClick={()=>closeModal(false)}>X</button> */}
-            {renderResume()}
+          {/* <button onClick={()=>closeModal(false)}>X</button> */}
+          {renderResume()}
         </div>
       </div>
     </>

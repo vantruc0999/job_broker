@@ -70,7 +70,7 @@ function MyCV() {
       render();
     }
   };
-  const handleDelte = async(e) => {
+  const handleDelte = async (e) => {
     console.log(e.target.id);
     await axios
       .post(
@@ -80,12 +80,12 @@ function MyCV() {
       )
       .then((res) => {
         console.log(res.data);
-        if(res.data.message.includes("succesfully")){
-          alert(res.data.message)
-        }
         setStatus(res.data);
+        if (res.data.message.includes("succesfully")) {
+          alert(res.data.message);
+        }
       });
-      render()
+    render();
   };
   const renderResume = () => {
     if (Object.keys(cv).length > 0) {
@@ -144,7 +144,7 @@ function MyCV() {
                     </a>
                   </Link>
 
-                  <a
+                  <p
                     onClick={(e) => {
                       handleDelte(e);
                     }}
@@ -152,7 +152,7 @@ function MyCV() {
                     class="btn btn-danger btn-block"
                   >
                     <b>Xóa</b>
-                  </a>
+                  </p>
                 </div>
               </div>
             </div>
@@ -169,19 +169,19 @@ function MyCV() {
           style={{ width: "100%", textAlign: "center" }}
         >
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-dashboard" /> Bảng tin
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-upload" /> Tải lên CV có sẵn
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-list-alt" /> Hoàn thiện CV
@@ -202,19 +202,19 @@ function MyCV() {
             </div>
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-default"
           >
             <i className="fa fa-exclamation-triangle" /> Sửa lỗi CV
           </a>
           <a
-            href=""
+            href="/"
             className="border-primary text-uppercase text-bold btn btn-primary"
           >
             <i className="fa fa-line-chart" /> CV của bạn
           </a>
           <a
-            href=""
+            href="/"
             target="_blank"
             className="border-primary text-uppercase text-bold btn  btn-default"
           >
@@ -228,10 +228,7 @@ function MyCV() {
         >
           <div className="job_cv">
             <h3 style={{ paddingTop: 20 }}>CV của bạn</h3>
-            <div
-              className="row justify-content-between"
-              style={{ margin: "20px auto" }}
-            >
+            <div className="row" style={{ margin: "20px auto" }}>
               {renderResume()}
             </div>
           </div>

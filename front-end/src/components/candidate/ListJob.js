@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 const ListJob = () => {
   const [suitable, setSuitable] = useState([]);
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>.",suitable);
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
     let config = {
@@ -19,13 +20,18 @@ const ListJob = () => {
       });
   }, []);
   console.log(suitable);
-
+  
   const renderSuitable = () => {
+    var suitableArr = []
     if ( Object.keys(suitable).length > 0) {
-      console.log(typeof(suitable));
-      const suitableArr = Array.from(Object.values(suitable));
+      if(suitable?.jobs){
+        suitableArr = suitable.jobs
+      } else {
+        suitableArr = Array.from(Object.values(suitable));
+      }
       // suitable && suitable.jobs &&
-      return suitableArr.map((value, key) => {
+      console.log("aaaaaaaaaaaaaaaaaa", suitableArr);
+      return suitableArr?.map((value, key) => {
         return (
           <>
              <Link to={"/listJob/job/" + value.job_id} style={{ textDecoration: "none", margin: "5px 0" }}

@@ -51,6 +51,7 @@ const ApplyJob = () => {
         console.log(value.job_id);
         return (
           <>
+            
               <div className="card">
                 <div className="row g-0">
                   <div className="col-md-2">

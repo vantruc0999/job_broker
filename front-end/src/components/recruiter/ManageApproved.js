@@ -98,7 +98,7 @@ function ManageApproved() {
                 <td>{value.skills}</td>
                 <td>{value.status}</td>
                 <td class="project-actions text-right">
-                <a
+                  <a
                     onClick={() => {
                       setOpenModal(true);
                       handleOpenModal(value.resume_id);
@@ -127,7 +127,7 @@ function ManageApproved() {
   };
   return (
     <div>
-          {openModal && <ModalCV closeModal={setOpenModal} modalId={modalId} />}
+      {openModal && <ModalCV closeModal={setOpenModal} modalId={modalId} />}
       <Sidebar />
       <main id="main" className="main" style={{ minHeight: "665px" }}>
         <section className="section">

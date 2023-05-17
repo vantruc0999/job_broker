@@ -48,7 +48,7 @@ section {
   line-height: 1.4;
 }
 section .row {
-  background-color: #e9f0ff;
+  /* background-color: #e9f0ff; */
   list-style: none;
   padding: 15px 20px;
   /* border-radius: 5px; */

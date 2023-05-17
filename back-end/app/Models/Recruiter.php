@@ -21,6 +21,7 @@ class Recruiter extends Model
         'email',
         'password',
         'phone',
+        'image'
     ];
 
     /**

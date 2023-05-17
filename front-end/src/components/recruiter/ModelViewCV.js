@@ -164,63 +164,6 @@ const ModelViewCV = () => {
                     </div>
                     <ul style={{ padding: "0" }}>{renderSkill()}</ul>
                   </div>
-                  <div className="resume_item resume_social">
-                    <div className="title">
-                      <p className="bold">Mạng xã hội</p>
-                    </div>
-                    <ul style={{ padding: "0" }}>
-                      <li>
-                        <div className="icon">
-                          <i className="fab fa-facebook-square" />
-                        </div>
-                        <div className="data">
-                          <p className="semi-bold">Facebook</p>
-                          <p>
-                            <a href="" target="_blank">
-                              kim.thang.26
-                            </a>
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="icon">
-                          <i className="fab fa-skype" />
-                        </div>
-                        <div className="data">
-                          <p className="semi-bold">Skype</p>
-                          <p>
-                            <a href="#">kim.thang.26</a>
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="icon">
-                          <i className="fab fa-youtube" />
-                        </div>
-                        <div className="data">
-                          <p className="semi-bold">Youtube</p>
-                          <p>
-                            <a href="" target="_blank">
-                              kimthang
-                            </a>
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="icon">
-                          <i className="fab fa-linkedin" />
-                        </div>
-                        <div className="data">
-                          <p className="semi-bold">Linkedin</p>
-                          <p>
-                            <a href="" target="_blank">
-                              kim-thang
-                            </a>
-                          </p>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
                 </div>
               </div>
               <div className="resume_right">

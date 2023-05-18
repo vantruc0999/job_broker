@@ -54,6 +54,14 @@ function Sidebar() {
                 </a>
               </Link>
             </li>
+            <li class="nav-item">
+              <Link to="/mail">
+                <a class="nav-link " href="index.html">
+                  <i class="bi bi-circle"></i>
+                  <span>Mail </span>
+                </a>
+              </Link>
+            </li>
           </ul>
         </aside>
       </div>

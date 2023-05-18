@@ -369,10 +369,21 @@ function FileCV() {
                                   <li>
                                     <div className="date"></div>
                                     <div className="info">
-                                      <p className="semi-bold">Trường học:</p>
-                                      <p>Ngành học: </p>
-                                      <p>Niên khóa: </p>
-                                      <p>Xếp loại: </p>
+                                      <p>
+                                        Trường học:{" "}
+                                        {resume.resume.education_major}
+                                      </p>
+                                      <p>
+                                        Ngành học: {resume.resume.education}
+                                      </p>
+                                      <p>
+                                        Niên khóa:{" "}
+                                        {resume.resume.education_year}
+                                      </p>
+                                      <p>
+                                        Xếp loại:{" "}
+                                        {resume.resume.education_description}
+                                      </p>
                                     </div>
                                   </li>
                                 </ul>
@@ -390,7 +401,7 @@ function FileCV() {
                                 <ul>
                                   <li>
                                     <div className="date">
-                                      Chứng chỉ: TOEIC 500
+                                    <p>Chứng chỉ: {resume.resume.certificate}</p>
                                     </div>
                                   </li>
                                 </ul>
@@ -408,8 +419,7 @@ function FileCV() {
                               Các kỹ năng
                             </h4>
                             <ul class="list-unstyled mb-4 resume_work2">
-                              <li class="mb-2">JAVA</li>
-                              <li class="mb-2">REACT</li>
+                            {renderSkill()}
                             </ul>
                           </div>
 
@@ -418,8 +428,7 @@ function FileCV() {
                               Sở thích
                             </h4>
                             <ul class="list-unstyled">
-                              <li class="mb-2">Học</li>
-                              <li class="mb-2">Hát</li>
+                            {resume.resume.activity}
                             </ul>
                           </div>
 
@@ -428,8 +437,7 @@ function FileCV() {
                               Giải thưởng
                             </h4>
                             <ul class="list-inline">
-                              <li class="mb-2">Khuyến khích</li>
-                              <li class="mb-2">Giải nhì</li>
+                            {resume.resume.hobby}
                             </ul>
                           </div>
                         </div>

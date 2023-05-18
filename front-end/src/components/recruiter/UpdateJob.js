@@ -298,12 +298,12 @@ const AnimatedMulti = (props) => {
       };
       await axios
         .get(
-          `http://127.0.0.1:8000/api/candidate/show-detail/${params.id}`,
+          `http://127.0.0.1:8000/api/job-detail/28/${params.id}`,
           config
         )
         .then((res) => {
-          if (res.data.skill.length > 0) {
-            const arraySkillSelected = res.data.skill.map((item) => {
+          if (res.data.job_detail.skills.length > 0) {
+            const arraySkillSelected = res.data.job_detail.skills.map((item) => {
               return { value: item.skill_id, label: item.skill_name };
             });
             setSkillSelected(arraySkillSelected);

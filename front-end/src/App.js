@@ -56,6 +56,7 @@ import ManageApproved from "./components/recruiter/ManageApproved";
 import ManageDeClined from "./components/recruiter/ManageDeclined";
 import ChooseTemplate from "./components/candidate/ChooseTemplate";
 import HistoryBuyPackage from "./components/admin/HistoryBuyPackage";
+import FormMail from "./components/recruiter/FormMail";
 function App(props) {
   let param1 = useLocation();
   return (
@@ -107,6 +108,8 @@ function App(props) {
           <Route path="/manageApproved/fileCV/:id" element={<FileCV />} />
           <Route path="/manageDeclined" element={<ManageDeClined />} />
           <Route path="/manageDeclined/fileCV/:id" element={<FileCV />} />
+          <Route path="/mail" element={<FormMail />} />
+
         </Route>
 
         {/* ------------ */}

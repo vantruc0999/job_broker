@@ -224,3 +224,7 @@
   position: relative;
   top: 1px;
 }
+
+.swiper-grid-column>.swiper-wrapper{
+  flex-direction: row;
+}

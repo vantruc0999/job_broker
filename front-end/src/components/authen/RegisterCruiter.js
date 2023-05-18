@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import "../../assets/css/loginCruiter.css";
 
 import "../../assets/css/inputCV.css";
@@ -15,6 +16,7 @@ import { v4 } from "uuid";
 import { storage } from "../Firebase";
 
 function RegisterCruiter() {
+  const navigate = useNavigate()
   const [inputs, setInputs] = useState("");
   const [errors, setErrors] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -67,7 +69,7 @@ function RegisterCruiter() {
     const re =
       /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-    var regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    // var regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
     let flag = true;
 
@@ -102,10 +104,10 @@ function RegisterCruiter() {
       errorSubmit.email = "Please enter your email";
     }
 
-    if (!regexPass.test(inputs.password)) {
-      flag = false;
-      errorSubmit.password = "Invalid password format";
-    }
+    // if (!regexPass.test(inputs.password)) {
+    //   flag = false;
+    //   errorSubmit.password = "Invalid password format";
+    // }
     if (inputs.password === undefined) {
       flag = false;
       errorSubmit.password = "Please enter your password";
@@ -186,6 +188,7 @@ function RegisterCruiter() {
               image: "",
             });
             alert(res.data.message);
+            navigate("loginCruiter")
           }
         })
         .catch((errors) => {

@@ -8,7 +8,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "../../assets/css/homepage.css";
 
-import { Pagination, Navigation } from "swiper";
+import { Pagination, Navigation, Grid } from "swiper";
 import axios from "axios";
 import Example2 from "./Example2";
 function Homepage() {
@@ -26,7 +26,7 @@ function Homepage() {
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/highlight-job").then((res) => {
       console.log(res.data);
-      setJobSkill(res.data);
+      setJobSkill(res.data.jobs);
     });
   }, []);
   function handleModalClose(showValue) {
@@ -89,63 +89,71 @@ function Homepage() {
       }
       return suitableArr?.map((value, key) => {
         return (
-          <>
-            <Link
-              to={"/job/" + value.job_id}
-              style={{ display: "flex", textDecoration: "none" }}
+          <SwiperSlide>
+            <div
+              className="urgentHiring mr-3"
+              style={{
+                padding: "0",
+                width: 400,
+              }}
             >
-              <div className="col-3">
-                <img
-                  src={Logo}
-                  alt=""
-                  style={{
-                    width: "90px",
-                    height: "90px",
-                    margin: " 25px auto",
-                  }}
-                />
-              </div>
-              <div className="col-9 urgent">
-                <h5>{value.job_name}</h5>
-                <p>{value.company_name}</p>
-                <ul
-                  class="p-0"
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    overflow: "hidden",
-                    width: "100%",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  <li
-                    class="list-group-item list-group-item-action"
+              <Link
+                to={"/job/" + value.job_id}
+                style={{ display: "flex", textDecoration: "none" }}
+              >
+                <div className="col-3">
+                  <img
+                    src={Logo}
+                    alt=""
                     style={{
-                      width: "100px",
-                      textOverflow: "ellipsis",
+                      width: "90px",
+                      height: "90px",
+                      margin: " 25px auto",
+                    }}
+                  />
+                </div>
+                <div className="col-9 urgent">
+                  <h5>{value.job_name}</h5>
+                  <p>{value.company_name}</p>
+                  <ul
+                    class="p-0"
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      overflow: "hidden",
+                      width: "100%",
+                      whiteSpace: "nowrap",
                     }}
                   >
-                    <p style={{ fontSize: "10px" }}>
-                      <i class="fas fa-map-marker-alt mr-1"></i>
-                      {value.job_location}
-                    </p>
-                  </li>
-                  <li
-                    class="list-group-item list-group-item-action"
-                    style={{
-                      width: "100px",
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    <p style={{ fontSize: "10px" }}>
-                      <i class="fas fa-dollar-sign mr-1"></i>
-                      {value.salary}
-                    </p>
-                  </li>
-                </ul>
-              </div>
-            </Link>
-          </>
+                    <li
+                      class="list-group-item list-group-item-action"
+                      style={{
+                        width: "100px",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      <p style={{ fontSize: "10px" }}>
+                        <i class="fas fa-map-marker-alt mr-1"></i>
+                        {value.job_location}
+                      </p>
+                    </li>
+                    <li
+                      class="list-group-item list-group-item-action"
+                      style={{
+                        width: "100px",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      <p style={{ fontSize: "10px" }}>
+                        <i class="fas fa-dollar-sign mr-1"></i>
+                        {value.salary}
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </Link>
+            </div>
+          </SwiperSlide>
         );
       });
     }
@@ -648,8 +656,8 @@ function Homepage() {
           modules={[Pagination, Navigation]}
           className="mySwiper"
         >
-          {jobSkill.jobs.length > 0 &&
-            jobSkill.jobs.map((job) => {
+          {jobSkill.length > 0 &&
+            jobSkill.map((job) => {
               return (
                 <SwiperSlide>
                   <div
@@ -864,93 +872,91 @@ function Homepage() {
         >
           Việc làm mới nhất
         </h4>
-        <div className="job_urgent">
-          <div className="row d-flex " style={{ margin: "0 auto" }}>
-            <Swiper
-              onSwiper={setSwiperRef}
-              slidesPerView={3}
-              centeredSlides={false}
-              spaceBetween={10}
-              pagination={{
-                type: "fraction",
-              }}
-              navigation={true}
-              modules={[Pagination, Navigation]}
-              className="mySwiper"
-            >
-              {/* List Job */}
-              {jobs.length > 0 &&
-                jobs.map((job) => {
-                  return (
-                    <SwiperSlide>
-                      <div
-                        className="urgentHiring mr-3"
-                        style={{ padding: "0", width: 400 }}
-                      >
-                        <Link
-                          to={"/job/" + job.job_id}
-                          style={{ display: "flex", textDecoration: "none" }}
-                        >
-                          <div className="col-3">
-                            <img
-                              src={Logo}
-                              alt=""
-                              style={{
-                                width: "90px",
-                                height: "90px",
-                                margin: " 25px auto",
-                              }}
-                            />
-                          </div>
-                          <div className="col-9 urgent">
-                            <h5 style={{ wordWrap: "break-word" }}>
-                              {job.job_name}
-                            </h5>
-                            <p>{job.company_name}</p>
-                            <ul
-                              class="p-0"
-                              style={{
-                                display: "flex",
-                                justifyContent: "flex-start",
-                                overflow: "hidden",
-                                width: "100%",
-                                whiteSpace: "nowrap",
-                              }}
-                            >
-                              <li
-                                class="list-group-item list-group-item-action"
-                                style={{
-                                  width: "100px",
-                                  textOverflow: "ellipsis",
-                                }}
-                              >
-                                <p style={{ fontSize: "10px" }}>
-                                  <i class="fas fa-map-marker-alt mr-1"></i>
-                                  {job.job_location}
-                                </p>
-                              </li>
-                              <li
-                                class="list-group-item list-group-item-action"
-                                style={{
-                                  width: "100px",
-                                  textOverflow: "ellipsis",
-                                }}
-                              >
-                                <p style={{ fontSize: "10px" }}>
-                                  <i class="fas fa-dollar-sign mr-1"></i>
-                                  {job.salary}
-                                </p>
-                              </li>
-                            </ul>
-                          </div>
-                        </Link>
+        {/* <div className="job_urgent">
+          <div className="row d-flex " style={{ margin: "0 auto" }}> */}
+        <Swiper
+          slidesPerView={3}
+          grid={{
+            rows: 2,
+          }}
+          spaceBetween={0}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Grid, Pagination]}
+          className="mySwiper"
+        >
+          {/* List Job */}
+          {jobs.length > 0 &&
+            jobs.map((job) => {
+              return (
+                <SwiperSlide>
+                  <div
+                    className="urgentHiring mr-3"
+                    style={{ padding: "0", width: 400 }}
+                  >
+                    <Link
+                      to={"/job/" + job.job_id}
+                      style={{ display: "flex", textDecoration: "none" }}
+                    >
+                      <div className="col-3">
+                        <img
+                          src={Logo}
+                          alt=""
+                          style={{
+                            width: "90px",
+                            height: "90px",
+                            margin: " 25px auto",
+                          }}
+                        />
                       </div>
-                    </SwiperSlide>
-                  );
-                })}
-            </Swiper>
-          </div>
-        </div>
+                      <div className="col-9 urgent">
+                        <h5 style={{ wordWrap: "break-word" }}>
+                          {job.job_name}
+                        </h5>
+                        <p>{job.company_name}</p>
+                        <ul
+                          class="p-0"
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            overflow: "hidden",
+                            width: "100%",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-map-marker-alt mr-1"></i>
+                              {job.job_location}
+                            </p>
+                          </li>
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-dollar-sign mr-1"></i>
+                              {job.salary}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                    </Link>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+        </Swiper>
       </div>
       {/* Việc làm nổi bật */}
 

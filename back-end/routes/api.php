@@ -5,6 +5,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CandidateAuthController;
 use App\Http\Controllers\API\CategoryExamController;
 use App\Http\Controllers\API\CompanyQuestionController;
+use App\Http\Controllers\API\EmailNotificationController;
 use App\Http\Controllers\API\JobApplicationController;
 use App\Http\Controllers\API\JobController;
 use App\Http\Controllers\API\PackageController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\RecruiterAuthController;
 use App\Http\Controllers\API\ResumeController;
 use App\Http\Controllers\API\SkillController;
+use App\Http\Controllers\SendMailController;
 use App\Models\Candidate;
 use App\Models\JobApplication;
 use App\Models\Payment;
@@ -53,7 +55,7 @@ Route::get('skills', [SkillController::class, 'index']);
 
 Route::get('jobs-by-skills/{id}', [JobController::class, 'getJobsByProgrammingSkills']);
 
-Route::post('recruiter/resume-accept/{id}', [JobApplicationController::class, 'acceptApplicationRequest']);
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -85,6 +87,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('job-update/{id}', [JobController::class, 'handleUpdateJob']);
 
         Route::post('resume-decline/{id}', [JobApplicationController::class, 'declineApplicationRequest']);
+        Route::post('resume-accept/{id}', [JobApplicationController::class, 'acceptApplicationRequest']);
 
         Route::get('get-candidates/{id}', [JobApplicationController::class, 'getAllCandidateByJob']);
         Route::get('get-approved-candidates/{id}', [JobApplicationController::class, 'getAllApprovedCandidateByJob']);
@@ -102,6 +105,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::post('check-paid-package',[PaymentController::class, 'checkPaidPackage']);
         Route::post('extend-package',[PaymentController::class, 'extendPackage']);
+
+        Route::post('send-mail', [SendMailController::class, 'sendMail']);
+        Route::post('create-mail', [EmailNotificationController::class, 'store']);
     });
 
     Route::prefix('candidate')->group(function () {

@@ -267,7 +267,120 @@ function Homepage() {
       </div>
 
       {/* Typical Employers */}
+      <div
+        className="container-fluid "
+        style={{
+          backgroundColor: "#f8f9fa",
+          paddingLeft: "124.5px",
+          paddingBottom: 20,
+        }}
+      >
+        <h4
+          style={{
+            paddingTop: 20,
+            fontWeight: "bold",
+          }}
+        >
+          Việc làm nổi bật
+        </h4>
 
+        {/* <div className="job_urgent ">
+          <div
+            className="row d-flex "
+            style={{
+              margin: "0 auto",
+            }}
+          > */}
+        <Swiper
+          onSwiper={setSwiperRef}
+          slidesPerView={3}
+          centeredSlides={false}
+          spaceBetween={10}
+          pagination={{
+            type: "fraction",
+          }}
+          navigation={true}
+          modules={[Pagination, Navigation]}
+          className="mySwiper"
+        >
+          {jobSkill.length > 0 &&
+            jobSkill.map((job) => {
+              return (
+                <SwiperSlide>
+                  <div
+                    className="urgentHiring mr-3"
+                    style={{
+                      padding: "0",
+                      width: 400,
+                    }}
+                  >
+                    <Link
+                      to={"/job/" + job.job_id}
+                      style={{ display: "flex", textDecoration: "none" }}
+                      className="position-relative"
+                    >
+                      <div class="ribbon-wrapper">
+                        <div class="ribbon bg-danger">hot</div>
+                      </div>
+                      <div className="col-3">
+                        <img
+                          src={Logo}
+                          alt=""
+                          style={{
+                            width: "90px",
+                            height: "90px",
+                            margin: " 25px auto",
+                          }}
+                        />
+                      </div>
+                      <div className="col-9 urgent">
+                        <h5>{job.job_name}</h5>
+                        <p>{job.company_name}</p>
+                        <ul
+                          class="p-0"
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            overflow: "hidden",
+                            width: "100%",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-map-marker-alt mr-1"></i>
+                              {job.job_location}
+                            </p>
+                          </li>
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-dollar-sign mr-1"></i>
+                              {job.salary}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                    </Link>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+        </Swiper>
+        {/* </div> */}
+        {/* </div> */}
+      </div>
       {/* infinite loop */}
       <div className="container-fluid" style={{ padding: "0 110px" }}>
         <h4 style={{ paddingTop: 20, fontWeight: "bold", paddingLeft: "10px" }}>
@@ -515,120 +628,6 @@ function Homepage() {
       {/* infinite loop */}
 
       {/* Việc làm gợi ý */}
-      <div
-        className="container-fluid "
-        style={{
-          backgroundColor: "#f8f9fa",
-          paddingLeft: "124.5px",
-          paddingBottom: 20,
-        }}
-      >
-        <h4
-          style={{
-            paddingTop: 20,
-            fontWeight: "bold",
-          }}
-        >
-          Việc làm nổi bật
-        </h4>
-
-        {/* <div className="job_urgent ">
-          <div
-            className="row d-flex "
-            style={{
-              margin: "0 auto",
-            }}
-          > */}
-        <Swiper
-          onSwiper={setSwiperRef}
-          slidesPerView={3}
-          centeredSlides={false}
-          spaceBetween={10}
-          pagination={{
-            type: "fraction",
-          }}
-          navigation={true}
-          modules={[Pagination, Navigation]}
-          className="mySwiper"
-        >
-          {jobSkill.length > 0 &&
-            jobSkill.map((job) => {
-              return (
-                <SwiperSlide>
-                  <div
-                    className="urgentHiring mr-3"
-                    style={{
-                      padding: "0",
-                      width: 400,
-                    }}
-                  >
-                    <Link
-                      to={"/job/" + job.job_id}
-                      style={{ display: "flex", textDecoration: "none" }}
-                      className="position-relative"
-                    >
-                      <div class="ribbon-wrapper">
-                        <div class="ribbon bg-danger">hot</div>
-                      </div>
-                      <div className="col-3">
-                        <img
-                          src={Logo}
-                          alt=""
-                          style={{
-                            width: "90px",
-                            height: "90px",
-                            margin: " 25px auto",
-                          }}
-                        />
-                      </div>
-                      <div className="col-9 urgent">
-                        <h5>{job.job_name}</h5>
-                        <p>{job.company_name}</p>
-                        <ul
-                          class="p-0"
-                          style={{
-                            display: "flex",
-                            justifyContent: "flex-start",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <li
-                            class="list-group-item list-group-item-action"
-                            style={{
-                              width: "100px",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            <p style={{ fontSize: "10px" }}>
-                              <i class="fas fa-map-marker-alt mr-1"></i>
-                              {job.job_location}
-                            </p>
-                          </li>
-                          <li
-                            class="list-group-item list-group-item-action"
-                            style={{
-                              width: "100px",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            <p style={{ fontSize: "10px" }}>
-                              <i class="fas fa-dollar-sign mr-1"></i>
-                              {job.salary}
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                    </Link>
-                  </div>
-                </SwiperSlide>
-              );
-            })}
-        </Swiper>
-        {/* </div> */}
-        {/* </div> */}
-      </div>
 
       {/* Tin tức */}
       <div class="teks-section" style={{ padding: "15px 70px" }}>

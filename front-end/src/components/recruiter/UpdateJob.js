@@ -5,10 +5,11 @@ import Select from "react-select";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import makeAnimated from "react-select/animated";
+import Sidebar from "./Sidebar";
 
 const animatedComponents = makeAnimated();
 
-// 
+//
 function UpdateJob() {
   let params = useParams();
   const navigate = useNavigate();
@@ -99,6 +100,7 @@ function UpdateJob() {
   };
   return (
     <>
+      <Sidebar />
       <main id="main" class="main">
         <section class="section">
           <div class="row">
@@ -336,8 +338,8 @@ const AnimatedMulti = (props) => {
     getSkillSelect();
   }, [params.id]);
 
-  useEffect(()=> {
-    sendData(skillSelected)
+  useEffect(() => {
+    sendData(skillSelected);
   }, [JSON.stringify(skillSelected)]);
   return (
     <Select

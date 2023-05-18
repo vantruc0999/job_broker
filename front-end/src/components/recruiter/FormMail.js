@@ -33,6 +33,14 @@ const FormMail = () => {
                         placeholder="Nhập ..."
                       ></textarea>
                     </div>
+                    <div class="form-group">
+                      <label>Chữ ký</label>
+                      <textarea
+                        class="form-control"
+                        rows="3"
+                        placeholder="Nhập ..."
+                      ></textarea>
+                    </div>
                   </div>
                   <div class="card-footer">
                     <button type="submit" class="btn btn-success float-right">

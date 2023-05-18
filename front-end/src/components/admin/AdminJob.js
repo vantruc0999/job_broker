@@ -25,7 +25,6 @@ function AdminJob() {
       .then((res) => {
         console.log(res.data);
         setJobwait(res.data.jobs);
-        
       });
   }
 

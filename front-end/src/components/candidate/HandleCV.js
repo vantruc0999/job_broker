@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "../../assets/css/upload.css";
+
 function HandleCV() {
   const [files, setFile] = useState("");
   const [avatar, setAvatar] = useState("");

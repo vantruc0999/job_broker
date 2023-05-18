@@ -37,7 +37,8 @@ const Test = () => {
         });
     }
   }, []);
-  const skills = detailJob && detailJob.skills ? detailJob.skills.join(", ") : "";
+  const skills =
+    detailJob && detailJob.skills ? detailJob.skills.join(", ") : "";
   function renderSkill() {
     return (
       <div>
@@ -46,7 +47,6 @@ const Test = () => {
     );
   }
   return (
-    
     <div>
       <div
         className="container"

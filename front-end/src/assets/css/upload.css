@@ -34,13 +34,13 @@
   border: 2px dashed #6990f2;
 }
 
-form> :where(i, p) {
+form > :where(i, p) {
   color: #6990f2;
 }
-form> i {
+form > i {
   font-size: 50px;
 }
-form> p {
+form > p {
   font-size: 16px;
   margin-top: 15px;
 }
@@ -48,18 +48,18 @@ section {
   line-height: 1.4;
 }
 section .row {
-  background-color: #e9f0ff;
-  list-style: none;
-  padding: 15px 20px;
+  /* background-color: #e9f0ff; */
+  /* list-style: none; */
+  /* padding: 15px 20px; */
   /* border-radius: 5px; */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  /* display: flex;
+  align-items: center; */
+  /* justify-content: space-between; */
 }
 
 section .row i {
   font-size: 16px;
-  color: #6990f2;
+  /* color: #6990f2; */
 }
 section .details span {
   font-size: 14px;
@@ -114,6 +114,3 @@ section .details span {
   font-size: 16px;
   color: #6990f2;
 }
-
-
-

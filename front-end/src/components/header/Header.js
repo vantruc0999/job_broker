@@ -356,7 +356,7 @@ function Header() {
               <a
                 className="nav-link"
                 data-widget="pushmenu"
-                href="#"
+                href="/"
                 role="button"
               >
                 <i className="fas fa-bars" />
@@ -376,7 +376,7 @@ function Header() {
                 className="nav-link"
                 data-widget="navbar-search"
                 data-target="#main-header-search"
-                href="#"
+                href="/"
                 role="button"
               >
                 <i className="fas fa-search" />
@@ -410,18 +410,50 @@ function Header() {
               <a
                 className="nav-link"
                 data-widget="fullscreen"
-                href="#"
+                href="/"
                 role="button"
               >
                 <i className="fas fa-expand-arrows-alt" />
               </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link"
+                data-toggle="dropdown"
+                href="/"
+                aria-expanded="false"
+              >
+                <i class="fas fa-plus"></i>
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-right p-0"
+                style={{ left: "inherit", right: "0px" }}
+              >
+                <a
+                  className="nav-link"
+                  style={{ cursor: "pointer", fontSize: "14px" }}
+                  onClick={logout}
+                  href="/"
+                >
+                  <span>Đăng xuất</span>
+                </a>
+                {/* <a href="#" class="dropdown-item">
+                  <i class="flag-icon flag-icon-de mr-2"></i> German
+                </a>
+                <a href="#" class="dropdown-item">
+                  <i class="flag-icon flag-icon-fr mr-2"></i> French
+                </a>
+                <a href="#" class="dropdown-item">
+                  <i class="flag-icon flag-icon-es mr-2"></i> Spanish
+                </a> */}
+              </div>
             </li>
           </ul>
         </nav>
         {/* Sidebar */}
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
           {/* Brand Logo */}
-          <a href="Home.html" className="brand-link">
+          {/* <a href="Home.html" className="brand-link">
             <img
               src="https://ctp.edu.vn/wp-content/uploads/2022/05/anh-meo-cute-doi-mu-long-tai-tho-600x600.jpg"
               alt="AdminLTE Logo"
@@ -429,12 +461,16 @@ function Header() {
               style={{ opacity: "0.8" }}
             />
             <span className="brand-text font-weight-light">Tên ADMIN</span>
-          </a>
+          </a> */}
           {/* Sidebar */}
           <div className="sidebarAdmin">
             {/* SidebarSearch Form */}
             <div className="form-inline">
-              <div className="input-group" data-widget="sidebar-search">
+              <div
+                className="input-group"
+                data-widget="sidebar-search"
+                style={{ marginTop: "10px" }}
+              >
                 <input
                   className="form-control form-control-sidebar"
                   type="search"
@@ -480,12 +516,6 @@ function Header() {
                     <i className="nav-icon fas fa-th" />
                     <p>Lịch sử giao dịch</p>
                   </Link>
-                </li>
-                <li className="nav-item" onClick={logout}>
-                  <a className="nav-link" style={{ cursor: "pointer" }}>
-                    <i className="nav-icon fas fa-th" />
-                    <span>Đăng xuất</span>
-                  </a>
                 </li>
               </ul>
             </nav>

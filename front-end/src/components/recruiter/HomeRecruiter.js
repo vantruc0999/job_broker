@@ -18,7 +18,10 @@ const HomeRe = () => {
           </nav>
         </div>
         <section class="section dashboard">
-          <div className="row">
+          <div
+            className="row"
+            style={{ display: "flex", justifyContent: "flex-start" }}
+          >
             <div className="col-lg-12">
               <div class="row">
                 <div class="col-lg-3 col-6">

@@ -56,7 +56,7 @@ import ManageApproved from "./components/recruiter/ManageApproved";
 import ManageDeClined from "./components/recruiter/ManageDeclined";
 import ChooseTemplate from "./components/candidate/ChooseTemplate";
 import HistoryBuyPackage from "./components/admin/HistoryBuyPackage";
-import FileCV2 from "./components/candidate/FileCV2";
+import FormMail from "./components/recruiter/FormMail";
 function App(props) {
   let param1 = useLocation();
   return (
@@ -88,7 +88,6 @@ function App(props) {
           <Route path="/allCV/UpdateCv/:id" element={<UpdateCv />} />
           <Route path="/applyJob" element={<ApplyJob />} />
           <Route path="/listJob/job/:id" element={<Test />} />
-          <Route path="/fileCV2" element={<FileCV2 />} />
         </Route>
         {/* ---------- */}
 
@@ -109,6 +108,7 @@ function App(props) {
           <Route path="/manageApproved/fileCV/:id" element={<FileCV />} />
           <Route path="/manageDeclined" element={<ManageDeClined />} />
           <Route path="/manageDeclined/fileCV/:id" element={<FileCV />} />
+          <Route path="/mail" element={<FormMail />} />
         </Route>
 
         {/* ------------ */}

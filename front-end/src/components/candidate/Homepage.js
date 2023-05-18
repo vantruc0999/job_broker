@@ -171,17 +171,30 @@ function Homepage() {
           Việc làm phù hợp
         </h4>
 
-        <div className="job_urgent">
+        {/* <div className="job_urgent">
           <div
             className="row d-flex "
             style={{
               margin: "0 auto",
             }}
-          >
-            {/* List Job */}
-            {jobSkill.length > 0 &&
-              jobSkill.map((job) => {
-                return (
+          > */}
+        <Swiper
+          onSwiper={setSwiperRef}
+          slidesPerView={3}
+          centeredSlides={false}
+          spaceBetween={10}
+          pagination={{
+            type: "fraction",
+          }}
+          navigation={true}
+          modules={[Pagination, Navigation]}
+          className="mySwiper"
+        >
+          {/* List Job */}
+          {jobSkill.length > 0 &&
+            jobSkill.map((job) => {
+              return (
+                <SwiperSlide>
                   <div
                     className="urgentHiring mr-3"
                     style={{
@@ -245,10 +258,12 @@ function Homepage() {
                       </div>
                     </Link>
                   </div>
-                );
-              })}
-          </div>
-        </div>
+                </SwiperSlide>
+              );
+            })}
+        </Swiper>
+        {/* </div>
+        </div> */}
       </div>
 
       {/* Typical Employers */}
@@ -517,16 +532,29 @@ function Homepage() {
           Việc làm nổi bật
         </h4>
 
-        <div className="job_urgent ">
+        {/* <div className="job_urgent ">
           <div
             className="row d-flex "
             style={{
               margin: "0 auto",
             }}
-          >
-            {jobSkill.length > 0 &&
-              jobSkill.map((job) => {
-                return (
+          > */}
+        <Swiper
+          onSwiper={setSwiperRef}
+          slidesPerView={3}
+          centeredSlides={false}
+          spaceBetween={10}
+          pagination={{
+            type: "fraction",
+          }}
+          navigation={true}
+          modules={[Pagination, Navigation]}
+          className="mySwiper"
+        >
+          {jobSkill.length > 0 &&
+            jobSkill.map((job) => {
+              return (
+                <SwiperSlide>
                   <div
                     className="urgentHiring mr-3"
                     style={{
@@ -594,10 +622,12 @@ function Homepage() {
                       </div>
                     </Link>
                   </div>
-                );
-              })}
-          </div>
-        </div>
+                </SwiperSlide>
+              );
+            })}
+        </Swiper>
+        {/* </div> */}
+        {/* </div> */}
       </div>
 
       {/* Tin tức */}
@@ -739,74 +769,89 @@ function Homepage() {
         </h4>
         <div className="job_urgent">
           <div className="row d-flex " style={{ margin: "0 auto" }}>
-            {/* List Job */}
-            {jobs.length > 0 &&
-              jobs.map((job) => {
-                return (
-                  <div
-                    className="urgentHiring mr-3"
-                    style={{ padding: "0", width: 400 }}
-                  >
-                    <Link
-                      to={"/job/" + job.job_id}
-                      style={{ display: "flex", textDecoration: "none" }}
-                    >
-                      <div className="col-3">
-                        <img
-                          src={Logo}
-                          alt=""
-                          style={{
-                            width: "90px",
-                            height: "90px",
-                            margin: " 25px auto",
-                          }}
-                        />
-                      </div>
-                      <div className="col-9 urgent">
-                        <h5 style={{ wordWrap: "break-word" }}>
-                          {job.job_name}
-                        </h5>
-                        <p>{job.company_name}</p>
-                        <ul
-                          class="p-0"
-                          style={{
-                            display: "flex",
-                            justifyContent: "flex-start",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
+            <Swiper
+              onSwiper={setSwiperRef}
+              slidesPerView={3}
+              centeredSlides={false}
+              spaceBetween={10}
+              pagination={{
+                type: "fraction",
+              }}
+              navigation={true}
+              modules={[Pagination, Navigation]}
+              className="mySwiper"
+            >
+              {/* List Job */}
+              {jobs.length > 0 &&
+                jobs.map((job) => {
+                  return (
+                    <SwiperSlide>
+                      <div
+                        className="urgentHiring mr-3"
+                        style={{ padding: "0", width: 400 }}
+                      >
+                        <Link
+                          to={"/job/" + job.job_id}
+                          style={{ display: "flex", textDecoration: "none" }}
                         >
-                          <li
-                            class="list-group-item list-group-item-action"
-                            style={{
-                              width: "100px",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            <p style={{ fontSize: "10px" }}>
-                              <i class="fas fa-map-marker-alt mr-1"></i>
-                              {job.job_location}
-                            </p>
-                          </li>
-                          <li
-                            class="list-group-item list-group-item-action"
-                            style={{
-                              width: "100px",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            <p style={{ fontSize: "10px" }}>
-                              <i class="fas fa-dollar-sign mr-1"></i>
-                              {job.salary}
-                            </p>
-                          </li>
-                        </ul>
+                          <div className="col-3">
+                            <img
+                              src={Logo}
+                              alt=""
+                              style={{
+                                width: "90px",
+                                height: "90px",
+                                margin: " 25px auto",
+                              }}
+                            />
+                          </div>
+                          <div className="col-9 urgent">
+                            <h5 style={{ wordWrap: "break-word" }}>
+                              {job.job_name}
+                            </h5>
+                            <p>{job.company_name}</p>
+                            <ul
+                              class="p-0"
+                              style={{
+                                display: "flex",
+                                justifyContent: "flex-start",
+                                overflow: "hidden",
+                                width: "100%",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              <li
+                                class="list-group-item list-group-item-action"
+                                style={{
+                                  width: "100px",
+                                  textOverflow: "ellipsis",
+                                }}
+                              >
+                                <p style={{ fontSize: "10px" }}>
+                                  <i class="fas fa-map-marker-alt mr-1"></i>
+                                  {job.job_location}
+                                </p>
+                              </li>
+                              <li
+                                class="list-group-item list-group-item-action"
+                                style={{
+                                  width: "100px",
+                                  textOverflow: "ellipsis",
+                                }}
+                              >
+                                <p style={{ fontSize: "10px" }}>
+                                  <i class="fas fa-dollar-sign mr-1"></i>
+                                  {job.salary}
+                                </p>
+                              </li>
+                            </ul>
+                          </div>
+                        </Link>
                       </div>
-                    </Link>
-                  </div>
-                );
-              })}
+                    </SwiperSlide>
+                  );
+                })}
+            </Swiper>
           </div>
         </div>
       </div>

@@ -260,7 +260,7 @@ function FileCV() {
                   <div class="media flex-column flex-md-row">
                     <div>
                       <img
-                        src="https://i.ibb.co/V9w0tqm/image.jpg"
+                        src={resume.resume.image}
                         alt="image"
                         border="0"
                         width="220"
@@ -428,7 +428,7 @@ function FileCV() {
                               Sở thích
                             </h4>
                             <ul class="list-unstyled">
-                            {resume.resume.activity}
+                            {resume.resume.hobby}
                             </ul>
                           </div>
 
@@ -437,7 +437,7 @@ function FileCV() {
                               Giải thưởng
                             </h4>
                             <ul class="list-inline">
-                            {resume.resume.hobby}
+                            {resume.resume.activity}
                             </ul>
                           </div>
                         </div>

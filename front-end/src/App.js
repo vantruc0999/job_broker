@@ -71,6 +71,7 @@ function App(props) {
         <Route index path="/" element={<Homepage />} />
         <Route path="/homeCandidate" element={<Homepage />} />
         <Route path="/homeRecruiter" element={<HomeRecruiter />} />
+        <Route path="/listJob" element={<ListJob />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -84,7 +85,7 @@ function App(props) {
           <Route path="/chooseCV" element={<ChooseTemplate />} />
           <Route path="/chooseCV/createCV/:id" element={<CreateCV />} />
           <Route path="/uploadCV" element={<MyPdfReader />} />
-          <Route path="/listJob" element={<ListJob />} />
+          {/* <Route path="/listJob" element={<ListJob />} /> */}
           <Route path="/allCV/UpdateCv/:id" element={<UpdateCv />} />
           <Route path="/applyJob" element={<ApplyJob />} />
           <Route path="/listJob/job/:id" element={<Test />} />

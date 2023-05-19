@@ -8,7 +8,6 @@ import { json, useNavigate } from "react-router-dom";
 function Example(props) {
   const navigate = useNavigate();
 
-  console.log(props.jobId);
   const [show, setShow] = useState(false);
   const [cv, setCv] = useState("");
   let user = JSON.parse(localStorage.getItem("user"));

@@ -6,7 +6,6 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 function Example2(props) {
-  console.log(props.jobId);
   const [show, setShow] = useState(false);
   const [cv, setCv] = useState("");
   let user = JSON.parse(localStorage.getItem("user"));

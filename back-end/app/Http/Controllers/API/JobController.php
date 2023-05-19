@@ -252,9 +252,26 @@ class JobController extends Controller
                         ->where('recruiter_id', '=', $job->recruiter_id)
                         ->first()->company_name;
         $job->company_name = $company_name;
+        // $skills = JobSkills::where('job_id', '=', $id)->get();
+        // $job->skills = $skills;
+        $skills = self::getJobSkillByJobId($job->job_id);
         return response([
             'job_detail' => $job,
+            'skills' => $skills
         ]);
+    }
+
+    private static function getJobSkillByJobId($job_id)
+    {
+        $skills = JobSkills::select('skill_name', 'job_skills.skill_id')
+            ->join('programming_skills', 'programming_skills.skill_id', '=', 'job_skills.skill_id')
+            ->where('job_id', '=', $job_id)
+            ->get();
+        // $skill_name = [];
+        // $skills->each(function ($item) use (&$skill_name) {
+        //     $skill_name[] = $item->skill_name;
+        // });
+        return $skills;
     }
 
     private static function getJobSkills($job_id)

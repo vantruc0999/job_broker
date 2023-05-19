@@ -37,7 +37,8 @@ const Test = () => {
         });
     }
   }, []);
-  const skills = detailJob && detailJob.skills ? detailJob.skills.join(", ") : "";
+  const skills =
+    detailJob && detailJob.skills ? detailJob.skills.join(", ") : "";
   function renderSkill() {
     return (
       <div>
@@ -46,7 +47,6 @@ const Test = () => {
     );
   }
   return (
-    
     <div>
       <div
         className="container"
@@ -313,7 +313,7 @@ const Test = () => {
                   </div>
                 </div>
               </div>
-              <div
+              {/* <div
                 className="related-job row"
                 // style={{ border: "1px solid #000" }}
               >
@@ -506,7 +506,7 @@ const Test = () => {
                     </div>
                   </div>
                 </a>
-              </div>
+              </div> */}
             </div>
 
             <div className="col-lg-4">
@@ -553,7 +553,7 @@ const Test = () => {
                     padding: "10px 15px",
                   }}
                 >
-                  VIỆC LÀM KHÁC CÙNG CÔNG TY
+                  VIỆC LÀM LIÊN QUAN
                 </h6>
                 <a href="/" style={{ textDecoration: "none" }}>
                   <div className="card mb-0">

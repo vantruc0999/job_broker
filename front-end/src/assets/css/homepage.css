@@ -37,12 +37,13 @@
   display: block;
   text-align: center;
   background:#f6fafb;
-  padding-top: 50px;
+  padding-top: 40px;
   padding-bottom: 20px;
 }
 .search-job .searcDetail {
   width: 50%;
-  margin: 30px auto;
+  margin: 0 auto;
+  margin-bottom: 20px;
   border: 1px solid #1772bd;
   border-radius: 50px 50px 50px 50px;
   padding: 5px 10px 5px 10px;

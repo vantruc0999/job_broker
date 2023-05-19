@@ -131,7 +131,7 @@ function App(props) {
       param1["pathname"].includes("register") ||
       param1["pathname"].includes("registerCruiter") ||
       param1["pathname"].includes("loginadmin") ? null : (
-        <Footer />
+        null
       )}
     </>
   );

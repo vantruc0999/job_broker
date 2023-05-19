@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../../assets/css/inputCV.css";
 import {
   ref,
@@ -16,16 +16,20 @@ import { v4 } from "uuid";
 import { storage } from "../Firebase";
 const animatedComponents = makeAnimated();
 
-// const arraySkill = [
-//   { value: 1, label: "Javascript" },
-//   { value: 2, label: "PHP" },
-//   { value: 3, label: "NodeJS" },
-//   { value: 4, label: "ReactJS" },
-//   { value: 4, label: "RUST123" },
-// ];
-
+const arraySkill = [
+  { value: 1, label: "Javascript" },
+  { value: 2, label: "PHP" },
+  { value: 3, label: "NodeJS" },
+  { value: 4, label: "ReactJS" },
+  { value: 4, label: "RUST123" },
+];
+const arraySkill2 = [
+  { value: 1, label: "Tiếng Anh" },
+  { value: 2, label: "Tiếng Nhật" },
+  { value: 3, label: "Tiếng Trung" },
+  { value: 4, label: "Tiếng Nga" },
+];
 function CreateCV() {
-  let params = useParams();
   const navigate = useNavigate();
   const tx = document.getElementById("exp_input");
   if (tx) {
@@ -37,6 +41,7 @@ function CreateCV() {
     );
     tx.addEventListener("input", OnInput, false);
   }
+
   function OnInput() {
     this.style.height = 0;
     this.style.height = this.scrollHeight + "px";
@@ -72,32 +77,118 @@ function CreateCV() {
   // const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
   const [urlImage, setUrlImage] = useState(null);
-  const [template, setTemplate] = useState(null);
-
   const [imagePreview, setImagePreview] = useState("");
+  const [errors, setErrors] = useState({
+    first_name: {
+      status: false,
+      mesage: ''
+    },
+    last_name: {
+      status: false,
+      mesage: ''
+    },
+    phone: {
+      status: false,
+      mesage: ''
+    },
+    birth_day: {
+      status: false,
+      mesage: ''
+    },
+    email: {
+      status: false,
+      mesage: ''
+    },
+    hobby: {
+      status: false,
+      mesage: ''
+    },
+    activity:{
+      status: false,
+      mesage: ''
+    },
+    address: {
+      status: false,
+      mesage: ''
+    },
+    resume_name:{
+      status: false,
+      mesage: ''
+    },
+    education: {
+      status: false,
+      mesage: ''
+    },
+    education_year: {
+      status: false,
+      mesage: ''
+    },
+    education_major: {
+      status: false,
+      mesage: ''
+    },
+    education_description: {
+      status: false,
+      mesage: ''
+    },
+    certificate: {
+      status: false,
+      mesage: ''
+    },
+    template: {
+      status: false,
+      mesage: ''
+    },
+    image: {
+      status: false,
+      mesage: ''
+    },
+    experience_project: {
+      status: false,
+      mesage: ''
+    },
+    experience_company: {
+      status: false,
+      mesage: ''
+    },
+    skills: {
+      status: false,
+      mesage: ''
+    },
+  });
+
+
   const imageListRef = ref(storage, "image/");
+  
   console.log(urlImage);
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>",file);
     // setImageUpload(file);
 
     const reader = new FileReader();
+
+    console.log("oke");
+    console.log(reader);
     reader.onload = () => {
       setImagePreview(reader.result);
+      console.log(reader.result);
       uploadFile(file);
     };
     reader.readAsDataURL(file);
   };
   const uploadFile = async (imageUpload) => {
-    console.log("0");
     if (imageUpload == null) return;
-    console.log(imageUpload);
     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
-    console.log();
-    console.log("1");
     await uploadBytes(imageRef, imageUpload).then((snaphsot) => {
-      console.log("2");
       getDownloadURL(snaphsot.ref).then((url) => {
+        console.log("----------------");
+        console.log("3");
+        console.log(snaphsot);
+        console.log(imageRef);
+        console.log(url);
+        console.log(imageUpload);
+        console.log("----------------");
         setUrlImage(url);
         setImageList((prev) => [...prev, url]);
       });
@@ -113,28 +204,24 @@ function CreateCV() {
         });
       });
     });
-    setTemplate(params.id);
   }, []);
-  console.log(template);
   useEffect(() => {
     const textarea = document.getElementById("emailSummary");
     const placeholder = "Email";
 
-    if (textarea) {
-      textarea.addEventListener("focus", () => {
-        if (textarea.placeholder === placeholder) {
-          textarea.placeholder = "";
-        }
-        textarea.rows = "2";
-      });
+    textarea.addEventListener("focus", () => {
+      if (textarea.placeholder === placeholder) {
+        textarea.placeholder = "";
+      }
+      textarea.rows = "2";
+    });
 
-      textarea.addEventListener("blur", () => {
-        if (textarea.value === "") {
-          textarea.placeholder = placeholder;
-        }
-        textarea.rows = "1";
-      });
-    }
+    textarea.addEventListener("blur", () => {
+      if (textarea.value === "") {
+        textarea.placeholder = placeholder;
+      }
+      textarea.rows = "1";
+    });
     let user = JSON.parse(localStorage.getItem("user"));
     let config = {
       headers: {
@@ -277,6 +364,7 @@ function CreateCV() {
       [field]: value,
     };
     setExp(newAwards);
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",exp);
   };
   const handleAddExp = () => {
     setExp([...exp, ""]);
@@ -345,6 +433,7 @@ function CreateCV() {
             </div>
             <div key={index} className="form-field">
               <input
+              required='required'
                 className="form_input"
                 type="text"
                 placeholder=" "
@@ -379,6 +468,7 @@ function CreateCV() {
             </div>
             <div key={index} className="form-field">
               <input
+              required='required'
                 className="form_input"
                 type="text"
                 placeholder=" "
@@ -413,6 +503,7 @@ function CreateCV() {
             </div>
             <div key={index} className="form-field">
               <input
+              required='required'
                 className="form_input"
                 type="text"
                 placeholder=" "
@@ -445,6 +536,7 @@ function CreateCV() {
             <div key={index} className="form-field">
               <div style={{ display: "flex" }}>
                 <input
+                required='required'
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian bắt đầu"
@@ -455,6 +547,7 @@ function CreateCV() {
                   }
                 />
                 <input
+                required='required'
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian kết thúc "
@@ -466,6 +559,7 @@ function CreateCV() {
                 />
               </div>
               <input
+              required='required'
                 className="exp_input"
                 type="text"
                 placeholder="Vị trí"
@@ -476,6 +570,7 @@ function CreateCV() {
                 }
               />
               <input
+              required='required'
                 className="exp_input"
                 type="text"
                 placeholder="Tên dự án"
@@ -528,6 +623,7 @@ function CreateCV() {
                 <tr>
                   <td>
                     <input
+                    required='required'
                       className="form_input"
                       type="text"
                       placeholder="Trường học"
@@ -543,6 +639,7 @@ function CreateCV() {
                   </td>
                   <td>
                     <input
+                    required='required'
                       className="form_input"
                       type="text"
                       placeholder="Ngành học"
@@ -554,6 +651,7 @@ function CreateCV() {
                   </td>
                   <td>
                     <input
+                    required='required'
                       className="form_input"
                       type="text"
                       placeholder="Niên khóa"
@@ -565,6 +663,7 @@ function CreateCV() {
                   </td>
                   <td>
                     <input
+                    required='required'
                       className="form_input"
                       type="text"
                       placeholder="Xếp loại"
@@ -598,6 +697,7 @@ function CreateCV() {
             <div key={index} className="form-field">
               <div style={{ display: "flex" }}>
                 <input
+                required='required'
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian bắt đầu"
@@ -608,6 +708,7 @@ function CreateCV() {
                   }
                 />
                 <input
+                required='required'
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian kết thúc "
@@ -619,6 +720,7 @@ function CreateCV() {
                 />
               </div>
               <input
+              required='required'
                 className="exp_input"
                 type="text"
                 placeholder="Chức vụ"
@@ -629,6 +731,7 @@ function CreateCV() {
                 }
               />
               <input
+              required='required'
                 className="exp_input"
                 type="text"
                 placeholder="Công ty"
@@ -668,31 +771,336 @@ function CreateCV() {
       </>
     );
   };
+
   // console.log(inputs);
   const handleSubmit = (e) => {
-    e.preventDefault();
+    let flag = true
+    let errors = {
+      first_name: {
+        status: false,
+        mesage: ''
+      },
+      last_name: {
+        status: false,
+        mesage: ''
+      },
+      phone: {
+        status: false,
+        mesage: ''
+      },
+      birth_day: {
+        status: false,
+        mesage: ''
+      },
+      email: {
+        status: false,
+        mesage: ''
+      },
+      hobby: {
+        status: false,
+        mesage: ''
+      },
+      activity:{
+        status: false,
+        mesage: ''
+      },
+      address: {
+        status: false,
+        mesage: ''
+      },
+      resume_name:{
+        status: false,
+        mesage: ''
+      },
+      education: {
+        status: false,
+        mesage: ''
+      },
+      education_year: {
+        status: false,
+        mesage: ''
+      },
+      education_major: {
+        status: false,
+        mesage: ''
+      },
+      education_description: {
+        status: false,
+        mesage: ''
+      },
+      certificate: {
+        status: false,
+        mesage: ''
+      },
+      template: {
+        status: false,
+        mesage: ''
+      },
+      image: {
+        status: false,
+        mesage: ''
+      },
+      experience_project: {
+        status: false,
+        mesage: ''
+      },
+      experience_company: {
+        status: false,
+        mesage: ''
+      },
+      skills: {
+        status: false,
+        mesage: ''
+      },
+    }
+
     let resume = {
-      first_name: inputs.first_name,
-      last_name: inputs.last_name,
-      phone: inputs.phone,
-      birth_day: inputs.birth_day,
-      email: inputs.email,
-      hobby: softSkill[0].title,
-      activity: awards[0].title,
-      address: inputs.address,
+      first_name: inputs?.first_name,
+      last_name: inputs?.last_name,
+      phone: inputs?.phone,
+      birth_day: inputs?.birth_day,
+      email: inputs?.email,
+      hobby: softSkill[0]?.title,
+      activity: awards[0]?.title,
+      address: inputs?.address,
       resume_name: inputs.namecv,
-      education: education[0].school,
-      education_year: education[0].time,
-      education_major: education[0].specialize,
-      education_description: education[0].rank,
-      certificate: certificate[0].title,
-      template: template,
+      education: education[0]?.school,
+      education_year: education[0]?.time,
+      education_major: education[0]?.specialize,
+      education_description: education[0]?.rank,
+      certificate: certificate[0]?.title,
+      template: 1,
       image: urlImage,
       experience_project: experience_project,
       experience_company: experience_company,
-      skills: skill.job_skill,
+      skills: skill?.job_skill,
     };
+
+    if(!resume.first_name){
+      setErrors({...errors, first_name: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.last_name){
+      setErrors({...errors, last_name: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.phone){
+      setErrors({...errors, phone: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.birth_day){
+      setErrors({...errors, birth_day: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.email){
+      setErrors({...errors, email: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.hobby){
+      setErrors({...errors, hobby: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.activity){
+      setErrors({...errors, activity: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.resume_name){
+      setErrors({...errors, resume_name: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.address){
+      setErrors({...errors, address: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.education){
+      setErrors({...errors, education: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.education_year){
+      setErrors({...errors, education_year: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.education_major){
+      setErrors({...errors, education_major: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.education_description){
+      setErrors({...errors, education_description: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.certificate){
+      setErrors({...errors, certificate: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.template){
+      setErrors({...errors, template: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.image){
+      setErrors({...errors, image: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.experience_project){
+      setErrors({...errors, experience_project: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.experience_company){
+      setErrors({...errors, experience_company: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.first_name){
+      setErrors({...errors, first_name: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+    if(!resume.skills){
+      setErrors({...errors, skills: {
+        status: true,
+        message: 'Không được để trống trường này'
+      }})
+      flag = false
+    }
+
     // console.log(typeof experience_project);
+    e.preventDefault();
+    if(!flag) {
+      return
+    } else {
+      setErrors({
+        first_name: {
+          status: false,
+          mesage: ''
+        },
+        last_name: {
+          status: false,
+          mesage: ''
+        },
+        phone: {
+          status: false,
+          mesage: ''
+        },
+        birth_day: {
+          status: false,
+          mesage: ''
+        },
+        email: {
+          status: false,
+          mesage: ''
+        },
+        hobby: {
+          status: false,
+          mesage: ''
+        },
+        activity:{
+          status: false,
+          mesage: ''
+        },
+        address: {
+          status: false,
+          mesage: ''
+        },
+        resume_name:{
+          status: false,
+          mesage: ''
+        },
+        education: {
+          status: false,
+          mesage: ''
+        },
+        education_year: {
+          status: false,
+          mesage: ''
+        },
+        education_major: {
+          status: false,
+          mesage: ''
+        },
+        education_description: {
+          status: false,
+          mesage: ''
+        },
+        certificate: {
+          status: false,
+          mesage: ''
+        },
+        template: {
+          status: false,
+          mesage: ''
+        },
+        image: {
+          status: false,
+          mesage: ''
+        },
+        experience_project: {
+          status: false,
+          mesage: ''
+        },
+        experience_company: {
+          status: false,
+          mesage: ''
+        },
+        skills: {
+          status: false,
+          mesage: ''
+        },
+      })
+    }
     let object = {};
     object.resume = resume;
     let user = JSON.parse(localStorage.getItem("user"));
@@ -715,661 +1123,6 @@ function CreateCV() {
 
     console.log(resume);
   };
-  const renderTemplate1 = () => {
-    return (
-      <>
-        <div
-          className="row"
-          style={{ margin: "50px 0", boxShadow: "5px 5px 5px 5px" }}
-        >
-          <div
-            className="col-4 "
-            style={{ background: "#0bb5f4", padding: "0" }}
-          >
-            <div className="summary" style={{ padding: "0" }}>
-              <div className="avatar">
-                {imagePreview ? (
-                  <img
-                    src={imagePreview}
-                    alt=""
-                    style={{
-                      maxWidth: "220px",
-                      height: "220px",
-                      borderRadius: "50%",
-                    }}
-                  />
-                ) : (
-                  <img
-                    src={Logo}
-                    alt=""
-                    style={{
-                      maxWidth: "220px",
-                      height: "220px",
-                      borderRadius: "50%",
-                    }}
-                  />
-                )}
-                <div className="round">
-                  <input
-                    name="avatar"
-                    type="file"
-                    className="form-control"
-                    id="avatar"
-                    multiple
-                    onChange={handleImageUpload}
-                  />
-                  <i className="fa fa-camera" style={{ color: "#fff" }}></i>
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  textAlign: "center",
-                }}
-                className="summary-child"
-              >
-                <div>
-                  <div className="email">
-                    <i
-                      className="fas fa-envelope mr-2"
-                      style={{ alignItems: "center" }}
-                    >
-                      {" "}
-                    </i>
-
-                    <input
-                      id="emailSummary"
-                      type="text"
-                      name="email"
-                      placeholder="Email"
-                      rows="1"
-                      value={inputs.email}
-                      onChange={handleInput}
-                      style={{
-                        width: "60%",
-                        border: "none",
-                        borderRadius: "4px",
-                        resize: "vertical",
-                        wordBreak: "break-all",
-                        wordWrap: "break-word",
-                        overflow: "hidden",
-                      }}
-                    ></input>
-                  </div>
-                  <div className="mt-4">
-                    <i className="fas fa-phone mr-2" />
-                    <input
-                      type="text"
-                      name="phone"
-                      value={inputs.phone}
-                      placeholder="Số điện thoại"
-                      onChange={handleInput}
-                      style={{ width: "60%" }}
-                    />
-                  </div>
-                  <div className="mt-4">
-                    <i className="fas fa-birthday-cake mr-2" />
-                    <input
-                      type="text"
-                      placeholder="yyyy-mm-dd"
-                      name="birth_day"
-                      value={inputs.birth_day}
-                      onChange={handleInput}
-                      style={{ width: "60%" }}
-                    />
-                  </div>
-                  <div className="mt-4">
-                    <i className="fas fa-map-marker-alt mr-2" />
-                    <input
-                      type="text"
-                      placeholder="Địa chỉ"
-                      value={inputs.address}
-                      name="address"
-                      onChange={handleInput}
-                      style={{ width: "60%" }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <section className="experience">
-              <h4>
-                <i className="fas fa-laptop-code" /> Kỹ năng
-              </h4>
-              {showForm && showForm.includes(5) ? (
-                addSkill()
-              ) : (
-                <div
-                  className="content_form"
-                  onClick={(e) => handleShow(5, e)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <div id="content-suggest-skill"></div>
-                  <i className="fas fa-plus" />
-                </div>
-              )}
-            </section>
-          </div>
-          <div className="col-8">
-            <section className="experience">
-              <h1 style={{ fontWeight: "700" }}>
-                {inputs.last_name} {inputs.first_name}
-              </h1>
-              <div style={{ display: "inline-block" }}>
-                <input
-                  type="text"
-                  placeholder="Tên CV "
-                  value={inputs.namecv}
-                  name="namecv"
-                  onChange={handleInput}
-                  style={{ padding: "5px", border: "none", color: "#000" }}
-                />
-                <input
-                  type="text"
-                  placeholder="Vị trí mong muốn"
-                  value={inputs.position}
-                  name="position"
-                  onChange={handleInput}
-                  style={{ padding: "5px", border: "none", color: "#000" }}
-                />
-              </div>
-            </section>
-            <section className="experience">
-              <h4>
-                <i className="fas fa-briefcase" /> Kinh nghiệm làm việc
-              </h4>
-              {exp.length > 0 ? (
-                addContentExp()
-              ) : (
-                <div
-                  className="content_form"
-                  onClick={handleAddExp}
-                  style={{ cursor: "pointer" }}
-                >
-                  <div id="content-suggest-award"></div>
-                  <i className="fas fa-plus" />
-                </div>
-              )}
-            </section>
-            <section className="experience">
-              <h4>
-                <i className="fas fa-graduation-cap" />
-                Học vấn
-              </h4>
-              {education.length > 0 ? (
-                addContentEducation()
-              ) : (
-                <div
-                  className="content_form"
-                  onClick={handleAddEdu}
-                  style={{ cursor: "pointer" }}
-                >
-                  <div id="content-suggest-award"></div>
-                  <i className="fas fa-plus" />
-                </div>
-              )}
-            </section>
-            <section className="experience">
-              <h4>
-                <i class="fas fa-file-code"></i> Dự án
-              </h4>
-              {active.length > 0 ? (
-                addContentAction()
-              ) : (
-                <div
-                  className="content_form"
-                  onClick={handleAddAct}
-                  style={{ cursor: "pointer" }}
-                >
-                  <div id="content-suggest-award"></div>
-                  <i className="fas fa-plus" />
-                </div>
-              )}
-            </section>
-            <section className="experience">
-              <h4>
-                <i className="fas fa-certificate" /> Chứng chỉ
-              </h4>
-              {certificate.length > 0 ? (
-                addContentCertificates()
-              ) : (
-                <div
-                  className="content_form"
-                  onClick={handleAddCer}
-                  style={{ cursor: "pointer" }}
-                >
-                  <div id="content-suggest-award"></div>
-                  <i className="fas fa-plus" />
-                </div>
-              )}
-            </section>
-            <section className="experience">
-              <h4>
-                <i className="fas fa-feather" /> Sở thích
-              </h4>
-
-              {softSkill.length > 0 ? (
-                addContentSoftSkill()
-              ) : (
-                <div
-                  className="content_form"
-                  onClick={handleAddSoft}
-                  style={{ cursor: "pointer" }}
-                >
-                  <div id="content-suggest-award"></div>
-                  <i className="fas fa-plus" />
-                </div>
-              )}
-            </section>
-            <section className="experience">
-              <h4>
-                <i className="fas fa-medal" /> Hoạt động
-              </h4>
-              {awards.length > 0 ? (
-                addContentAward()
-              ) : (
-                <div
-                  className="content_form"
-                  onClick={handleAddAward}
-                  style={{ cursor: "pointer" }}
-                >
-                  <div id="content-suggest-award"></div>
-                  <i className="fas fa-plus" />
-                </div>
-              )}
-            </section>
-          </div>
-        </div>
-      </>
-    );
-  };
-  // const input = document.getElementById("emailSummary");
-
-  // input.addEventListener("input", function () {
-  //   const value = inputs.email;
-  //   const formattedValue = formatInputValue(value);
-  //   input.value = formattedValue;
-  // });
-
-  // function formatInputValue(value) {
-  //   const parts = value.split("@");
-  //   const formattedParts = parts.map((part, index) => {
-  //     if (index > 0) {
-  //       return "<br/>" + part;
-  //     }
-  //     return part;
-  //   });
-  //   return formattedParts.join("@");
-  // }
-  const renderTemplate2 = () => {
-    return (
-      <>
-        <div className="row" style={{ margin: "50px 0" }}>
-          <article
-            class="resume"
-            style={{ width: "100%", margin: 0, padding: 0 }}
-          >
-            <div class="resume-wrapper-inner mx-auto text-left bg-white shadow-lg">
-              <header
-                class="resume-header pt-4 pt-md-0"
-                style={{ background: "#434E5E" }}
-              >
-                <div class="media flex-column flex-md-row">
-                  <div className="avatar" style={{ padding: 0, margin: 0 }}>
-                    {imagePreview ? (
-                      <img
-                        src={imagePreview}
-                        alt=""
-                        style={{
-                          maxWidth: "230px",
-                          height: "230px",
-                        }}
-                      />
-                    ) : (
-                      <img
-                        src={Logo}
-                        alt=""
-                        style={{
-                          maxWidth: "230px",
-                          height: "230px",
-                        }}
-                      />
-                    )}
-                    <div
-                      className="round"
-                      style={{
-                        position: "absolute",
-                        bottom: "0%",
-                        right: "0%",
-                      }}
-                    >
-                      <input
-                        name="avatar"
-                        type="file"
-                        className="form-control"
-                        id="avatar"
-                        multiple
-                        onChange={handleImageUpload}
-                      />
-                      <i className="fa fa-camera" style={{ color: "#fff" }}></i>
-                    </div>
-                  </div>
-
-                  <div class="media-body p-4 d-flex flex-column flex-md-row mx-auto mx-lg-0 resume_content">
-                    <div class="primary-info">
-                      <h1 class="name mt-0 mb-1 text-white text-uppercase text-uppercase">
-                        {inputs.last_name} {inputs.first_name}
-                      </h1>
-                      <div class="title mb-3">
-                        <input
-                          type="text"
-                          placeholder="Tên CV "
-                          value={inputs.namecv}
-                          name="namecv"
-                          onChange={handleInput}
-                          style={{
-                            padding: "5px",
-                            border: "none",
-                            color: "#fff",
-                            background: "rgb(67, 78, 94)",
-                          }}
-                        />
-                      </div>
-                    </div>
-                    <div
-                      class="secondary-info mt-2"
-                      style={{ marginLeft: 200 }}
-                    >
-                      <ul class="list-unstyled" style={{ width: 300 }}>
-                        <li class="mb-2">
-                          <div>
-                            <i class="fas fa-map-marker-alt fa-fw mr-2"></i>
-                            <input
-                              type="text"
-                              placeholder="Địa chỉ"
-                              value={inputs.address}
-                              name="address"
-                              onChange={handleInput}
-                              style={{
-                                width: "90%",
-                                padding: "5px",
-                                border: "none",
-                                color: "#fff",
-                                background: "rgb(67, 78, 94)",
-                              }}
-                            />
-                          </div>
-                        </li>
-                        <li className="mb-2">
-                          <div>
-                            <i class="fas fa-phone fa-fw mr-2"></i>
-                            <input
-                              type="text"
-                              name="phone"
-                              value={inputs.phone}
-                              placeholder="Số điện thoại"
-                              onChange={handleInput}
-                              style={{
-                                width: "90%",
-                                padding: "5px",
-                                border: "none",
-                                color: "#fff",
-                                background: "rgb(67, 78, 94)",
-                              }}
-                            />
-                          </div>
-                        </li>
-                        <li class="mb-2">
-                          <div>
-                            <i class="far fa-envelope fa-fw mr-2"></i>
-                            <input
-                              id="emailSummary"
-                              type="text"
-                              name="email"
-                              placeholder="Email"
-                              rows="1"
-                              value={inputs.email}
-                              onChange={handleInput}
-                              style={{
-                                width: "90%",
-                                padding: "5px",
-                                border: "none",
-                                color: "#fff",
-                                background: "rgb(67, 78, 94)",
-                              }}
-                            />
-                          </div>
-                        </li>
-                        <li class="mb-2">
-                          <div>
-                            <i class="fas fa-birthday-cake fa-fw mr-2"></i>
-                            <input
-                              type="text"
-                              placeholder="yyyy-mm-dd"
-                              name="birth_day"
-                              value={inputs.birth_day}
-                              onChange={handleInput}
-                              style={{
-                                width: "90%",
-                                padding: "5px",
-                                border: "none",
-                                color: "#fff",
-                                background: "rgb(67, 78, 94)",
-                              }}
-                            />
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </header>
-              <div class="resume-body p-5">
-                <section class="resume-section summary-section mb-5">
-                  <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
-                    Giới thiệu
-                  </h2>
-                  <div class="resume-section-content">
-                    <p class="mb-0">
-                      Tôi là một chuyên viên phát triển phần mềm với hơn 10 năm
-                      tại các công ty trong và ngoài nước. Công việc của tôi cả
-                      về lập trình front-end lẫn back-end. Mong muốn được làm
-                      việc trong môi trường chuyên nghiệp, đồng nghiệp thân
-                      thiện và chế độ phúc lợi tốt.
-                    </p>
-                  </div>
-                </section>
-                <div class="row">
-                  <div class="col-lg-9">
-                    <section class="resume-section experience-section mb-5">
-                      <div class="resume-section-content">
-                        <div class="resume-timeline position-relative">
-                          <article class="resume-timeline-item position-relative pb-5 resume_item2 ">
-                            <div class="resume-timeline-item-header mb-2">
-                              <div class="d-flex flex-column flex-md-row">
-                                <h3 class="resume-position-title font-weight-bold mb-1">
-                                  Kinh nghiệm làm việc công ty
-                                </h3>
-                              </div>
-                            </div>
-                            <div class="resume-timeline-item-desc resume_work">
-                              <ul>
-                                <li>
-                                  {exp.length > 0 ? (
-                                    addContentExp()
-                                  ) : (
-                                    <div
-                                      className="content_form"
-                                      onClick={handleAddExp}
-                                      style={{ cursor: "pointer" }}
-                                    >
-                                      <div id="content-suggest-award"></div>
-                                      <i className="fas fa-plus" />
-                                    </div>
-                                  )}
-                                </li>
-                              </ul>
-                            </div>
-                          </article>
-                          <article class="resume-timeline-item position-relative pb-5 resume_item2">
-                            <div class="resume-timeline-item-header mb-2">
-                              <div class="d-flex flex-column flex-md-row">
-                                <h3 class="resume-position-title font-weight-bold mb-1">
-                                  Kinh nghiệm làm việc dự án
-                                </h3>
-                              </div>
-                            </div>
-                            <div class="resume-timeline-item-desc resume_work">
-                              <ul>
-                                <li>
-                                  {active.length > 0 ? (
-                                    addContentAction()
-                                  ) : (
-                                    <div
-                                      className="content_form"
-                                      onClick={handleAddAct}
-                                      style={{ cursor: "pointer" }}
-                                    >
-                                      <div id="content-suggest-award"></div>
-                                      <i className="fas fa-plus" />
-                                    </div>
-                                  )}
-                                </li>
-                              </ul>
-                            </div>
-                          </article>
-                          <article class="resume-timeline-item position-relative pb-5 resume_item2">
-                            <div class="resume-timeline-item-header mb-2">
-                              <div class="d-flex flex-column flex-md-row">
-                                <h3 class="resume-position-title font-weight-bold mb-1">
-                                  Giáo dục
-                                </h3>
-                              </div>
-                            </div>
-                            <div class="resume-timeline-item-desc resume_work">
-                              <ul>
-                                <li>
-                                  {education.length > 0 ? (
-                                    addContentEducation()
-                                  ) : (
-                                    <div
-                                      className="content_form"
-                                      onClick={handleAddEdu}
-                                      style={{ cursor: "pointer" }}
-                                    >
-                                      <div id="content-suggest-award"></div>
-                                      <i className="fas fa-plus" />
-                                    </div>
-                                  )}
-                                </li>
-                              </ul>
-                            </div>
-                          </article>
-                          <article class="resume-timeline-item position-relative pb-5 resume_item2">
-                            <div class="resume-timeline-item-header mb-2">
-                              <div class="d-flex flex-column flex-md-row">
-                                <h3 class="resume-position-title font-weight-bold mb-1">
-                                  Chứng chỉ ngoại ngữ
-                                </h3>
-                              </div>
-                            </div>
-                            <div class="resume-timeline-item-desc resume_work">
-                              <ul>
-                                <li>
-                                  {certificate.length > 0 ? (
-                                    addContentCertificates()
-                                  ) : (
-                                    <div
-                                      className="content_form"
-                                      onClick={handleAddCer}
-                                      style={{ cursor: "pointer" }}
-                                    >
-                                      <div id="content-suggest-award"></div>
-                                      <i className="fas fa-plus" />
-                                    </div>
-                                  )}
-                                </li>
-                              </ul>
-                            </div>
-                          </article>
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                  <div class="col-lg-3">
-                    <section class="resume-section skills-section mb-5">
-                      <div class="resume-section-content">
-                        <div class="resume-skill-item resume_item2 resume_skills">
-                          <h4 class="resume-skills-cat font-weight-bold">
-                            Các kỹ năng
-                          </h4>
-                          <ul class="list-unstyled mb-4 resume_work2">
-                            {showForm && showForm.includes(5) ? (
-                              addSkill()
-                            ) : (
-                              <div
-                                className="content_form"
-                                onClick={(e) => handleShow(5, e)}
-                                style={{ cursor: "pointer" }}
-                              >
-                                <div id="content-suggest-skill"></div>
-                                <i className="fas fa-plus" />
-                              </div>
-                            )}
-                          </ul>
-                        </div>
-
-                        <div class="resume-skill-item resume_item2 resume_skills">
-                          <h4 class="resume-skills-cat font-weight-bold">
-                            Sở thích
-                          </h4>
-                          <ul class="list-unstyled">
-                            {softSkill.length > 0 ? (
-                              addContentSoftSkill()
-                            ) : (
-                              <div
-                                className="content_form"
-                                onClick={handleAddSoft}
-                                style={{ cursor: "pointer" }}
-                              >
-                                <div id="content-suggest-award"></div>
-                                <i className="fas fa-plus" />
-                              </div>
-                            )}
-                          </ul>
-                        </div>
-
-                        <div class="resume-skill-item resume_item2 resume_skills">
-                          <h4 class="resume-skills-cat font-weight-bold">
-                            Hoạt động
-                          </h4>
-                          <ul class="list-inline">
-                            {awards.length > 0 ? (
-                              addContentAward()
-                            ) : (
-                              <div
-                                className="content_form"
-                                onClick={handleAddAward}
-                                style={{ cursor: "pointer" }}
-                              >
-                                <div id="content-suggest-award"></div>
-                                <i className="fas fa-plus" />
-                              </div>
-                            )}
-                          </ul>
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </>
-    );
-  };
   return (
     <>
       <div className="container-fluid d-flex" style={{ padding: "0" }}>
@@ -1380,9 +1133,308 @@ function CreateCV() {
           style={{ display: "flex", flexDirection: "column" }}
         >
           <div className="col-9" style={{ margin: "0 auto" }}>
-           
-            {template == 1 ? renderTemplate1() : renderTemplate2()}
-            {/* </div> */}
+            <div
+              className="row"
+              style={{ margin: "50px 0", boxShadow: "5px 5px 5px 5px" }}
+            >
+              <div
+                className="col-4 "
+                style={{ background: "#0bb5f4", padding: "0" }}
+              >
+                <div className="summary" style={{ padding: "0" }}>
+                  <div className="avatar">
+                    {/* <img
+                      src={Logo}
+                      alt=""
+                      style={{
+                        maxWidth: "220px",
+                        height: "220px",
+                        borderRadius: "50%",
+                      }}
+                    /> */}
+                    {imagePreview ? (
+                      <img
+                        src={imagePreview}
+                        alt=""
+                        style={{
+                          maxWidth: "220px",
+                          height: "220px",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    ) : (
+                      <img
+                        src={Logo}
+                        alt=""
+                        style={{
+                          maxWidth: "220px",
+                          height: "220px",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    )}
+                    <div className="round">
+                      <input
+                      required='required'
+                        name="avatar"
+                        type="file"
+                        className="form-control"
+                        id="avatar"
+                        multiple
+                        // onChange={(e) => {
+                        //   setImageUpload(e.target.files[0]);
+                        // }}
+                        onChange={handleImageUpload}
+                      />
+                      <i className="fa fa-camera" style={{ color: "#fff" }}></i>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      textAlign: "center",
+                    }}
+                    className="summary-child"
+                  >
+                    <div>
+                      <div className="email">
+                        <i
+                          className="fas fa-envelope mr-2"
+                          style={{ alignItems: "center" }}
+                        >
+                          {" "}
+                        </i>
+
+                        <input
+                        required='required'
+                          id="emailSummary"
+                          type="text"
+                          name="email"
+                          placeholder="Email"
+                          rows="1"
+                          value={inputs.email}
+                          onChange={handleInput}
+                          style={{
+                            width: "60%",
+                            // fontSize: "14px",
+                            border: "none",
+                            borderRadius: "4px",
+                            resize: "vertical",
+                            wordBreak: "break-all",
+                            wordWrap: "break-word",
+                            overflow: "hidden",
+                          }}
+                        ></input>
+                      </div>
+                      <div className="mt-4">
+                        <i className="fas fa-phone mr-2" />
+                        <input
+                        required='required'
+                          type="text"
+                          name="phone"
+                          value={inputs.phone}
+                          placeholder="Số điện thoại"
+                          onChange={handleInput}
+                          style={{ width: "60%" }}
+                        />
+                      </div>
+                      <div className="mt-4">
+                        <i className="fas fa-birthday-cake mr-2" />
+                        <input
+                        required='required'
+                          type="text"
+                          placeholder="yyyy-mm-dd"
+                          name="birth_day"
+                          value={inputs.birth_day}
+                          onChange={handleInput}
+                          style={{ width: "60%" }}
+                        />
+                      </div>
+                      <div className="mt-4">
+                        <i className="fas fa-map-marker-alt mr-2" />
+                        <input
+                        required='required'
+                          type="text"
+                          placeholder="Địa chỉ"
+                          value={inputs.address}
+                          name="address"
+                          onChange={handleInput}
+                          style={{ width: "60%" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <section className="experience">
+                  <h4>
+                    <i className="fas fa-laptop-code" /> Kỹ năng
+                  </h4>
+                  {showForm && showForm.includes(5) ? (
+                    addSkill()
+                  ) : (
+                    <div
+                      className="content_form"
+                      onClick={(e) => handleShow(5, e)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div id="content-suggest-skill"></div>
+                      <i className="fas fa-plus" />
+                    </div>
+                  )}
+                </section>
+
+                {/* <section className="experience">
+                  <h4>
+                    <i className="fas fa-language" /> Ngoại ngữ
+                  </h4>
+                  {showForm && showForm.includes(8) ? (
+                    addLanguage()
+                  ) : (
+                    <div
+                      className="content_form"
+                      onClick={(e) => handleShow(8, e)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div id="content-suggest-skill"></div>
+                      <i className="fas fa-plus" />
+                    </div>
+                  )}
+                </section> */}
+              </div>
+              <div className="col-8">
+                <section className="experience">
+                  <h1 style={{ fontWeight: "700" }}>
+                    {inputs.last_name} {inputs.first_name}
+                  </h1>
+                  <div style={{ display: "inline-block" }}>
+                    <input
+                    required='required'
+                      type="text"
+                      placeholder="Tên CV "
+                      value={inputs.namecv}
+                      name="namecv"
+                      onChange={handleInput}
+                      style={{ padding: "5px", border: "none", color: "#000" }}
+                    />
+                    {errors.first_name.status && <span style={{ color: "red"}}>{errors.first_name.mesage}</span>}
+                    <input
+                    required='required'
+                      type="text"
+                      placeholder="Vị trí mong muốn"
+                      value={inputs.position}
+                      name="position"
+                      onChange={handleInput}
+                      style={{ padding: "5px", border: "none", color: "#000" }}
+                    />
+                  </div>
+                </section>
+                <section className="experience">
+                  <h4>
+                    <i className="fas fa-briefcase" /> Kinh nghiệm làm việc
+                  </h4>
+                  {exp.length > 0 ? (
+                    addContentExp()
+                  ) : (
+                    <div
+                      className="content_form"
+                      onClick={handleAddExp}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div id="content-suggest-award"></div>
+                      <i className="fas fa-plus" />
+                    </div>
+                  )}
+                </section>
+                <section className="experience">
+                  <h4>
+                    <i className="fas fa-graduation-cap" />
+                    Học vấn
+                  </h4>
+                  {education.length > 0 ? (
+                    addContentEducation()
+                  ) : (
+                    <div
+                      className="content_form"
+                      onClick={handleAddEdu}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div id="content-suggest-award"></div>
+                      <i className="fas fa-plus" />
+                    </div>
+                  )}
+               </section>
+                <section className="experience">
+                  <h4>
+                    <i class="fas fa-file-code"></i> Dự án
+                  </h4>
+                  {active.length > 0 ? (
+                    addContentAction()
+                  ) : (
+                    <div
+                      className="content_form"
+                      onClick={handleAddAct}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div id="content-suggest-award"></div>
+                      <i className="fas fa-plus" />
+                    </div>
+                  )}
+                </section>
+                <section className="experience">
+                  <h4>
+                    <i className="fas fa-certificate" /> Chứng chỉ
+                  </h4>
+                  {certificate.length > 0 ? (
+                    addContentCertificates()
+                  ) : (
+                    <div
+                      className="content_form"
+                      onClick={handleAddCer}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div id="content-suggest-award"></div>
+                      <i className="fas fa-plus" />
+                    </div>
+                  )}
+                </section>
+                <section className="experience">
+                  <h4>
+                    <i className="fas fa-feather" /> Sở thích
+                  </h4>
+
+                  {softSkill.length > 0 ? (
+                    addContentSoftSkill()
+                  ) : (
+                    <div
+                      className="content_form"
+                      onClick={handleAddSoft}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div id="content-suggest-award"></div>
+                      <i className="fas fa-plus" />
+                    </div>
+                  )}
+                </section>
+                <section className="experience">
+                  <h4>
+                    <i className="fas fa-medal" /> Hoạt động
+                  </h4>
+                  {awards.length > 0 ? (
+                    addContentAward()
+                  ) : (
+                    <div
+                      className="content_form"
+                      onClick={handleAddAward}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div id="content-suggest-award"></div>
+                      <i className="fas fa-plus" />
+                    </div>
+                  )}
+                </section>
+              </div>
+            </div>
           </div>
           <button
             className="btn btn-primary"
@@ -1396,7 +1448,6 @@ function CreateCV() {
   );
 }
 const AnimatedMulti = (props) => {
-  let params = useParams();
   const sendData = (selected) => {
     setSkillSelected(selected);
     props.parentCallback(selected.map((skill) => skill.value));
@@ -1405,30 +1456,6 @@ const AnimatedMulti = (props) => {
   const [skill, setSkill] = useState([]);
 
   useEffect(() => {
-    const getSkillSelect = async () => {
-      let user = JSON.parse(localStorage.getItem("user"));
-      let config = {
-        headers: {
-          Authorization: "Bearer " + user.token,
-          "Content-Type": "application/x-www-form-urlencoded",
-          Accept: "application/json",
-        },
-      };
-      await axios
-        .get(
-          `http://127.0.0.1:8000/api/candidate/show-detail/${params.id}`,
-          config
-        )
-        .then((res) => {
-          if (res.data.skill.length > 0) {
-            const arraySkillSelected = res.data.skill.map((item) => {
-              return { value: item.skill_id, label: item.skill_name };
-            });
-            setSkillSelected(arraySkillSelected);
-          }
-        });
-    };
-
     const getListSkill = async () => {
       let user = JSON.parse(localStorage.getItem("user"));
       let config = {
@@ -1451,11 +1478,10 @@ const AnimatedMulti = (props) => {
         });
     };
     getListSkill();
-    getSkillSelect();
-  }, [params.id]);
+  }, []);
 
-  useEffect(() => {
-    sendData(skillSelected);
+  useEffect(()=> {
+    sendData(skillSelected)
   }, [JSON.stringify(skillSelected)]);
   return (
     <Select
@@ -1468,5 +1494,4 @@ const AnimatedMulti = (props) => {
     />
   );
 };
-
 export default CreateCV;

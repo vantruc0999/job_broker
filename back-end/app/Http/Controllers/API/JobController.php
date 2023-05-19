@@ -248,7 +248,10 @@ class JobController extends Controller
         //
         $job = Job::where('job_id', '=', $id)->first();
         $job->skills = self::getJobSkills($id);
-
+        $company_name = Recruiter::select('company_name')
+                        ->where('recruiter_id', '=', $job->recruiter_id)
+                        ->first()->company_name;
+        $job->company_name = $company_name;
         return response([
             'job_detail' => $job,
         ]);

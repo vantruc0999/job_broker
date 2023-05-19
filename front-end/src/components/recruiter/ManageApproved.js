@@ -40,7 +40,12 @@ function ManageApproved() {
         config
       )
       .then((res) => {
-        setApproved(res.data);
+        if (res.data.length === 0) {
+          alert("Không có ứng viên ứng tuyển");
+        } else {
+          console.log("có");
+          setApproved(res.data);
+        }
       });
   };
   const handleCancle = (e) => {
@@ -54,7 +59,7 @@ function ManageApproved() {
       )
       .then((res) => {
         if (res.data.message.includes("declined")) {
-          alert("Xóa ứng viên thành công");
+          alert("Bạn đã từ chối ứng viên");
         }
         const afterDelte = approved.filter((object) => {
           return object.application_id.toString() !== id;
@@ -105,6 +110,7 @@ function ManageApproved() {
                     }}
                     id={value.resume_id}
                     class="btn btn-primary btn-sm"
+                    style={{ margin: "5px 0" }}
                   >
                     <i class="fas fa-eye"></i>
                     Xem
@@ -143,7 +149,7 @@ function ManageApproved() {
                     }}
                   >
                     <h5 className="card-title" style={{ fontSize: "25px" }}>
-                      Quản lý ứng viên
+                      Quản lý ứng viên đã phê duyệt
                     </h5>
                   </div>
 
@@ -195,7 +201,7 @@ function ManageApproved() {
                                 {renderJob()}
                               </select>
                             </div>
-                            <div className="col-md-3 margin">
+                            {/* <div className="col-md-3 margin">
                               <label>Chọn theo loại</label>
 
                               <select
@@ -231,10 +237,10 @@ function ManageApproved() {
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                               </select>
-                            </div>
+                            </div> */}
                           </div>
 
-                          <div
+                          {/* <div
                             style={{
                               display: "flex",
                               justifyContent: "space-between",
@@ -282,7 +288,7 @@ function ManageApproved() {
                                 Ứng viên bị từ chối
                               </label>
                             </div>
-                          </div>
+                          </div> */}
 
                           <button
                             className="btn btn-primary"
@@ -290,6 +296,7 @@ function ManageApproved() {
                               fontSize: "14px",
                               width: "150px",
                               marginLeft: "20px",
+                              marginTop: "20px",
                             }}
                           >
                             Lọc ứng viên
@@ -315,7 +322,9 @@ function ManageApproved() {
                           <th scope="col">Email</th>
                           <th scope="col">Kỹ năng chuyên môn</th>
                           <th scope="col">Trạng thái</th>
-                          <th scope="col">Chức năng</th>
+                          <th scope="col" style={{ width: "10%" }}>
+                            Chức năng
+                          </th>
                         </tr>
                       </thead>
                       {renderCanofJobID()}

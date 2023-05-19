@@ -301,8 +301,10 @@ function CreateCV() {
     return (
       <>
         <div className="content_form">
-          <label class="form-label">Kỹ năng</label>
-          <AnimatedMulti parentCallback={handleSkillInput}></AnimatedMulti>
+          {/* <label class="form-label">Kỹ năng</label> */}
+          <div className="form-field">
+            <AnimatedMulti parentCallback={handleSkillInput}></AnimatedMulti>
+          </div>
         </div>
       </>
     );
@@ -388,7 +390,7 @@ function CreateCV() {
                 }
               />
               <label for="name" className="form-label">
-                Kĩ năng mềm
+                Kỹ năng mềm
               </label>
             </div>
           </div>
@@ -733,9 +735,14 @@ function CreateCV() {
                     src={imagePreview}
                     alt=""
                     style={{
-                      maxWidth: "220px",
-                      height: "220px",
+                      maxWidth: "230px",
+                      height: "230px",
                       borderRadius: "50%",
+                      margin: "0 auto",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      objectFit: "cover",
                     }}
                   />
                 ) : (
@@ -743,9 +750,14 @@ function CreateCV() {
                     src={Logo}
                     alt=""
                     style={{
-                      maxWidth: "220px",
-                      height: "220px",
+                      maxWidth: "230px",
+                      height: "230px",
                       borderRadius: "50%",
+                      margin: "0 auto",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      objectFit: "cover",
                     }}
                   />
                 )}
@@ -1024,6 +1036,12 @@ function CreateCV() {
                         style={{
                           maxWidth: "230px",
                           height: "230px",
+                          borderRadius: "50%",
+                          margin: "0 auto",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          objectFit: "cover",
                         }}
                       />
                     ) : (
@@ -1033,6 +1051,12 @@ function CreateCV() {
                         style={{
                           maxWidth: "230px",
                           height: "230px",
+                          borderRadius: "50%",
+                          margin: "0 auto",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          objectFit: "cover",
                         }}
                       />
                     )}
@@ -1064,7 +1088,7 @@ function CreateCV() {
                       <div class="title mb-3">
                         <input
                           type="text"
-                          placeholder="Tên CV "
+                          placeholder="Nhập tên CV của bạn "
                           value={inputs.namecv}
                           name="namecv"
                           onChange={handleInput}

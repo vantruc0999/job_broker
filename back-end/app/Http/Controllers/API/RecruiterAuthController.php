@@ -52,6 +52,7 @@ class RecruiterAuthController extends Controller
                 'recruiter_company' => $recruiter->company_name,
                 'message' => 'Logged In Successfully',
                 'role' => 'recruiter',
+                'image' => $recruiter->image,
                 'token' => $token
             ]);
         }

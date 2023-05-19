@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Mail\HelloMail;
 use App\Models\Candidate;
 use App\Models\Job;
 use App\Models\JobApplication;
 use App\Models\ProgrammingSkills;
+use App\Models\Recruiter;
 use App\Models\Resume;
 use App\Models\ResumeSkills;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class JobApplicationController extends Controller
 {
@@ -63,23 +66,45 @@ class JobApplicationController extends Controller
 
     public function acceptApplicationRequest($id)
     {
-        JobApplication::where('application_id', '=', $id)
-            ->update([
-                'status' => 'approved'
-            ]);
+        $job_application = JobApplication::where('application_id', '=', $id)->first();
+        // ->update([
+        //     'status' => 'approved'
+        // ]);
+        $job_application->status = 'approved';
+        $job_application->save();
+
+        $candidate = Resume::select('first_name', 'last_name', 'email')
+            ->where('resume_id', '=', $job_application->resume_id)
+            ->first();
+        $full_name = $candidate->first_name . ' ' . $candidate->last_name;
+        $recruiter = auth()->user();
+        $mailable = new HelloMail($recruiter, $full_name, 1);
+        Mail::to($candidate->email)->send($mailable);
         return response([
-            'message' => 'Resume has been approved'
+            'message' => 'Resume has been approved',
+            // 'recruiter' => $recruiter
         ]);
     }
 
     public function declineApplicationRequest($id)
     {
-        JobApplication::where('application_id', '=', $id)
-            ->update([
-                'status' => 'declined'
-            ]);
+        $job_application = JobApplication::where('application_id', '=', $id)->first();
+        // ->update([
+        //     'status' => 'approved'
+        // ]);
+        $job_application->status = 'declined';
+        $job_application->save();
+
+        $candidate = Resume::select('first_name', 'last_name', 'email')
+            ->where('resume_id', '=', $job_application->resume_id)
+            ->first();
+        $full_name = $candidate->first_name . ' ' . $candidate->last_name;
+        $recruiter = auth()->user();
+        $mailable = new HelloMail($recruiter, $full_name, 0);
+        Mail::to($candidate->email)->send($mailable);
         return response([
-            'message' => 'Resume has been declined'
+            'message' => 'Resume has been declined',
+            // 'recruiter' => $recruiter
         ]);
     }
 
@@ -118,7 +143,8 @@ class JobApplicationController extends Controller
 
         if (count($candidates) != 0) {
             foreach ($candidates as $candidate) {
-                $candidate_infor = self::getCandidateInfor($candidate['candidate_id']);
+                $candidate_infor = self::getCandidateResume($candidate['resume_id']);
+                // $candidate_infor = self::getCandidateInfor($candidate['candidate_id']);
                 $skills = self::getCandidateSkills($candidate['resume_id']);
 
                 $candidate_infor->skills = $skills;
@@ -130,6 +156,17 @@ class JobApplicationController extends Controller
         }
 
         return $candidates_list;
+    }
+
+    private function getCandidateResume($id)
+    {
+        $candidate_infor = Resume::select('email', 'first_name', 'last_name')
+            ->where('resume_id', '=', $id)
+            ->first();
+        $candidate_infor->fullname = $candidate_infor['first_name'] . ' ' . $candidate_infor['last_name'];
+        unset($candidate_infor->first_name);
+        unset($candidate_infor->last_name);
+        return $candidate_infor;
     }
 
     public function getAllApprovedCandidateByJob($job_id)

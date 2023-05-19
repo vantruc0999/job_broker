@@ -20,7 +20,6 @@ function Register() {
     var regexFN = /^[a-zA-ZÀ-ỹ]+(([',. -][a-zA-ZÀ-ỹ ])?[a-zA-ZÀ-ỹ]*)*$/;
     var regexLN = /^[a-zA-ZÀ-ỹ]+(([',. -][a-zA-ZÀ-ỹ ])?[a-zA-ZÀ-ỹ]*)*$/;
     var regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-
     var regexBirth =
       /^(0?[1-9]|[12]\d|3[01])[/](0?[1-9]|1[012])[/](19\d{2}|20\d{2})$/;
 

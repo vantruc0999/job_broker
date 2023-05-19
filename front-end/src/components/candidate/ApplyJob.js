@@ -75,16 +75,19 @@ const ApplyJob = () => {
                       paddingTop: "15px",
                     }}
                   >
-                    <h6
-                      className="card_title"
-                      style={{
-                        paddingTop: "8px",
-                        color: "#1E88E5",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {value.job_name}
-                    </h6>
+                    <Link to={"/job/" + value.job_id}>
+                      <h6
+                        className="card_title"
+                        style={{
+                          paddingTop: "8px",
+                          color: "#1E88E5",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {value.job_name}
+                      </h6>
+                    </Link>
+
                     <ul
                       class="p-0"
                       style={{

@@ -215,7 +215,7 @@ const ManageCan = () => {
                                 {renderJob()}
                               </select>
                             </div>
-                            <div className="col-md-3 margin">
+                            {/* <div className="col-md-3 margin">
                               <label>Chọn theo loại</label>
 
                               <select
@@ -251,10 +251,10 @@ const ManageCan = () => {
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                               </select>
-                            </div>
+                            </div> */}
                           </div>
 
-                          <div
+                          {/* <div
                             style={{
                               display: "flex",
                               justifyContent: "space-between",
@@ -302,7 +302,7 @@ const ManageCan = () => {
                                 Ứng viên bị từ chối
                               </label>
                             </div>
-                          </div>
+                          </div> */}
 
                           <button
                             className="btn btn-primary"
@@ -310,6 +310,7 @@ const ManageCan = () => {
                               fontSize: "14px",
                               width: "150px",
                               marginLeft: "20px",
+                              marginTop: "20px",
                             }}
                           >
                             Lọc ứng viên

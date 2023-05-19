@@ -36,7 +36,7 @@
 .search-job {
   display: block;
   text-align: center;
-  background:#f6fafb;
+  background: #f6fafb;
   padding-top: 50px;
   padding-bottom: 20px;
 }
@@ -61,7 +61,7 @@
   margin: 0 auto;
   font-size: 12px;
 }
-.menu-job ul li{
+.menu-job ul li {
   margin-right: 10px;
   border-radius: 5px;
 }
@@ -223,4 +223,8 @@
 .cv ul li .fa {
   position: relative;
   top: 1px;
+}
+
+.swiper-grid-column > .swiper-wrapper {
+  flex-direction: row;
 }

@@ -33,6 +33,21 @@ const AddJob = () => {
     benefit: "",
     job_skill: [],
   });
+
+  const [errors, setErrors] = useState({
+    job_name: false,
+    position_name: false,
+    job_start_date: false,
+    job_end_date: false,
+    salary: false,
+    job_location: false,
+    language: false,
+    job_requirement: false,
+    job_description: false,
+    benefit: false,
+    job_skill: false,
+  });
+
   const editorRequirement = useRef(null);
   const editorDescription = useRef(null);
   const editorBenefit = useRef(null);
@@ -43,6 +58,85 @@ const AddJob = () => {
 
   const handleAddJob = (e) => {
     e.preventDefault();
+    let flag = true;
+    let dateStart, dateEnd;
+    let errors = {
+      job_name: false,
+      position_name: false,
+      job_start_date: false,
+      job_end_date: false,
+      salary: false,
+      job_location: false,
+      language: false,
+      job_requirement: false,
+      job_description: false,
+      benefit: false,
+      job_skill: false,
+    };
+
+    if (job.job_name == "") {
+      errors = { ...errors, job_name: true };
+      flag = false;
+    }
+    if (job.position_name == "") {
+      errors = { ...errors, position_name: true };
+      flag = false;
+    }
+    if (job.job_start_date == "") {
+      errors = { ...errors, job_start_date: true };
+      flag = false;
+    }
+    if (job.job_end_date == "") {
+      errors = { ...errors, job_end_date: true };
+      flag = false;
+    }
+    if (job.salary == "") {
+      errors = { ...errors, salary: true };
+      flag = false;
+    }
+    if (job.job_location == "") {
+      errors = { ...errors, job_location: true };
+      flag = false;
+    }
+    if (job.language == "") {
+      errors = { ...errors, language: true };
+      flag = false;
+    }
+    if (job.job_requirement == "") {
+      errors = { ...errors, job_requirement: true };
+      flag = false;
+    }
+    if (job.job_description == "") {
+      errors = { ...errors, job_description: true };
+      flag = false;
+    }
+    if (job.benefit == "") {
+      errors = { ...errors, benefit: true };
+      flag = false;
+    }
+    if (job.job_skill == "" || job.job_skill.length == 0) {
+      errors = { ...errors, job_skill: true };
+      flag = false;
+    }
+
+    if (!flag) {
+      setErrors(errors);
+      return;
+    } else {
+      setErrors({
+        job_name: false,
+        position_name: false,
+        job_start_date: false,
+        job_end_date: false,
+        salary: false,
+        job_location: false,
+        language: false,
+        job_requirement: false,
+        job_description: false,
+        benefit: false,
+        job_skill: false,
+      });
+    }
     let user = JSON.parse(localStorage.getItem("user"));
     let config = {
       headers: {
@@ -51,21 +145,39 @@ const AddJob = () => {
         Accept: "application/json",
       },
     };
-    
-    axios
-      .post("http://127.0.0.1:8000/api/recruiter/add-job", job, config)
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.message === "You have not bought any package") {
-          alert(res.data.message);
-          navigate("/packageRecruiter");
-        } else if (res.data.message === "Job has been created successfully") {
-          alert(res.data.message);
-          navigate("/homeRecruiter");
-        }
-      });
+
+    if (job.job_start_date) {
+      dateStart = new Date(job.job_start_date);
+    }
+
+    if (job.job_end_date) {
+      dateEnd = new Date(job.job_end_date);
+    }
+
+    if (dateStart >= dateEnd) {
+      alert("Ngày kết thúc phải lơn hơn ngày bắt đầu");
+      flag = false;
+    }
+
+    if (flag) {
+      axios
+        .post("http://127.0.0.1:8000/api/recruiter/add-job", job, config)
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.message === "You have not bought any package") {
+            alert(res.data.message);
+            navigate("/packageRecruiter");
+          } else if (res.data.message === "Job has been created successfully") {
+            alert(res.data.message);
+            navigate("/homeRecruiter");
+          } else if (
+            res.data.message === "Job start date must be greater or equal today"
+          ) {
+            alert("Ngày bắt đầu phải lớn hơn hoặc bằng ngày hiện tại");
+          }
+        });
+    }
   };
-  console.log(job);
   return (
     <div>
       <Sidebar />
@@ -86,6 +198,7 @@ const AddJob = () => {
                   <div className="col-md-6 form-group">
                     <label for="inputName">Tên công việc</label>
                     <input
+                      required={"required"}
                       type="text"
                       id="inputName"
                       className="form-control"
@@ -93,17 +206,28 @@ const AddJob = () => {
                         setJob({ ...job, job_name: e.target.value });
                       }}
                     />
+                    {errors.job_name && (
+                      <span style={{ color: "red" }}>
+                        {"Tên công việc không được để trống"}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6">
                     <label>Vị trí tuyển dụng</label>
                     <input
+                      required={"required"}
                       type="text"
                       className="form-control"
                       onChange={(e) => {
                         setJob({ ...job, position_name: e.target.value });
                       }}
                     />
+                    {errors.position_name && (
+                      <span style={{ color: "red" }}>
+                        {"Vị trí không được để trống"}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6">
@@ -115,6 +239,11 @@ const AddJob = () => {
                         setJob({ ...job, job_start_date: e.target.value });
                       }}
                     />
+                    {errors.job_start_date && (
+                      <span style={{ color: "red" }}>
+                        {"Ngày bắt đầu không được để trống"}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6">
@@ -126,6 +255,11 @@ const AddJob = () => {
                         setJob({ ...job, job_end_date: e.target.value });
                       }}
                     />
+                    {errors.job_end_date && (
+                      <span style={{ color: "red" }}>
+                        {"Ngày kết thúc không được để trống"}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6" style={{ marginTop: "10px" }}>
@@ -139,6 +273,11 @@ const AddJob = () => {
                         }}
                       />
                     </div>
+                    {errors.salary && (
+                      <span style={{ color: "red" }}>
+                        {"Lương không được để trống"}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6" style={{ marginTop: "10px" }}>
@@ -150,6 +289,11 @@ const AddJob = () => {
                         setJob({ ...job, job_location: e.target.value });
                       }}
                     />
+                    {errors.job_location && (
+                      <span style={{ color: "red" }}>
+                        {"Nơi làm việc không được để trống"}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6">
@@ -161,6 +305,11 @@ const AddJob = () => {
                         setJob({ ...job, language: e.target.value });
                       }}
                     />
+                    {errors.language && (
+                      <span style={{ color: "red" }}>
+                        {"Ngôn ngữ không được để trống"}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6">
@@ -168,6 +317,11 @@ const AddJob = () => {
                     <AnimatedMulti
                       parentCallback={callbackFunction}
                     ></AnimatedMulti>
+                    {errors.job_skill && (
+                      <span style={{ color: "red" }}>
+                        {"Kỹ năng không được để trống"}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-12" style={{ margin: "10px 0" }}>
@@ -191,6 +345,11 @@ const AddJob = () => {
                         setJob({ ...job, job_description: e.target.value });
                       }}
                     /> */}
+                    {errors.job_description && (
+                      <span style={{ color: "red" }}>
+                        {"Mô tả không được để trống"}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-12" style={{ margin: "10px 0" }}>
@@ -214,6 +373,11 @@ const AddJob = () => {
                         setJob({ ...job, job_requirement: e.target.value });
                       }}
                     /> */}
+                    {errors.job_requirement && (
+                      <span style={{ color: "red" }}>
+                        {"Yêu cầu không được để trống"}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-12" style={{ margin: "10px 0" }}>
@@ -237,6 +401,11 @@ const AddJob = () => {
                         setJob({ ...job, benefit: e.target.value });
                       }}
                     /> */}
+                    {errors.benefit && (
+                      <span style={{ color: "red" }}>
+                        {"Lợi ích không được để trống"}
+                      </span>
+                    )}
                   </div>
 
                   <div className="text-center">

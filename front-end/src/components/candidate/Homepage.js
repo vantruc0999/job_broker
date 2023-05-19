@@ -8,7 +8,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "../../assets/css/homepage.css";
 
-import { Pagination, Navigation } from "swiper";
+import { Pagination, Navigation, Grid } from "swiper";
 import axios from "axios";
 import Example2 from "./Example2";
 function Homepage() {
@@ -17,22 +17,40 @@ function Homepage() {
   const [jobSkill, setJobSkill] = useState([]);
   const [show, setShow] = useState(false);
   let user = JSON.parse(localStorage.getItem("user"));
-
+  const [suitable, setSuitable] = useState([]);
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/jobs").then((res) => {
       setJobs(res.data.jobs);
     });
   }, []);
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/jobs-by-skills/4").then((res) => {
+    axios.get("http://127.0.0.1:8000/api/highlight-job").then((res) => {
       console.log(res.data);
-      setJobSkill(res.data);
+      setJobSkill(res.data.jobs);
     });
   }, []);
   function handleModalClose(showValue) {
     setShow(showValue);
   }
-  console.log(jobs);
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      axios
+        .post(`http://127.0.0.1:8000/api/candidate/recommend-job`, null, config)
+        .then((res) => {
+          console.log(res.data);
+          setSuitable(res.data);
+        });
+    }
+  }, []);
+  console.log(typeof suitable);
   const checkLogin = () => {
     if (!user) {
       return (
@@ -61,6 +79,86 @@ function Homepage() {
       );
     }
   };
+  const renderSuitable = () => {
+    var suitableArr = [];
+    if (Object.keys(suitable).length > 0) {
+      if (suitable?.jobs) {
+        suitableArr = suitable.jobs;
+      } else {
+        suitableArr = Array.from(Object.values(suitable));
+      }
+      return suitableArr?.map((value, key) => {
+        return (
+          <SwiperSlide>
+            <div
+              className="urgentHiring mr-3"
+              style={{
+                padding: "0",
+                width: 400,
+              }}
+            >
+              <Link
+                to={"/job/" + value.job_id}
+                style={{ display: "flex", textDecoration: "none" }}
+              >
+                <div className="col-3">
+                  <img
+                    src={Logo}
+                    alt=""
+                    style={{
+                      width: "90px",
+                      height: "90px",
+                      margin: " 25px auto",
+                    }}
+                  />
+                </div>
+                <div className="col-9 urgent">
+                  <h5>{value.job_name}</h5>
+                  <p>{value.company_name}</p>
+                  <ul
+                    class="p-0"
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      overflow: "hidden",
+                      width: "100%",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    <li
+                      class="list-group-item list-group-item-action"
+                      style={{
+                        width: "100px",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      <p style={{ fontSize: "10px" }}>
+                        <i class="fas fa-map-marker-alt mr-1"></i>
+                        {value.job_location}
+                      </p>
+                    </li>
+                    <li
+                      class="list-group-item list-group-item-action"
+                      style={{
+                        width: "100px",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      <p style={{ fontSize: "10px" }}>
+                        <i class="fas fa-dollar-sign mr-1"></i>
+                        {value.salary}
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </Link>
+            </div>
+          </SwiperSlide>
+        );
+      });
+    }
+  };
+  console.log(jobSkill);
   return (
     <>
       {/* SEO */}
@@ -71,6 +169,9 @@ function Homepage() {
           </h1>
           <div className="searcDetail">
             <div className="input-group">
+              <p style={{ margin: 0, display: "flex", alignItems: "center" }}>
+                Từ khóa:{" "}
+              </p>
               <input
                 type="text"
                 style={{
@@ -81,6 +182,9 @@ function Homepage() {
                 className="form-control"
                 placeholder="Việc làm, công ty, nghề nghiệp..."
               />
+              <p style={{ display: "flex", alignItems: "center", margin: 0 }}>
+                Địa điểm:{" "}
+              </p>
               <input
                 type="text"
                 style={{ border: "none" }}
@@ -154,117 +258,40 @@ function Homepage() {
 
       {/* SEO */}
       {/* Urgent Hiring */}
-      <div
-        className="container-fluid"
-        style={{
-          backgroundColor: "#f8f9fa",
-          paddingLeft: "124.5px",
-          paddingBottom: 20,
-        }}
-      >
-        <h4
+      {user ? (
+        <div
+          className="container-fluid"
           style={{
-            paddingTop: 20,
-            fontWeight: "bold",
+            backgroundColor: "#f8f9fa",
+            paddingLeft: "124.5px",
+            paddingRight: "124.5px",
+            paddingBottom: 20,
           }}
         >
-          Việc làm phù hợp
-        </h4>
-
-        {/* <div className="job_urgent">
-          <div
-            className="row d-flex "
+          <h4
             style={{
-              margin: "0 auto",
+              paddingTop: 20,
+              fontWeight: "bold",
             }}
-          > */}
-        <Swiper
-          onSwiper={setSwiperRef}
-          slidesPerView={3}
-          centeredSlides={false}
-          spaceBetween={10}
-          pagination={{
-            type: "fraction",
-          }}
-          navigation={true}
-          modules={[Pagination, Navigation]}
-          className="mySwiper"
-        >
-          {/* List Job */}
-          {jobSkill.length > 0 &&
-            jobSkill.map((job) => {
-              return (
-                <SwiperSlide>
-                  <div
-                    className="urgentHiring mr-3"
-                    style={{
-                      padding: "0",
-                      width: 400,
-                    }}
-                  >
-                    <Link
-                      to={"/job/" + job.job_id}
-                      style={{ display: "flex", textDecoration: "none" }}
-                    >
-                      <div className="col-3">
-                        <img
-                          src={Logo}
-                          alt=""
-                          style={{
-                            width: "90px",
-                            height: "90px",
-                            margin: " 25px auto",
-                          }}
-                        />
-                      </div>
-                      <div className="col-9 urgent">
-                        <h5>{job.job_name}</h5>
-                        <p>{job.company_name}</p>
-                        <ul
-                          class="p-0"
-                          style={{
-                            display: "flex",
-                            justifyContent: "flex-start",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <li
-                            class="list-group-item list-group-item-action"
-                            style={{
-                              width: "100px",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            <p style={{ fontSize: "10px" }}>
-                              <i class="fas fa-map-marker-alt mr-1"></i>
-                              {job.job_location}
-                            </p>
-                          </li>
-                          <li
-                            class="list-group-item list-group-item-action"
-                            style={{
-                              width: "100px",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            <p style={{ fontSize: "10px" }}>
-                              <i class="fas fa-dollar-sign mr-1"></i>
-                              {job.salary}
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                    </Link>
-                  </div>
-                </SwiperSlide>
-              );
-            })}
-        </Swiper>
-        {/* </div>
-        </div> */}
-      </div>
+          >
+            Việc làm phù hợp
+          </h4>
+          <Swiper
+            onSwiper={setSwiperRef}
+            slidesPerView={3}
+            centeredSlides={false}
+            spaceBetween={10}
+            pagination={{
+              type: "fraction",
+            }}
+            navigation={true}
+            modules={[Pagination, Navigation]}
+            className="mySwiper"
+          >
+            {renderSuitable()}
+          </Swiper>
+        </div>
+      ) : null}
 
       {/* Typical Employers */}
       <div
@@ -272,6 +299,7 @@ function Homepage() {
         style={{
           backgroundColor: "#f8f9fa",
           paddingLeft: "124.5px",
+          paddingRight: "124.5px",
           paddingBottom: 20,
         }}
       >
@@ -627,8 +655,6 @@ function Homepage() {
       </div>
       {/* infinite loop */}
 
-      {/* Việc làm gợi ý */}
-
       {/* Tin tức */}
       <div class="teks-section" style={{ padding: "15px 70px" }}>
         <div class="teks-section-title">
@@ -755,6 +781,7 @@ function Homepage() {
         style={{
           backgroundColor: "#f8f9fa",
           paddingLeft: "124.5px",
+          paddingRight: "124.5px",
           paddingBottom: 20,
         }}
       >
@@ -766,93 +793,91 @@ function Homepage() {
         >
           Việc làm mới nhất
         </h4>
-        <div className="job_urgent">
-          <div className="row d-flex " style={{ margin: "0 auto" }}>
-            <Swiper
-              onSwiper={setSwiperRef}
-              slidesPerView={3}
-              centeredSlides={false}
-              spaceBetween={10}
-              pagination={{
-                type: "fraction",
-              }}
-              navigation={true}
-              modules={[Pagination, Navigation]}
-              className="mySwiper"
-            >
-              {/* List Job */}
-              {jobs.length > 0 &&
-                jobs.map((job) => {
-                  return (
-                    <SwiperSlide>
-                      <div
-                        className="urgentHiring mr-3"
-                        style={{ padding: "0", width: 400 }}
-                      >
-                        <Link
-                          to={"/job/" + job.job_id}
-                          style={{ display: "flex", textDecoration: "none" }}
-                        >
-                          <div className="col-3">
-                            <img
-                              src={Logo}
-                              alt=""
-                              style={{
-                                width: "90px",
-                                height: "90px",
-                                margin: " 25px auto",
-                              }}
-                            />
-                          </div>
-                          <div className="col-9 urgent">
-                            <h5 style={{ wordWrap: "break-word" }}>
-                              {job.job_name}
-                            </h5>
-                            <p>{job.company_name}</p>
-                            <ul
-                              class="p-0"
-                              style={{
-                                display: "flex",
-                                justifyContent: "flex-start",
-                                overflow: "hidden",
-                                width: "100%",
-                                whiteSpace: "nowrap",
-                              }}
-                            >
-                              <li
-                                class="list-group-item list-group-item-action"
-                                style={{
-                                  width: "100px",
-                                  textOverflow: "ellipsis",
-                                }}
-                              >
-                                <p style={{ fontSize: "10px" }}>
-                                  <i class="fas fa-map-marker-alt mr-1"></i>
-                                  {job.job_location}
-                                </p>
-                              </li>
-                              <li
-                                class="list-group-item list-group-item-action"
-                                style={{
-                                  width: "100px",
-                                  textOverflow: "ellipsis",
-                                }}
-                              >
-                                <p style={{ fontSize: "10px" }}>
-                                  <i class="fas fa-dollar-sign mr-1"></i>
-                                  {job.salary}
-                                </p>
-                              </li>
-                            </ul>
-                          </div>
-                        </Link>
+        {/* <div className="job_urgent">
+          <div className="row d-flex " style={{ margin: "0 auto" }}> */}
+        <Swiper
+          slidesPerView={3}
+          grid={{
+            rows: 2,
+          }}
+          spaceBetween={0}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Grid, Pagination]}
+          className="mySwiper"
+        >
+          {/* List Job */}
+          {jobs.length > 0 &&
+            jobs.map((job) => {
+              return (
+                <SwiperSlide>
+                  <div
+                    className="urgentHiring mr-3"
+                    style={{ padding: "0", width: 400 }}
+                  >
+                    <Link
+                      to={"/job/" + job.job_id}
+                      style={{ display: "flex", textDecoration: "none" }}
+                    >
+                      <div className="col-3">
+                        <img
+                          src={Logo}
+                          alt=""
+                          style={{
+                            width: "90px",
+                            height: "90px",
+                            margin: " 25px auto",
+                          }}
+                        />
                       </div>
-                    </SwiperSlide>
-                  );
-                })}
-            </Swiper>
-          </div>
-        </div>
+                      <div className="col-9 urgent">
+                        <h5 style={{ wordWrap: "break-word" }}>
+                          {job.job_name}
+                        </h5>
+                        <p>{job.company_name}</p>
+                        <ul
+                          class="p-0"
+                          style={{
+                            display: "flex",
+                            justifyContent: "flex-start",
+                            overflow: "hidden",
+                            width: "100%",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-map-marker-alt mr-1"></i>
+                              {job.job_location}
+                            </p>
+                          </li>
+                          <li
+                            class="list-group-item list-group-item-action"
+                            style={{
+                              width: "100px",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            <p style={{ fontSize: "10px" }}>
+                              <i class="fas fa-dollar-sign mr-1"></i>
+                              {job.salary}
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                    </Link>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+        </Swiper>
       </div>
       {/* Việc làm nổi bật */}
 

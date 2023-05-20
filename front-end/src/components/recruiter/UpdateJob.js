@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import JoditEditor from "jodit-react";
 import Select from "react-select";
-
+import Sidebar from "./Sidebar";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import makeAnimated from "react-select/animated";
@@ -282,7 +282,7 @@ function UpdateJob() {
       };
       flag = false;
     }
-    console.log(">>>>>>",skill);
+    console.log(">>>>>>", skill);
     if (skill.job_skill == "" || skill.job_skill.length == 0) {
       errors = {
         ...errors,
@@ -387,6 +387,7 @@ function UpdateJob() {
   };
   return (
     <>
+      <Sidebar />
       <main id="main" class="main">
         <section class="section">
           <div class="row">
@@ -642,11 +643,9 @@ const AnimatedMulti = (props) => {
         .get(`http://127.0.0.1:8000/api/job-detail/${params.id}`, config)
         .then((res) => {
           if (res.data.skills.length > 0) {
-            const arraySkillSelected = res.data.skills.map(
-              (item) => {
-                return { value: item.skill_id, label: item.skill_name };
-              }
-            );
+            const arraySkillSelected = res.data.skills.map((item) => {
+              return { value: item.skill_id, label: item.skill_name };
+            });
             console.log(res.data);
             setSkillSelected(arraySkillSelected);
           }

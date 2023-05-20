@@ -37,15 +37,13 @@ const ManageJob = () => {
                 }}
               >
                 <th scope="row">
-                  <i
-                    class="bi bi-briefcase"
-                    style={{
-                      fontSize: "30px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  ></i>
+                  {value.status == "waiting" ? (
+                    <p className="text-success">Chờ duyệt</p>
+                  ) : value.status == "approved" ? (
+                    <p className="text-primary">Đã duyệt</p>
+                  ) : (
+                    <p className="text-danger">Từ chối</p>
+                  )}
                 </th>
                 <td>
                   <ul style={{ textAlign: "left" }}>
@@ -65,14 +63,14 @@ const ManageJob = () => {
                 <td>{value.job_start_date}</td>
                 <td>{value.job_end_date}</td>
                 <td>{user.recruiter_name}</td>
-                <td style={{ display: "grid" }}>
+                <td style={{ display: "grid", height: "100%" }}>
                   <Link
                     to={"/manageJob/updateJob/" + value.job_id}
                     className="btn btn-outline-success"
                     style={{
-                      margin: "2px",
+                      margin: "3px",
                       fontSize: "13px",
-                      padding: "2px 5px",
+                      padding: "5px 5px",
                     }}
                   >
                     Chỉnh Sửa
@@ -83,20 +81,10 @@ const ManageJob = () => {
                     style={{
                       margin: "2px",
                       fontSize: "13px",
-                      padding: "2px 5px",
+                      padding: "5px 5px",
                     }}
                   >
-                    Xóa
-                  </Link>
-                  <Link
-                    className="btn btn-outline-info"
-                    style={{
-                      margin: "2px",
-                      fontSize: "13px",
-                      padding: "2px 5px",
-                    }}
-                  >
-                    Xem chi tiết
+                    Hủy
                   </Link>
                 </td>
               </tr>
@@ -144,7 +132,7 @@ const ManageJob = () => {
                           textAlign: "center",
                         }}
                       >
-                        <th scope="col"></th>
+                        <th scope="col">Trạng thái</th>
                         <th scope="col">Tiêu đề việc làm</th>
                         <th scope="col" style={{ width: "15%" }}>
                           Ngày bắt đầu

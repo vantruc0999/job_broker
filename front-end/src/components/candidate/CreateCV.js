@@ -75,30 +75,32 @@ function CreateCV() {
   const [template, setTemplate] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const imageListRef = ref(storage, "image/");
-    console.log(imagePreview);
+  console.log(imagePreview);
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     let flag = true;
     if (!file) {
       flag = false;
-      setImagePreview(null)
+      setImagePreview(null);
     } else {
       let img = ["png", "jpg", "jpeg", "PNG", "JPG"];
       if (file.size > 1024 * 1024) {
         flag = false;
       } else if (!img.includes(file.name.split(".").pop())) {
         flag = false;
-        setImagePreview(null)
-        alert('file phải thuộc định dạng png, jpgm jpeg, png, jpg')
-        return
+        setImagePreview(null);
+        alert("file phải thuộc định dạng png, jpgm jpeg, png, jpg");
+        return;
       }
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImagePreview(reader.result);
-      uploadFile(file);
-    };
-    reader.readAsDataURL(file);
+    if (flag) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result);
+        uploadFile(file);
+      };
+      reader.readAsDataURL(file);
+    }
   };
   const uploadFile = async (imageUpload) => {
     if (imageUpload == null) return;
@@ -352,7 +354,7 @@ function CreateCV() {
             </div>
             <div key={index} className="form-field">
               <input
-                required="required"
+                // required="required"
                 className="form_input"
                 type="text"
                 placeholder=" "
@@ -387,7 +389,7 @@ function CreateCV() {
             </div>
             <div key={index} className="form-field">
               <input
-                required="required"
+                // required="required"
                 className="form_input"
                 type="text"
                 placeholder=" "
@@ -422,7 +424,7 @@ function CreateCV() {
             </div>
             <div key={index} className="form-field">
               <input
-                required="required"
+                // required="required"
                 className="form_input"
                 type="text"
                 placeholder=" "
@@ -455,7 +457,7 @@ function CreateCV() {
             <div key={index} className="form-field">
               <div style={{ display: "flex" }}>
                 <input
-                  required="required"
+                  // required="required"
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian bắt đầu"
@@ -466,7 +468,7 @@ function CreateCV() {
                   }
                 />
                 <input
-                  required="required"
+                  // required="required"
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian kết thúc "
@@ -478,7 +480,7 @@ function CreateCV() {
                 />
               </div>
               <input
-                required="required"
+                // required="required"
                 className="exp_input"
                 type="text"
                 placeholder="Vị trí"
@@ -489,7 +491,7 @@ function CreateCV() {
                 }
               />
               <input
-                required="required"
+                // required="required"
                 className="exp_input"
                 type="text"
                 placeholder="Tên dự án"
@@ -692,64 +694,88 @@ function CreateCV() {
   };
   // console.log(inputs);
   const handleSubmit = (e) => {
-    let flag = true
+    let flag = true;
     let resume = {
       first_name: inputs?.first_name,
       last_name: inputs?.last_name,
       phone: inputs?.phone,
       birth_day: inputs?.birth_day,
       email: inputs?.email,
-      hobby: softSkill[0]?.title,
-      activity: awards[0]?.title,
+      hobby: softSkill[0]?.title ? softSkill[0]?.title : "",
+      activity: awards[0]?.title ? awards[0]?.title : "",
       address: inputs?.address,
       resume_name: inputs?.namecv,
-      education: education[0]?.school,
-      education_year: education[0]?.time,
-      education_major: education[0]?.specialize,
-      education_description: education[0]?.rank,
-      certificate: certificate[0]?.title,
+      education: education[0]?.school ? education[0]?.school : "",
+      education_year: education[0]?.time ? education[0]?.time : "",
+      education_major: education[0]?.specialize ? education[0]?.specialize : "",
+      education_description: education[0]?.rank ? education[0]?.rank : "",
+      certificate: certificate[0]?.title ? certificate[0]?.title : "",
       template: template,
       image: urlImage,
-      experience_project: experience_project,
-      experience_company: experience_company,
+      experience_project:
+        experience_project.length > 0
+          ? experience_project
+          : [
+              {
+                project_name: "",
+                responsibility: "",
+                achievement: "",
+                experience_start: "",
+                experience_end: "",
+              },
+            ],
+      experience_company:
+        experience_company.length > 0
+          ? experience_company
+          : [
+              {
+                company_name: "",
+                position: "",
+                achievement: "",
+                experience_start: "",
+                experience_end: "",
+              },
+            ],
       skills: skill?.job_skill,
     };
-    console.log(resume);
-    if(!resume.image){
-      flag=false
-      alert("Bạn chưa chọn ảnh đại diện")
-      console.log("ngu");
-    } else if(Object.values(resume).includes(undefined) || Object.values(resume).includes("") || resume.skills?.length <= 0){
-      flag = false
-      console.log('>>>>>>>>>>>>>> NOOOOOOOOOOOOOOOOOO');
-      alert('Nhập đầy đủ các mục ở trên')
+    console.log(experience_project);
+    if (!resume.image) {
+      console.log('1');
+      // flag = false;
+      // alert("Bạn chưa chọn ảnh đại diện");
+      resume.image = Logo;
+    } 
+    if (resume.skills == undefined || resume.skills?.length == 0) {
+      console.log('2');
+      flag = false;
+      alert("Nhập Skill");
     } else {
-      console.log('yes');
+      console.log("yes");
     }
     e.preventDefault();
-    if(flag){
+    if (flag) {
       console.log(typeof experience_project);
-    let object = {};
-    object.resume = resume;
-    let user = JSON.parse(localStorage.getItem("user"));
-    let config = {
-      headers: {
-        Authorization: "Bearer " + user.token,
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
-    };
-    axios
-      .post("http://127.0.0.1:8000/api/candidate/create-cv", object, config)
-      .then((res) => {
-        if (res.data.status == "200") {
-          alert("Bạn đã tạo CV thành công");
-          navigate("/allCV");
-        }
-        // console.log(res.data.status);
-      });
+      let object = {};
+      object.resume = resume;
+      let user = JSON.parse(localStorage.getItem("user"));
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      axios
+        .post("http://127.0.0.1:8000/api/candidate/create-cv", object, config)
+        .then((res) => {
+          if (res.data.status == "200") {
+            alert("Bạn đã tạo CV thành công");
+            navigate("/allCV");
+          }
+          // console.log(res.data.status);
+        });
 
-    console.log(resume);
+      console.log(resume);
     }
   };
   const renderTemplate1 = () => {

@@ -4,10 +4,10 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 function UpdatePackage(props) {
-    // console.log(props.idPack);
+  // console.log(props.idPack);
   const [show, setShow] = useState(false);
   const [inputs, setInputs] = useState("");
-  const [pack,setPack] = useState("")
+  const [pack, setPack] = useState("");
   const [packageall, setPackageall] = useState("");
 
   const handleInput = (e) => {
@@ -15,7 +15,7 @@ function UpdatePackage(props) {
     let value = e.target.value;
     setInputs((state) => ({ ...state, [nameInput]: value }));
   };
- 
+
   let user = JSON.parse(localStorage.getItem("user"));
   let config = {
     headers: {
@@ -24,29 +24,31 @@ function UpdatePackage(props) {
       Accept: "application/json",
     },
   };
-  useEffect(()=>{
+  useEffect(() => {
     console.log("oke");
     axios
-    .get("http://127.0.0.1:8000/api/admin/package-detail/"+props.idPack, config)
-    .then((res) => {
-      setInputs({
-        package_name: res.data.package_infor.package_name,
-        package_description: res.data.package_infor.package_description,
-        price: res.data.package_infor.price,
-        exp_time: res.data.package_infor.exp_time,
-        unit: res.data.package_infor.unit,
-      })
-    });
-  },[])
-  const render2 = async() => {
+      .get(
+        "http://127.0.0.1:8000/api/admin/package-detail/" + props.idPack,
+        config
+      )
+      .then((res) => {
+        setInputs({
+          package_name: res.data.package_infor.package_name,
+          package_description: res.data.package_infor.package_description,
+          price: res.data.package_infor.price,
+          exp_time: res.data.package_infor.exp_time,
+          unit: res.data.package_infor.unit,
+        });
+      });
+  }, []);
+  const render2 = async () => {
     await axios
       .get("http://127.0.0.1:8000/api/recruiter/package", config)
       .then((res) => {
         props.parentCallBack(res.data);
-       
-    });
+      });
   };
- 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let data = {
@@ -67,15 +69,19 @@ function UpdatePackage(props) {
       },
     };
     axios
-      .post("http://127.0.0.1:8000/api/admin/update-package/"+props.idPack,data, config)
+      .post(
+        "http://127.0.0.1:8000/api/admin/update-package/" + props.idPack,
+        data,
+        config
+      )
       .then((res) => {
         console.log(res.data);
-        if(res.data.message.includes("successfully")){
-            alert("Sửa gói thành công")
+        if (res.data.message.includes("successfully")) {
+          alert("Sửa gói thành công");
         }
-        setPack(res.data)
+        setPack(res.data);
         props.resetId(null);
-       render2()
+        render2();
       });
     //   render2();
     //   handleUpdate()
@@ -113,6 +119,7 @@ function UpdatePackage(props) {
                     className="form-control"
                     value={inputs.package_name}
                     onChange={handleInput}
+                    required={"required"}
                   />
                 </div>
                 <div className="form-group">
@@ -124,6 +131,7 @@ function UpdatePackage(props) {
                     defaultValue={""}
                     value={inputs.package_description}
                     onChange={handleInput}
+                    required={"required"}
                   />
                 </div>
                 <div className="form-group">
@@ -134,6 +142,7 @@ function UpdatePackage(props) {
                     className="form-control"
                     value={inputs.price}
                     onChange={handleInput}
+                    required={"required"}
                   />
                 </div>
                 <div className="form-group">
@@ -144,6 +153,7 @@ function UpdatePackage(props) {
                     className="form-control"
                     value={inputs.exp_time}
                     onChange={handleInput}
+                    required={"required"}
                   />
                 </div>
                 <div className="form-group">
@@ -154,10 +164,8 @@ function UpdatePackage(props) {
                     className="form-control custom-select"
                     value={inputs.unit}
                     onChange={handleInput}
+                    required={"required"}
                   >
-                    <option selected="" disabled="">
-                      Chọn đơn vị
-                    </option>
                     <option value="week">Tuần</option>
                     <option value="month">Tháng</option>
                     <option value="year"> Năm</option>

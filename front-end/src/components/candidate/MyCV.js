@@ -81,8 +81,8 @@ function MyCV() {
       .then((res) => {
         console.log(res.data);
         setStatus(res.data);
-        if (res.data.message.includes("succesfully")) {
-          alert(res.data.message);
+        if (res.data.message.includes("Delete")) {
+          alert("Bạn đã xóa CV");
         }
       });
     render();
@@ -93,26 +93,26 @@ function MyCV() {
         return (
           <>
             <div className="col-md-3">
-              <div class="card card-primary card-outline">
-                <div class="card-body box-profile">
-                  <div class="text-center">
+              <div className="card card-primary card-outline">
+                <div className="card-body box-profile">
+                  <div className="text-center">
                     <img
-                      class=""
+                      className=""
                       src={Logo2}
                       alt=""
                       style={{ maxWidth: "80px", borderRadius: "50%" }}
                     />
                   </div>
-                  <h3 class="profile-username text-center">
+                  <h3 className="profile-username text-center">
                     {value.resume_name}
                   </h3>
-                  {/* <p class=" text-center"> {value.resume_name}</p> */}
+                  {/* <p className=" text-center"> {value.resume_name}</p> */}
                   <div
-                    class="list-group-itemm"
+                    className="list-group-itemm"
                     style={{ fontSize: "14px", marginBottom: "10px" }}
                   >
                     <b style={{ marginRight: "10px" }}>Trạng thái: </b>{" "}
-                    {/* <p class="float-right">{value.public_status == "0" ? <>private</>: <>public</>}</p> */}
+                    {/* <p className="float-right">{value.public_status == "0" ? <>private</>: <>public</>}</p> */}
                     <select
                       value={value.public_status}
                       id={value.resume_id}
@@ -128,7 +128,7 @@ function MyCV() {
                   <Link to={"/allCV/fileCV/" + value.resume_id}>
                     <a
                       href="/"
-                      class="btn btn-primary btn-block"
+                      className="btn btn-primary btn-block"
                       style={{ margin: "10px 0" }}
                     >
                       <b>Xem</b>
@@ -137,7 +137,7 @@ function MyCV() {
                   <Link to={"/allCV/UpdateCv/" + value.resume_id}>
                     <a
                       href="/"
-                      class="btn btn-success btn-block"
+                      className="btn btn-success btn-block"
                       style={{ margin: "10px 0" }}
                     >
                       <b>Chỉnh sửa</b>
@@ -149,7 +149,7 @@ function MyCV() {
                       handleDelte(e);
                     }}
                     id={value.resume_id}
-                    class="btn btn-danger btn-block"
+                    className="btn btn-danger btn-block"
                   >
                     <b>Xóa</b>
                   </p>

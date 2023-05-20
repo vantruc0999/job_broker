@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "../../assets/css/homepage.css";
 import Logo2 from "../../assets/images/logo.jpg";
 import CV from "../../assets/images/CV.jpg";
+import CV2 from "../../assets/images/CV2.jpg";
 function ChooseTemplate() {
   return (
     <>
@@ -94,7 +95,7 @@ function ChooseTemplate() {
                       <div className="thumb">
                         <picture>
                           <img
-                            src={CV}
+                            src={CV2}
                             className="image"
                             width="100%"
                             alt="JobsGO CV"

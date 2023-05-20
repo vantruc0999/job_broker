@@ -16,7 +16,7 @@ import { v4 } from "uuid";
 import { storage } from "../Firebase";
 
 function RegisterCruiter() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState("");
   const [errors, setErrors] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -33,9 +33,9 @@ function RegisterCruiter() {
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>",file);
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>", file);
     // setImageUpload(file);
-setAvatar(file)
+    setAvatar(file);
     const reader = new FileReader();
 
     console.log("oke");
@@ -188,7 +188,7 @@ setAvatar(file)
               image: "",
             });
             alert(res.data.message);
-            navigate("loginCruiter")
+            navigate("/loginCruiter");
           }
         })
         .catch((errors) => {

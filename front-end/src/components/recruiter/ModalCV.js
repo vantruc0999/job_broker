@@ -38,14 +38,14 @@ function ModalCV({ closeModal, modalId }) {
           <>
             <ul>
               <li>
-                <div className="date">
-                  {value.experience_start}-{value.experience_end}
+                <div className="date" style={{ fontWeight: "bold" }}>
+                  Bắt đầu - kết thúc: {value.experience_start} -{" "}
+                  {value.experience_end}
                 </div>
                 <div className="info">
-                  <p className="semi-bold">{value.company_name}</p>
-                  <p>Nhiệm vụ: {value.position}</p>
-                  {/* <p>Ngôn ngữ sử dụng: J2ME</p> */}
-                  <p>{value.achievement}</p>
+                  <p className="semi-bold">Công ty: {value.company_name}</p>
+                  <p>Vị trí: {value.position}</p>
+                  <p>Mô tả: {value.achievement}</p>
                 </div>
               </li>
             </ul>
@@ -75,14 +75,14 @@ function ModalCV({ closeModal, modalId }) {
           <>
             <ul>
               <li>
-                <div className="date">
-                  {value.experience_start}-{value.experience_end}
+                <div className="date" style={{ fontWeight: "bold" }}>
+                  Bắt đầu - kết thúc: {value.experience_start}-
+                  {value.experience_end}
                 </div>
                 <div className="info">
                   <p className="semi-bold">Dự án: {value.project_name}</p>
                   <p>Vị trí: {value.responsibility}</p>
-                  {/* <p>Ngôn ngữ sử dụng: J2ME</p> */}
-                  <p>{value.achievement}</p>
+                  <p>Mô tả: {value.achievement}</p>
                 </div>
               </li>
             </ul>
@@ -205,18 +205,26 @@ function ModalCV({ closeModal, modalId }) {
                   <ul>
                     <li>
                       <div
-                        className="info"
+                        className="info row"
                         style={{
                           display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
+                          // justifyContent: "space-between",
+                          // alignItems: "center",
                           fontWeight: "bold",
                         }}
                       >
-                        <p>Ngành: {resume.resume.education_major}</p>
-                        <p>Học vấn: {resume.resume.education}</p>
-                        <p>Niên khóa: {resume.resume.education_year}</p>
-                        <p>Xếp loại: {resume.resume.education_description}</p>
+                        <p className="col-6">
+                          Trường học: {resume.resume.education_major}
+                        </p>
+                        <p className="col-6">
+                          Ngành học: {resume.resume.education}
+                        </p>
+                        <p className="col-6">
+                          Niên khóa: {resume.resume.education_year}
+                        </p>
+                        <p className="col-6">
+                          Xếp loại: {resume.resume.education_description}
+                        </p>
                       </div>
                     </li>
                   </ul>

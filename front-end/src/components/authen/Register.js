@@ -1,9 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import Errors from "../Errors"
+
 function Register() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState("");
   const [errors, setErrors] = useState("");
   const handleInput = (e) => {
@@ -19,8 +19,7 @@ function Register() {
     var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     var regexFN = /^[a-zA-ZÀ-ỹ]+(([',. -][a-zA-ZÀ-ỹ ])?[a-zA-ZÀ-ỹ]*)*$/;
     var regexLN = /^[a-zA-ZÀ-ỹ]+(([',. -][a-zA-ZÀ-ỹ ])?[a-zA-ZÀ-ỹ]*)*$/;
-    var regexPass =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+    var regexPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     var regexBirth =
       /^(0?[1-9]|[12]\d|3[01])[/](0?[1-9]|1[012])[/](19\d{2}|20\d{2})$/;
 
@@ -76,10 +75,9 @@ function Register() {
       errorSubmit.phone = "Invalid phone number";
     }
 
- 
     if (!regexFN.test(inputs.first_name)) {
       flag = false;
-      errorSubmit.first_name=("Invalid first_name");
+      errorSubmit.first_name = "Invalid first_name";
     }
     if (inputs.first_name === undefined) {
       flag = false;
@@ -92,7 +90,7 @@ function Register() {
 
     if (!regexLN.test(inputs.last_name)) {
       flag = false;
-      errorSubmit.last_name=("Invalid last_name");
+      errorSubmit.last_name = "Invalid last_name";
     }
     if (inputs.last_name === undefined) {
       flag = false;
@@ -158,7 +156,7 @@ function Register() {
               birthday: "",
             });
             alert(res.data.message);
-            navigate('/login')
+            navigate("/login");
           }
         })
         .catch((errors) => {
@@ -171,7 +169,7 @@ function Register() {
   return (
     <>
       <div className="auth-form auth-form__signup">
-        <div className="auth-form__container">
+        <div className="auth-form__container" style={{ padding: "20px 30px" }}>
           <div className="auth-form__header">
             <h3 className="auth-form__heading">Sign Up</h3>
           </div>
@@ -297,22 +295,6 @@ function Register() {
               </button>
             </div>
           </form>
-        </div>
-        <div className="auth-form__socials">
-          <a
-            href=""
-            className="auth-form__socials--facebook btn btn--size-s btn--with-icon"
-          >
-            <i className="auth-form__socials-icon fa-brands fa-facebook-square" />
-            Connect with Facebook
-          </a>
-          <a
-            href=""
-            className="auth-form__socials--google btn btn--size-s btn--with-icon"
-          >
-            <i className="auth-form__socials-icon fa-brands fa-google" />
-            Connect with Google
-          </a>
         </div>
       </div>
     </>

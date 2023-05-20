@@ -19,10 +19,10 @@ function Login() {
     let errorSubmit = {};
     const re =
       /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    
+
     // var regexPass =
     // /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
-   
+
     let flag = true;
     if (!re.test(inputs.email)) {
       flag = false;
@@ -49,7 +49,6 @@ function Login() {
       flag = false;
       errorSubmit.password = "Please enter your password";
     }
-    
 
     if (!flag) {
       setErrors(errorSubmit);
@@ -74,11 +73,11 @@ function Login() {
               password: "",
             });
             alert(res.data.message);
-            if(res.data.role === "candidate"){
-              localStorage.setItem("user",JSON.stringify(res.data))
-              navigate("/homeCandidate")
-            }else if(res.data.role === "recruiter"){
-              navigate("/homeRecruiter")
+            if (res.data.role === "candidate") {
+              localStorage.setItem("user", JSON.stringify(res.data));
+              navigate("/homeCandidate");
+            } else if (res.data.role === "recruiter") {
+              navigate("/homeRecruiter");
             }
           }
         })
@@ -92,7 +91,7 @@ function Login() {
   return (
     <>
       <div className="auth-form auth-form__login" style={{ marginTop: 150 }}>
-        <div className="auth-form__container">
+        <div className="auth-form__container" style={{ padding: "20px 30px" }}>
           <div className="auth-form__header">
             <h3 className="auth-form__heading">Login</h3>
             <span className="auth-form__switch-btn auth-form__switch-btn2">
@@ -123,7 +122,7 @@ function Login() {
                   value={inputs.password}
                   onChange={handleInput}
                 />
-                 <p style={{ color: "red" }}>{errors.password}</p>
+                <p style={{ color: "red" }}>{errors.password}</p>
               </div>
             </div>
             <div className="auth-form__aside">
@@ -139,13 +138,15 @@ function Login() {
             </div>
             <div className="auth-form__controls">
               <Link to="/register">
-              <button className="btn auth-form__controls-back">SIGN UP</button>
+                <button className="btn auth-form__controls-back">
+                  SIGN UP
+                </button>
               </Link>
               <button className="btn btn--primary ">LOGIN</button>
             </div>
           </form>
         </div>
-        <div className="auth-form__socials">
+        {/* <div className="auth-form__socials">
           <Link
             to="#"
             className="auth-form__socials--facebook btn btn--size-s btn--with-icon"
@@ -160,7 +161,7 @@ function Login() {
             <i className="auth-form__socials-icon fa-brands fa-google" />
             Sign in with Google
           </Link>
-        </div>
+        </div> */}
       </div>
     </>
   );

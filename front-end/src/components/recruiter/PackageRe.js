@@ -28,40 +28,56 @@ const PackageRe = () => {
       return Object.keys(packageall).map((key, item) => {
         return (
           <>
-            <div class="col-12 col-sm-6 col-md-3 d-flex align-items-stretch flex-column">
+            <div
+              class="col-12 col-sm-6 col-md-6 d-flex align-items-stretch flex-column"
+              style={{ minHeight: "400px" }}
+            >
               <div class="card bg-light d-flex flex-fill">
-                <div class="card-header text-muted border-bottom-0">
+                <div
+                  class="card-header text-muted border-bottom-0"
+                  style={{ textAlign: "center" }}
+                >
                   Mua gói dịch vụ để sử dụng
                 </div>
                 <div class="card-body pt-0">
                   <div class="row">
-                    <div class="col-12">
-                      <h2 class="lead" style={{ textAlign: "center" }}>
+                    <div class="col-12" style={{ fontSize: "20px" }}>
+                      <h2
+                        class="lead"
+                        style={{
+                          textAlign: "center",
+                          fontSize: "25px",
+                          color: "red",
+                        }}
+                      >
                         <b>{packageall[key]["package_name"]}</b>
                       </h2>
-                      <p class="text-muted text-sm">
-                        <b>Mô tả: </b> {packageall[key]["package_description"]}
-                      </p>
+
                       <ul class="ml-4 mb-0 fa-ul text-muted">
-                        <li class="small">
+                        <li class="small" style={{ padding: "12px 5px" }}>
                           <span class="fa-li">
                             <i class="fas fa-lg fa-dollar-sign"></i>
                           </span>{" "}
                           <b>Giá: </b> {packageall[key]["price"]} USD
                         </li>
-                        <li class="small">
+                        <li class="small" style={{ paddingBottom: "12px" }}>
                           <span class="fa-li">
                             <i class="fas fa-lg fa-clock"></i>
                           </span>
-                          <b>Thời gian sử dụng: </b> {packageall[key]["exp_time"]} {packageall[key]["unit"]}
+                          <b>Thời gian sử dụng: </b>{" "}
+                          {packageall[key]["exp_time"]}{" "}
+                          {packageall[key]["unit"]}
                         </li>
                       </ul>
+                      <p class="small">
+                        <b>Mô tả: </b> {packageall[key]["package_description"]}
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div class="card-footer">
                   <div class="text-right">
-                  <PayPalButton
+                    <PayPalButton
                       product={{
                         id: packageall[key]["package_id"],
                         description: packageall[key]["package_name"],
@@ -83,10 +99,11 @@ const PackageRe = () => {
       <main id="main" className="main" style={{ minHeight: "665px" }}>
         <section class="content">
           <div class="card card-solid">
+            <div class="card-header">
+              <h3 class="card-title">GÓI DỊCH VỤ CỦA CHÚNG TÔI</h3>
+            </div>
             <div class="card-body pb-0">
-              <div class="row">
-               {renPackage()}
-              </div>
+              <div class="row">{renPackage()}</div>
             </div>
           </div>
         </section>

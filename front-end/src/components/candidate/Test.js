@@ -77,7 +77,7 @@ const Test = () => {
                         ) : (
                           <Example jobId={detailJob.job_id} />
                         )}
-                        <button
+                        {/* <button
                           type="button"
                           className="btn btn-danger"
                           style={{ marginRight: "20px" }}
@@ -97,7 +97,7 @@ const Test = () => {
                           style={{ marginRight: "20px" }}
                         >
                           Chia sẻ
-                        </button>
+                        </button> */}
                       </div>
                     </>
                   ) : null}
@@ -529,7 +529,7 @@ const Test = () => {
                       className="company_name"
                       style={{ fontWeight: "bold" }}
                     >
-                      Tên công ty
+                      {detailJob.company_name}
                     </div>
                   </div>
 

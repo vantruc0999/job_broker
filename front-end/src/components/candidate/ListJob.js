@@ -6,11 +6,11 @@ import { useLocation } from "react-router-dom";
 const ListJob = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const searchValue = searchParams.get('search');
-  const addressValue = searchParams.get('address');
+  const searchValue = searchParams.get("search");
+  const addressValue = searchParams.get("address");
   const [jobs, setJobs] = useState([]);
-  const [filterJob, setFilterJob] = useState([])
-  const [search,setSearch] = useState([])
+  const [filterJob, setFilterJob] = useState([]);
+  const [search, setSearch] = useState([]);
   console.log(">>>>>>>>>>>>>>>>>>>>>>>>.", jobs);
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/jobs").then((res) => {
@@ -20,8 +20,11 @@ const ListJob = () => {
   const renderJob = () => {
     if (Object.keys(jobs).length > 0) {
       // const search = jobs.filter(item => item.job_location.toLowerCase() === addressValue.toLowerCase());
-      if(addressValue || searchValue){
-        const address = jobs.filter(item => item.job_location.toLowerCase() === addressValue.toLowerCase());
+      if (addressValue || searchValue) {
+        const address = jobs.filter(
+          (item) =>
+            item.job_location.toLowerCase() === addressValue.toLowerCase()
+        );
         return address.map((value, key) => {
           return (
             <>
@@ -110,7 +113,7 @@ const ListJob = () => {
             </>
           );
         });
-      }else{
+      } else {
         return jobs.map((value, key) => {
           return (
             <>
@@ -236,7 +239,219 @@ const ListJob = () => {
             </div>
 
             <div className="col-lg-3">
-              <div className="card">Lọc</div>
+              <div class="blog-sidebar">
+                <div
+                  class="sidebar-widget padd-top-0 padd-bot-0 mrg-top-20"
+                  style={{ color: "#333", marginTop: "5px" }}
+                >
+                  <h6
+                    class="mrg-bot-5"
+                    style={{
+                      background: "#f1f6fb",
+                      padding: "9px 15px",
+                      color: "#1772bd",
+                    }}
+                  >
+                    Ngành nghề liên quan
+                  </h6>
+                  <ul
+                    class="sidebar-list expandible-bk"
+                    style={{
+                      fontSize: "13px",
+                      padding: "5px 5px",
+                      color: "#333",
+                    }}
+                  >
+                    <li>
+                      <a
+                        title="Thực Tập Sinh Công Nghệ Thông Tin"
+                        href="/viec-lam-thuc-tap-sinh-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">
+                          Thực Tập Sinh Công Nghệ Thông Tin
+                        </div>
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        title="Thực Tập Sinh Công Nghệ Thông Tin"
+                        href="/viec-lam-thuc-tap-sinh-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">
+                          Chuyên Viên Công Nghệ Thông Tin
+                        </div>
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        title="Thực Tập Sinh Công Nghệ Thông Tin"
+                        href="/viec-lam-thuc-tap-sinh-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">
+                          Trưởng Phòng Công Nghệ Thông Tin
+                        </div>
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        title="Thực Tập Sinh Công Nghệ Thông Tin"
+                        href="/viec-lam-thuc-tap-sinh-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">
+                          Kỹ Sư Công Nghệ Thông Tin
+                        </div>
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        title="Thực Tập Sinh Công Nghệ Thông Tin"
+                        href="/viec-lam-thuc-tap-sinh-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">
+                          Giám Đốc Công Nghệ
+                        </div>
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="sidebar-widget padd-top-0 padd-bot-0 mrg-top-20">
+                  <h6
+                    class="mrg-bot-5"
+                    style={{
+                      background: "#f1f6fb",
+                      padding: "9px 15px",
+                      color: "#1772bd",
+                    }}
+                  >
+                    Tìm theo địa điểm
+                  </h6>
+                  <ul
+                    class="sidebar-list expandible-bk"
+                    style={{
+                      fontSize: "13px",
+                      padding: "5px 5px",
+                      color: "#333",
+                    }}
+                  >
+                    <li>
+                      <a
+                        title="Thực Tập Sinh Công Nghệ Thông Tin"
+                        href="/viec-lam-thuc-tap-sinh-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">Quận Thanh Khê</div>
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        title="Thực Tập Sinh Công Nghệ Thông Tin"
+                        href="/viec-lam-thuc-tap-sinh-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">Quận Sơn Trà</div>
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        title="Thực Tập Sinh Công Nghệ Thông Tin"
+                        href="/viec-lam-thuc-tap-sinh-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">Quận Ngũ Hành Sơn</div>
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        title="Thực Tập Sinh Công Nghệ Thông Tin"
+                        href="/viec-lam-thuc-tap-sinh-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">Quận Liên Chiểu</div>
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        title="Thực Tập Sinh Công Nghệ Thông Tin"
+                        href="/viec-lam-thuc-tap-sinh-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">Quận Cẩm Lệ</div>
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="sidebar-widget padd-top-0 padd-bot-0 mrg-top-20">
+                  <h6
+                    class="mrg-bot-5"
+                    style={{
+                      background: "#f1f6fb",
+                      padding: "9px 15px",
+                      color: "#1772bd",
+                    }}
+                  >
+                    TÌM THEO LOẠI HÌNH
+                  </h6>
+                  <ul
+                    class="sidebar-list expandible-bk"
+                    style={{
+                      fontSize: "13px",
+                      padding: "5px 5px",
+                      color: "#333",
+                    }}
+                  >
+                    <li>
+                      <a
+                        title="Thực Tập Sinh Công Nghệ Thông Tin"
+                        href="/viec-lam-thuc-tap-sinh-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">
+                          Công Nghệ Thông Tin Full-Time
+                        </div>
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        title="Chuyên Viên Công Nghệ Thông Tin"
+                        href="/viec-lam-chuyen-vien-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">
+                          Công Nghệ Thông Tin Part-Time
+                        </div>{" "}
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        title="Trưởng Phòng Công Nghệ Thông Tin"
+                        href="/viec-lam-truong-phong-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">
+                          Công Nghệ Thông Tin Thời Vụ
+                        </div>
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        title="Kỹ Sư Công Nghệ Thông Tin"
+                        href="/viec-lam-ky-su-cong-nghe-thong-tin.html"
+                      >
+                        <div class="txt text-capitalize">
+                          Công Nghệ Thông Tin Remote
+                        </div>
+                        <span class="small text-muted padd-top-5"></span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </section>

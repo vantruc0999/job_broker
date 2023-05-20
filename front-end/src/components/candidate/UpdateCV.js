@@ -52,7 +52,7 @@ function UpdateCV() {
     this.style.height = this.scrollHeight + "px";
   }
 
-
+  const [oldResume, setOldResume] = useState({});
   const [showForm, setShowForm] = useState([]);
   const [exp, setExp] = useState([]);
   const [education, setEducation] = useState([]);
@@ -73,6 +73,7 @@ function UpdateCV() {
   const [resume, setResume] = useState("");
   const [id, setId] = useState([]);
   const [info, setInfo] = useState("");
+  const [template, setTemplate] = useState("");
   let user = JSON.parse(localStorage.getItem("user"));
   let config = {
     headers: {
@@ -81,36 +82,35 @@ function UpdateCV() {
       Accept: "application/json",
     },
   };
-  console.log(resume);
 
   const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>", file);
-    // setImageUpload(file);
-
-    const reader = new FileReader();
-
-    console.log("oke");
-    console.log(reader);
-    reader.onload = () => {
-      setImagePreview(reader.result);
-      console.log(reader.result);
-      uploadFile(file);
-    };
-    reader.readAsDataURL(file);
+    let flag = true;
+    let file = e.target.files[0];
+    if (!file) {
+      flag = false;
+    } else {
+      let img = ["png", "jpg", "jpeg", "PNG", "JPG"];
+      if (file.size > 1024 * 1024) {
+        flag = false;
+      } else if (!img.includes(file.name.split(".").pop())) {
+        flag = false;
+        alert('file phải thuộc định dạng png, jpgm jpeg, png, jpg')
+      }
+    }
+    if (flag) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result);
+        uploadFile(file);
+      };
+      reader.readAsDataURL(file);
+    }
   };
   const uploadFile = async (imageUpload) => {
     if (imageUpload == null) return;
     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
     await uploadBytes(imageRef, imageUpload).then((snaphsot) => {
       getDownloadURL(snaphsot.ref).then((url) => {
-        console.log("----------------");
-        console.log("3");
-        console.log(snaphsot);
-        console.log(imageRef);
-        console.log(url);
-        console.log(imageUpload);
-        console.log("----------------");
         setUrlImage(url);
         // setImageList((prev) => [...prev, url]);
       });
@@ -124,8 +124,9 @@ function UpdateCV() {
         config
       )
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.resume.template);
         setResume(res.data);
+        setTemplate(res.data.resume.template);
         setExp(res.data.experience_company);
         setActive(res.data.experience_project);
         const edu2 = [
@@ -167,28 +168,63 @@ function UpdateCV() {
           resume_name: res.data.resume.resume_name,
           image: res.data.resume.image,
         });
+        setUrlImage(res.data.resume.image);
         setImagePreview(res.data.resume.image);
-        setUrlImage(res?.data?.resume?.image)
+        setOldResume({
+          first_name: res.data.resume.first_name,
+          last_name: res.data.resume.last_name,
+          phone: res.data.resume.phone,
+          birth_day: res.data.resume.birth_day,
+          email: res.data.resume.email,
+          address: res.data.resume.address,
+          hobby: res.data.resume.hobby,
+          activity: res.data.resume.activity,
+          resume_name: res.data.resume.resume_name,
+          education: res.data.resume.education,
+          education_year: res.data.resume.education_year,
+          education_major: res.data.resume.education_major,
+          education_description: res.data.resume.education_description,
+          certificate: res.data.resume.certificate,
+          template: res.data.resume.template,
+          image: res.data.resume.image,
+          experience_project: res.data.experience_project.map((item) => ({
+            project_name: item.project_name,
+            responsibility: item.responsibility,
+            achievement: item.achievement,
+            experience_start: item.experience_start,
+            experience_end: item.experience_end,
+          })),
+          experience_company: res.data.experience_company.map((item) => ({
+            company_name: item.company_name,
+            position: item.position,
+            achievement: item.achievement,
+            experience_start: item.experience_start,
+            experience_end: item.experience_end,
+          })),
+          skills: res.data.skill.map((item) => item.skill_id),
+        });
       });
   }, []);
-
+  console.log(">>>>>>", template);
   useEffect(() => {
     const textarea = document.getElementById("emailSummary");
     const placeholder = "Email";
 
-    textarea.addEventListener("focus", () => {
-      if (textarea.placeholder === placeholder) {
-        textarea.placeholder = "";
-      }
-      textarea.rows = "2";
-    });
+    if (textarea) {
+      textarea.addEventListener("focus", () => {
+        if (textarea.placeholder === placeholder) {
+          textarea.placeholder = "";
+        }
+        textarea.rows = "2";
+      });
 
-    textarea.addEventListener("blur", () => {
-      if (textarea.value === "") {
-        textarea.placeholder = placeholder;
-      }
-      textarea.rows = "1";
-    });
+      textarea.addEventListener("blur", () => {
+        if (textarea.value === "") {
+          textarea.placeholder = placeholder;
+        }
+        textarea.rows = "1";
+      });
+    }
     let user = JSON.parse(localStorage.getItem("user"));
     let config = {
       headers: {
@@ -383,7 +419,7 @@ function UpdateCV() {
             </div>
             <div key={index} className="form-field">
               <input
-              required='required'
+                required="required"
                 className="form_input"
                 type="text"
                 placeholder=" "
@@ -418,7 +454,7 @@ function UpdateCV() {
             </div>
             <div key={index} className="form-field">
               <input
-              required='required'
+                required="required"
                 className="form_input"
                 type="text"
                 placeholder=" "
@@ -453,7 +489,7 @@ function UpdateCV() {
             </div>
             <div key={index} className="form-field">
               <input
-              required='required'
+                required="required"
                 className="form_input"
                 type="text"
                 placeholder=" "
@@ -486,7 +522,7 @@ function UpdateCV() {
             <div key={index} className="form-field">
               <div style={{ display: "flex" }}>
                 <input
-                required='required'
+                  required="required"
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian bắt đầu"
@@ -501,7 +537,7 @@ function UpdateCV() {
                   }
                 />
                 <input
-                required='required'
+                  required="required"
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian kết thúc"
@@ -517,7 +553,7 @@ function UpdateCV() {
                 />
               </div>
               <input
-              required='required'
+                required="required"
                 className="exp_input"
                 type="text"
                 placeholder="Vị trí"
@@ -528,7 +564,7 @@ function UpdateCV() {
                 }
               />
               <input
-              required='required'
+                required="required"
                 className="exp_input"
                 type="text"
                 placeholder="Tên dự án"
@@ -584,7 +620,7 @@ function UpdateCV() {
                 <tr>
                   <td>
                     <input
-                    required='required'
+                      required="required"
                       className="form_input"
                       type="text"
                       placeholder="Ngành học"
@@ -600,7 +636,7 @@ function UpdateCV() {
                   </td>
                   <td>
                     <input
-                    required='required'
+                      required="required"
                       className="form_input"
                       type="text"
                       placeholder="Học vấn"
@@ -612,7 +648,7 @@ function UpdateCV() {
                   </td>
                   <td>
                     <input
-                    required='required'
+                      required="required"
                       className="form_input"
                       type="text"
                       placeholder="Niên khóa"
@@ -624,7 +660,7 @@ function UpdateCV() {
                   </td>
                   <td>
                     <input
-                    required='required'
+                      required="required"
                       className="form_input"
                       type="text"
                       placeholder="Xếp loại"
@@ -654,7 +690,7 @@ function UpdateCV() {
             <div key={index} className="form-field">
               <div style={{ display: "flex" }}>
                 <input
-                required='required'
+                  required="required"
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian bắt đầu"
@@ -669,7 +705,7 @@ function UpdateCV() {
                   }
                 />
                 <input
-                required='required'
+                  required="required"
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian kết thúc"
@@ -686,7 +722,7 @@ function UpdateCV() {
               </div>
 
               <input
-              required='required'
+                required="required"
                 className="exp_input"
                 type="text"
                 placeholder="Chức vụ"
@@ -697,7 +733,7 @@ function UpdateCV() {
                 }
               />
               <input
-              required='required'
+                required="required"
                 className="exp_input"
                 type="text"
                 placeholder="Công ty"
@@ -737,64 +773,77 @@ function UpdateCV() {
       </>
     );
   };
-  console.log(inputs);
   const handleSubmit = (e) => {
+    e.preventDefault();
+    let flag = true;
     let resume = {
-      first_name: inputs.first_name,
-      last_name: inputs.last_name,
-      phone: inputs.phone,
-      birth_day: inputs.birth_day,
-      email: inputs.email,
-      address: inputs.address,
-      hobby: softSkill[0].hobby,
-      activity: awards[0].activity,
-      resume_name: inputs.resume_name,
-      education: education[0].school,
-      education_year: education[0].time,
-      education_major: education[0].specialize,
-      education_description: education[0].rank,
-      certificate: certificate[0].title,
+      first_name: inputs?.first_name,
+      last_name: inputs?.last_name,
+      phone: inputs?.phone,
+      birth_day: inputs?.birth_day,
+      email: inputs?.email,
+      address: inputs?.address,
+      hobby: softSkill[0]?.hobby,
+      activity: awards[0]?.activity,
+      resume_name: inputs?.resume_name,
+      education: education[0]?.school,
+      education_year: education[0]?.time,
+      education_major: education[0]?.specialize,
+      education_description: education[0]?.rank,
+      certificate: certificate[0]?.title,
       template: 1,
       image: urlImage,
       experience_project: experience_project,
       experience_company: experience_company,
-      skills: skill.job_skill,
+      skills: skill?.job_skill,
     };
-    e.preventDefault();
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", resume);
-    console.log(typeof experience_project);
-    let object = {};
-    object.resume = resume;
-    let user = JSON.parse(localStorage.getItem("user"));
-    let config = {
-      headers: {
-        Authorization: "Bearer " + user.token,
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
-    };
-    console.log("object", object);
-    axios
-      .post(
-        `http://127.0.0.1:8000/api/candidate/update-cv/${params.id}`,
-        object,
-        config
-      )
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.message.includes("considered")) {
-          alert(
-            "CV đang được xem xét trong mục công việc, không thể chỉnh sửa"
-          );
-          // navigate("/allCV");
-        } else if ((res.data.status = 200)) {
-          alert("Bạn đã cập nhật thành công");
-        }
-        console.log(res.data);
-      });
+    if (JSON.stringify(oldResume) === JSON.stringify(resume)) {
+      alert("Thông tin không có gì thay đổi");
+      return;
+    }
+    if (
+      Object.values(resume).includes(undefined) ||
+      Object.values(resume).includes("") ||
+      resume.skills?.length <= 0
+    ) {
+      flag = false;
+      console.log(">>>>>>>>>>>>>> NOOOOOOOOOOOOOOOOOO");
+      alert("Nhập đầy đủ các mục ở trên");
+    } else {
+      console.log("yes");
+    }
+    if (flag) {
+      let object = {};
+      object.resume = resume;
+      let user = JSON.parse(localStorage.getItem("user"));
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      axios
+        .post(
+          `http://127.0.0.1:8000/api/candidate/update-cv/${params.id}`,
+          object,
+          config
+        )
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.message.includes("considered")) {
+            alert(
+              "CV đang được xem xét trong mục công việc, không thể chỉnh sửa"
+            );
+            // navigate("/allCV");
+          } else if ((res.data.status = 200)) {
+            alert("Bạn đã cập nhật thành công");
+          }
+        });
+      setOldResume(resume);
+    }
   };
-
-  function renderResume() {
+  function renderResume1() {
     return (
       <>
         <div className="w-100 d-flex" style={{ padding: "0" }}>
@@ -815,16 +864,6 @@ function UpdateCV() {
                 >
                   <div className="summary" style={{ padding: "0" }}>
                     <div className="avatar">
-                      {/* <img
-                        src={inputs.image}
-                        alt=""
-                        style={{
-                          maxWidth: "220px",
-                          height: "220px",
-                          borderRadius: "50%",
-                        }}
-                      /> */}
-
                       {imagePreview ? (
                         <img
                           src={imagePreview}
@@ -848,7 +887,6 @@ function UpdateCV() {
                       )}
                       <div className="round">
                         <input
-                        required='required'
                           name="avatar"
                           type="file"
                           className="form-control"
@@ -883,7 +921,7 @@ function UpdateCV() {
                           </i>
 
                           <input
-                          required='required'
+                            required="required"
                             id="emailSummary"
                             type="text"
                             name="email"
@@ -906,7 +944,7 @@ function UpdateCV() {
                         <div className="mt-4">
                           <i className="fas fa-phone mr-2" />
                           <input
-                          required='required'
+                            required="required"
                             type="text"
                             name="phone"
                             value={inputs.phone}
@@ -918,7 +956,7 @@ function UpdateCV() {
                         <div className="mt-4">
                           <i className="fas fa-birthday-cake mr-2" />
                           <input
-                          required='required'
+                            required="required"
                             type="text"
                             placeholder="dd-mm-yyyy"
                             name="birth_day"
@@ -930,7 +968,7 @@ function UpdateCV() {
                         <div className="mt-4">
                           <i className="fas fa-map-marker-alt mr-2" />
                           <input
-                          required='required'
+                            required="required"
                             type="text"
                             placeholder="Địa chỉ"
                             value={inputs.address}
@@ -983,7 +1021,7 @@ function UpdateCV() {
                       {inputs.last_name} {inputs.first_name}
                     </h1>
                     <input
-                    required='required'
+                      required="required"
                       type="text"
                       placeholder="tên cv"
                       value={inputs.resume_name}
@@ -991,14 +1029,15 @@ function UpdateCV() {
                       onChange={handleInput}
                       style={{ padding: "5px", border: "none", color: "#000" }}
                     />
-                    <input
+                    {/* <input
+                      required="required"
                       type="text"
                       placeholder="Vị trí mong muốn"
                       value={inputs.position}
                       name="position"
                       onChange={handleInput}
                       style={{ padding: "5px", border: "none", color: "#000" }}
-                    />
+                    /> */}
                   </section>
                   <section className="experience">
                     <h4>
@@ -1118,6 +1157,382 @@ function UpdateCV() {
       </>
     );
   }
+  const renderResume2 = () => {
+    return (
+      <>
+        <form onSubmit={handleSubmit}>
+          <div className="row" style={{ margin: "50px 0" }}>
+            <article
+              class="resume"
+              style={{ width: "100%", margin: 0, padding: 0 }}
+            >
+              <div class="resume-wrapper-inner mx-auto text-left bg-white shadow-lg">
+                <header
+                  class="resume-header pt-4 pt-md-0"
+                  style={{ background: "#434E5E" }}
+                >
+                  <div class="media flex-column flex-md-row">
+                    <div className="avatar" style={{ padding: 0, margin: 0 }}>
+                      {imagePreview ? (
+                        <img
+                          src={imagePreview}
+                          alt=""
+                          style={{
+                            maxWidth: "230px",
+                            height: "230px",
+                          }}
+                        />
+                      ) : (
+                        <img
+                          src={Logo}
+                          alt=""
+                          style={{
+                            maxWidth: "230px",
+                            height: "230px",
+                          }}
+                        />
+                      )}
+                      <div
+                        className="round"
+                        style={{
+                          position: "absolute",
+                          bottom: "0%",
+                          right: "0%",
+                        }}
+                      >
+                        <input
+                          name="avatar"
+                          type="file"
+                          className="form-control"
+                          id="avatar"
+                          multiple
+                          onChange={handleImageUpload}
+                        />
+                        <i
+                          className="fa fa-camera"
+                          style={{ color: "#fff" }}
+                        ></i>
+                      </div>
+                    </div>
+
+                    <div class="media-body p-4 d-flex flex-column flex-md-row mx-auto mx-lg-0 resume_content">
+                      <div class="primary-info">
+                        <h1 class="name mt-0 mb-1 text-white text-uppercase text-uppercase">
+                          {inputs.last_name} {inputs.first_name}
+                        </h1>
+                        <div class="title mb-3">
+                          <input
+                            required="required"
+                            type="text"
+                            placeholder="tên cv"
+                            value={inputs.resume_name}
+                            name="resume_name"
+                            onChange={handleInput}
+                            style={{
+                              padding: "5px",
+                              border: "none",
+                              color: "#fff",
+                              background: "rgb(67, 78, 94)",
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="secondary-info mt-2"
+                        style={{ marginLeft: 200 }}
+                      >
+                        <ul class="list-unstyled" style={{ width: 300 }}>
+                          <li class="mb-2">
+                            <div>
+                              <i class="fas fa-map-marker-alt fa-fw mr-2"></i>
+                              <input
+                                required="required"
+                                type="text"
+                                placeholder="Địa chỉ"
+                                value={inputs.address}
+                                name="address"
+                                onChange={handleInput}
+                                style={{
+                                  width: "90%",
+                                  padding: "5px",
+                                  border: "none",
+                                  color: "#fff",
+                                  background: "rgb(67, 78, 94)",
+                                }}
+                              />
+                            </div>
+                          </li>
+                          <li className="mb-2">
+                            <div>
+                              <i class="fas fa-phone fa-fw mr-2"></i>
+                              <input
+                                required="required"
+                                type="text"
+                                name="phone"
+                                value={inputs.phone}
+                                placeholder="Số điện thoại"
+                                onChange={handleInput}
+                                style={{
+                                  width: "90%",
+                                  padding: "5px",
+                                  border: "none",
+                                  color: "#fff",
+                                  background: "rgb(67, 78, 94)",
+                                }}
+                              />
+                            </div>
+                          </li>
+                          <li class="mb-2">
+                            <div>
+                              <i class="far fa-envelope fa-fw mr-2"></i>
+                              <input
+                                required="required"
+                                id="emailSummary"
+                                type="text"
+                                name="email"
+                                placeholder="Email"
+                                rows="1"
+                                value={inputs.email}
+                                onChange={handleInput}
+                                style={{
+                                  width: "90%",
+                                  padding: "5px",
+                                  border: "none",
+                                  color: "#fff",
+                                  background: "rgb(67, 78, 94)",
+                                }}
+                              />
+                            </div>
+                          </li>
+                          <li class="mb-2">
+                            <div>
+                              <i class="fas fa-birthday-cake fa-fw mr-2"></i>
+                              <input
+                                required="required"
+                                type="text"
+                                placeholder="yyyy-mm-dd"
+                                name="birth_day"
+                                value={inputs.birth_day}
+                                onChange={handleInput}
+                                style={{
+                                  width: "90%",
+                                  padding: "5px",
+                                  border: "none",
+                                  color: "#fff",
+                                  background: "rgb(67, 78, 94)",
+                                }}
+                              />
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </header>
+                <div class="resume-body p-5">
+                  <section class="resume-section summary-section mb-5">
+                    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                      Giới thiệu
+                    </h2>
+                    <div class="resume-section-content">
+                      <p class="mb-0">
+                        Tôi là một chuyên viên phát triển phần mềm với hơn 10
+                        năm tại các công ty trong và ngoài nước. Công việc của
+                        tôi cả về lập trình front-end lẫn back-end. Mong muốn
+                        được làm việc trong môi trường chuyên nghiệp, đồng
+                        nghiệp thân thiện và chế độ phúc lợi tốt.
+                      </p>
+                    </div>
+                  </section>
+                  <div class="row">
+                    <div class="col-lg-9">
+                      <section class="resume-section experience-section mb-5">
+                        <div class="resume-section-content">
+                          <div class="resume-timeline position-relative">
+                            <article class="resume-timeline-item position-relative pb-5 resume_item2 ">
+                              <div class="resume-timeline-item-header mb-2">
+                                <div class="d-flex flex-column flex-md-row">
+                                  <h3 class="resume-position-title font-weight-bold mb-1">
+                                    Kinh nghiệm làm việc công ty
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="resume-timeline-item-desc resume_work">
+                                <ul>
+                                  <li>
+                                    {exp.length > 0 ? (
+                                      addContentExp()
+                                    ) : (
+                                      <div
+                                        className="content_form"
+                                        onClick={handleAddExp}
+                                        style={{ cursor: "pointer" }}
+                                      >
+                                        <div id="content-suggest-award"></div>
+                                        <i className="fas fa-plus" />
+                                      </div>
+                                    )}
+                                  </li>
+                                </ul>
+                              </div>
+                            </article>
+                            <article class="resume-timeline-item position-relative pb-5 resume_item2">
+                              <div class="resume-timeline-item-header mb-2">
+                                <div class="d-flex flex-column flex-md-row">
+                                  <h3 class="resume-position-title font-weight-bold mb-1">
+                                    Kinh nghiệm làm việc dự án
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="resume-timeline-item-desc resume_work">
+                                <ul>
+                                  <li>
+                                    {active.length > 0 ? (
+                                      addContentAction()
+                                    ) : (
+                                      <div
+                                        className="content_form"
+                                        onClick={handleAddAct}
+                                        style={{ cursor: "pointer" }}
+                                      >
+                                        <div id="content-suggest-award"></div>
+                                        <i className="fas fa-plus" />
+                                      </div>
+                                    )}
+                                  </li>
+                                </ul>
+                              </div>
+                            </article>
+                            <article class="resume-timeline-item position-relative pb-5 resume_item2">
+                              <div class="resume-timeline-item-header mb-2">
+                                <div class="d-flex flex-column flex-md-row">
+                                  <h3 class="resume-position-title font-weight-bold mb-1">
+                                    Giáo dục
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="resume-timeline-item-desc resume_work">
+                                <ul>
+                                  <li>
+                                    {education.length > 0 ? (
+                                      addContentEducation()
+                                    ) : (
+                                      <div
+                                        className="content_form"
+                                        onClick={handleAddEdu}
+                                        style={{ cursor: "pointer" }}
+                                      >
+                                        <div id="content-suggest-award"></div>
+                                        <i className="fas fa-plus" />
+                                      </div>
+                                    )}
+                                  </li>
+                                </ul>
+                              </div>
+                            </article>
+                            <article class="resume-timeline-item position-relative pb-5 resume_item2">
+                              <div class="resume-timeline-item-header mb-2">
+                                <div class="d-flex flex-column flex-md-row">
+                                  <h3 class="resume-position-title font-weight-bold mb-1">
+                                    Chứng chỉ ngoại ngữ
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="resume-timeline-item-desc resume_work">
+                                <ul>
+                                  <li>
+                                    {certificate.length > 0 ? (
+                                      addContentCertificates()
+                                    ) : (
+                                      <div
+                                        className="content_form"
+                                        onClick={handleAddCer}
+                                        style={{ cursor: "pointer" }}
+                                      >
+                                        <div id="content-suggest-award"></div>
+                                        <i className="fas fa-plus" />
+                                      </div>
+                                    )}
+                                  </li>
+                                </ul>
+                              </div>
+                            </article>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <div class="col-lg-3">
+                      <section class="resume-section skills-section mb-5">
+                        <div class="resume-section-content">
+                          <div class="resume-skill-item resume_item2 resume_skills">
+                            <h4 class="resume-skills-cat font-weight-bold">
+                              Các kỹ năng
+                            </h4>
+                            <ul class="list-unstyled mb-4 resume_work2">
+                              {showForm && showForm.includes(5)
+                                ? addSkill()
+                                : addSkill()}
+                            </ul>
+                          </div>
+
+                          <div class="resume-skill-item resume_item2 resume_skills">
+                            <h4 class="resume-skills-cat font-weight-bold">
+                              Sở thích
+                            </h4>
+                            <ul class="list-unstyled">
+                              {softSkill.length > 0 ? (
+                                addContentSoftSkill()
+                              ) : (
+                                <div
+                                  className="content_form"
+                                  onClick={handleAddSoft}
+                                  style={{ cursor: "pointer" }}
+                                >
+                                  <div id="content-suggest-award"></div>
+                                  <i className="fas fa-plus" />
+                                </div>
+                              )}
+                            </ul>
+                          </div>
+
+                          <div class="resume-skill-item resume_item2 resume_skills">
+                            <h4 class="resume-skills-cat font-weight-bold">
+                              Hoạt động
+                            </h4>
+                            <ul class="list-inline">
+                              {awards.length > 0 ? (
+                                addContentAward()
+                              ) : (
+                                <div
+                                  className="content_form"
+                                  onClick={handleAddAward}
+                                  style={{ cursor: "pointer" }}
+                                >
+                                  <div id="content-suggest-award"></div>
+                                  <i className="fas fa-plus" />
+                                </div>
+                              )}
+                            </ul>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+          <button
+            className="btn btn-primary"
+            style={{ width: "20%", marginLeft: "39%", marginBottom: "30px" }}
+          >
+            Cập nhật CV
+          </button>
+        </form>
+      </>
+    );
+  };
+  console.log(typeof template);
   return (
     <>
       <div className="container">
@@ -1189,7 +1604,7 @@ function UpdateCV() {
               className="row justify-content-between"
               style={{ margin: "20px auto" }}
             >
-              {renderResume()}
+              {template == 1 ? renderResume1() : renderResume2()}
             </div>
           </div>
         </div>
@@ -1244,7 +1659,6 @@ const AnimatedMulti = (props) => {
         .get(`http://127.0.0.1:8000/api/skills`, config)
         .then((res) => {
           if (res && res.data.length > 0) {
-            console.log(">>>>>>>>", res.data);
             const arraySkill = res.data.map((item) => {
               return { value: item.skill_id, label: item.skill_name };
             });

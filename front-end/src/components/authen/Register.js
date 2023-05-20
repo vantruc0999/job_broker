@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-
+import Errors from "../Errors"
 function Register() {
   const navigate = useNavigate()
   const [inputs, setInputs] = useState("");
@@ -76,9 +76,10 @@ function Register() {
       errorSubmit.phone = "Invalid phone number";
     }
 
+ 
     if (!regexFN.test(inputs.first_name)) {
       flag = false;
-      errorSubmit.first_name("Invalid first_name");
+      errorSubmit.first_name=("Invalid first_name");
     }
     if (inputs.first_name === undefined) {
       flag = false;
@@ -91,7 +92,7 @@ function Register() {
 
     if (!regexLN.test(inputs.last_name)) {
       flag = false;
-      errorSubmit.last_name("Invalid last_name");
+      errorSubmit.last_name=("Invalid last_name");
     }
     if (inputs.last_name === undefined) {
       flag = false;

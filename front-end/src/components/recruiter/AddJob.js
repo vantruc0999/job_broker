@@ -35,17 +35,50 @@ const AddJob = () => {
   });
 
   const [errors, setErrors] = useState({
-    job_name: false,
-    position_name: false,
-    job_start_date: false,
-    job_end_date: false,
-    salary: false,
-    job_location: false,
-    language: false,
-    job_requirement: false,
-    job_description: false,
-    benefit: false,
-    job_skill: false,
+    job_name: {
+      status: false,
+      message: "",
+    },
+    position_name: {
+      status: false,
+      message: "",
+    },
+    job_start_date: {
+      status: false,
+      message: "",
+    },
+    job_end_date: {
+      status: false,
+      message: "",
+    },
+    salary: {
+      status: false,
+      message: "",
+    },
+    job_location: {
+      status: false,
+      message: "",
+    },
+    language: {
+      status: false,
+      message: "",
+    },
+    job_requirement: {
+      status: false,
+      message: "",
+    },
+    job_description: {
+      status: false,
+      message: "",
+    },
+    benefit: {
+      status: false,
+      message: "",
+    },
+    job_skill: {
+      status: false,
+      message: "",
+    },
   });
 
   const editorRequirement = useRef(null);
@@ -60,82 +93,206 @@ const AddJob = () => {
     e.preventDefault();
     let flag = true;
     let dateStart, dateEnd;
+    let today = new Date();
     let errors = {
-      job_name: false,
-      position_name: false,
-      job_start_date: false,
-      job_end_date: false,
-      salary: false,
-      job_location: false,
-      language: false,
-      job_requirement: false,
-      job_description: false,
-      benefit: false,
-      job_skill: false,
+      job_name: {
+        status: false,
+        message: "",
+      },
+      position_name: {
+        status: false,
+        message: "",
+      },
+      job_start_date: {
+        status: false,
+        message: "",
+      },
+      job_end_date: {
+        status: false,
+        message: "",
+      },
+      salary: {
+        status: false,
+        message: "",
+      },
+      job_location: {
+        status: false,
+        message: "",
+      },
+      language: {
+        status: false,
+        message: "",
+      },
+      job_requirement: {
+        status: false,
+        message: "",
+      },
+      job_description: {
+        status: false,
+        message: "",
+      },
+      benefit: {
+        status: false,
+        message: "",
+      },
+      job_skill: {
+        status: false,
+        message: "",
+      },
     };
 
     if (job.job_name == "") {
-      errors = { ...errors, job_name: true };
+      errors = {
+        ...errors,
+        job_name: {
+          status: true,
+          message: "Tên công việc không được để trống",
+        },
+      };
       flag = false;
     }
     if (job.position_name == "") {
-      errors = { ...errors, position_name: true };
+      errors = {
+        ...errors,
+        position_name: {
+          status: true,
+          message: "Vị trí công việc không được để trống",
+        },
+      };
       flag = false;
     }
     if (job.job_start_date == "") {
-      errors = { ...errors, job_start_date: true };
+      errors = {
+        ...errors,
+        job_start_date: {
+          status: true,
+          message: "Ngày bắt đầu không được để trống",
+        },
+      };
       flag = false;
+    } else {
+      dateStart = new Date(job.job_start_date);
+      if (dateStart <= today) {
+        errors = {
+          ...errors,
+          job_start_date: {
+            status: true,
+            message: "Ngày bắt đầu phải lơn hơn ngày hiện tại",
+          },
+        };
+        flag = false;
+      }
     }
     if (job.job_end_date == "") {
-      errors = { ...errors, job_end_date: true };
+      errors = {
+        ...errors,
+        job_end_date: {
+          status: true,
+          message: "Ngày kết thúc không được để trống",
+        },
+      };
       flag = false;
+    } else {
+      dateEnd = new Date(job.job_end_date);
+      if (dateEnd <= dateStart) {
+        errors = {
+          ...errors,
+          job_end_date: {
+            status: true,
+            message: "Ngày kết thúc phải lớn hơn ngày bắt đầu",
+          },
+        };
+        flag = false;
+      }
     }
     if (job.salary == "") {
-      errors = { ...errors, salary: true };
+      errors = {
+        ...errors,
+        salary: {
+          status: true,
+          message: "Lương không được để trống",
+        },
+      };
       flag = false;
     }
     if (job.job_location == "") {
-      errors = { ...errors, job_location: true };
+      errors = {
+        ...errors,
+        job_location: {
+          status: true,
+          message: "Vị trí công việc không được để trống",
+        },
+      };
       flag = false;
     }
     if (job.language == "") {
-      errors = { ...errors, language: true };
+      errors = {
+        ...errors,
+        language: {
+          status: true,
+          message: "Ngôn ngữ không được để trống",
+        },
+      };
       flag = false;
     }
     if (job.job_requirement == "") {
-      errors = { ...errors, job_requirement: true };
+      errors = {
+        ...errors,
+        job_requirement: {
+          status: true,
+          message: "Yêu cầu không được để trống",
+        },
+      };
       flag = false;
     }
     if (job.job_description == "") {
-      errors = { ...errors, job_description: true };
+      errors = {
+        ...errors,
+        job_description: {
+          status: true,
+          message: "Mô tả không được để trống",
+        },
+      };
       flag = false;
     }
     if (job.benefit == "") {
-      errors = { ...errors, benefit: true };
+      errors = {
+        ...errors,
+        benefit: {
+          status: true,
+          message: "Lợi ích không được để trống",
+        },
+      };
       flag = false;
     }
     if (job.job_skill == "" || job.job_skill.length == 0) {
-      errors = { ...errors, job_skill: true };
+      errors = {
+        ...errors,
+        job_skill: {
+          status: true,
+          message: "Kỹ năng không được để trống",
+        },
+      };
       flag = false;
     }
 
     if (!flag) {
       setErrors(errors);
       return;
-    } else {
-      setErrors({
-        job_name: false,
-        position_name: false,
-        job_start_date: false,
-        job_end_date: false,
-        salary: false,
-        job_location: false,
-        language: false,
-        job_requirement: false,
-        job_description: false,
-        benefit: false,
-        job_skill: false,
-      });
+      // } else {
+      //   setErrors({
+      //     job_name: false,
+      //     position_name: false,
+      //     job_start_date: false,
+      //     job_end_date: false,
+      //     salary: false,
+      //     job_location: false,
+      //     language: false,
+      //     job_requirement: false,
+      //     job_description: false,
+      //     benefit: false,
+      //     job_skill: false,
+      //   })
     }
     let user = JSON.parse(localStorage.getItem("user"));
     let config = {
@@ -146,34 +303,23 @@ const AddJob = () => {
       },
     };
 
-    if (job.job_start_date) {
-      dateStart = new Date(job.job_start_date);
-    }
-
-    if (job.job_end_date) {
-      dateEnd = new Date(job.job_end_date);
-    }
-
-    if (dateStart >= dateEnd) {
-      alert("Ngày kết thúc phải lơn hơn ngày bắt đầu");
-      flag = false;
-    }
-
     if (flag) {
       axios
         .post("http://127.0.0.1:8000/api/recruiter/add-job", job, config)
         .then((res) => {
           console.log(res.data);
           if (res.data.message === "You have not bought any package") {
-            alert(res.data.message);
+            alert("Bạn chưa có gói dịch vụ. Vui lòng mua gói");
             navigate("/packageRecruiter");
           } else if (res.data.message === "Job has been created successfully") {
-            alert(res.data.message);
+            alert("Tạo tin tuyển dụng thành công");
             navigate("/homeRecruiter");
           } else if (
             res.data.message === "Job start date must be greater or equal today"
           ) {
             alert("Ngày bắt đầu phải lớn hơn hoặc bằng ngày hiện tại");
+          } else if (res.data.message === "Your package has been expired") {
+            alert("Gói của bạn đã hết hạn vui lòng mua gói mới ");
           }
         });
     }
@@ -206,9 +352,9 @@ const AddJob = () => {
                         setJob({ ...job, job_name: e.target.value });
                       }}
                     />
-                    {errors.job_name && (
+                    {errors.job_name.status && (
                       <span style={{ color: "red" }}>
-                        {"Tên công việc không được để trống"}
+                        {errors.job_name.message}
                       </span>
                     )}
                   </div>
@@ -223,9 +369,9 @@ const AddJob = () => {
                         setJob({ ...job, position_name: e.target.value });
                       }}
                     />
-                    {errors.position_name && (
+                    {errors.position_name.status && (
                       <span style={{ color: "red" }}>
-                        {"Vị trí không được để trống"}
+                        {errors.position_name.message}
                       </span>
                     )}
                   </div>
@@ -239,9 +385,9 @@ const AddJob = () => {
                         setJob({ ...job, job_start_date: e.target.value });
                       }}
                     />
-                    {errors.job_start_date && (
+                    {errors.job_start_date.status && (
                       <span style={{ color: "red" }}>
-                        {"Ngày bắt đầu không được để trống"}
+                        {errors.job_start_date.message}
                       </span>
                     )}
                   </div>
@@ -255,9 +401,9 @@ const AddJob = () => {
                         setJob({ ...job, job_end_date: e.target.value });
                       }}
                     />
-                    {errors.job_end_date && (
+                    {errors.job_end_date.status && (
                       <span style={{ color: "red" }}>
-                        {"Ngày kết thúc không được để trống"}
+                        {errors.job_end_date.message}
                       </span>
                     )}
                   </div>
@@ -273,9 +419,9 @@ const AddJob = () => {
                         }}
                       />
                     </div>
-                    {errors.salary && (
+                    {errors.salary.status && (
                       <span style={{ color: "red" }}>
-                        {"Lương không được để trống"}
+                        {errors.salary.message}
                       </span>
                     )}
                   </div>
@@ -289,9 +435,9 @@ const AddJob = () => {
                         setJob({ ...job, job_location: e.target.value });
                       }}
                     />
-                    {errors.job_location && (
+                    {errors.job_location.status && (
                       <span style={{ color: "red" }}>
-                        {"Nơi làm việc không được để trống"}
+                        {errors.job_location.message}
                       </span>
                     )}
                   </div>
@@ -305,9 +451,9 @@ const AddJob = () => {
                         setJob({ ...job, language: e.target.value });
                       }}
                     />
-                    {errors.language && (
+                    {errors.language.status && (
                       <span style={{ color: "red" }}>
-                        {"Ngôn ngữ không được để trống"}
+                        {errors.language.message}
                       </span>
                     )}
                   </div>
@@ -317,9 +463,9 @@ const AddJob = () => {
                     <AnimatedMulti
                       parentCallback={callbackFunction}
                     ></AnimatedMulti>
-                    {errors.job_skill && (
+                    {errors.job_skill.status && (
                       <span style={{ color: "red" }}>
-                        {"Kỹ năng không được để trống"}
+                        {errors.job_skill.message}
                       </span>
                     )}
                   </div>
@@ -345,9 +491,9 @@ const AddJob = () => {
                         setJob({ ...job, job_description: e.target.value });
                       }}
                     /> */}
-                    {errors.job_description && (
+                    {errors.job_description.status && (
                       <span style={{ color: "red" }}>
-                        {"Mô tả không được để trống"}
+                        {errors.job_description.message}
                       </span>
                     )}
                   </div>
@@ -373,9 +519,9 @@ const AddJob = () => {
                         setJob({ ...job, job_requirement: e.target.value });
                       }}
                     /> */}
-                    {errors.job_requirement && (
+                    {errors.job_requirement.status && (
                       <span style={{ color: "red" }}>
-                        {"Yêu cầu không được để trống"}
+                        {errors.job_requirement.message}
                       </span>
                     )}
                   </div>
@@ -401,9 +547,9 @@ const AddJob = () => {
                         setJob({ ...job, benefit: e.target.value });
                       }}
                     /> */}
-                    {errors.benefit && (
+                    {errors.benefit.status && (
                       <span style={{ color: "red" }}>
-                        {"Lợi ích không được để trống"}
+                        {errors.benefit.message}
                       </span>
                     )}
                   </div>

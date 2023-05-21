@@ -40,12 +40,7 @@ function ManageApproved() {
         config
       )
       .then((res) => {
-        if (res.data.length === 0) {
-          alert("Không có ứng viên ứng tuyển");
-        } else {
-          console.log("có");
-          setApproved(res.data);
-        }
+        setApproved(res.data);
       });
   };
   const handleCancle = (e) => {
@@ -59,7 +54,7 @@ function ManageApproved() {
       )
       .then((res) => {
         if (res.data.message.includes("declined")) {
-          alert("Bạn đã từ chối ứng viên");
+          alert("Xóa ứng viên thành công");
         }
         const afterDelte = approved.filter((object) => {
           return object.application_id.toString() !== id;
@@ -201,95 +196,7 @@ function ManageApproved() {
                                 {renderJob()}
                               </select>
                             </div>
-                            {/* <div className="col-md-3 margin">
-                              <label>Chọn theo loại</label>
-
-                              <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                style={{ fontSize: "13px" }}
-                              >
-                                {renderJob()}
-                              </select>
-                            </div>
-                            <div className="col-md-3 margin">
-                              <label>Ngôn ngữ</label>
-                              <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                style={{ fontSize: "13px" }}
-                              >
-                                <option selected="">Chọn ngôn ngữ</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                              </select>
-                            </div>
-                            <div className="col-md-3 margin">
-                              <label>Bằng cấp</label>
-                              <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                style={{ fontSize: "13px" }}
-                              >
-                                <option selected="">Chọn bằng cấp</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                              </select>
-                            </div> */}
                           </div>
-
-                          {/* <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "60%",
-                              marginLeft: "10px",
-                              marginTop: "10px",
-                            }}
-                          >
-                            <label>Hiển thị: </label>
-                            <div className="checkbox">
-                              <label
-                                className="form-check-label"
-                                for="gridRadios1"
-                              >
-                                Tất cả ứng viên
-                              </label>
-                            </div>
-                            <div className="checkbox">
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name="gridRadios"
-                                id="gridRadios1"
-                                value="option1"
-                              />
-                              <label
-                                className="form-check-label"
-                                for="gridRadios1"
-                              >
-                                Ứng viên đã duyệt
-                              </label>
-                            </div>
-                            <div className="checkbox">
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name="gridRadios"
-                                id="gridRadios1"
-                                value="option1"
-                              />
-                              <label
-                                className="form-check-label"
-                                for="gridRadios1"
-                              >
-                                Ứng viên bị từ chối
-                              </label>
-                            </div>
-                          </div> */}
-
                           <button
                             className="btn btn-primary"
                             style={{

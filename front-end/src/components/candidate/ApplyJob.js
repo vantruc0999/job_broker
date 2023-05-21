@@ -163,7 +163,11 @@ const ApplyJob = () => {
                       textAlign: "center",
                     }}
                   >
-                    {value.status}
+                    {value.status == "pending"
+                      ? "Chờ duyệt"
+                      : value.status == "approved"
+                      ? "Đã duyệt"
+                      : "Từ chối"}
                   </p>
                   <p
                     className="btn btn-danger"

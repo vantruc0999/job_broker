@@ -8,7 +8,6 @@ import { json, useNavigate } from "react-router-dom";
 function Example(props) {
   const navigate = useNavigate();
 
-  console.log(props.jobId);
   const [show, setShow] = useState(false);
   const [cv, setCv] = useState("");
   let user = JSON.parse(localStorage.getItem("user"));
@@ -23,9 +22,9 @@ function Example(props) {
     axios
       .get(`http://127.0.0.1:8000/api/candidate/show-all`, config)
       .then((res) => {
-        if(res.data.resume === 0){
-          alert("Bạn cần tạo hồ sơ")
-          navigate("/createCV")
+        if (res.data.resume === 0) {
+          alert("Bạn cần tạo hồ sơ");
+          navigate("/createCV");
         }
         setCv(res.data.resume);
       });
@@ -73,7 +72,6 @@ function Example(props) {
                   <h3 class="profile-username text-center">
                     {value.resume_name}
                   </h3>
-                  <p class=" text-center">Tên CV</p>
                   <div
                     class="list-group-item"
                     style={{ fontSize: "14px", marginBottom: "10px" }}

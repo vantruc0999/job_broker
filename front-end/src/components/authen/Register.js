@@ -77,7 +77,7 @@ function Register() {
 
     if (!regexFN.test(inputs.first_name)) {
       flag = false;
-      errorSubmit.first_name("Invalid first_name");
+      errorSubmit.first_name = "Invalid first_name";
     }
     if (inputs.first_name === undefined) {
       flag = false;
@@ -90,7 +90,7 @@ function Register() {
 
     if (!regexLN.test(inputs.last_name)) {
       flag = false;
-      errorSubmit.last_name("Invalid last_name");
+      errorSubmit.last_name = "Invalid last_name";
     }
     if (inputs.last_name === undefined) {
       flag = false;
@@ -169,7 +169,7 @@ function Register() {
   return (
     <>
       <div className="auth-form auth-form__signup">
-        <div className="auth-form__container">
+        <div className="auth-form__container" style={{ padding: "20px 30px" }}>
           <div className="auth-form__header">
             <h3 className="auth-form__heading">Sign Up</h3>
           </div>
@@ -295,22 +295,6 @@ function Register() {
               </button>
             </div>
           </form>
-        </div>
-        <div className="auth-form__socials">
-          <a
-            href=""
-            className="auth-form__socials--facebook btn btn--size-s btn--with-icon"
-          >
-            <i className="auth-form__socials-icon fa-brands fa-facebook-square" />
-            Connect with Facebook
-          </a>
-          <a
-            href=""
-            className="auth-form__socials--google btn btn--size-s btn--with-icon"
-          >
-            <i className="auth-form__socials-icon fa-brands fa-google" />
-            Connect with Google
-          </a>
         </div>
       </div>
     </>

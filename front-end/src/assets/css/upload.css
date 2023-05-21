@@ -48,13 +48,13 @@ section {
   line-height: 1.4;
 }
 section .row {
-  /* background-color: #e9f0ff; */
-  /* list-style: none; */
-  /* padding: 15px 20px; */
-  /* border-radius: 5px; */
-  /* display: flex;
-  align-items: center; */
-  /* justify-content: space-between; */
+  /* background-color: #e9f0ff;
+  list-style: none;
+  padding: 15px 20px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; */
 }
 
 section .row i {

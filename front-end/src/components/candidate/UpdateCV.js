@@ -52,6 +52,7 @@ function UpdateCV() {
     this.style.height = this.scrollHeight + "px";
   }
 
+  const [oldResume, setOldResume] = useState({});
   const [showForm, setShowForm] = useState([]);
   const [exp, setExp] = useState([]);
   const [education, setEducation] = useState([]);
@@ -83,13 +84,27 @@ function UpdateCV() {
   };
 
   const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImagePreview(reader.result);
-      uploadFile(file);
-    };
-    reader.readAsDataURL(file);
+    let file = e.target.files[0];
+    let flag = true;
+    if (!file) {
+      flag = false;
+    } else {
+      let img = ["png", "jpg", "jpeg", "PNG", "JPG"];
+      if (file.size > 1024 * 1024) {
+        flag = false;
+      } else if (!img.includes(file.name.split(".").pop())) {
+        flag = false;
+        alert("file phải thuộc định dạng png, jpgm jpeg, png, jpg");
+      }
+    }
+    if (flag) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result);
+        uploadFile(file);
+      };
+      reader.readAsDataURL(file);
+    }
   };
   const uploadFile = async (imageUpload) => {
     if (imageUpload == null) return;
@@ -109,11 +124,50 @@ function UpdateCV() {
         config
       )
       .then((res) => {
-        console.log(res.data.resume.template);
         setResume(res.data);
         setTemplate(res.data.resume.template);
-        setExp(res.data.experience_company);
-        setActive(res.data.experience_project);
+        setExp(
+          res.data.experience_company.length > 0
+            ? res.data.experience_company.map((item) => ({
+                company_name: item?.company_name ? item?.company_name : "",
+                position: item?.position ? item?.position : "",
+                achievement: item.achievement ? item.achievement : "",
+                experience_start: item.experience_start
+                  ? item.experience_start
+                  : "",
+                experience_end: item.experience_end ? item.experience_end : "",
+              }))
+            : [
+                {
+                  company_name: "",
+                  position: "",
+                  achievement: "",
+                  experience_start: "",
+                  experience_end: "",
+                },
+              ]
+        );
+        setActive(
+          res.data.experience_project.length > 0
+            ? res.data.experience_project.map((item) => ({
+                project_name: item.project_name ? item.project_name : "",
+                responsibility: item.responsibility ? item.responsibility : "",
+                achievement: item.achievement ? item.achievement : "",
+                experience_start: item.experience_start
+                  ? item.experience_start
+                  : "",
+                experience_end: item.experience_end ? item.experience_end : "",
+              }))
+            : [
+                {
+                  project_name: "",
+                  responsibility: "",
+                  achievement: "",
+                  experience_start: "",
+                  experience_end: "",
+                },
+              ]
+        );
         const edu2 = [
           {
             specialize: res.data.resume.education_major,
@@ -153,7 +207,57 @@ function UpdateCV() {
           resume_name: res.data.resume.resume_name,
           image: res.data.resume.image,
         });
+        setUrlImage(res.data.resume.image);
         setImagePreview(res.data.resume.image);
+        setOldResume({
+          first_name: res.data.resume.first_name
+            ? res.data.resume.first_name
+            : "",
+          last_name: res.data.resume.last_name ? res.data.resume.last_name : "",
+          phone: res.data.resume.phone ? res.data.resume.phone : "",
+          birth_day: res.data.resume.birth_day ? res.data.resume.birth_day : "",
+          email: res.data.resume.email ? res.data.resume.email : "",
+          address: res.data.resume.address ? res.data.resume.address : "",
+          hobby: res.data.resume.hobby ? res.data.resume.hobby : "",
+          activity: res.data.resume.activity ? res.data.resume.activity : "",
+          resume_name: res.data.resume.resume_name
+            ? res.data.resume.resume_name
+            : "",
+          education: res.data.resume.education ? res.data.resume.education : "",
+          education_year: res.data.resume.education_year
+            ? res.data.resume.education_year
+            : "",
+          education_major: res.data.resume.education_major
+            ? res.data.resume.education_major
+            : "",
+          education_description: res.data.resume.education_description
+            ? res.data.resume.education_description
+            : "",
+          certificate: res.data.resume.certificate
+            ? res.data.resume.certificate
+            : "",
+          template: res.data.resume.template,
+          image: res.data.resume.image ? res.data.resume.image : Logo,
+          experience_project: res.data.experience_project.map((item) => ({
+            project_name: item.project_name ? item.project_name : "",
+            responsibility: item.responsibility ? item.responsibility : "",
+            achievement: item.achievement ? item.achievement : "",
+            experience_start: item.experience_start
+              ? item.experience_start
+              : "",
+            experience_end: item.experience_end ? item.experience_end : "",
+          })),
+          experience_company: res.data.experience_company.map((item) => ({
+            company_name: item?.company_name ? item?.company_name : "",
+            position: item?.position ? item?.position : "",
+            achievement: item.achievement ? item.achievement : "",
+            experience_start: item.experience_start
+              ? item.experience_start
+              : "",
+            experience_end: item.experience_end ? item.experience_end : "",
+          })),
+          skills: res.data.skill.map((item) => item.skill_id),
+        });
       });
   }, []);
   console.log(">>>>>>", template);
@@ -185,6 +289,8 @@ function UpdateCV() {
       },
     };
   }, []);
+  console.log(exp);
+  console.log(active);
   const handleInput = (e) => {
     let nameInput = e.target.name;
     let value = e.target.value;
@@ -328,8 +434,7 @@ function UpdateCV() {
     return (
       <>
         <div className="content_form">
-          {/* <label class="form-label">Kỹ năng</label>
-           */}
+          {/* <label class="form-label">Kỹ năng</label> */}
           <div className="form-field">
             <AnimatedMulti parentCallback={handleSkillInput}></AnimatedMulti>
           </div>
@@ -367,15 +472,13 @@ function UpdateCV() {
       <>
         {certificate.map((certificate, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div
-              className="addition"
-              style={{ cursor: "pointer", fontSize: "18px" }}
-            >
-              <i class="fa fa-minus" onClick={() => handleRemoveCer(index)}></i>
+            <div className="addition">
               <i class="fa fa-plus mr-1" onClick={handleAddCer}></i>
+              <i class="fa fa-minus" onClick={() => handleRemoveCer(index)}></i>
             </div>
             <div key={index} className="form-field">
               <input
+                // required="required"
                 className="form_input"
                 type="text"
                 placeholder=" "
@@ -398,18 +501,19 @@ function UpdateCV() {
       <>
         {softSkill.map((softSkill, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div
-              className="addition"
-              style={{ cursor: "pointer", fontSize: "18px" }}
-            >
+            <div className="addition">
               <i
-                class="fa fa-minus"
+                class="fa-regular fa-square-plus mr-1"
+                onClick={handleAddSoft}
+              ></i>
+              <i
+                class="fa-regular fa-square-minus"
                 onClick={() => handleRemoveSoft(index)}
               ></i>
-              <i class="fa fa-plus mr-1" onClick={handleAddSoft}></i>
             </div>
             <div key={index} className="form-field">
               <input
+                // required="required"
                 className="form_input"
                 type="text"
                 placeholder=" "
@@ -432,18 +536,19 @@ function UpdateCV() {
       <>
         {awards.map((award, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div
-              className="addition"
-              style={{ cursor: "pointer", fontSize: "18px" }}
-            >
+            <div className="addition">
               <i
-                class="fa fa-minus"
+                class="fa-regular fa-square-plus mr-1"
+                onClick={handleAddAward}
+              ></i>
+              <i
+                class="fa-regular fa-square-minus"
                 onClick={() => handleRemoveAward(index)}
               ></i>
-              <i class="fa fa-plus mr-1" onClick={handleAddAward}></i>
             </div>
             <div key={index} className="form-field">
               <input
+                // required="required"
                 className="form_input"
                 type="text"
                 placeholder=" "
@@ -466,16 +571,17 @@ function UpdateCV() {
       <>
         {active.map((active, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div
-              className="addition"
-              style={{ cursor: "pointer", fontSize: "18px" }}
-            >
-              <i class="fa fa-minus" onClick={() => handleRemoveAct(index)}></i>
-              <i class="fa fa-plus mr-1" onClick={handleAddAct}></i>
+            <div className="addition">
+              <i class="fas fa-plus mr-1" onClick={handleAddAct}></i>
+              <i
+                class="fas fa-minus"
+                onClick={() => handleRemoveAct(index)}
+              ></i>
             </div>
             <div key={index} className="form-field">
               <div style={{ display: "flex" }}>
                 <input
+                  // required="required"
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian bắt đầu"
@@ -490,6 +596,7 @@ function UpdateCV() {
                   }
                 />
                 <input
+                  // required="required"
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian kết thúc"
@@ -505,6 +612,7 @@ function UpdateCV() {
                 />
               </div>
               <input
+                // required="required"
                 className="exp_input"
                 type="text"
                 placeholder="Vị trí"
@@ -515,6 +623,7 @@ function UpdateCV() {
                 }
               />
               <input
+                // required="required"
                 className="exp_input"
                 type="text"
                 placeholder="Tên dự án"
@@ -555,18 +664,22 @@ function UpdateCV() {
       <>
         {education.map((education, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div
-              className="addition"
-              style={{ cursor: "pointer", fontSize: "18px" }}
-            >
-              <i class="fa fa-minus" onClick={() => handleRemoveEdu(index)}></i>
-              <i class="fa fa-plus mr-1" onClick={handleAddEdu}></i>
+            <div className="addition">
+              <i
+                class="fa-regular fa-square-plus mr-1"
+                onClick={handleAddEdu}
+              ></i>
+              <i
+                class="fa-regular fa-square-minus"
+                onClick={() => handleRemoveEdu(index)}
+              ></i>
             </div>
             <div key={index} className="form-field">
               <table className="edu_form">
                 <tr>
                   <td>
                     <input
+                      // required="required"
                       className="form_input"
                       type="text"
                       placeholder="Ngành học"
@@ -582,6 +695,7 @@ function UpdateCV() {
                   </td>
                   <td>
                     <input
+                      // required="required"
                       className="form_input"
                       type="text"
                       placeholder="Học vấn"
@@ -593,6 +707,7 @@ function UpdateCV() {
                   </td>
                   <td>
                     <input
+                      // required="required"
                       className="form_input"
                       type="text"
                       placeholder="Niên khóa"
@@ -604,6 +719,7 @@ function UpdateCV() {
                   </td>
                   <td>
                     <input
+                      // required="required"
                       className="form_input"
                       type="text"
                       placeholder="Xếp loại"
@@ -626,16 +742,14 @@ function UpdateCV() {
       <>
         {exp.map((exp, index) => (
           <div className="content_form" style={{ marginTop: "30px" }}>
-            <div
-              className="addition"
-              style={{ cursor: "pointer", fontSize: "18px" }}
-            >
-              <i class="fa fa-minus" onClick={() => handleRemoveExp(index)}></i>
+            <div className="addition">
               <i class="fa fa-plus mr-1" onClick={handleAddExp}></i>
+              <i class="fa fa-minus" onClick={() => handleRemoveExp(index)}></i>
             </div>
             <div key={index} className="form-field">
               <div style={{ display: "flex" }}>
                 <input
+                  // required="required"
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian bắt đầu"
@@ -650,6 +764,7 @@ function UpdateCV() {
                   }
                 />
                 <input
+                  // required="required"
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian kết thúc"
@@ -666,6 +781,7 @@ function UpdateCV() {
               </div>
 
               <input
+                // required="required"
                 className="exp_input"
                 type="text"
                 placeholder="Chức vụ"
@@ -676,6 +792,7 @@ function UpdateCV() {
                 }
               />
               <input
+                // required="required"
                 className="exp_input"
                 type="text"
                 placeholder="Công ty"
@@ -717,54 +834,98 @@ function UpdateCV() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    let flag = true;
     let resume = {
-      first_name: inputs.first_name,
-      last_name: inputs.last_name,
-      phone: inputs.phone,
-      birth_day: inputs.birth_day,
-      email: inputs.email,
-      address: inputs.address,
-      hobby: softSkill[0].hobby,
-      activity: awards[0].activity,
-      resume_name: inputs.resume_name,
-      education: education[0].school,
-      education_year: education[0].time,
-      education_major: education[0].specialize,
-      education_description: education[0].rank,
-      certificate: certificate[0].title,
-      template: 1,
+      first_name: inputs?.first_name,
+      last_name: inputs?.last_name,
+      phone: inputs?.phone,
+      birth_day: inputs?.birth_day,
+      email: inputs?.email,
+      address: inputs?.address,
+      hobby: softSkill[0]?.title ? softSkill[0]?.title : "",
+      activity: awards[0]?.title ? awards[0]?.title : "",
+      resume_name: inputs?.resume_name,
+      education: education[0]?.school ? education[0]?.school : "",
+      education_year: education[0]?.time ? education[0]?.time : "",
+      education_major: education[0]?.specialize ? education[0]?.specialize : "",
+      education_description: education[0]?.rank ? education[0]?.rank : "",
+      certificate: certificate[0]?.title ? certificate[0]?.title : "",
+      template: template,
       image: urlImage,
-      experience_project: experience_project,
-      experience_company: experience_company,
-      skills: skill.job_skill,
+      experience_project:
+        experience_project.length > 0
+          ? experience_project
+          : [
+              {
+                project_name: "",
+                responsibility: "",
+                achievement: "",
+                experience_start: "",
+                experience_end: "",
+              },
+            ],
+      experience_company:
+        experience_company.length > 0
+          ? experience_company
+          : [
+              {
+                company_name: "",
+                position: "",
+                achievement: "",
+                experience_start: "",
+                experience_end: "",
+              },
+            ],
+      skills: skill?.job_skill,
     };
-    let object = {};
-    object.resume = resume;
-    let user = JSON.parse(localStorage.getItem("user"));
-    let config = {
-      headers: {
-        Authorization: "Bearer " + user.token,
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/json",
-      },
-    };
-    axios
-      .post(
-        `http://127.0.0.1:8000/api/candidate/update-cv/${params.id}`,
-        object,
-        config
-      )
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.message.includes("considered")) {
-          alert(
-            "CV đang được xem xét trong mục công việc, không thể chỉnh sửa"
-          );
-          // navigate("/allCV");
-        } else if ((res.data.status = 200)) {
-          alert("Bạn đã cập nhật thành công");
-        }
-      });
+    console.log(JSON.stringify(oldResume));
+    console.log(JSON.stringify(resume));
+    if (JSON.stringify(oldResume) === JSON.stringify(resume)) {
+      alert("Thông tin không có gì thay đổi");
+      return;
+    }
+    if (
+      Object.values(resume).includes(undefined) ||
+      resume.skills?.length <= 0
+    ) {
+      flag = false;
+      console.log(">>>>>>>>>>>>>> NOOOOOOOOOOOOOOOOOO");
+      alert("Nhập đầy đủ các mục ở trên");
+      console.log(resume);
+    } else {
+      console.log("yes");
+    }
+    if (flag) {
+      let object = {};
+      object.resume = resume;
+      let user = JSON.parse(localStorage.getItem("user"));
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      axios
+        .post(
+          `http://127.0.0.1:8000/api/candidate/update-cv/${params.id}`,
+          object,
+          config
+        )
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.message.includes("considered")) {
+            alert(
+              "CV đang được xem xét trong mục công việc, không thể chỉnh sửa"
+            );
+            // navigate("/allCV");
+          } else if ((res.data.status = 200)) {
+            alert("Bạn đã cập nhật thành công");
+          }
+        });
+      setOldResume(resume);
+      console.log(resume);
+    }
   };
   function renderResume1() {
     return (
@@ -854,6 +1015,7 @@ function UpdateCV() {
                           </i>
 
                           <input
+                            // required="required"
                             id="emailSummary"
                             type="text"
                             name="email"
@@ -876,6 +1038,7 @@ function UpdateCV() {
                         <div className="mt-4">
                           <i className="fas fa-phone mr-2" />
                           <input
+                            // required="required"
                             type="text"
                             name="phone"
                             value={inputs.phone}
@@ -887,6 +1050,7 @@ function UpdateCV() {
                         <div className="mt-4">
                           <i className="fas fa-birthday-cake mr-2" />
                           <input
+                            // required="required"
                             type="text"
                             placeholder="dd-mm-yyyy"
                             name="birth_day"
@@ -898,6 +1062,7 @@ function UpdateCV() {
                         <div className="mt-4">
                           <i className="fas fa-map-marker-alt mr-2" />
                           <input
+                            // required="required"
                             type="text"
                             placeholder="Địa chỉ"
                             value={inputs.address}
@@ -950,6 +1115,7 @@ function UpdateCV() {
                       {inputs.last_name} {inputs.first_name}
                     </h1>
                     <input
+                      required="required"
                       type="text"
                       placeholder="tên cv"
                       value={inputs.resume_name}
@@ -957,14 +1123,15 @@ function UpdateCV() {
                       onChange={handleInput}
                       style={{ padding: "5px", border: "none", color: "#000" }}
                     />
-                    <input
+                    {/* <input
+                      required="required"
                       type="text"
                       placeholder="Vị trí mong muốn"
                       value={inputs.position}
                       name="position"
                       onChange={handleInput}
                       style={{ padding: "5px", border: "none", color: "#000" }}
-                    />
+                    /> */}
                   </section>
                   <section className="experience">
                     <h4>
@@ -1161,6 +1328,7 @@ function UpdateCV() {
                         </h1>
                         <div class="title mb-3">
                           <input
+                            // required="required"
                             type="text"
                             placeholder="tên cv"
                             value={inputs.resume_name}
@@ -1184,6 +1352,7 @@ function UpdateCV() {
                             <div>
                               <i class="fas fa-map-marker-alt fa-fw mr-2"></i>
                               <input
+                                // required="required"
                                 type="text"
                                 placeholder="Địa chỉ"
                                 value={inputs.address}
@@ -1203,6 +1372,7 @@ function UpdateCV() {
                             <div>
                               <i class="fas fa-phone fa-fw mr-2"></i>
                               <input
+                                // required="required"
                                 type="text"
                                 name="phone"
                                 value={inputs.phone}
@@ -1222,6 +1392,7 @@ function UpdateCV() {
                             <div>
                               <i class="far fa-envelope fa-fw mr-2"></i>
                               <input
+                                // required="required"
                                 id="emailSummary"
                                 type="text"
                                 name="email"
@@ -1243,6 +1414,7 @@ function UpdateCV() {
                             <div>
                               <i class="fas fa-birthday-cake fa-fw mr-2"></i>
                               <input
+                                // required="required"
                                 type="text"
                                 placeholder="yyyy-mm-dd"
                                 name="birth_day"

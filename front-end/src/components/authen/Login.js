@@ -91,7 +91,7 @@ function Login() {
   return (
     <>
       <div className="auth-form auth-form__login" style={{ marginTop: 150 }}>
-        <div className="auth-form__container">
+        <div className="auth-form__container" style={{ padding: "20px 30px" }}>
           <div className="auth-form__header">
             <h3 className="auth-form__heading">Login</h3>
             <span className="auth-form__switch-btn auth-form__switch-btn2">
@@ -146,7 +146,7 @@ function Login() {
             </div>
           </form>
         </div>
-        <div className="auth-form__socials">
+        {/* <div className="auth-form__socials">
           <Link
             to="#"
             className="auth-form__socials--facebook btn btn--size-s btn--with-icon"
@@ -161,7 +161,7 @@ function Login() {
             <i className="auth-form__socials-icon fa-brands fa-google" />
             Sign in with Google
           </Link>
-        </div>
+        </div> */}
       </div>
     </>
   );

@@ -2,11 +2,16 @@ import Sidebar from "./Sidebar";
 import { useEffect, useRef, useState } from "react";
 import axios, { all } from "axios";
 import { Link } from "react-router-dom";
-
+import ModalCV from "./ModalCV";
 const ManageCan = () => {
   const [allJob, setAllJob] = useState("");
   const [candidate, setCandidate] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [modalId, setModalId] = useState(null);
 
+  const handleOpenModal = (id) => {
+    setModalId(id);
+  };
   let user = JSON.parse(localStorage.getItem("user"));
   console.log(user.token);
   let config = {
@@ -114,13 +119,17 @@ const ManageCan = () => {
                 <td>{value.skills}</td>
                 <td>{value.status}</td>
                 <td class="project-actions text-right">
-                  <Link
-                    to={"/manageCan/fileCV/" + value.resume_id}
+                  <a
+                    onClick={() => {
+                      setOpenModal(true);
+                      handleOpenModal(value.resume_id);
+                    }}
+                    id={value.resume_id}
                     class="btn btn-primary btn-sm"
                   >
                     <i class="fas fa-eye"></i>
                     Xem
-                  </Link>
+                  </a>
                   <a
                     class="btn btn-info btn-sm"
                     id={value.application_id}
@@ -148,6 +157,7 @@ const ManageCan = () => {
   };
   return (
     <div>
+      {openModal && <ModalCV closeModal={setOpenModal} modalId={modalId} />}
       <Sidebar />
       <main id="main" className="main" style={{ minHeight: "665px" }}>
         <section className="section">
@@ -215,94 +225,7 @@ const ManageCan = () => {
                                 {renderJob()}
                               </select>
                             </div>
-                            {/* <div className="col-md-3 margin">
-                              <label>Chọn theo loại</label>
-
-                              <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                style={{ fontSize: "13px" }}
-                              >
-                                {renderJob()}
-                              </select>
-                            </div>
-                            <div className="col-md-3 margin">
-                              <label>Ngôn ngữ</label>
-                              <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                style={{ fontSize: "13px" }}
-                              >
-                                <option selected="">Chọn ngôn ngữ</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                              </select>
-                            </div>
-                            <div className="col-md-3 margin">
-                              <label>Bằng cấp</label>
-                              <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                style={{ fontSize: "13px" }}
-                              >
-                                <option selected="">Chọn bằng cấp</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                              </select>
-                            </div> */}
                           </div>
-
-                          {/* <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "60%",
-                              marginLeft: "10px",
-                              marginTop: "10px",
-                            }}
-                          >
-                            <label>Hiển thị: </label>
-                            <div className="checkbox">
-                              <label
-                                className="form-check-label"
-                                for="gridRadios1"
-                              >
-                                Tất cả ứng viên
-                              </label>
-                            </div>
-                            <div className="checkbox">
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name="gridRadios"
-                                id="gridRadios1"
-                                value="option1"
-                              />
-                              <label
-                                className="form-check-label"
-                                for="gridRadios1"
-                              >
-                                Ứng viên đã duyệt
-                              </label>
-                            </div>
-                            <div className="checkbox">
-                              <input
-                                className="form-check-input"
-                                type="radio"
-                                name="gridRadios"
-                                id="gridRadios1"
-                                value="option1"
-                              />
-                              <label
-                                className="form-check-label"
-                                for="gridRadios1"
-                              >
-                                Ứng viên bị từ chối
-                              </label>
-                            </div>
-                          </div> */}
 
                           <button
                             className="btn btn-primary"
@@ -353,5 +276,4 @@ const ManageCan = () => {
     </div>
   );
 };
-
 export default ManageCan;

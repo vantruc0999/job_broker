@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ModalViewJob from "./ModalViewJob";
-function AdminJob() {
+function AdDeclinedJob() {
   const [jobwait, setJobwait] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [id, setId] = useState("");
@@ -19,9 +19,8 @@ function AdminJob() {
   };
 
   const render = () => {
-    console.log("http://127.0.0.1:8000/api/admin/waiting-jobs", config);
     axios
-      .get(`http://127.0.0.1:8000/api/admin/waiting-jobs`, config)
+      .get(`http://127.0.0.1:8000/api/admin/view-declined-jobs`, config)
       .then((res) => {
         console.log(res.data);
         setJobwait(res.data.jobs);
@@ -49,7 +48,7 @@ function AdminJob() {
         console.log(res.data.message);
         setSuccess(res.data);
         if (res.data.message.includes("approved")) {
-          alert("Bạn đã duyệt tin tuyển dụng");
+          alert(res.data.message);
         }
       });
     render();
@@ -64,7 +63,7 @@ function AdminJob() {
       .then((res) => {
         console.log(res.data);
         if (res.data.message.includes("declined")) {
-          alert("Bạn đã từ chối tin tuyển dụng");
+          alert(res.data.message);
         }
       });
     render();
@@ -82,9 +81,11 @@ function AdminJob() {
                 <td>
                   <a> {value.job_name} </a>
                   <br />
+                  <small> Ngày tạo 01.01.2019 </small>
                 </td>
-                <td>{value.job_location}</td>
-                <td>{value.salary}</td>
+                <td>00/00/0000</td>
+                <td className="project_progress">00/00/0000</td>
+                <td className="project-state">Hoạt động</td>
                 <td className="project-actions text-right">
                   {openModal === false ? (
                     <>
@@ -95,6 +96,7 @@ function AdminJob() {
                           e.preventDefault();
                           setOpenModal(true);
                         }}
+                        style={{ margin: " 5px 0" }}
                       >
                         <i className="fas fa-folder"> </i>
                         Xem
@@ -105,18 +107,18 @@ function AdminJob() {
                   )}
                   <button
                     id={value.job_id}
-                    className="btn btn-success ml-2 btn-sm"
+                    className="btn btn-success ml-2"
                     onClick={(e) => handleDetailCV(e)}
                   >
                     Duyệt
                   </button>
-                  <button
+                  {/* <button
                     id={value.job_id}
-                    className="btn btn-danger ml-2 btn-sm"
+                    className="btn btn-success ml-2"
                     onClick={(e) => handleDelete(e)}
                   >
-                    Từ chối
-                  </button>
+                    Xóa
+                  </button> */}
                 </td>
               </tr>
             </tbody>
@@ -188,9 +190,10 @@ function AdminJob() {
                         <tr>
                           <th>Tên công ty</th>
                           <th>Tên công việc</th>
-                          <th>Địa chỉ</th>
-                          <th>Lương</th>
-                          <th>Tính năng</th>
+                          <th>Ngày bắt đầu</th>
+                          <th>Ngày kết thúc</th>
+                          <th>Trạng thái</th>
+                          <th style={{ width: "10%" }}>Tính năng</th>
                         </tr>
                       </thead>
                       {renderJobWait()}
@@ -288,4 +291,4 @@ function AdminJob() {
     </>
   );
 }
-export default AdminJob;
+export default AdDeclinedJob;

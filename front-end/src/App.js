@@ -57,6 +57,8 @@ import ManageDeClined from "./components/recruiter/ManageDeclined";
 import ChooseTemplate from "./components/candidate/ChooseTemplate";
 import HistoryBuyPackage from "./components/admin/HistoryBuyPackage";
 import FormMail from "./components/recruiter/FormMail";
+import AdAcceptJob from "./components/admin/AdAcceptJob";
+import AdDeclinedJob from "./components/admin/AdDeclinedJob";
 function App(props) {
   let param1 = useLocation();
   return (
@@ -71,6 +73,7 @@ function App(props) {
         <Route index path="/" element={<Homepage />} />
         <Route path="/homeCandidate" element={<Homepage />} />
         <Route path="/homeRecruiter" element={<HomeRecruiter />} />
+        <Route path="/listJob" element={<ListJob />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -84,7 +87,7 @@ function App(props) {
           <Route path="/chooseCV" element={<ChooseTemplate />} />
           <Route path="/chooseCV/createCV/:id" element={<CreateCV />} />
           <Route path="/uploadCV" element={<MyPdfReader />} />
-          <Route path="/listJob" element={<ListJob />} />
+          {/* <Route path="/listJob" element={<ListJob />} /> */}
           <Route path="/allCV/UpdateCv/:id" element={<UpdateCv />} />
           <Route path="/applyJob" element={<ApplyJob />} />
           <Route path="/listJob/job/:id" element={<Test />} />
@@ -122,15 +125,17 @@ function App(props) {
           <Route path="/admincv/fileCV/:id" element={<FileCV />} />
           <Route path="/package" element={<Package />} />
           <Route path="/historyBuy" element={<HistoryBuyPackage />} />
+          <Route path="/acceptjob" element={<AdAcceptJob />} />
+          <Route path="/declinedjob" element={<AdDeclinedJob />} />
         </Route>
       </Routes>
       {/* {props.children} */}
       {param1["pathname"].includes("login") ||
       param1["pathname"].includes("register") ||
       param1["pathname"].includes("registerCruiter") ||
-      param1["pathname"].includes("loginadmin") ? null : (
-        <Footer />
-      )}
+      param1["pathname"].includes("loginadmin")
+        ? null
+        : null}
     </>
   );
 }

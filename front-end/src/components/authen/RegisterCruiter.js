@@ -16,7 +16,7 @@ import { v4 } from "uuid";
 import { storage } from "../Firebase";
 
 function RegisterCruiter() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState("");
   const [errors, setErrors] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -35,7 +35,7 @@ function RegisterCruiter() {
     const file = e.target.files[0];
     console.log(">>>>>>>>>>>>>>>>>>>>>>>", file);
     // setImageUpload(file);
-
+    setAvatar(file);
     const reader = new FileReader();
 
     console.log("oke");
@@ -142,19 +142,19 @@ function RegisterCruiter() {
       errorSubmit.phone = "Invalid phone number";
     }
 
-    // if (!file) {
-    //   // flag = false;
-    //   errorSubmit.avatar = "file not uploaded yet";
-    // } else {
-    //   let img = ["png", "jpg", "jpeg", "PNG", "JPG"];
-    //   if (file.size > 1024 * 1024) {
-    //     // flag = false;
-    //     errorSubmit.avatar = "File quá dung lượng";
-    //   } else if (!img.includes(file.name.split(".").pop())) {
-    //     // flag = false;
-    //     errorSubmit.avatar("This not image");
-    //   }
-    // }
+    if (!avatar) {
+      // flag = false;
+      errorSubmit.avatar = "file not uploaded yet";
+    } else {
+      let img = ["png", "jpg", "jpeg", "PNG", "JPG"];
+      if (avatar.size > 1024 * 1024) {
+        // flag = false;
+        errorSubmit.avatar = "File quá dung lượng";
+      } else if (!img.includes(avatar.name.split(".").pop())) {
+        // flag = false;
+        errorSubmit.avatar = "This not image";
+      }
+    }
 
     if (!flag) {
       setErrors(errorSubmit);
@@ -188,7 +188,7 @@ function RegisterCruiter() {
               image: "",
             });
             alert(res.data.message);
-            navigate("loginCruiter")
+            navigate("/loginCruiter");
           }
         })
         .catch((errors) => {

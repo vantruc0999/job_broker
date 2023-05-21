@@ -451,7 +451,10 @@ function Header() {
           </ul>
         </nav>
         {/* Sidebar */}
-        <aside className="main-sidebar sidebar-dark-primary elevation-4">
+        <aside
+          className="main-sidebar sidebar-dark-primary"
+          style={{ minHeight: "2000px" }}
+        >
           {/* Brand Logo */}
           {/* <a href="Home.html" className="brand-link">
             <img
@@ -500,11 +503,23 @@ function Header() {
                   </Link>
                 </li>
                 <li className="nav-item">
+                  <Link to="/acceptjob" className="nav-link">
+                    <i className="nav-icon fas fa-th" />
+                    <p>Tin đã duyệt</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/declinedjob" className="nav-link">
+                    <i className="nav-icon fas fa-th" />
+                    <p>Tin bị từ chối</p>
+                  </Link>
+                </li>
+                {/* <li className="nav-item">
                   <Link to="/admincv" className="nav-link">
                     <i className="nav-icon fas fa-th" />
                     <p>Quản lý CV</p>
                   </Link>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <Link to="/package" className="nav-link">
                     <i className="nav-icon fas fa-th" />

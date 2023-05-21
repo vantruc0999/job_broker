@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState , useRef} from "react";
 import Sidebar from "./Sidebar";
 import JoditEditor from "jodit-react";
 import axios from "axios";
@@ -22,19 +22,19 @@ function FormMail() {
       Accept: "application/json",
     },
   };
-  const handleInputs = (e) => {
+  const handleInputs = (e) =>{
     const nameInput = e.target.name;
     const value = e.target.value;
-    setInputs((state) => ({ ...state, [nameInput]: value }));
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    setInputs((state)=>({...state,[nameInput]:value}))
+  }
+  const handleSubmit = (e) =>{
+    e.preventDefault(); 
     axios
       .post("http://127.0.0.1:8000/api/recruiter/create-mail", inputs, config)
       .then((res) => {
         console.log(res.data);
       });
-  };
+  }
   return (
     <div>
       <Sidebar />
@@ -69,32 +69,32 @@ function FormMail() {
                     <div class="form-group">
                       <label>Email thông báo tuyển dụng</label>
                       <JoditEditor
-                        ref={editorApprove}
-                        tabIndex={1}
-                        value={inputs.approval_email}
-                        // onChange={(e) => setJob({ ...job, benefit: editor.current.value })}
-                        onBlur={() =>
-                          setInputs((prevJob) => ({
-                            ...prevJob,
-                            approval_email: editorApprove.current.value,
-                          }))
-                        }
-                      />
+                      ref={editorApprove}
+                      tabIndex={1}
+                      value={inputs.approval_email}
+                      // onChange={(e) => setJob({ ...job, benefit: editor.current.value })}
+                      onBlur={() =>
+                        setInputs((prevJob) => ({
+                          ...prevJob,
+                          approval_email: editorApprove.current.value,
+                        }))
+                      }
+                    />
                     </div>
                     <div class="form-group">
                       <label>Email thông báo từ chối</label>
                       <JoditEditor
-                        ref={editorDeclined}
-                        tabIndex={1}
-                        value={inputs.decline_email}
-                        // onChange={(e) => setJob({ ...job, benefit: editor.current.value })}
-                        onBlur={() =>
-                          setInputs((prevJob) => ({
-                            ...prevJob,
-                            decline_email: editorDeclined.current.value,
-                          }))
-                        }
-                      />
+                      ref={editorDeclined}
+                      tabIndex={1}
+                      value={inputs.decline_email}
+                      // onChange={(e) => setJob({ ...job, benefit: editor.current.value })}
+                      onBlur={() =>
+                        setInputs((prevJob) => ({
+                          ...prevJob,
+                          decline_email: editorDeclined.current.value,
+                        }))
+                      }
+                    />
                     </div>
                     <div class="form-group">
                       <label>Chữ ký</label>

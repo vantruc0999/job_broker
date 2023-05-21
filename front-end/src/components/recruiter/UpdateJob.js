@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import JoditEditor from "jodit-react";
 import Select from "react-select";
-
+import Sidebar from "./Sidebar";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import makeAnimated from "react-select/animated";
-import Sidebar from "./Sidebar";
 
 const animatedComponents = makeAnimated();
 
@@ -20,14 +19,64 @@ function UpdateJob() {
   const editorBenefit = useRef(null);
   const [skill, setSkill] = useState([]);
   const handleSkillInput = (childData) => {
+    console.log(childData);
     setSkill({ ...skill, job_skill: [...childData] });
+    // sektSkill([...childData]);
   };
 
+  const [errors, setErrors] = useState({
+    job_name: {
+      status: false,
+      message: "",
+    },
+    position_name: {
+      status: false,
+      message: "",
+    },
+    job_start_date: {
+      status: false,
+      message: "",
+    },
+    job_end_date: {
+      status: false,
+      message: "",
+    },
+    salary: {
+      status: false,
+      message: "",
+    },
+    job_location: {
+      status: false,
+      message: "",
+    },
+    language: {
+      status: false,
+      message: "",
+    },
+    job_requirement: {
+      status: false,
+      message: "",
+    },
+    job_description: {
+      status: false,
+      message: "",
+    },
+    benefit: {
+      status: false,
+      message: "",
+    },
+    job_skill: {
+      status: false,
+      message: "",
+    },
+  });
+  console.log(inputs.skills);
   const handleInput = (e) => {
     let nameInput = e.target.name;
     let value = e.target.value;
     setInputs((state) => ({ ...state, [nameInput]: value }));
   };
+
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
     let config = {
@@ -52,12 +101,250 @@ function UpdateJob() {
           language: res.data.job_detail.language,
           position_name: res.data.job_detail.position_name,
           salary: res.data.job_detail.salary,
-          skills: res.data.job_detail.skills,
+          skills: res.data.skills,
         });
       });
   }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
+    let flag = true;
+    let dateStart, dateEnd;
+    let today = new Date();
+    let errors = {
+      job_name: {
+        status: false,
+        message: "",
+      },
+      position_name: {
+        status: false,
+        message: "",
+      },
+      job_start_date: {
+        status: false,
+        message: "",
+      },
+      job_end_date: {
+        status: false,
+        message: "",
+      },
+      salary: {
+        status: false,
+        message: "",
+      },
+      job_location: {
+        status: false,
+        message: "",
+      },
+      language: {
+        status: false,
+        message: "",
+      },
+      job_requirement: {
+        status: false,
+        message: "",
+      },
+      job_description: {
+        status: false,
+        message: "",
+      },
+      benefit: {
+        status: false,
+        message: "",
+      },
+      job_skill: {
+        status: false,
+        message: "",
+      },
+    };
+
+    if (inputs.job_name == "") {
+      errors = {
+        ...errors,
+        job_name: {
+          status: true,
+          message: "Tên công việc không được để trống",
+        },
+      };
+      flag = false;
+    }
+    if (inputs.position_name == "") {
+      errors = {
+        ...errors,
+        position_name: {
+          status: true,
+          message: "Vị trí công việc không được để trống",
+        },
+      };
+      flag = false;
+    }
+    if (inputs.job_start_date == "") {
+      errors = {
+        ...errors,
+        job_start_date: {
+          status: true,
+          message: "Ngày bắt đầu không được để trống",
+        },
+      };
+      flag = false;
+    } else {
+      dateStart = new Date(inputs.job_start_date);
+      if (dateStart <= today) {
+        errors = {
+          ...errors,
+          job_start_date: {
+            status: true,
+            message: "Ngày bắt đầu phải lơn hơn ngày hiện tại",
+          },
+        };
+        flag = false;
+      }
+    }
+    if (inputs.job_end_date == "") {
+      errors = {
+        ...errors,
+        job_end_date: {
+          status: true,
+          message: "Ngày kết thúc không được để trống",
+        },
+      };
+      flag = false;
+    } else {
+      dateEnd = new Date(inputs.job_end_date);
+      if (dateEnd <= dateStart) {
+        errors = {
+          ...errors,
+          job_end_date: {
+            status: true,
+            message: "Ngày kết thúc phải lớn hơn ngày bắt đầu",
+          },
+        };
+        flag = false;
+      }
+    }
+    if (inputs.salary == "") {
+      errors = {
+        ...errors,
+        salary: {
+          status: true,
+          message: "Lương không được để trống",
+        },
+      };
+      flag = false;
+    }
+    if (inputs.job_location == "") {
+      errors = {
+        ...errors,
+        job_location: {
+          status: true,
+          message: "Vị trí công việc không được để trống",
+        },
+      };
+      flag = false;
+    }
+    if (inputs.language == "") {
+      errors = {
+        ...errors,
+        language: {
+          status: true,
+          message: "Ngôn ngữ không được để trống",
+        },
+      };
+      flag = false;
+    }
+    if (inputs.job_requirement == "") {
+      errors = {
+        ...errors,
+        job_requirement: {
+          status: true,
+          message: "Ngôn ngữ không được để trống",
+        },
+      };
+      flag = false;
+    }
+    console.log(inputs.job_description);
+    if (inputs.job_description == "") {
+      errors = {
+        ...errors,
+        job_description: {
+          status: true,
+          message: "Mô tả không được để trống",
+        },
+      };
+      flag = false;
+    }
+    if (inputs.benefit == "") {
+      errors = {
+        ...errors,
+        benefit: {
+          status: true,
+          message: "Lợi ích không được để trống",
+        },
+      };
+      flag = false;
+    }
+    console.log(">>>>>>", skill);
+    if (skill.job_skill == "" || skill.job_skill.length == 0) {
+      errors = {
+        ...errors,
+        job_skill: {
+          status: true,
+          message: "Kỹ năng không được để trống",
+        },
+      };
+      flag = false;
+    }
+
+    if (!flag) {
+      setErrors(errors);
+      return;
+    } else {
+      setErrors({
+        job_name: {
+          status: false,
+          message: "",
+        },
+        position_name: {
+          status: false,
+          message: "",
+        },
+        job_start_date: {
+          status: false,
+          message: "",
+        },
+        job_end_date: {
+          status: false,
+          message: "",
+        },
+        salary: {
+          status: false,
+          message: "",
+        },
+        job_location: {
+          status: false,
+          message: "",
+        },
+        language: {
+          status: false,
+          message: "",
+        },
+        job_requirement: {
+          status: false,
+          message: "",
+        },
+        job_description: {
+          status: false,
+          message: "",
+        },
+        benefit: {
+          status: false,
+          message: "",
+        },
+        job_skill: {
+          status: false,
+          message: "",
+        },
+      });
+    }
     console.log("oke");
     let user = JSON.parse(localStorage.getItem("user"));
     let config = {
@@ -111,7 +398,7 @@ function UpdateJob() {
                   class="card-title"
                   style={{ fontSize: "22px", color: "blue" }}
                 >
-                  Chỉnh sửa tin tuyển dụng
+                  Thêm tin tuyển dụng
                 </p>
 
                 <form
@@ -129,6 +416,11 @@ function UpdateJob() {
                       className="form-control"
                       onChange={handleInput}
                     />
+                    {errors.job_name.status && (
+                      <span style={{ color: "red" }}>
+                        {errors.job_name.message}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6">
@@ -140,6 +432,11 @@ function UpdateJob() {
                       value={inputs.position_name}
                       onChange={handleInput}
                     />
+                    {errors.position_name.status && (
+                      <span style={{ color: "red" }}>
+                        {errors.position_name.message}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6">
@@ -151,6 +448,11 @@ function UpdateJob() {
                       value={inputs.job_start_date}
                       onChange={handleInput}
                     />
+                    {errors.job_start_date.status && (
+                      <span style={{ color: "red" }}>
+                        {errors.job_start_date.message}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6">
@@ -162,6 +464,11 @@ function UpdateJob() {
                       value={inputs.job_end_date}
                       onChange={handleInput}
                     />
+                    {errors.job_end_date.status && (
+                      <span style={{ color: "red" }}>
+                        {errors.job_end_date.message}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6" style={{ marginTop: "10px" }}>
@@ -176,6 +483,11 @@ function UpdateJob() {
                       />
                       <span className="input-group-text">triệu</span>
                     </div>
+                    {errors.salary.status && (
+                      <span style={{ color: "red" }}>
+                        {errors.salary.message}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6" style={{ marginTop: "10px" }}>
@@ -187,6 +499,11 @@ function UpdateJob() {
                       value={inputs.job_location}
                       onChange={handleInput}
                     />
+                    {errors.job_location.status && (
+                      <span style={{ color: "red" }}>
+                        {errors.job_location.message}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6">
@@ -198,6 +515,11 @@ function UpdateJob() {
                       value={inputs.language}
                       onChange={handleInput}
                     />
+                    {errors.language.status && (
+                      <span style={{ color: "red" }}>
+                        {errors.language.message}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-6">
@@ -205,6 +527,11 @@ function UpdateJob() {
                     <AnimatedMulti
                       parentCallback={handleSkillInput}
                     ></AnimatedMulti>
+                    {errors.job_skill.status && (
+                      <span style={{ color: "red" }}>
+                        {errors.job_skill.message}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-12" style={{ margin: "10px 0" }}>
@@ -220,6 +547,11 @@ function UpdateJob() {
                         }))
                       }
                     />
+                    {errors.job_description.status && (
+                      <span style={{ color: "red" }}>
+                        {errors.job_description.message}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-12" style={{ margin: "10px 0" }}>
@@ -235,6 +567,11 @@ function UpdateJob() {
                         }))
                       }
                     />
+                    {errors.job_requirement.status && (
+                      <span style={{ color: "red" }}>
+                        {errors.job_requirement.message}
+                      </span>
+                    )}
                   </div>
 
                   <div className="col-md-12" style={{ margin: "10px 0" }}>
@@ -250,6 +587,11 @@ function UpdateJob() {
                         }))
                       }
                     />
+                    {errors.benefit.status && (
+                      <span style={{ color: "red" }}>
+                        {errors.benefit.message}
+                      </span>
+                    )}
                   </div>
 
                   <div className="text-center">
@@ -287,7 +629,6 @@ const AnimatedMulti = (props) => {
   };
   const [skillSelected, setSkillSelected] = useState([]);
   const [skill, setSkill] = useState([]);
-
   useEffect(() => {
     const getSkillSelect = async () => {
       let user = JSON.parse(localStorage.getItem("user"));
@@ -299,14 +640,13 @@ const AnimatedMulti = (props) => {
         },
       };
       await axios
-        .get(`http://127.0.0.1:8000/api/job-detail/28/${params.id}`, config)
+        .get(`http://127.0.0.1:8000/api/job-detail/${params.id}`, config)
         .then((res) => {
-          if (res.data.job_detail.skills.length > 0) {
-            const arraySkillSelected = res.data.job_detail.skills.map(
-              (item) => {
-                return { value: item.skill_id, label: item.skill_name };
-              }
-            );
+          if (res.data.skills.length > 0) {
+            const arraySkillSelected = res.data.skills.map((item) => {
+              return { value: item.skill_id, label: item.skill_name };
+            });
+            console.log(res.data);
             setSkillSelected(arraySkillSelected);
           }
         });

@@ -31,6 +31,228 @@ function ModalCV({ closeModal, modalId }) {
         setInfo(res.data);
       });
   }, []);
+
+  const renderResume2 = () => {
+    if (Object.keys(resume).length > 0) {
+      const email = resume.resume.email;
+      let nameEmail = email?.split("@", 1);
+      console.log(resume.resume);
+      return (
+        <>
+          <div>
+            <article class="resume" style={{ width: "100%" }}>
+              <div class="resume-wrapper-inner mx-auto text-left bg-white shadow-lg">
+                <header
+                  class="resume-header pt-4 pt-md-0"
+                  style={{ background: "#434E5E" }}
+                >
+                  <div class="media flex-column flex-md-row">
+                    <div>
+                      <img
+                        src={resume.resume.image}
+                        alt=""
+                        style={{
+                          maxWidth: "230px",
+                          height: "230px",
+                          borderRadius: "50%",
+                          margin: "0 auto",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </div>
+                    <img
+                      class="mr-3 img-fluid picture mx-auto"
+                      src="assets/images/фотощька.jpg"
+                      alt=""
+                    />
+                    <div class="media-body p-4 d-flex flex-column flex-md-row mx-auto mx-lg-0 resume_content">
+                      <div class="primary-info">
+                        <h1 class="name mt-0 mb-1 text-white text-uppercase text-uppercase">
+                          {resume.resume.last_name} {resume.resume.first_name}
+                        </h1>
+                        {/* <div class="title mb-3">Developer</div> */}
+                      </div>
+                      <div class="secondary-info ml-md-auto mt-2">
+                        <ul class="list-unstyled" style={{ width: 300 }}>
+                          <li class="mb-2">
+                            <div>
+                              <i class="fas fa-map-marker-alt fa-fw mr-2"></i>
+                              {resume.resume.address}
+                            </div>
+                          </li>
+                          <li className="mb-2">
+                            <div>
+                              <i class="fas fa-phone fa-fw mr-2"></i>
+                              {resume.resume.phone}
+                            </div>
+                          </li>
+                          <li class="mb-2">
+                            <div>
+                              <i class="far fa-envelope fa-fw mr-2"></i>
+                              {resume.resume.email}
+                            </div>
+                          </li>
+                          <li class="mb-2">
+                            <div>
+                              <i class="fas fa-birthday-cake fa-fw mr-2"></i>
+                              {resume.resume.birth_day}
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </header>
+                <div class="resume-body p-5">
+                  <section class="resume-section summary-section mb-5">
+                    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">
+                      Giới thiệu
+                    </h2>
+                    <div class="resume-section-content">
+                      <p class="mb-0">
+                        Tôi là một chuyên viên phát triển phần mềm với hơn 10
+                        năm tại các công ty trong và ngoài nước. Công việc của
+                        tôi cả về lập trình front-end lẫn back-end. Mong muốn
+                        được làm việc trong môi trường chuyên nghiệp, đồng
+                        nghiệp thân thiện và chế độ phúc lợi tốt.
+                      </p>
+                    </div>
+                  </section>
+                  <div class="row">
+                    <div class="col-lg-9">
+                      <section class="resume-section experience-section mb-5">
+                        <div class="resume-section-content">
+                          <div class="resume-timeline position-relative">
+                            <article class="resume-timeline-item position-relative pb-5 resume_item2 ">
+                              <div class="resume-timeline-item-header mb-2">
+                                <div class="d-flex flex-column flex-md-row">
+                                  <h3 class="resume-position-title font-weight-bold mb-1">
+                                    Kinh nghiệm làm việc công ty
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="resume-timeline-item-desc resume_work">
+                                {renderExp()}
+                              </div>
+                            </article>
+                            <article class="resume-timeline-item position-relative pb-5 resume_item2">
+                              <div class="resume-timeline-item-header mb-2">
+                                <div class="d-flex flex-column flex-md-row">
+                                  <h3 class="resume-position-title font-weight-bold mb-1">
+                                    Kinh nghiệm làm việc dự án
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="resume-timeline-item-desc resume_work">
+                                {renderExpProject()}
+                              </div>
+                            </article>
+                            <article class="resume-timeline-item position-relative pb-5 resume_item2">
+                              <div class="resume-timeline-item-header mb-2">
+                                <div class="d-flex flex-column flex-md-row">
+                                  <h3 class="resume-position-title font-weight-bold mb-1">
+                                    Giáo dục
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="resume-timeline-item-desc resume_work">
+                                <ul>
+                                  <li>
+                                    <div
+                                      className="info row"
+                                      style={{
+                                        display: "flex",
+                                        // justifyContent: "space-between",
+                                        // alignItems: "center",
+                                        // fontWeight: "bold",
+                                      }}
+                                    >
+                                      <p className="col-6">
+                                        Trường học:{" "}
+                                        {resume.resume.education_major}
+                                      </p>
+                                      <p className="col-6">
+                                        Ngành học: {resume.resume.education}
+                                      </p>
+                                      <p className="col-6">
+                                        Niên khóa:{" "}
+                                        {resume.resume.education_year}
+                                      </p>
+                                      <p className="col-6">
+                                        Xếp loại:{" "}
+                                        {resume.resume.education_description}
+                                      </p>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </article>
+                            <article class="resume-timeline-item position-relative pb-5 resume_item2">
+                              <div class="resume-timeline-item-header mb-2">
+                                <div class="d-flex flex-column flex-md-row">
+                                  <h3 class="resume-position-title font-weight-bold mb-1">
+                                    Chứng chỉ ngoại ngữ
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="resume-timeline-item-desc resume_work">
+                                <ul>
+                                  <li>
+                                    <div className="date">
+                                      <p>
+                                        Chứng chỉ: {resume.resume.certificate}
+                                      </p>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </article>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <div class="col-lg-3">
+                      <section class="resume-section skills-section mb-5">
+                        <div class="resume-section-content">
+                          <div class="resume-skill-item resume_item2 resume_skills">
+                            <h4 class="resume-skills-cat font-weight-bold">
+                              Các kỹ năng
+                            </h4>
+                            <ul class="list-unstyled mb-4 resume_work2">
+                              {renderSkill()}
+                            </ul>
+                          </div>
+
+                          <div class="resume-skill-item resume_item2 resume_skills">
+                            <h4 class="resume-skills-cat font-weight-bold">
+                              Sở thích
+                            </h4>
+                            <ul class="list-unstyled">{resume.resume.hobby}</ul>
+                          </div>
+
+                          <div class="resume-skill-item resume_item2 resume_skills">
+                            <h4 class="resume-skills-cat font-weight-bold">
+                              Giải thưởng
+                            </h4>
+                            <ul class="list-inline">
+                              {resume.resume.activity}
+                            </ul>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </>
+      );
+    }
+  };
   const renderExp = () => {
     if (Object.keys(resume).length > 0) {
       return resume.experience_company.map((value, key) => {
@@ -38,14 +260,14 @@ function ModalCV({ closeModal, modalId }) {
           <>
             <ul>
               <li>
-                <div className="date">
-                  {value.experience_start}-{value.experience_end}
+                <div className="date" style={{ fontWeight: "bold" }}>
+                  Bắt đầu - kết thúc: {value.experience_start} -{" "}
+                  {value.experience_end}
                 </div>
                 <div className="info">
-                  <p className="semi-bold">{value.company_name}</p>
-                  <p>Nhiệm vụ: {value.position}</p>
-                  {/* <p>Ngôn ngữ sử dụng: J2ME</p> */}
-                  <p>{value.achievement}</p>
+                  <p className="semi-bold">Công ty: {value.company_name}</p>
+                  <p>Vị trí: {value.position}</p>
+                  <p>Mô tả: {value.achievement}</p>
                 </div>
               </li>
             </ul>
@@ -75,14 +297,14 @@ function ModalCV({ closeModal, modalId }) {
           <>
             <ul>
               <li>
-                <div className="date">
-                  {value.experience_start}-{value.experience_end}
+                <div className="date" style={{ fontWeight: "bold" }}>
+                  Bắt đầu - kết thúc: {value.experience_start}-
+                  {value.experience_end}
                 </div>
                 <div className="info">
                   <p className="semi-bold">Dự án: {value.project_name}</p>
                   <p>Vị trí: {value.responsibility}</p>
-                  {/* <p>Ngôn ngữ sử dụng: J2ME</p> */}
-                  <p>{value.achievement}</p>
+                  <p>Mô tả: {value.achievement}</p>
                 </div>
               </li>
             </ul>
@@ -94,7 +316,7 @@ function ModalCV({ closeModal, modalId }) {
   const renderResume = () => {
     if (Object.keys(resume).length > 0) {
       const email = resume.resume.email;
-      let nameEmail = email.split("@", 1);
+      let nameEmail = email?.split("@", 1);
       console.log(nameEmail);
       return (
         <>
@@ -205,18 +427,26 @@ function ModalCV({ closeModal, modalId }) {
                   <ul>
                     <li>
                       <div
-                        className="info"
+                        className="info row"
                         style={{
                           display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
+                          // justifyContent: "space-between",
+                          // alignItems: "center",
                           fontWeight: "bold",
                         }}
                       >
-                        <p>Ngành: {resume.resume.education_major}</p>
-                        <p>Học vấn: {resume.resume.education}</p>
-                        <p>Niên khóa: {resume.resume.education_year}</p>
-                        <p>Xếp loại: {resume.resume.education_description}</p>
+                        <p className="col-6">
+                          Trường học: {resume.resume.education_major}
+                        </p>
+                        <p className="col-6">
+                          Ngành học: {resume.resume.education}
+                        </p>
+                        <p className="col-6">
+                          Niên khóa: {resume.resume.education_year}
+                        </p>
+                        <p className="col-6">
+                          Xếp loại: {resume.resume.education_description}
+                        </p>
                       </div>
                     </li>
                   </ul>
@@ -245,7 +475,7 @@ function ModalCV({ closeModal, modalId }) {
       <div className="modalBackground" onClick={() => closeModal(false)}>
         <div className="modalContainer" onClick={(e) => e.stopPropagation()}>
           {/* <button onClick={()=>closeModal(false)}>X</button> */}
-          {renderResume()}
+          {resume?.resume?.template == 1 ? renderResume() : renderResume2()}
         </div>
       </div>
     </>

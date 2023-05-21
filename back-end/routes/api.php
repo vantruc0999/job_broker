@@ -55,8 +55,6 @@ Route::get('skills', [SkillController::class, 'index']);
 
 Route::get('jobs-by-skills/{id}', [JobController::class, 'getJobsByProgrammingSkills']);
 
-
-
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::post('logout', [AdminAuthController::class, 'logout']);

@@ -11,6 +11,7 @@ import "../../assets/css/homepage.css";
 import { Pagination, Navigation, Grid } from "swiper";
 import axios from "axios";
 import Example2 from "./Example2";
+import Search from "./Search";
 function Homepage() {
   const [swiperRef, setSwiperRef] = useState(null);
   const [jobs, setJobs] = useState([]);
@@ -167,7 +168,8 @@ function Homepage() {
           <h1 style={{ marginBottom: 40, fontWeight: 600 }}>
             BrokerJob - Tìm việc làm
           </h1>
-          <div className="searcDetail">
+          <Search/>
+          {/* <div className="searcDetail">
             <div className="input-group">
               <p style={{ margin: 0, display: "flex", alignItems: "center" }}>
                 Từ khóa:{" "}
@@ -201,7 +203,7 @@ function Homepage() {
                 Tìm kiếm
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div

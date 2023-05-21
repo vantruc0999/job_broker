@@ -1,6 +1,44 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const HistoryBuyPackage = () => {
+  const [histotyPack, setHistoryPack] = useState("");
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    let config = {
+      headers: {
+        Authorization: "Bearer " + user.token,
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
+    };
+    axios
+      .get("http://127.0.0.1:8000/api/recruiter/payment-history", config)
+      .then((res) => {
+        console.log(res.data);
+        setHistoryPack(res.data);
+      });
+  }, []);
+  const renderHistory = () => {
+    if (Object.keys(histotyPack).length > 0) {
+      return histotyPack.map((value, key) => {
+        return (
+          <>
+            <tbody>
+              <tr>
+                <td>{value.payment_id}</td>
+                <td>{value.package_name}</td>
+                <td>{value.amount} USD</td>
+                <td>{value.start_date}</td>
+                <td>{value.end_date}</td>
+              </tr>
+            </tbody>
+          </>
+        );
+      });
+    }
+  };
   return (
     <>
       <div className="content-wrapper" style={{ minHeight: "665px" }}>
@@ -39,14 +77,7 @@ const HistoryBuyPackage = () => {
                         <th>Tạo ngày</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>FPT</td>
-                        <td>VIPPRO</td>
-                        <td>100 USD</td>
-                        <td>00/00/000</td>
-                      </tr>
-                    </tbody>
+                    {renderHistory()}
                   </table>
                 </div>
                 <div class="card-footer clearfix">

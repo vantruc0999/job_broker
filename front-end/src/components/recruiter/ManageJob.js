@@ -37,15 +37,13 @@ const ManageJob = () => {
                 }}
               >
                 <th scope="row">
-                  <i
-                    class="bi bi-briefcase"
-                    style={{
-                      fontSize: "30px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  ></i>
+                  {value.status == "waiting" ? (
+                    <p className="text-success">Chờ duyệt</p>
+                  ) : value.status == "approved" ? (
+                    <p className="text-primary">Đã duyệt</p>
+                  ) : (
+                    <p className="text-danger">Từ chối</p>
+                  )}
                 </th>
                 <td>
                   <ul style={{ textAlign: "left" }}>
@@ -86,18 +84,8 @@ const ManageJob = () => {
                       padding: "5px 5px",
                     }}
                   >
-                    Xóa
+                    Hủy
                   </Link>
-                  {/* <Link
-                    className="btn btn-outline-info"
-                    style={{
-                      margin: "2px",
-                      fontSize: "13px",
-                      padding: "2px 5px",
-                    }}
-                  >
-                    Xem chi tiết
-                  </Link> */}
                 </td>
               </tr>
             </tbody>
@@ -144,7 +132,7 @@ const ManageJob = () => {
                           textAlign: "center",
                         }}
                       >
-                        <th scope="col"></th>
+                        <th scope="col">Trạng thái</th>
                         <th scope="col">Tiêu đề việc làm</th>
                         <th scope="col" style={{ width: "15%" }}>
                           Ngày bắt đầu

@@ -7,14 +7,60 @@ use Illuminate\Http\Request;
 use App\Models\Payment;
 use Carbon\Carbon;
 use App\Models\Package;
+use App\Models\Recruiter;
+use PayPal\Rest\ApiContext;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Api\Payout;
+use PayPal\Api\PayoutSenderBatchHeader;
+use PayPal\Api\Currency;
 use DateTime;
 
 class PaymentController extends Controller
 {
     //
     //
-    private static function pay(Request $request)
+    private static function addMoneyToReceiver(Request $request)
     {
+        // Initialize PayPal API context
+        $apiContext = new ApiContext(
+            new OAuthTokenCredential(
+                config('paypal.client_id'),
+                config('paypal.secret')
+            )
+        );
+
+        // Retrieve the receiver's PayPal account email
+        $receiverEmail = 'sb-oka6c25403897_api1.business.example.com';
+
+        // Retrieve the payment amount
+        $amount = 100;
+
+        // Create a Payout object
+        $payout = new Payout();
+
+        // Set the sender batch header
+        $senderBatchHeader = new PayoutSenderBatchHeader();
+        $senderBatchHeader->setSenderBatchId(uniqid())
+            ->setEmailSubject('Adding money to PayPal account');
+        $payout->setSenderBatchHeader($senderBatchHeader);
+
+        // Set the receiver details
+        $receiver = new \PayPal\Api\PayoutItem();
+        $receiver->setRecipientType('EMAIL')
+            ->setReceiver($receiverEmail)
+            ->setAmount(new Currency('USD', $amount));
+        $payout->setItems([$receiver]);
+
+        // Create the payout
+        $payout->create(null, $apiContext);
+
+        // return response()->json(['message' => 'Money added successfully']);
+    }
+
+
+    private static function pay(Request $request)
+    {   
+        // self::addMoneyToReceiver($request);
         $package = Package::find($request->package_id);
 
         Payment::create([
@@ -112,5 +158,23 @@ class PaymentController extends Controller
         //     // 'exp_time' => $package['exp_time']
         //     'Message' => 'Extend successfully'
         // ]);
+    }
+
+    private static function getRecruiterAndCompanyName($recruiter_id){
+        $recruiter = Recruiter::select('company_name', 'recruiter_name')
+                                ->where('recruiter_id', '=', $recruiter_id)
+                                ->first();
+        return $recruiter;
+    }
+
+    public function getAllRecruiterPayment(){
+        $history_payment = Payment::select('payment_id', 'payer_email', 'amount', 'currency', 'payment_status', 'package_name', 'recruiter_id', 'start_date', 'end_date', 'created_at')
+                                    ->get();
+        foreach($history_payment as $item){
+            $recruiter = self::getRecruiterAndCompanyName($item['recruiter_id']);
+            $item->recruiter_name = $recruiter['recruiter_name'];
+            $item->company_name = $recruiter['company_name'];
+        }
+        return $history_payment;
     }
 }

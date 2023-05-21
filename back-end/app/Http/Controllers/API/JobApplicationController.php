@@ -108,6 +108,18 @@ class JobApplicationController extends Controller
         ]);
     }
 
+    public function completeRecruitment($application_id)
+    {
+        JobApplication::where('application_id', '=', $application_id)
+            ->update([
+                'application_completed' => 1
+            ]);
+        return response([
+            'message' => 'Recruitment completed',
+        ]);
+    }
+
+
     private static function getCandidateInfor($candidate_id)
     {
         $candidate_infor = Candidate::select('email', 'first_name', 'last_name')
@@ -160,7 +172,7 @@ class JobApplicationController extends Controller
 
     private function getCandidateResume($id)
     {
-        $candidate_infor = Resume::select('email', 'first_name', 'last_name')
+        $candidate_infor = Resume::select('email', 'first_name', 'last_name', 'image', 'template')
             ->where('resume_id', '=', $id)
             ->first();
         $candidate_infor->fullname = $candidate_infor['first_name'] . ' ' . $candidate_infor['last_name'];
@@ -178,7 +190,8 @@ class JobApplicationController extends Controller
 
         if (count($candidates) != 0) {
             foreach ($candidates as $candidate) {
-                $candidate_infor = self::getCandidateInfor($candidate['candidate_id']);
+                $candidate_infor = self::getCandidateResume($candidate['resume_id']);
+                // $candidate_infor = self::getCandidateInfor($candidate['candidate_id']);
                 $skills = self::getCandidateSkills($candidate['resume_id']);
 
                 $candidate_infor->skills = $skills;
@@ -202,7 +215,8 @@ class JobApplicationController extends Controller
 
         if (count($candidates) != 0) {
             foreach ($candidates as $candidate) {
-                $candidate_infor = self::getCandidateInfor($candidate['candidate_id']);
+                $candidate_infor = self::getCandidateResume($candidate['resume_id']);
+                // $candidate_infor = self::getCandidateInfor($candidate['candidate_id']);
                 $skills = self::getCandidateSkills($candidate['resume_id']);
 
                 $candidate_infor->skills = $skills;

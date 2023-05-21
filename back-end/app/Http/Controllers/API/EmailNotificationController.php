@@ -50,6 +50,15 @@ class EmailNotificationController extends Controller
 
     }
 
+    public function showEmailContent(){
+        $recruiter = auth()->user();
+        return response([
+            'approval_email' => $recruiter['approval_email'],
+            'decline_email' => $recruiter['decline_email'],
+            'signature' => $recruiter['signature']
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      *

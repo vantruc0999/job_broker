@@ -72,6 +72,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('waiting-jobs', [JobController::class, 'getAllJobsOnWaiting']);
         Route::get('view-accept-jobs', [JobController::class, 'getAllApprovedJobs']);
         Route::get('view-declined-jobs', [JobController::class, 'getAllDeclinedJobs']);
+
+        Route::get('view-all-payment', [PaymentController::class, 'getAllRecruiterPayment']);
     });
 
     Route::prefix('recruiter')->group(function () {
@@ -86,6 +88,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::post('resume-decline/{id}', [JobApplicationController::class, 'declineApplicationRequest']);
         Route::post('resume-accept/{id}', [JobApplicationController::class, 'acceptApplicationRequest']);
+        Route::post('complete-recruitment/{id}', [JobApplicationController::class, 'completeRecruitment']);
 
         Route::get('get-candidates/{id}', [JobApplicationController::class, 'getAllCandidateByJob']);
         Route::get('get-approved-candidates/{id}', [JobApplicationController::class, 'getAllApprovedCandidateByJob']);
@@ -106,6 +109,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
         Route::post('send-mail', [SendMailController::class, 'sendMail']);
         Route::post('create-mail', [EmailNotificationController::class, 'store']);
+        Route::post('content-mail', [EmailNotificationController::class, 'showEmailContent']);
     });
 
     Route::prefix('candidate')->group(function () {

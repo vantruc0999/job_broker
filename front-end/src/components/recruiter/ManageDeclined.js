@@ -90,7 +90,7 @@ function ManageDeClined() {
               >
                 <td>
                   <img
-                    src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                    src={value.image}
                     alt=""
                     style={{ maxWidth: "80px", borderRadius: "50%" }}
                   />

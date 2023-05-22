@@ -6,6 +6,7 @@ import "../../assets/css/style.css";
 import "../../assets/css/bootstrap_min.css";
 import Example from "../candidate/Example";
 import { useNavigate } from "react-router-dom";
+import Footer from "../footer/Footer";
 
 const Test = () => {
   const navigate = useNavigate();
@@ -313,200 +314,6 @@ const Test = () => {
                   </div>
                 </div>
               </div>
-              {/* <div
-                className="related-job row"
-                // style={{ border: "1px solid #000" }}
-              >
-                <h6
-                  style={{
-                    fontWeight: "bold",
-                    margin: "0",
-                    padding: "10px 15px",
-                  }}
-                >
-                  VIỆC LÀM LIÊN QUAN
-                </h6>
-                <a
-                  href="/"
-                  style={{ textDecoration: "none" }}
-                  className="col-lg-6"
-                >
-                  <div className="card mb-0">
-                    <div className="row g-0">
-                      <div className="col-md-3">
-                        <img
-                          src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          className="img-fluid rounded-start"
-                          alt="..."
-                          style={{ padding: "8px" }}
-                        />
-                      </div>
-                      <div className="col-md-9">
-                        <div
-                          className="card_body"
-                          style={{
-                            display: "grid",
-                            marginLeft: "-10px",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <h6
-                            className="card_title"
-                            style={{
-                              paddingTop: "8px",
-                              color: "red",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            Card with an image onnnnnnnnnnnnnnnnnnn
-                            ttttttttttttttttttttttttttttttttttttttttttttttttt
-                          </h6>
-                          <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-                <a
-                  href="/"
-                  style={{ textDecoration: "none" }}
-                  className="col-lg-6"
-                >
-                  <div className="card mb-0">
-                    <div className="row g-0">
-                      <div className="col-md-3">
-                        <img
-                          src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          className="img-fluid rounded-start"
-                          alt="..."
-                          style={{ padding: "8px" }}
-                        />
-                      </div>
-                      <div className="col-md-9">
-                        <div
-                          className="card_body"
-                          style={{
-                            display: "grid",
-                            marginLeft: "-10px",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <h6
-                            className="card_title"
-                            style={{
-                              paddingTop: "8px",
-                              color: "red",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            Card with an image onnnnnnnnnnnnnnnnnnn
-                            ttttttttttttttttttttttttttttttttttttttttttttttttt
-                          </h6>
-                          <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-                <a
-                  href="/"
-                  style={{ textDecoration: "none" }}
-                  className="col-lg-6"
-                >
-                  <div className="card mb-0">
-                    <div className="row g-0">
-                      <div className="col-md-3">
-                        <img
-                          src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          className="img-fluid rounded-start"
-                          alt="..."
-                          style={{ padding: "8px" }}
-                        />
-                      </div>
-                      <div className="col-md-9">
-                        <div
-                          className="card_body"
-                          style={{
-                            display: "grid",
-                            marginLeft: "-10px",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <h6
-                            className="card_title"
-                            style={{
-                              paddingTop: "8px",
-                              color: "red",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            Card with an image onnnnnnnnnnnnnnnnnnn
-                            ttttttttttttttttttttttttttttttttttttttttttttttttt
-                          </h6>
-                          <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-                <a
-                  href="/"
-                  style={{ textDecoration: "none" }}
-                  className="col-lg-6"
-                >
-                  <div className="card mb-0">
-                    <div className="row g-0">
-                      <div className="col-md-3">
-                        <img
-                          src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          className="img-fluid rounded-start"
-                          alt="..."
-                          style={{ padding: "8px" }}
-                        />
-                      </div>
-                      <div className="col-md-9">
-                        <div
-                          className="card_body"
-                          style={{
-                            display: "grid",
-                            marginLeft: "-10px",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <h6
-                            className="card_title"
-                            style={{
-                              paddingTop: "8px",
-                              color: "red",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            Card with an image onnnnnnnnnnnnnnnnnnn
-                            ttttttttttttttttttttttttttttttttttttttttttttttttt
-                          </h6>
-                          <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div> */}
             </div>
 
             <div className="col-lg-4">
@@ -724,6 +531,7 @@ const Test = () => {
           </div>
         </section>
       </div>
+      <Footer/>
     </div>
   );
 };

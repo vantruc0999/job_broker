@@ -327,7 +327,7 @@ function ModalCV({ closeModal, modalId }) {
               </div>
               <div className="resume_left">
                 <div className="resume_profile">
-                  <img src={Logo} alt="profile_pic" />
+                  <img src={resume.resume.image} alt="profile_pic" />
                 </div>
                 <div className="resume_content">
                   <div className="resume_item resume_info">

@@ -180,7 +180,7 @@ function FileCV() {
                     <div className="title">
                       <p className="bold">Sở thích</p>
                     </div>
-                    {resume.hobby ? (
+                    {resume.resume.hobby ? (
                       <div>
                         <ul style={{ color: "#b1eaff" }}>
                           {resume.resume.hobby}
@@ -192,7 +192,7 @@ function FileCV() {
                     <div className="title">
                       <p className="bold">Giải thưởng</p>
                     </div>
-                    {resume.activity ? (
+                    {resume.resume.activity ? (
                       <>
                         <ul style={{ color: "#b1eaff" }}>
                           {resume.resume.activity}
@@ -219,45 +219,63 @@ function FileCV() {
                   <div className="title">
                     <p className="bold">Kinh nghiệm làm việc công ty</p>
                   </div>
-                  {renderExp()}
+                  {resume.experience_company[0].company_name
+                    ? renderExp()
+                    : null}
                 </div>
 
                 <div className="resume_item resume_work">
                   <div className="title">
                     <p className="bold">Kinh nghiệm làm việc dự án</p>
                   </div>
-                  {renderExpProject()}
+                  {resume.experience_project[0].company_name
+                    ? renderExpProject()
+                    : null}
                 </div>
                 <div className="resume_item resume_education">
                   <div className="title">
                     <p className="bold">Giáo dục</p>
                   </div>
-                  <ul>
-                    <li>
-                      <div
-                        className="info row"
-                        style={{
-                          display: "flex",
-                          // justifyContent: "space-between",
-                          // alignItems: "center",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        <p className="col-6">
-                          Trường học: {resume.resume.education_major}
-                        </p>
-                        <p className="col-6">
-                          Ngành học: {resume.resume.education}
-                        </p>
-                        <p className="col-6">
-                          Niên khóa: {resume.resume.education_year}
-                        </p>
-                        <p className="col-6">
-                          Xếp loại: {resume.resume.education_description}
-                        </p>
-                      </div>
-                    </li>
-                  </ul>
+                  {resume.resume.education ? (
+                    <ul>
+                      <li>
+                        <div
+                          className="info row"
+                          style={{
+                            display: "flex",
+                            // justifyContent: "space-between",
+                            // alignItems: "center",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          <p className="col-6">
+                            Trường học:{" "}
+                            {resume.resume.education_major
+                              ? resume.resume.education_major
+                              : null}
+                          </p>
+                          <p className="col-6">
+                            Ngành học:{" "}
+                            {resume.resume.education
+                              ? resume.resume.education
+                              : null}
+                          </p>
+                          <p className="col-6">
+                            Niên khóa:{" "}
+                            {resume.resume.education_year
+                              ? resume.resume.education_year
+                              : null}
+                          </p>
+                          <p className="col-6">
+                            Xếp loại:{" "}
+                            {resume.resume.education_description
+                              ? resume.resume.education_description
+                              : null}
+                          </p>
+                        </div>
+                      </li>
+                    </ul>
+                  ) : null}
                 </div>
                 {resume.certificate ? (
                   <div className="resume_item resume_education">
@@ -280,6 +298,7 @@ function FileCV() {
       );
     }
   };
+  console.log(resume);
   const renderResume2 = () => {
     if (Object.keys(resume).length > 0) {
       const email = resume.resume.email;
@@ -382,7 +401,9 @@ function FileCV() {
                                 </div>
                               </div>
                               <div class="resume-timeline-item-desc resume_work">
-                                {renderExp()}
+                                {resume.experience_company[0].company_name
+                                  ? renderExp()
+                                  : null}
                               </div>
                             </article>
                             <article class="resume-timeline-item position-relative pb-5 resume_item2">
@@ -394,7 +415,9 @@ function FileCV() {
                                 </div>
                               </div>
                               <div class="resume-timeline-item-desc resume_work">
-                                {renderExpProject()}
+                                {resume.experience_project[0].company_name
+                                  ? renderExpProject()
+                                  : null}
                               </div>
                             </article>
                             <article class="resume-timeline-item position-relative pb-5 resume_item2">
@@ -405,37 +428,39 @@ function FileCV() {
                                   </h3>
                                 </div>
                               </div>
-                              <div class="resume-timeline-item-desc resume_work">
-                                <ul>
-                                  <li>
-                                    <div
-                                      className="info row"
-                                      style={{
-                                        display: "flex",
-                                        // justifyContent: "space-between",
-                                        // alignItems: "center",
-                                        // fontWeight: "bold",
-                                      }}
-                                    >
-                                      <p className="col-6">
-                                        Trường học:{" "}
-                                        {resume.resume.education_major}
-                                      </p>
-                                      <p className="col-6">
-                                        Ngành học: {resume.resume.education}
-                                      </p>
-                                      <p className="col-6">
-                                        Niên khóa:{" "}
-                                        {resume.resume.education_year}
-                                      </p>
-                                      <p className="col-6">
-                                        Xếp loại:{" "}
-                                        {resume.resume.education_description}
-                                      </p>
-                                    </div>
-                                  </li>
-                                </ul>
-                              </div>
+                              {resume.resume.education ? (
+                                <div class="resume-timeline-item-desc resume_work">
+                                  <ul>
+                                    <li>
+                                      <div
+                                        className="info row"
+                                        style={{
+                                          display: "flex",
+                                          // justifyContent: "space-between",
+                                          // alignItems: "center",
+                                          // fontWeight: "bold",
+                                        }}
+                                      >
+                                        <p className="col-6">
+                                          Trường học:{" "}
+                                          {resume.resume.education_major}
+                                        </p>
+                                        <p className="col-6">
+                                          Ngành học: {resume.resume.education}
+                                        </p>
+                                        <p className="col-6">
+                                          Niên khóa:{" "}
+                                          {resume.resume.education_year}
+                                        </p>
+                                        <p className="col-6">
+                                          Xếp loại:{" "}
+                                          {resume.resume.education_description}
+                                        </p>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                              ) : null}
                             </article>
                             <article class="resume-timeline-item position-relative pb-5 resume_item2">
                               <div class="resume-timeline-item-header mb-2">

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Logo2 from "../../assets/images/logo.jpg";
 import { useNavigate } from "react-router-dom";
+import Footer from "../footer/Footer";
 function MyCV() {
   let navigate = useNavigate();
   const [cv, setCv] = useState("");
@@ -234,6 +235,7 @@ function MyCV() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

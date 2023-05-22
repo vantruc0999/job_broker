@@ -832,6 +832,7 @@ function UpdateCV() {
       </>
     );
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let flag = true;
@@ -842,8 +843,8 @@ function UpdateCV() {
       birth_day: inputs?.birth_day,
       email: inputs?.email,
       address: inputs?.address,
-      hobby: softSkill[0]?.title ? softSkill[0]?.title : "",
-      activity: awards[0]?.title ? awards[0]?.title : "",
+      hobby: softSkill[0]?.hobby ? softSkill[0]?.hobby : "",
+      activity: awards[0]?.activity ? awards[0]?.activity : "",
       resume_name: inputs?.resume_name,
       education: education[0]?.school ? education[0]?.school : "",
       education_year: education[0]?.time ? education[0]?.time : "",

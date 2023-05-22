@@ -30,7 +30,6 @@ function ManageApproved() {
       });
   }, []);
   useEffect(() => {}, [approved]);
-
   const handleGetID = async (e) => {
     let id = e.target.value;
     setId(id);
@@ -43,9 +42,9 @@ function ManageApproved() {
         setApproved(res.data);
       });
   };
+
   const handleCancle = (e) => {
     let id = e.currentTarget.id;
-    console.log(id);
     axios
       .post(
         `http://127.0.0.1:8000/api/recruiter/resume-decline/` + id,
@@ -73,11 +72,25 @@ function ManageApproved() {
       });
     }
   };
-
+  const completeJob = (e) =>{
+    let id = e.currentTarget.id;
+    console.log(id);
+    axios
+      .post(
+        `http://127.0.0.1:8000/api/recruiter/complete-recruitment/` + id,
+        null,
+        config
+      )
+      .then((res) => {
+       console.log(res.data);
+       if(res.data.message.includes("completed")){
+        alert("Hoàn thành tuyển dụng")
+       }
+      });
+  }
   const renderCanofJobID = () => {
     if (Object.keys(approved).length > 0) {
       return approved.map((value, key) => {
-        console.log(value);
         return (
           <>
             <tbody>
@@ -88,7 +101,7 @@ function ManageApproved() {
               >
                 <td>
                   <img
-                    src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                    src={value.image}
                     alt=""
                     style={{ maxWidth: "80px", borderRadius: "50%" }}
                   />
@@ -109,6 +122,14 @@ function ManageApproved() {
                   >
                     <i class="fas fa-eye"></i>
                     Xem
+                  </a>
+                  <a
+                    id={value.application_id}
+                    onClick={completeJob}
+                    class="btn btn-primary btn-sm"
+                  >
+                    <i class="fas fa-trash"></i>
+                    Hoàn thành
                   </a>
                   <a
                     id={value.application_id}

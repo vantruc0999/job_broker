@@ -14,7 +14,7 @@ const HistoryBuyPackage = () => {
       },
     };
     axios
-      .get("http://127.0.0.1:8000/api/recruiter/payment-history", config)
+      .get("http://127.0.0.1:8000/api/admin/view-all-payment", config)
       .then((res) => {
         console.log(res.data);
         setHistoryPack(res.data);
@@ -27,9 +27,11 @@ const HistoryBuyPackage = () => {
           <>
             <tbody>
               <tr>
-                <td>{value.payment_id}</td>
+                <td>{value.company_name}</td>
                 <td>{value.package_name}</td>
-                <td>{value.amount} USD</td>
+                <td>
+                  {value.amount} {value.currency}
+                </td>
                 <td>{value.start_date}</td>
                 <td>{value.end_date}</td>
               </tr>
@@ -74,7 +76,8 @@ const HistoryBuyPackage = () => {
                         <th>Tên công ty</th>
                         <th>Tên gói</th>
                         <th>Giá</th>
-                        <th>Tạo ngày</th>
+                        <th>Ngày bắt đầu</th>
+                        <th>Ngày kết thúc</th>
                       </tr>
                     </thead>
                     {renderHistory()}

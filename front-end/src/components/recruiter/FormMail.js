@@ -1,17 +1,11 @@
-import { useState , useRef} from "react";
+import { useState , useRef, useEffect} from "react";
 import Sidebar from "./Sidebar";
 import JoditEditor from "jodit-react";
 import axios from "axios";
 
 function FormMail() {
   const [approved, setApproved] = useState(null);
-  const [inputs, setInputs] = useState({
-    approval_email:
-      "Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile devices, desktops/laptops, or another type of compatible computer. ",
-    decline_email:
-      "Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile devices, desktops/laptops, or another type of compatible computer. ",
-    signature: "kimthang",
-  });
+  const [inputs, setInputs] = useState("");
   const editorApprove = useRef(null);
   const editorDeclined = useRef(null);
   let user = JSON.parse(localStorage.getItem("user"));
@@ -22,6 +16,20 @@ function FormMail() {
       Accept: "application/json",
     },
   };
+  useEffect(()=>{
+    axios
+    .post("http://127.0.0.1:8000/api/recruiter/content-mail",null, config)
+    .then((res) => {
+      console.log(res.data);
+      setInputs(
+        {
+          approval_email: res.data.approval_email,
+          decline_email:res.data.decline_email,
+          signature: res.data.signature,
+        }
+      )
+    });
+  })
   const handleInputs = (e) =>{
     const nameInput = e.target.name;
     const value = e.target.value;
@@ -29,10 +37,14 @@ function FormMail() {
   }
   const handleSubmit = (e) =>{
     e.preventDefault(); 
+    console.log(inputs);
     axios
       .post("http://127.0.0.1:8000/api/recruiter/create-mail", inputs, config)
       .then((res) => {
         console.log(res.data);
+        if(res.data.message.includes("update")){
+          alert("Mail đã được cập nhật")
+        }
       });
   }
   return (

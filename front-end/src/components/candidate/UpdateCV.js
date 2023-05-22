@@ -956,7 +956,6 @@ function UpdateCV() {
                           style={{
                             maxWidth: "230px",
                             height: "230px",
-                            borderRadius: "50%",
                             margin: "0 auto",
                             display: "flex",
                             justifyContent: "center",
@@ -971,7 +970,6 @@ function UpdateCV() {
                           style={{
                             maxWidth: "230px",
                             height: "230px",
-                            borderRadius: "50%",
                             margin: "0 auto",
                             display: "flex",
                             justifyContent: "center",
@@ -1275,7 +1273,6 @@ function UpdateCV() {
                           style={{
                             maxWidth: "230px",
                             height: "230px",
-                            borderRadius: "50%",
                             margin: "0 auto",
                             display: "flex",
                             justifyContent: "center",
@@ -1290,7 +1287,6 @@ function UpdateCV() {
                           style={{
                             maxWidth: "230px",
                             height: "230px",
-                            borderRadius: "50%",
                             margin: "0 auto",
                             display: "flex",
                             justifyContent: "center",

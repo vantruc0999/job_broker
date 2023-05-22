@@ -248,7 +248,7 @@ function Header() {
           className="header fixed-top d-flex align-items-center container-fluid"
         >
           <div className="d-flex align-items-center justify-content-between">
-            <Link to="/">
+            <Link to="/homeRecruiter">
               <img
                 className="navbar-brand"
                 src={Logo}

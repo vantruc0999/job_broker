@@ -3,6 +3,7 @@ import "../../assets/css/homepage.css";
 import Logo2 from "../../assets/images/logo.jpg";
 import CV from "../../assets/images/CV.jpg";
 import CV2 from "../../assets/images/CV2.jpg";
+import Footer from "../footer/Footer";
 function ChooseTemplate() {
   return (
     <>
@@ -136,6 +137,7 @@ function ChooseTemplate() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

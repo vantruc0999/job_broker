@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "../../assets/css/homepage.css";
+import Footer from "../footer/Footer";
 
 import { Pagination, Navigation, Grid } from "swiper";
 import axios from "axios";
@@ -168,7 +169,7 @@ function Homepage() {
           <h1 style={{ marginBottom: 40, fontWeight: 600 }}>
             BrokerJob - Tìm việc làm
           </h1>
-          <Search/>
+          <Search />
           {/* <div className="searcDetail">
             <div className="input-group">
               <p style={{ margin: 0, display: "flex", alignItems: "center" }}>
@@ -1058,6 +1059,7 @@ function Homepage() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

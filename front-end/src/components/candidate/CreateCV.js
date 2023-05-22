@@ -800,7 +800,6 @@ function CreateCV() {
                     style={{
                       maxWidth: "230px",
                       height: "230px",
-                      borderRadius: "50%",
                       margin: "0 auto",
                       display: "flex",
                       justifyContent: "center",
@@ -815,7 +814,6 @@ function CreateCV() {
                     style={{
                       maxWidth: "230px",
                       height: "230px",
-                      borderRadius: "50%",
                       margin: "0 auto",
                       display: "flex",
                       justifyContent: "center",
@@ -945,15 +943,6 @@ function CreateCV() {
                   onChange={handleInput}
                   style={{ padding: "5px", border: "none", color: "#000" }}
                 />
-                {/* <input
-                  required="required"
-                  type="text"
-                  placeholder="Vị trí mong muốn"
-                  value={inputs.position}
-                  name="position"
-                  onChange={handleInput}
-                  style={{ padding: "5px", border: "none", color: "#000" }}
-                /> */}
               </div>
             </section>
             <section className="experience">
@@ -1105,7 +1094,6 @@ function CreateCV() {
                         style={{
                           maxWidth: "230px",
                           height: "230px",
-                          borderRadius: "50%",
                           margin: "0 auto",
                           display: "flex",
                           justifyContent: "center",
@@ -1120,7 +1108,6 @@ function CreateCV() {
                         style={{
                           maxWidth: "230px",
                           height: "230px",
-                          borderRadius: "50%",
                           margin: "0 auto",
                           display: "flex",
                           justifyContent: "center",

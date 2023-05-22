@@ -27,7 +27,7 @@ function FormMail() {
           signature: res.data.signature,
         });
       });
-  });
+  }, []);
   const handleInputs = (e) => {
     const nameInput = e.target.name;
     const value = e.target.value;

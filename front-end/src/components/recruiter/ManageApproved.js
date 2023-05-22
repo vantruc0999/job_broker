@@ -106,7 +106,6 @@ function ManageApproved() {
                     style={{
                       maxWidth: "80px",
                       height: "80px",
-                      borderRadius: "50%",
                       margin: "0 auto",
                       display: "flex",
                       justifyContent: "center",

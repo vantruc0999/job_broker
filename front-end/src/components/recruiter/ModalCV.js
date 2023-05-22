@@ -47,26 +47,19 @@ function ModalCV({ closeModal, modalId }) {
                   style={{ background: "#434E5E" }}
                 >
                   <div class="media flex-column flex-md-row">
-                    <div>
-                      <img
-                        src={resume.resume.image}
-                        alt=""
-                        style={{
-                          maxWidth: "230px",
-                          height: "230px",
-                          borderRadius: "50%",
-                          margin: "0 auto",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          objectFit: "cover",
-                        }}
-                      />
-                    </div>
                     <img
                       class="mr-3 img-fluid picture mx-auto"
-                      src="assets/images/фотощька.jpg"
+                      src={resume.resume.image}
                       alt=""
+                      style={{
+                        maxWidth: "230px",
+                        height: "230px",
+                        margin: "0 auto",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        objectFit: "cover",
+                      }}
                     />
                     <div class="media-body p-4 d-flex flex-column flex-md-row mx-auto mx-lg-0 resume_content">
                       <div class="primary-info">
@@ -327,7 +320,19 @@ function ModalCV({ closeModal, modalId }) {
               </div>
               <div className="resume_left">
                 <div className="resume_profile">
-                  <img src={Logo} alt="profile_pic" />
+                  <img
+                    src={resume.resume.image}
+                    alt="profile_pic"
+                    style={{
+                      maxWidth: "230px",
+                      height: "230px",
+                      margin: "0 auto",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      objectFit: "cover",
+                    }}
+                  />
                 </div>
                 <div className="resume_content">
                   <div className="resume_item resume_info">

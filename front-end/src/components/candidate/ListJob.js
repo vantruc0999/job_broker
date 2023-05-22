@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Search from "./Search";
 import { useLocation } from "react-router-dom";
+import Footer from "../footer/Footer";
 const ListJob = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -208,10 +209,7 @@ const ListJob = () => {
   console.log(search);
   return (
     <div>
-      <div
-        className="container"
-        style={{ margin: "0 auto", width: "1250px", height: "655px" }}
-      >
+      <div className="container" style={{ margin: "0 auto", width: "1250px" }}>
         <div>
           <Search />
         </div>
@@ -456,6 +454,7 @@ const ListJob = () => {
           </div>
         </section>
       </div>
+      <Footer />
     </div>
   );
 };

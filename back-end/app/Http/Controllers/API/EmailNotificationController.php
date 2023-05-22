@@ -31,7 +31,8 @@ class EmailNotificationController extends Controller
         Recruiter::where('recruiter_id', '=', auth()->user()['recruiter_id'])
             ->update([
                 'approval_email' => $request->approval_email,
-                'decline_email' => $request->decline_email
+                'decline_email' => $request->decline_email,
+                'signature' => $request->signature
             ]);
         return response([
             'message' => 'Email update successfully',

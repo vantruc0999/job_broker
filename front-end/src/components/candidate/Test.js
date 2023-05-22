@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "../../assets/css/style.css";
 import "../../assets/css/bootstrap_min.css";
 import Example from "../candidate/Example";
@@ -11,9 +11,15 @@ const Test = () => {
   const navigate = useNavigate();
   let params = useParams();
   const [role, setRole] = useState("");
+  const [jobs, setJobs] = useState([]);
   const [detailJob, setJobDetail] = useState("");
   const [openModal, setOpenModal] = useState(false);
   let user = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/api/jobs").then((res) => {
+      setJobs(res.data.jobs);
+    });
+  }, []);
   useEffect(() => {
     if (user) {
       let config = {
@@ -313,200 +319,6 @@ const Test = () => {
                   </div>
                 </div>
               </div>
-              {/* <div
-                className="related-job row"
-                // style={{ border: "1px solid #000" }}
-              >
-                <h6
-                  style={{
-                    fontWeight: "bold",
-                    margin: "0",
-                    padding: "10px 15px",
-                  }}
-                >
-                  VIỆC LÀM LIÊN QUAN
-                </h6>
-                <a
-                  href="/"
-                  style={{ textDecoration: "none" }}
-                  className="col-lg-6"
-                >
-                  <div className="card mb-0">
-                    <div className="row g-0">
-                      <div className="col-md-3">
-                        <img
-                          src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          className="img-fluid rounded-start"
-                          alt="..."
-                          style={{ padding: "8px" }}
-                        />
-                      </div>
-                      <div className="col-md-9">
-                        <div
-                          className="card_body"
-                          style={{
-                            display: "grid",
-                            marginLeft: "-10px",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <h6
-                            className="card_title"
-                            style={{
-                              paddingTop: "8px",
-                              color: "red",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            Card with an image onnnnnnnnnnnnnnnnnnn
-                            ttttttttttttttttttttttttttttttttttttttttttttttttt
-                          </h6>
-                          <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-                <a
-                  href="/"
-                  style={{ textDecoration: "none" }}
-                  className="col-lg-6"
-                >
-                  <div className="card mb-0">
-                    <div className="row g-0">
-                      <div className="col-md-3">
-                        <img
-                          src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          className="img-fluid rounded-start"
-                          alt="..."
-                          style={{ padding: "8px" }}
-                        />
-                      </div>
-                      <div className="col-md-9">
-                        <div
-                          className="card_body"
-                          style={{
-                            display: "grid",
-                            marginLeft: "-10px",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <h6
-                            className="card_title"
-                            style={{
-                              paddingTop: "8px",
-                              color: "red",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            Card with an image onnnnnnnnnnnnnnnnnnn
-                            ttttttttttttttttttttttttttttttttttttttttttttttttt
-                          </h6>
-                          <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-                <a
-                  href="/"
-                  style={{ textDecoration: "none" }}
-                  className="col-lg-6"
-                >
-                  <div className="card mb-0">
-                    <div className="row g-0">
-                      <div className="col-md-3">
-                        <img
-                          src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          className="img-fluid rounded-start"
-                          alt="..."
-                          style={{ padding: "8px" }}
-                        />
-                      </div>
-                      <div className="col-md-9">
-                        <div
-                          className="card_body"
-                          style={{
-                            display: "grid",
-                            marginLeft: "-10px",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <h6
-                            className="card_title"
-                            style={{
-                              paddingTop: "8px",
-                              color: "red",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            Card with an image onnnnnnnnnnnnnnnnnnn
-                            ttttttttttttttttttttttttttttttttttttttttttttttttt
-                          </h6>
-                          <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-                <a
-                  href="/"
-                  style={{ textDecoration: "none" }}
-                  className="col-lg-6"
-                >
-                  <div className="card mb-0">
-                    <div className="row g-0">
-                      <div className="col-md-3">
-                        <img
-                          src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          className="img-fluid rounded-start"
-                          alt="..."
-                          style={{ padding: "8px" }}
-                        />
-                      </div>
-                      <div className="col-md-9">
-                        <div
-                          className="card_body"
-                          style={{
-                            display: "grid",
-                            marginLeft: "-10px",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <h6
-                            className="card_title"
-                            style={{
-                              paddingTop: "8px",
-                              color: "red",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            Card with an image onnnnnnnnnnnnnnnnnnn
-                            ttttttttttttttttttttttttttttttttttttttttttttttttt
-                          </h6>
-                          <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div> */}
             </div>
 
             <div className="col-lg-4">
@@ -555,170 +367,56 @@ const Test = () => {
                 >
                   VIỆC LÀM LIÊN QUAN
                 </h6>
-                <a href="/" style={{ textDecoration: "none" }}>
-                  <div className="card mb-0">
-                    <div className="row g-0">
-                      <div className="col-md-3">
-                        <img
-                          src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          className="img-fluid rounded-start"
-                          alt="..."
-                          style={{ padding: "8px" }}
-                        />
-                      </div>
-                      <div className="col-md-9">
-                        <div
-                          className="card_body"
-                          style={{
-                            display: "grid",
-                            marginLeft: "-10px",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <h6
-                            className="card_title"
-                            style={{
-                              paddingTop: "8px",
-                              color: "black",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            Card with an image onnnnnnnnnnnnnnnnnnn
-                            ttttttttttttttttttttttttttttttttttttttttttttttttt
-                          </h6>
-                          <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-                <a href="/" style={{ textDecoration: "none" }}>
-                  <div className="card mb-0">
-                    <div className="row g-0">
-                      <div className="col-md-3">
-                        <img
-                          src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          className="img-fluid rounded-start"
-                          alt="..."
-                          style={{ padding: "8px" }}
-                        />
-                      </div>
-                      <div className="col-md-9">
-                        <div
-                          className="card_body"
-                          style={{
-                            display: "grid",
-                            marginLeft: "-10px",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <h6
-                            className="card_title"
-                            style={{
-                              paddingTop: "8px",
-                              color: "black",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            Card with an image onnnnnnnnnnnnnnnnnnn
-                            ttttttttttttttttttttttttttttttttttttttttttttttttt
-                          </h6>
-                          <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-                <a href="/" style={{ textDecoration: "none" }}>
-                  <div className="card mb-0">
-                    <div className="row g-0">
-                      <div className="col-md-3">
-                        <img
-                          src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          className="img-fluid rounded-start"
-                          alt="..."
-                          style={{ padding: "8px" }}
-                        />
-                      </div>
-                      <div className="col-md-9">
-                        <div
-                          className="card_body"
-                          style={{
-                            display: "grid",
-                            marginLeft: "-10px",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <h6
-                            className="card_title"
-                            style={{
-                              paddingTop: "8px",
-                              color: "black",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            Card with an image onnnnnnnnnnnnnnnnnnn
-                            ttttttttttttttttttttttttttttttttttttttttttttttttt
-                          </h6>
-                          <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-                <a href="/" style={{ textDecoration: "none" }}>
-                  <div className="card mb-0">
-                    <div className="row g-0">
-                      <div className="col-md-3">
-                        <img
-                          src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                          className="img-fluid rounded-start"
-                          alt="..."
-                          style={{ padding: "8px" }}
-                        />
-                      </div>
-                      <div className="col-md-9">
-                        <div
-                          className="card_body"
-                          style={{
-                            display: "grid",
-                            marginLeft: "-10px",
-                            overflow: "hidden",
-                            width: "100%",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          <h6
-                            className="card_title"
-                            style={{
-                              paddingTop: "8px",
-                              color: "black",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            Card with an image onnnnnnnnnnnnnnnnnnn
-                            ttttttttttttttttttttttttttttttttttttttttttttttttt
-                          </h6>
-                          <p className="card_text" style={{ fontSize: "12px" }}>
-                            Tên công ty
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
+                {jobs.length > 0 &&
+                  jobs.map((job) => {
+                    return (
+                      <Link to={"/job/" + job.job_id}>
+                        <a href="/" style={{ textDecoration: "none" }}>
+                          <div className="card mb-0">
+                            <div className="row g-0">
+                              <div className="col-md-3">
+                                <img
+                                  src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                                  className="img-fluid rounded-start"
+                                  alt="..."
+                                  style={{ padding: "8px" }}
+                                />
+                              </div>
+                              <div className="col-md-9">
+                                <div
+                                  className="card_body"
+                                  style={{
+                                    display: "grid",
+                                    marginLeft: "-10px",
+                                    overflow: "hidden",
+                                    width: "100%",
+                                    whiteSpace: "nowrap",
+                                  }}
+                                >
+                                  <h6
+                                    className="card_title"
+                                    style={{
+                                      paddingTop: "8px",
+                                      color: "black",
+                                      textOverflow: "ellipsis",
+                                    }}
+                                  >
+                                    {job.job_name}
+                                  </h6>
+                                  <p
+                                    className="card_text"
+                                    style={{ fontSize: "12px" }}
+                                  >
+                                    {job.company_name}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                      </Link>
+                    );
+                  })}
               </div>
             </div>
           </div>

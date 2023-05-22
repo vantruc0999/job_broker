@@ -90,9 +90,18 @@ function ManageDeClined() {
               >
                 <td>
                   <img
-                    src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                    src={value.image}
                     alt=""
-                    style={{ maxWidth: "80px", borderRadius: "50%" }}
+                    style={{
+                      maxWidth: "80px",
+                      height: "80px",
+                      borderRadius: "50%",
+                      margin: "0 auto",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      objectFit: "cover",
+                    }}
                   />
                 </td>
                 <td>{value.fullname}</td>

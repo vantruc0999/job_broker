@@ -34,7 +34,9 @@ class JobController extends Controller
         if (count($jobs) != 0) {
             foreach ($jobs as $job) {
                 $company_name = self::getAllCompanyName($job['recruiter_id']);
+                $company_image = self::getCompanyImage($job['recruiter_id']);
                 $job->company_name = $company_name;
+                $job->company_image = $company_image;
                 unset($job->recruiter_id);
             }
         }
@@ -48,6 +50,13 @@ class JobController extends Controller
         return Recruiter::select('company_name')
             ->where('recruiter_id', '=', auth()->user()['recruiter_id'])->first();
     }
+
+    private static function getCompanyImage($recruiter_id)
+    {
+        return Recruiter::select('image')
+            ->where('recruiter_id', '=', $recruiter_id)->first()['image'];
+    }
+
 
     private static function getAllCompanyName($recruiter_id)
     {
@@ -84,7 +93,7 @@ class JobController extends Controller
 
     public function getAllJobsOnWaiting()
     {
-        $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
+        $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id', 'job.status')
             ->where('status', '=', 'waiting')
             ->orderBy('job_id', 'desc')
             ->get();
@@ -102,7 +111,7 @@ class JobController extends Controller
 
     public function getAllApprovedJobs()
     {
-        $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
+        $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id', 'status')
             ->where('status', '=', 'approved')
             ->orderBy('job_id', 'desc')
             ->get();
@@ -120,7 +129,7 @@ class JobController extends Controller
 
     public function getAllDeclinedJobs()
     {
-        $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
+        $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id', 'status')
             ->where('status', '=', 'declined')
             ->orderBy('job_id', 'desc')
             ->get();
@@ -251,7 +260,9 @@ class JobController extends Controller
         $company_name = Recruiter::select('company_name')
                         ->where('recruiter_id', '=', $job->recruiter_id)
                         ->first()->company_name;
+        $company_image = self::getCompanyImage($job['recruiter_id']);
         $job->company_name = $company_name;
+        $job->company_image = $company_image;
         // $skills = JobSkills::where('job_id', '=', $id)->get();
         // $job->skills = $skills;
         $skills = self::getJobSkillByJobId($job->job_id);
@@ -389,6 +400,8 @@ class JobController extends Controller
         $jobs = JobApplication::select('job_application.job_id', 'job_name', 'job_location', 'recruiter_id', 'resume_id', 'job_application.status', 'application_id')
             ->join('job', 'job.job_id', '=', 'job_application.job_id')
             ->where('candidate_id', '=', auth()->user()['candidate_id'])
+            ->where('application_completed', '=', 0)
+            // ->where('job_application.status', '=', 'pending')
             ->get();
 
         if (count($jobs) != 0) {
@@ -448,7 +461,9 @@ class JobController extends Controller
         if (count($jobs) != 0) {
             foreach ($jobs as $job) {
                 $company_name = self::getAllCompanyName($job['recruiter_id']);
+                $company_image = self::getCompanyImage($job['recruiter_id']);
                 $job->company_name = $company_name;
+                $job->company_image = $company_image;
                 unset($job->recruiter_id);
             }
         }
@@ -456,4 +471,6 @@ class JobController extends Controller
             'jobs' => $jobs
         ]);
     }
+
+   
 }

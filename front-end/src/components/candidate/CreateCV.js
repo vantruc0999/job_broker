@@ -1045,7 +1045,7 @@ function CreateCV() {
             </section>
             <section className="experience">
               <h4>
-                <i className="fas fa-medal" /> Hoạt động
+                <i className="fas fa-medal" /> Giải thưởng
               </h4>
               {awards.length > 0 ? (
                 addContentAward()

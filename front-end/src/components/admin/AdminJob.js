@@ -64,7 +64,7 @@ function AdminJob() {
       .then((res) => {
         console.log(res.data);
         if (res.data.message.includes("declined")) {
-          alert("Bạn đã xóa tin tuyển dụng");
+          alert("Bạn đã từ chối tin tuyển dụng");
         }
       });
     render();
@@ -82,11 +82,9 @@ function AdminJob() {
                 <td>
                   <a> {value.job_name} </a>
                   <br />
-                  <small> Ngày tạo 01.01.2019 </small>
                 </td>
-                <td>00/00/0000</td>
-                <td className="project_progress">00/00/0000</td>
-                <td className="project-state">Hoạt động</td>
+                <td>{value.job_location}</td>
+                <td>{value.salary}</td>
                 <td className="project-actions text-right">
                   {openModal === false ? (
                     <>
@@ -117,7 +115,7 @@ function AdminJob() {
                     className="btn btn-danger ml-2 btn-sm"
                     onClick={(e) => handleDelete(e)}
                   >
-                    Xóa
+                    Từ chối
                   </button>
                 </td>
               </tr>
@@ -190,9 +188,8 @@ function AdminJob() {
                         <tr>
                           <th>Tên công ty</th>
                           <th>Tên công việc</th>
-                          <th>Ngày bắt đầu</th>
-                          <th>Ngày kết thúc</th>
-                          <th>Trạng thái</th>
+                          <th>Địa chỉ</th>
+                          <th>Lương</th>
                           <th>Tính năng</th>
                         </tr>
                       </thead>

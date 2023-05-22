@@ -210,20 +210,32 @@ function UpdateCV() {
         setUrlImage(res.data.resume.image);
         setImagePreview(res.data.resume.image);
         setOldResume({
-          first_name: res.data.resume.first_name ? res.data.resume.first_name : '',
-          last_name: res.data.resume.last_name ? res.data.resume.last_name : '',
-          phone: res.data.resume.phone ? res.data.resume.phone : '',
-          birth_day: res.data.resume.birth_day ? res.data.resume.birth_day : '',
-          email: res.data.resume.email ? res.data.resume.email : '',
-          address: res.data.resume.address ? res.data.resume.address : '',
-          hobby: res.data.resume.hobby ? res.data.resume.hobby : '',
-          activity: res.data.resume.activity ? res.data.resume.activity : '',
-          resume_name: res.data.resume.resume_name ? res.data.resume.resume_name : '',
-          education: res.data.resume.education ? res.data.resume.education : '',
-          education_year: res.data.resume.education_year ? res.data.resume.education_year : '',
-          education_major: res.data.resume.education_major ? res.data.resume.education_major : '',
-          education_description: res.data.resume.education_description ? res.data.resume.education_description : '',
-          certificate: res.data.resume.certificate ? res.data.resume.certificate : '',
+          first_name: res.data.resume.first_name
+            ? res.data.resume.first_name
+            : "",
+          last_name: res.data.resume.last_name ? res.data.resume.last_name : "",
+          phone: res.data.resume.phone ? res.data.resume.phone : "",
+          birth_day: res.data.resume.birth_day ? res.data.resume.birth_day : "",
+          email: res.data.resume.email ? res.data.resume.email : "",
+          address: res.data.resume.address ? res.data.resume.address : "",
+          hobby: res.data.resume.hobby ? res.data.resume.hobby : "",
+          activity: res.data.resume.activity ? res.data.resume.activity : "",
+          resume_name: res.data.resume.resume_name
+            ? res.data.resume.resume_name
+            : "",
+          education: res.data.resume.education ? res.data.resume.education : "",
+          education_year: res.data.resume.education_year
+            ? res.data.resume.education_year
+            : "",
+          education_major: res.data.resume.education_major
+            ? res.data.resume.education_major
+            : "",
+          education_description: res.data.resume.education_description
+            ? res.data.resume.education_description
+            : "",
+          certificate: res.data.resume.certificate
+            ? res.data.resume.certificate
+            : "",
           template: res.data.resume.template,
           image: res.data.resume.image ? res.data.resume.image : Logo,
           experience_project: res.data.experience_project.map((item) => ({
@@ -237,12 +249,12 @@ function UpdateCV() {
           })),
           experience_company: res.data.experience_company.map((item) => ({
             company_name: item?.company_name ? item?.company_name : "",
-                position: item?.position ? item?.position : "",
-                achievement: item.achievement ? item.achievement : "",
-                experience_start: item.experience_start
-                  ? item.experience_start
-                  : "",
-                experience_end: item.experience_end ? item.experience_end : "",
+            position: item?.position ? item?.position : "",
+            achievement: item.achievement ? item.achievement : "",
+            experience_start: item.experience_start
+              ? item.experience_start
+              : "",
+            experience_end: item.experience_end ? item.experience_end : "",
           })),
           skills: res.data.skill.map((item) => item.skill_id),
         });
@@ -422,8 +434,10 @@ function UpdateCV() {
     return (
       <>
         <div className="content_form">
-          <label class="form-label">Kỹ năng</label>
-          <AnimatedMulti parentCallback={handleSkillInput}></AnimatedMulti>
+          {/* <label class="form-label">Kỹ năng</label> */}
+          <div className="form-field">
+            <AnimatedMulti parentCallback={handleSkillInput}></AnimatedMulti>
+          </div>
         </div>
       </>
     );
@@ -818,6 +832,7 @@ function UpdateCV() {
       </>
     );
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let flag = true;
@@ -828,8 +843,8 @@ function UpdateCV() {
       birth_day: inputs?.birth_day,
       email: inputs?.email,
       address: inputs?.address,
-      hobby: softSkill[0]?.title ? softSkill[0]?.title : "",
-      activity: awards[0]?.title ? awards[0]?.title : "",
+      hobby: softSkill[0]?.hobby ? softSkill[0]?.hobby : "",
+      activity: awards[0]?.activity ? awards[0]?.activity : "",
       resume_name: inputs?.resume_name,
       education: education[0]?.school ? education[0]?.school : "",
       education_year: education[0]?.time ? education[0]?.time : "",
@@ -939,9 +954,14 @@ function UpdateCV() {
                           src={imagePreview}
                           alt=""
                           style={{
-                            maxWidth: "220px",
-                            height: "220px",
+                            maxWidth: "230px",
+                            height: "230px",
                             borderRadius: "50%",
+                            margin: "0 auto",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            objectFit: "cover",
                           }}
                         />
                       ) : (
@@ -949,9 +969,14 @@ function UpdateCV() {
                           src={Logo}
                           alt=""
                           style={{
-                            maxWidth: "220px",
-                            height: "220px",
+                            maxWidth: "230px",
+                            height: "230px",
                             borderRadius: "50%",
+                            margin: "0 auto",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            objectFit: "cover",
                           }}
                         />
                       )}
@@ -1250,6 +1275,12 @@ function UpdateCV() {
                           style={{
                             maxWidth: "230px",
                             height: "230px",
+                            borderRadius: "50%",
+                            margin: "0 auto",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            objectFit: "cover",
                           }}
                         />
                       ) : (
@@ -1259,6 +1290,12 @@ function UpdateCV() {
                           style={{
                             maxWidth: "230px",
                             height: "230px",
+                            borderRadius: "50%",
+                            margin: "0 auto",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            objectFit: "cover",
                           }}
                         />
                       )}

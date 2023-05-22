@@ -96,6 +96,7 @@ function AdAcceptJob() {
                           e.preventDefault();
                           setOpenModal(true);
                         }}
+                        style={{ margin: "5px 0" }}
                       >
                         <i className="fas fa-folder"> </i>
                         Xem
@@ -113,7 +114,7 @@ function AdAcceptJob() {
                   </button> */}
                   <button
                     id={value.job_id}
-                    className="btn btn-success ml-2"
+                    className="btn btn-danger ml-2 btn-sm"
                     onClick={(e) => handleDelete(e)}
                   >
                     Hủy bỏ
@@ -192,7 +193,7 @@ function AdAcceptJob() {
                           <th>Ngày bắt đầu</th>
                           <th>Ngày kết thúc</th>
                           <th>Trạng thái</th>
-                          <th>Tính năng</th>
+                          <th style={{ width: "10%" }}>Tính năng</th>
                         </tr>
                       </thead>
                       {renderJobWait()}

@@ -451,7 +451,10 @@ function Header() {
           </ul>
         </nav>
         {/* Sidebar */}
-        <aside className="main-sidebar sidebar-dark-primary elevation-4">
+        <aside
+          className="main-sidebar sidebar-dark-primary"
+          style={{ minHeight: "2000px" }}
+        >
           {/* Brand Logo */}
           {/* <a href="Home.html" className="brand-link">
             <img

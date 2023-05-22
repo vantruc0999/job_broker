@@ -96,6 +96,7 @@ function AdDeclinedJob() {
                           e.preventDefault();
                           setOpenModal(true);
                         }}
+                        style={{ margin: " 5px 0" }}
                       >
                         <i className="fas fa-folder"> </i>
                         Xem
@@ -192,7 +193,7 @@ function AdDeclinedJob() {
                           <th>Ngày bắt đầu</th>
                           <th>Ngày kết thúc</th>
                           <th>Trạng thái</th>
-                          <th>Tính năng</th>
+                          <th style={{ width: "10%" }}>Tính năng</th>
                         </tr>
                       </thead>
                       {renderJobWait()}

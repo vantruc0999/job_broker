@@ -66,4 +66,27 @@ class RecruiterAuthController extends Controller
             'message' => 'Logged Out Successfully',
         ]);
     }
+
+    public function getRecruiterInfor()
+    {
+        $recruiter = auth()->user();
+        unset($recruiter['approval_email']);
+        unset($recruiter['decline_email']);
+        unset($recruiter['signature']);
+        return $recruiter;
+    }
+
+    public function updateRecruiterInfor(Request $request)
+    {
+        Recruiter::where('recruiter_id', '=', auth()->user()['recruiter_id'])
+            ->update([
+                'company_name' => $request->company_name,
+                'recruiter_name' => $request->recruiter_name,
+                'image' => $request->image,
+                'phone' => $request->phone
+            ]);
+        return response([
+            'message' => 'Update information successfully'
+        ]);
+    }
 }

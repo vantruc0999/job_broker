@@ -41,6 +41,7 @@ class JobApplicationController extends Controller
             ['candidate_id', '=', auth()->user()['candidate_id']],
             ['job_id', '=', $request->job_id]
         ])
+
             ->first();
 
         // return response([
@@ -185,6 +186,7 @@ class JobApplicationController extends Controller
     {
         $candidates = JobApplication::where('job_id', '=', $job_id)
             ->where('status', '=', 'approved')
+            ->where('application_completed', '=', 0)
             ->get();
         $candidates_list = [];
 

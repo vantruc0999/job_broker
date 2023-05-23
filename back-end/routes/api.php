@@ -77,7 +77,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     Route::prefix('recruiter')->group(function () {
+
         Route::post('logout', [RecruiterAuthController::class, 'logout']);
+        Route::get('infor', [RecruiterAuthController::class, 'getRecruiterInfor']);
+        Route::post('update-infor', [RecruiterAuthController::class, 'updateRecruiterInfor']);
 
         Route::post('payment', [PaymentController::class, 'handlePayment']);
         Route::get('payment-history', [PaymentController::class, 'getPaymentHistory']);
@@ -110,6 +113,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('send-mail', [SendMailController::class, 'sendMail']);
         Route::post('create-mail', [EmailNotificationController::class, 'store']);
         Route::post('content-mail', [EmailNotificationController::class, 'showEmailContent']);
+
+        Route::get('get-candidate-job/{id}', [JobController::class, 'recommendCandidateByJob']);
     });
 
     Route::prefix('candidate')->group(function () {

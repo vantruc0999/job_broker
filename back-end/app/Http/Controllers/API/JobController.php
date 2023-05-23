@@ -162,8 +162,8 @@ class JobController extends Controller
         // $skills->each(function ($skill) use (&$skills_name) {
         //     $skills_name[] = $skill['skill_name'];
         // });
-        $expire_date->each(function($item) use (&$expire){
-            if(Carbon::now()->gte($item['start_date']) ){
+        $expire_date->each(function ($item) use (&$expire) {
+            if (Carbon::now()->gte($item['start_date'])) {
                 $expire = $item;
                 return false;
             }
@@ -252,20 +252,26 @@ class JobController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public static function show($id, $rcm = 0)
     {
         //
         $job = Job::where('job_id', '=', $id)->first();
         $job->skills = self::getJobSkills($id);
         $company_name = Recruiter::select('company_name')
-                        ->where('recruiter_id', '=', $job->recruiter_id)
-                        ->first()->company_name;
+            ->where('recruiter_id', '=', $job->recruiter_id)
+            ->first()->company_name;
         $company_image = self::getCompanyImage($job['recruiter_id']);
         $job->company_name = $company_name;
         $job->company_image = $company_image;
         // $skills = JobSkills::where('job_id', '=', $id)->get();
         // $job->skills = $skills;
         $skills = self::getJobSkillByJobId($job->job_id);
+        if ($rcm != 0) {
+            return [
+                'job_detail' => $job,
+                'skills' => $skills
+            ];
+        }
         return response([
             'job_detail' => $job,
             'skills' => $skills
@@ -472,5 +478,33 @@ class JobController extends Controller
         ]);
     }
 
-   
+    private static function getResumeBySkill($skill_id)
+    {
+        $relevantResume = Resume::select('resume.resume_id', 'first_name', 'last_name', 'phone', 'image')
+            ->where('public_status', '=', 1)
+            ->join('resume_skills', 'resume_skills.resume_id', '=', 'resume.resume_id')
+            ->where('skill_id', '=', $skill_id)
+            ->get()
+            ;
+        return $relevantResume;
+    }
+
+    public function recommendCandidateByJob($job_id)
+    {
+        $job_detail = self::show($job_id, 1);
+        // $rcm_candidate = [];
+        // foreach($job_detail['skills'] as $skill)
+        // {
+        //     $rcm_candidate[] = self::getResumeBySkill($skill['skill_id']);
+        // }
+
+        $recCandidate = collect([]);
+
+        foreach ($job_detail['skills'] as $item) {
+            $can_temp = self::getResumeBySkill($item['skill_id']);
+            $recCandidate = $recCandidate->merge($can_temp);
+        }
+        $job_detail['recCan'] =  $recCandidate->unique('resume_id');
+        return $job_detail;
+    }
 }

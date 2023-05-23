@@ -194,9 +194,9 @@ function Header() {
                         </a>
                       </Link> */}
                       {checkLogin()}
-                      <a className="dropdown-item" href="#">
+                      {/* <a className="dropdown-item" href="#">
                         Check CV
-                      </a>
+                      </a> */}
                     </div>
                   </li>
                   {/* <li className="nav-item dropdown">

@@ -481,7 +481,6 @@ function UpdateJob() {
                         value={inputs.salary}
                         onChange={handleInput}
                       />
-                      <span className="input-group-text">triệu</span>
                     </div>
                     {errors.salary.status && (
                       <span style={{ color: "red" }}>

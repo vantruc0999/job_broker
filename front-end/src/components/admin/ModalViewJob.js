@@ -33,6 +33,7 @@ function ModalViewJob(props) {
       axios
         .get(`http://127.0.0.1:8000/api/job-detail/` + props.id, config)
         .then((res) => {
+          console.log(res.data);
           setJobDetail(res.data.job_detail);
         });
     }
@@ -56,10 +57,13 @@ function ModalViewJob(props) {
   };
   return (
     <>
-      <span className="btn btn-primary btn-sm" onClick={(e) => {
-        e.preventDefault()
-        setShow(true)
-      }}>
+      <span
+        className="btn btn-primary btn-sm"
+        onClick={(e) => {
+          e.preventDefault();
+          setShow(true);
+        }}
+      >
         <i className="fas fa-folder"> </i>
         Xem
       </span>

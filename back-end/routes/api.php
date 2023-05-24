@@ -54,6 +54,7 @@ Route::get('skills', [SkillController::class, 'index']);
 
 
 Route::get('jobs-by-skills/{id}', [JobController::class, 'getJobsByProgrammingSkills']);
+Route::get('search-jobs', [JobController::class, 'searchJobTitle']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('admin')->group(function () {

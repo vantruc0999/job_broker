@@ -507,4 +507,12 @@ class JobController extends Controller
         $job_detail['recCan'] =  $recCandidate->unique('resume_id');
         return $job_detail;
     }
+
+    public function searchJobTitle(Request $request){
+        $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
+            ->where('job_name', 'like', "%$request->title%")
+            ->orderBy('job_id', 'desc')
+            ->get();
+        return $jobs;
+    }
 }

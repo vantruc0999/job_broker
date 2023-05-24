@@ -12,6 +12,7 @@ import { Pagination, Navigation, Grid } from "swiper";
 import axios from "axios";
 import Example2 from "./Example2";
 import Search from "./Search";
+import Footer from "../footer/Footer";
 function Homepage() {
   const [swiperRef, setSwiperRef] = useState(null);
   const [jobs, setJobs] = useState([]);
@@ -1058,6 +1059,7 @@ function Homepage() {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 }

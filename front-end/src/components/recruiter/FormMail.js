@@ -25,10 +25,11 @@ function FormMail() {
           approval_email: res.data.approval_email,
           decline_email: res.data.decline_email,
           signature: res.data.signature,
-        });
-      });
-  });
-  const handleInputs = (e) => {
+        }
+      )
+    });
+  },[])
+  const handleInputs = (e) =>{
     const nameInput = e.target.name;
     const value = e.target.value;
     setInputs((state) => ({ ...state, [nameInput]: value }));

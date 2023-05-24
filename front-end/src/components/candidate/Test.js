@@ -6,6 +6,7 @@ import "../../assets/css/style.css";
 import "../../assets/css/bootstrap_min.css";
 import Example from "../candidate/Example";
 import { useNavigate } from "react-router-dom";
+import Footer from "../footer/Footer";
 
 const Test = () => {
   const navigate = useNavigate();
@@ -422,6 +423,7 @@ const Test = () => {
           </div>
         </section>
       </div>
+      <Footer/>
     </div>
   );
 };

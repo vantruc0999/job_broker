@@ -28,7 +28,7 @@ class HelloMail extends Mailable
         $this->recruiter = $recruiter;
         $this->candidate_name = $candidate_name;
         $this->is_approved = $is_approved;
-        // $this->queue = "email";
+        $this->queue = "email";
     }
 
     /**

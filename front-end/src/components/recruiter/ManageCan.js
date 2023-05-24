@@ -80,7 +80,7 @@ const ManageCan = () => {
   };
   function alertFunc() {
     setTimeout(() => {
-      alert("Xóa ứng viên thành công");
+      alert("Hệ thống sẽ gửi mail xác nhận đến ứng viên");
     }, 3000);
   }
   const handleCancle = (e) => {
@@ -94,7 +94,7 @@ const ManageCan = () => {
       )
       .then((res) => {
         if (res.data.message.includes("declined")) {
-          alert("Hệ thống đang gửi mail xác nhận đến ứng viên");
+          alert("Bạn đã từ chối ứng viên");
         }
         const afterDelte = candidate.filter((object) => {
           return object.application_id.toString() !== id;

@@ -961,6 +961,7 @@ function UpdateCV() {
                             justifyContent: "center",
                             alignItems: "center",
                             objectFit: "cover",
+                            borderRadius: "50%",
                           }}
                         />
                       ) : (
@@ -975,6 +976,7 @@ function UpdateCV() {
                             justifyContent: "center",
                             alignItems: "center",
                             objectFit: "cover",
+                            borderRadius: "50%",
                           }}
                         />
                       )}

@@ -124,7 +124,6 @@ function CreateCV() {
     });
     setTemplate(params.id);
   }, []);
-  console.log(template);
   useEffect(() => {
     const textarea = document.getElementById("emailSummary");
     const placeholder = "Email";
@@ -742,7 +741,6 @@ function CreateCV() {
     };
     console.log(experience_project);
     if (!resume.image) {
-      console.log("1");
       // flag = false;
       // alert("Bạn chưa chọn ảnh đại diện");
       resume.image = Logo;
@@ -805,6 +803,7 @@ function CreateCV() {
                       justifyContent: "center",
                       alignItems: "center",
                       objectFit: "cover",
+                      borderRadius: "50%",
                     }}
                   />
                 ) : (
@@ -819,6 +818,7 @@ function CreateCV() {
                       justifyContent: "center",
                       alignItems: "center",
                       objectFit: "cover",
+                      borderRadius: "50%",
                     }}
                   />
                 )}

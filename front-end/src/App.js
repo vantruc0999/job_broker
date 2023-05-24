@@ -113,7 +113,7 @@ function App(props) {
           <Route path="/manageDeclined" element={<ManageDeClined />} />
           <Route path="/manageDeclined/fileCV/:id" element={<FileCV />} />
           <Route path="/mail" element={<FormMail />} />
-          <Route path="/jobDetail" element={<JobDetail />} />
+          <Route path="/jobDetail/:id" element={<JobDetail />} />
         </Route>
 
         {/* ------------ */}

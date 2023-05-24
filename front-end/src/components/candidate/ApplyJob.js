@@ -124,7 +124,7 @@ const ApplyJob = () => {
                             marginLeft: "10px",
                           }}
                         >
-                          <i class="fas fa-dollar-sign mr-1"></i>
+                          <i class="fas fa-building mr-1"></i>
                           {value.company_name}
                         </p>
                       </li>

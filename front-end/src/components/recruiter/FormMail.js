@@ -130,7 +130,7 @@ function FormMail() {
                   </div>
                   <div class="card-footer">
                     <button type="submit" class="btn btn-success float-right">
-                      Gửi
+                      Cập nhật
                     </button>
                   </div>
                 </form>

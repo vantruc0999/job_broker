@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import HeaderRe from "../common/Header";
 import Sidebar from "./Sidebar";
 import "../../assets/css/style.css";
@@ -44,15 +44,18 @@ const AddJob = () => {
   const navigate = useNavigate();
   const [job, setJob] = useState({
     job_name: "",
-    position_name: "",
+    position_name: "Nhân Viên/Chuyên Viên",
     job_start_date: "",
     job_end_date: "",
-    salary: "",
-    job_location: "",
-    language: "",
-    job_requirement: "",
-    job_description: "",
-    benefit: "",
+    salary: "Thỏa thuận",
+    job_location: "Đà Nẵng",
+    language: "Tiếng Anh",
+    job_requirement:
+      "Tham gia phát triển các hệ thống ứng dụng trên thiết bị di động android/ IOS.\nTham gia phát triển ứng dụng cho các dự án IOT, thương mại điện tử, làm việc theo sự phân công của cấp quản lý. \n Sửa chữa, nâng cấp hệ thống ứng dụng, phát triển các yêu cầu bổ sung tính năng.\n- Làm việc với các ngôn ngữ lập trình React Native, lưu trữ dữ liệu trên thiết bị di động SQLite và giao tiếp API thông qua dữ liệu có cấu trúc Json",
+    job_description:
+      "- Tốt nghiệp Cao đẳng/ Đại học chuyên ngành CNTT, Toán Tin, Viễn thông… \n - Có tối thiểu 01 năm kinh nghiệm ở vị trí tương đương;\n - Có kiến thức về lập trình hướng đối tượng",
+    benefit:
+      "- Thu nhập: Thỏa thuận theo năng lực và kinh nghiệm. \n - Thưởng: Thưởng theo quy định công ty, thưởng theo hiệu quả công việc,... \n - Phát triển: Được bổ nhiệm các vị trí cao hơn khi thể hiện được năng lực làm việc",
     job_skill: [],
   });
 
@@ -378,6 +381,7 @@ const AddJob = () => {
                       type="text"
                       id="inputName"
                       className="form-control"
+                      value={job.job_name}
                       onChange={(e) => {
                         setJob({ ...job, job_name: e.target.value });
                       }}
@@ -395,6 +399,7 @@ const AddJob = () => {
                       required={"required"}
                       type="text"
                       className="form-control"
+                      value={job.position_name}
                       onChange={(e) => {
                         setJob({ ...job, position_name: e.target.value });
                       }}
@@ -443,6 +448,7 @@ const AddJob = () => {
                     <div className="input-group mb-3">
                       <input
                         type="text"
+                        value={job.salary}
                         className="form-control"
                         onChange={(e) => {
                           setJob({ ...job, salary: e.target.value });
@@ -459,6 +465,7 @@ const AddJob = () => {
                   <div className="col-md-6" style={{ marginTop: "10px" }}>
                     <label>Nơi làm việc</label>
                     <input
+                      value={job.job_location}
                       type="text"
                       className="form-control"
                       onChange={(e) => {
@@ -476,6 +483,7 @@ const AddJob = () => {
                     <label>Ngôn ngữ</label>
                     <input
                       type="text"
+                      value={job.language}
                       className="form-control"
                       onChange={(e) => {
                         setJob({ ...job, language: e.target.value });
@@ -614,15 +622,74 @@ const AddJob = () => {
 };
 
 const AnimatedMulti = (props) => {
+  let params = useParams();
   const sendData = (selected) => {
+    setSkillSelected(selected);
     props.parentCallback(selected.map((skill) => skill.value));
   };
+  const [skillSelected, setSkillSelected] = useState([]);
+  const [skill, setSkill] = useState([]);
+
+  useEffect(() => {
+    const getSkillSelect = async () => {
+      let user = JSON.parse(localStorage.getItem("user"));
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      await axios
+        .get(
+          `http://127.0.0.1:8000/api/candidate/show-detail/${params.id}`,
+          config
+        )
+        .then((res) => {
+          if (res.data.skill.length > 0) {
+            const arraySkillSelected = res.data.skill.map((item) => {
+              return { value: item.skill_id, label: item.skill_name };
+            });
+            setSkillSelected(arraySkillSelected);
+          }
+        });
+    };
+
+    const getListSkill = async () => {
+      let user = JSON.parse(localStorage.getItem("user"));
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      await axios
+        .get(`http://127.0.0.1:8000/api/skills`, config)
+        .then((res) => {
+          if (res && res.data.length > 0) {
+            console.log(">>>>>>>>", res.data);
+            const arraySkill = res.data.map((item) => {
+              return { value: item.skill_id, label: item.skill_name };
+            });
+            setSkill(arraySkill);
+          }
+        });
+    };
+    getListSkill();
+    getSkillSelect();
+  }, [params.id]);
+
+  useEffect(() => {
+    sendData(skillSelected);
+  }, [JSON.stringify(skillSelected)]);
   return (
     <Select
+      value={[...skillSelected]}
       closeMenuOnSelect={false}
       components={animatedComponents}
       isMulti
-      options={arraySkill}
+      options={skill}
       onChange={sendData}
     />
   );

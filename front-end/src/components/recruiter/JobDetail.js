@@ -7,7 +7,7 @@ import { Link, useParams } from "react-router-dom";
 import Example from "../candidate/Example";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
-
+import ModalCV from "./ModalCV";
 const JobDetail = () => {
   const navigate = useNavigate();
   let params = useParams();
@@ -15,6 +15,8 @@ const JobDetail = () => {
   const [jobs, setJobs] = useState([]);
   const [detailJob, setJobDetail] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [candidate, setCandidate] = useState("");
+  const [modalId, setModalId] = useState(null);
   let user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/jobs").then((res) => {
@@ -44,6 +46,26 @@ const JobDetail = () => {
         });
     }
   }, []);
+  useEffect(() => {
+    if (user) {
+      let config = {
+        headers: {
+          Authorization: "Bearer " + user.token,
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+      };
+      setRole(user.role);
+      axios
+        .get(
+          `http://127.0.0.1:8000/api/recruiter/get-candidate-job/` + params.id,
+          config
+        )
+        .then((res) => {
+          setCandidate(res.data);
+        });
+    }
+  }, []);
   const skills =
     detailJob && detailJob.skills ? detailJob.skills.join(", ") : "";
   function renderSkill() {
@@ -53,9 +75,69 @@ const JobDetail = () => {
       </div>
     );
   }
-
+  const handleOpenModal = (id) => {
+    setModalId(id);
+  };
+  const renderCan = () => {
+    if (Object.keys(candidate).length > 0) {
+      let array = Array.from(Object.values(candidate.recCan));
+      return array.map((value, key) => {
+        console.log(value);
+        return (
+          <>
+            <a
+              onClick={() => {
+                setOpenModal(true);
+                handleOpenModal(value.resume_id);
+              }}
+              id={value.resume_id}
+              style={{ textDecoration: "none" }}
+            >
+              <div className="card mb-0">
+                <div className="row g-0">
+                  <div className="col-md-3">
+                    <img
+                      src={value.image}
+                      className="img-fluid rounded-start"
+                      alt="..."
+                      style={{ padding: "8px" }}
+                    />
+                  </div>
+                  <div className="col-md-9">
+                    <div
+                      className="card_body"
+                      style={{
+                        display: "grid",
+                        marginLeft: "-10px",
+                        overflow: "hidden",
+                        width: "100%",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      <h6
+                        className="card_title"
+                        style={{
+                          paddingTop: "8px",
+                          color: "black",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {value.first_name} {value.last_name}
+                      </h6>
+                      <p>{value.phone}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </>
+        );
+      });
+    }
+  };
   return (
     <div>
+      {openModal && <ModalCV closeModal={setOpenModal} modalId={modalId} />}
       <Sidebar />
       <main id="main" className="main">
         <section className="section">
@@ -346,56 +428,7 @@ const JobDetail = () => {
                 >
                   GỢI Ý ỨNG VIÊN
                 </h6>
-                {jobs.length > 0 &&
-                  jobs.map((job) => {
-                    return (
-                      <Link to={"/job/" + job.job_id}>
-                        <a href="/" style={{ textDecoration: "none" }}>
-                          <div className="card mb-0">
-                            <div className="row g-0">
-                              <div className="col-md-3">
-                                <img
-                                  src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
-                                  className="img-fluid rounded-start"
-                                  alt="..."
-                                  style={{ padding: "8px" }}
-                                />
-                              </div>
-                              <div className="col-md-9">
-                                <div
-                                  className="card_body"
-                                  style={{
-                                    display: "grid",
-                                    marginLeft: "-10px",
-                                    overflow: "hidden",
-                                    width: "100%",
-                                    whiteSpace: "nowrap",
-                                  }}
-                                >
-                                  <h6
-                                    className="card_title"
-                                    style={{
-                                      paddingTop: "8px",
-                                      color: "black",
-                                      textOverflow: "ellipsis",
-                                    }}
-                                  >
-                                    {job.job_name}
-                                  </h6>
-                                  <p
-                                    className="card_text"
-                                    style={{ fontSize: "12px" }}
-                                  >
-                                    {job.company_name}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </a>
-                      </Link>
-                    );
-                  })}
+                {renderCan()}
               </div>
             </div>
           </div>

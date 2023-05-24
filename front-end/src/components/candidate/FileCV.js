@@ -121,7 +121,8 @@ function FileCV() {
                       justifyContent: "center",
                       alignItems: "center",
                       objectFit: "cover",
-                      paddingTop: "30px",
+                      borderRadius: "50%",
+                      marginTop: "20px",
                     }}
                   />
                 </div>

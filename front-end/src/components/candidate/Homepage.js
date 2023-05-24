@@ -25,6 +25,7 @@ function Homepage() {
       setJobs(res.data.jobs);
     });
   }, []);
+  console.log(jobs);
   useEffect(() => {
     axios.get("http://127.0.0.1:8000/api/highlight-job").then((res) => {
       console.log(res.data);
@@ -90,6 +91,7 @@ function Homepage() {
         suitableArr = Array.from(Object.values(suitable));
       }
       return suitableArr?.map((value, key) => {
+        console.log(value);
         return (
           <SwiperSlide>
             <div
@@ -105,7 +107,7 @@ function Homepage() {
               >
                 <div className="col-3">
                   <img
-                    src={Logo}
+                    src={value.company_image}
                     alt=""
                     style={{
                       width: "90px",
@@ -355,7 +357,7 @@ function Homepage() {
                       </div>
                       <div className="col-3">
                         <img
-                          src={Logo}
+                          src={job.company_image}
                           alt=""
                           style={{
                             width: "90px",
@@ -825,7 +827,7 @@ function Homepage() {
                     >
                       <div className="col-3">
                         <img
-                          src={Logo}
+                          src={job.company_image}
                           alt=""
                           style={{
                             width: "90px",

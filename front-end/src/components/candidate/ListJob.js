@@ -27,6 +27,7 @@ const ListJob = () => {
             item.job_location.toLowerCase() === addressValue.toLowerCase()
         );
         return address.map((value, key) => {
+          console.log(value);
           return (
             <>
               <Link
@@ -38,9 +39,9 @@ const ListJob = () => {
                   <div className="row g-0">
                     <div className="col-3">
                       <img
-                        src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                        src={value.company_image}
                         className="img-fluid rounded-start"
-                        alt="..."
+                        alt=""
                         style={{ padding: "8px" }}
                       />
                     </div>
@@ -127,7 +128,7 @@ const ListJob = () => {
                   <div className="row g-0">
                     <div className="col-3">
                       <img
-                        src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                        src={value.company_image}
                         className="img-fluid rounded-start"
                         alt="..."
                         style={{ padding: "8px" }}

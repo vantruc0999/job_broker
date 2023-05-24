@@ -35,11 +35,12 @@ function Header() {
   const renderLog = () => {
     var user = localStorage.getItem("user");
     user = JSON.parse(user);
+    console.log(user);
     if (user) {
       return (
         <>
           <li className="nav-item d-flex divide dropdown">
-            <img
+            {/* <img
               className="navbar-brand"
               src={Logo}
               alt=""
@@ -50,7 +51,7 @@ function Header() {
                 margin: 0,
                 marginTop: 6,
               }}
-            />
+            /> */}
             <Link
               className="nav-link dropdown-toggle text-dark"
               data-toggle="dropdown"
@@ -157,25 +158,7 @@ function Header() {
                     </Link>
                     <div className="dropdown-menu">
                       <Link to="/listJob" className="dropdown-item">
-                        Việc làm phù hợp
-                      </Link>
-                    </div>
-                  </li>
-                  <li className="nav-item dropdown">
-                    <Link
-                      className="nav-link dropdown-toggle text-dark"
-                      href="#"
-                      id="navbardrop"
-                      data-toggle="dropdown"
-                    >
-                      Công ty
-                    </Link>
-                    <div className="dropdown-menu">
-                      <Link className="dropdown-item" href="#">
-                        Công ty tiêu biểu
-                      </Link>
-                      <Link className="dropdown-item" href="#">
-                        Tất cả công ty
+                        Danh sách việc làm
                       </Link>
                     </div>
                   </li>
@@ -241,6 +224,7 @@ function Header() {
     );
   };
   const HeaderRe = () => {
+    console.log(name);
     return (
       <div>
         <header
@@ -291,7 +275,7 @@ function Header() {
                   style={{ cursor: "pointer" }}
                 >
                   <img
-                    src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                    src={name.image}
                     alt="Profile"
                     className="rounded-circle"
                     style={{
@@ -301,14 +285,13 @@ function Header() {
                     }}
                   />
                   <span className="d-none d-md-block dropdown-toggle ps-2">
-                    {name.recruiter_name}
+                    {name.recruiter_company}
                   </span>
                 </a>
 
                 <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                   <li className="dropdown-header">
-                    <h6>Recruiter_Name</h6>
-                    <span>Company_name</span>
+                    <h6>{name.recruiter_name}</h6>
                   </li>
                   <li>
                     <hr className="dropdown-divider" />

@@ -2,13 +2,13 @@ import React from "react";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-import "../../assets/css/style.css";
-import "../../assets/css/bootstrap_min.css";
+// import "../../assets/css/style.css";
+// import "../../assets/css/bootstrap_min.css";
 import Example from "../candidate/Example";
 import { useNavigate } from "react-router-dom";
-import Footer from "../footer/Footer";
+import Sidebar from "./Sidebar";
 
-const Test = () => {
+const JobDetail = () => {
   const navigate = useNavigate();
   let params = useParams();
   const [role, setRole] = useState("");
@@ -53,12 +53,11 @@ const Test = () => {
       </div>
     );
   }
+
   return (
     <div>
-      <div
-        className="container"
-        style={{ margin: "0 auto", width: "1250px", marginTop: "24px" }}
-      >
+      <Sidebar />
+      <main id="main" className="main">
         <section className="section">
           <div className="row">
             <div className="col-lg-8">
@@ -345,7 +344,7 @@ const Test = () => {
                     padding: "10px 15px",
                   }}
                 >
-                  VIỆC LÀM LIÊN QUAN
+                  GỢI Ý ỨNG VIÊN
                 </h6>
                 {jobs.length > 0 &&
                   jobs.map((job) => {
@@ -401,10 +400,9 @@ const Test = () => {
             </div>
           </div>
         </section>
-      </div>
-      <Footer />
+      </main>
     </div>
   );
 };
 
-export default Test;
+export default JobDetail;

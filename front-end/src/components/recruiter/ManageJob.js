@@ -52,7 +52,6 @@ const ManageJob = () => {
                     </a>
 
                     {/* <li className="title-list">{job.jobs[0].company_name}</li> */}
-                    <li className="title-list">Cập nhật lúc</li>
 
                     <li className="title-list">
                       <i class="fas fa-map-marker-alt mr-1"></i>{" "}
@@ -64,6 +63,17 @@ const ManageJob = () => {
                 <td>{value.job_end_date}</td>
                 <td>{user.recruiter_name}</td>
                 <td style={{ display: "grid", height: "100%" }}>
+                  <Link
+                    to={"/jobDetail/" + value.job_id}
+                    className="btn btn-outline-primary"
+                    style={{
+                      margin: "3px",
+                      fontSize: "13px",
+                      padding: "5px 5px",
+                    }}
+                  >
+                    Xem chi tiết
+                  </Link>
                   <Link
                     to={"/manageJob/updateJob/" + value.job_id}
                     className="btn btn-outline-success"
@@ -98,7 +108,7 @@ const ManageJob = () => {
   return (
     <div>
       <Sidebar />
-      <main id="main" className="main" style={{ minHeight: "665px" }}>
+      <main id="main" className="main">
         <section className="section">
           <div className="row">
             <div className="col-lg-12">

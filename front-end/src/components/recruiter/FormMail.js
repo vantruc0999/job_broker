@@ -8,6 +8,8 @@ function FormMail() {
   const [inputs, setInputs] = useState("");
   const editorApprove = useRef(null);
   const editorDeclined = useRef(null);
+  const editorSignature = useRef(null);
+
   let user = JSON.parse(localStorage.getItem("user"));
   let config = {
     headers: {
@@ -17,6 +19,9 @@ function FormMail() {
     },
   };
   useEffect(() => {
+    render();
+  }, []);
+  const render = () => {
     axios
       .post("http://127.0.0.1:8000/api/recruiter/content-mail", null, config)
       .then((res) => {
@@ -27,7 +32,7 @@ function FormMail() {
           signature: res.data.signature,
         });
       });
-  }, []);
+  };
   const handleInputs = (e) => {
     const nameInput = e.target.name;
     const value = e.target.value;
@@ -43,6 +48,7 @@ function FormMail() {
         if (res.data.message.includes("update")) {
           alert("Mail đã được cập nhật");
         }
+        render();
       });
   };
   return (
@@ -108,13 +114,18 @@ function FormMail() {
                     </div>
                     <div class="form-group">
                       <label>Chữ ký</label>
-                      <textarea
-                        class="form-control"
-                        rows="3"
-                        placeholder="Nhập ..."
+                      <JoditEditor
+                        ref={editorSignature}
+                        tabIndex={1}
                         value={inputs.signature}
-                        onChange={handleInputs}
-                      ></textarea>
+                        // onChange={(e) => setJob({ ...job, benefit: editor.current.value })}
+                        onBlur={() =>
+                          setInputs((prevJob) => ({
+                            ...prevJob,
+                            signature: editorSignature.current.value,
+                          }))
+                        }
+                      />
                     </div>
                   </div>
                   <div class="card-footer">

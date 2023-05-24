@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import JoditEditor from "jodit-react";
 import { useState, useRef } from "react";
 import Select from "react-select";
@@ -19,6 +19,28 @@ const arraySkill = [
   { value: 4, label: "Python" },
 ];
 const AddJob = () => {
+  const [histotyPack, setHistoryPack] = useState([]);
+
+  useEffect(() => {
+    render();
+  }, []);
+
+  const render = async () => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    let config = {
+      headers: {
+        Authorization: "Bearer " + user.token,
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+      },
+    };
+    await axios
+      .get("http://127.0.0.1:8000/api/recruiter/payment-history", config)
+      .then((res) => {
+        console.log(res.data);
+        setHistoryPack(res.data);
+      });
+  };
   const navigate = useNavigate();
   const [job, setJob] = useState({
     job_name: "",
@@ -332,6 +354,14 @@ const AddJob = () => {
           <div class="row">
             <div class="col-lg-12"></div>
             <div class="card addjob">
+              {histotyPack.length === 0 ? (
+                <span>
+                  Bạn cần phải mua gói để tạo công việc{" "}
+                  <Link to="/packageRecruiter">Mua gói ngay</Link>
+                </span>
+              ) : (
+                ""
+              )}
               <div class="card-body d-grid">
                 <p
                   class="card-title"

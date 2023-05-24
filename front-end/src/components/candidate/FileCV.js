@@ -36,6 +36,7 @@ function FileCV() {
         setInfo(res.data);
       });
   }, []);
+  // console.log(resume.experience_project[0].company_name);
   const renderExp = () => {
     if (Object.keys(resume).length > 0) {
       return resume.experience_company.map((value, key) => {
@@ -228,7 +229,7 @@ function FileCV() {
                   <div className="title">
                     <p className="bold">Kinh nghiệm làm việc dự án</p>
                   </div>
-                  {resume.experience_project[0].company_name
+                  {resume.experience_project[0].project_name
                     ? renderExpProject()
                     : null}
                 </div>
@@ -414,7 +415,7 @@ function FileCV() {
                                 </div>
                               </div>
                               <div class="resume-timeline-item-desc resume_work">
-                                {resume.experience_project[0].company_name
+                                {resume.experience_project[0].project_name
                                   ? renderExpProject()
                                   : null}
                               </div>
@@ -473,9 +474,7 @@ function FileCV() {
                                 <ul>
                                   <li>
                                     <div className="date">
-                                      <p>
-                                        Chứng chỉ: {resume.resume.certificate}
-                                      </p>
+                                      <p>{resume.resume.certificate}</p>
                                     </div>
                                   </li>
                                 </ul>

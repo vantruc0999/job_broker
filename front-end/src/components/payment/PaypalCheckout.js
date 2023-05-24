@@ -75,10 +75,11 @@ function PayPalButton(props) {
             )
             .then((res) => {
               console.log(res.data);
-              if(param1["pathname"].includes("packageRecruiter")){
+              if (param1["pathname"].includes("packageRecruiter")) {
                 navigate("/manageJob");
-              }else{
-                navigate("/addJob")
+              } else {
+                navigate("/addJob");
+                alert("Bạn đã thanh toán thành công");
               }
             });
         }}

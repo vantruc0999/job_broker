@@ -10,7 +10,7 @@ function AdminJob() {
   const [id, setId] = useState("");
   const [success, setSuccess] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 5;
 
   // Tính chỉ số của dữ liệu trong trang hiện tại
   const indexOfLastItem = currentPage * itemsPerPage;

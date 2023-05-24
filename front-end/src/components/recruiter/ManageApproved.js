@@ -39,10 +39,19 @@ function ManageApproved() {
         config
       )
       .then((res) => {
-        setApproved(res.data);
+        if (res.data.length === 0) {
+          alert("Không có ứng viên ứng tuyển");
+        } else {
+          console.log("có");
+          setApproved(res.data);
+        }
       });
   };
-
+  function alertFunc() {
+    setTimeout(() => {
+      alert("Bạn đã từ chối ứng viên");
+    }, 3000);
+  }
   const handleCancle = (e) => {
     let id = e.currentTarget.id;
     axios
@@ -53,12 +62,13 @@ function ManageApproved() {
       )
       .then((res) => {
         if (res.data.message.includes("declined")) {
-          alert("Xóa ứng viên thành công");
+          alert("Hệ thống đang gửi mail xác nhận đến ứng viên");
         }
         const afterDelte = approved.filter((object) => {
           return object.application_id.toString() !== id;
         });
         setApproved(afterDelte);
+        alertFunc();
       });
   };
   const renderJob = () => {
@@ -66,7 +76,10 @@ function ManageApproved() {
       return allJob.jobs.map((value, key) => {
         return (
           <>
-            <option value={value.job_id}> {value.job_name}</option>
+            <option key={value.job_id} value={value.job_id}>
+              {" "}
+              {value.job_name}
+            </option>
           </>
         );
       });
@@ -215,12 +228,9 @@ function ManageApproved() {
                                 className="form-select"
                                 aria-label="Default select example"
                                 style={{ fontSize: "13px" }}
-                                value=""
+                                value={id}
                                 onChange={handleGetID}
                               >
-                                <option selected="" value="">
-                                  Chọn ngành nghề chuyên môn
-                                </option>
                                 {renderJob()}
                               </select>
                             </div>

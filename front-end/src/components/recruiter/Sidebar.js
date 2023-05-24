@@ -18,7 +18,7 @@ function Sidebar() {
               <Link to="/managecan">
                 <a className="nav-link " href="/">
                   <i className="bi bi-circle"></i>
-                  <span>Quản lý ứng viên</span>
+                  <span>Ứng viên đang chờ duyệt</span>
                 </a>
               </Link>
             </li>

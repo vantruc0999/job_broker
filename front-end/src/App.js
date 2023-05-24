@@ -59,6 +59,7 @@ import HistoryBuyPackage from "./components/admin/HistoryBuyPackage";
 import FormMail from "./components/recruiter/FormMail";
 import AdAcceptJob from "./components/admin/AdAcceptJob";
 import AdDeclinedJob from "./components/admin/AdDeclinedJob";
+import JobDetail from "./components/recruiter/JobDetail";
 function App(props) {
   let param1 = useLocation();
   return (
@@ -112,6 +113,7 @@ function App(props) {
           <Route path="/manageDeclined" element={<ManageDeClined />} />
           <Route path="/manageDeclined/fileCV/:id" element={<FileCV />} />
           <Route path="/mail" element={<FormMail />} />
+          <Route path="/jobDetail" element={<JobDetail />} />
         </Route>
 
         {/* ------------ */}

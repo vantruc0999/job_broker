@@ -80,12 +80,9 @@ function AdAcceptJob() {
                 <td>{value.company_name}</td>
                 <td>
                   <a> {value.job_name} </a>
-                  <br />
-                  <small> Ngày tạo 01.01.2019 </small>
                 </td>
-                <td>00/00/0000</td>
-                <td className="project_progress">00/00/0000</td>
-                <td className="project-state">Hoạt động</td>
+                <td>{value.salary}</td>
+                <td>{value.status}</td>
                 <td className="project-actions text-right">
                   {openModal === false ? (
                     <>
@@ -190,10 +187,9 @@ function AdAcceptJob() {
                         <tr>
                           <th>Tên công ty</th>
                           <th>Tên công việc</th>
-                          <th>Ngày bắt đầu</th>
-                          <th>Ngày kết thúc</th>
+                          <th>Địa chỉ</th>
                           <th>Trạng thái</th>
-                          <th style={{ width: "10%" }}>Tính năng</th>
+                          <th>Tính năng</th>
                         </tr>
                       </thead>
                       {renderJobWait()}

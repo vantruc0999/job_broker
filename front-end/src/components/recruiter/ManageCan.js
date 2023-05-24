@@ -8,7 +8,7 @@ const ManageCan = () => {
   const [candidate, setCandidate] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [modalId, setModalId] = useState(null);
-
+  const [id, setId] = useState("");
   const handleOpenModal = (id) => {
     setModalId(id);
   };
@@ -31,10 +31,10 @@ const ManageCan = () => {
 
   const handleGetID = (e) => {
     let id = e.target.value;
+    setId(id);
     axios
       .get(`http://127.0.0.1:8000/api/recruiter/get-candidates/` + id, config)
       .then((res) => {
-        console.log(res);
         if (res.data.length === 0) {
           alert("Không có ứng viên ứng tuyển");
         } else {
@@ -60,6 +60,7 @@ const ManageCan = () => {
   const handleApply = (e) => {
     let id = e.currentTarget.id;
     console.log(id);
+    setId(id);
     axios
       .post(
         `http://127.0.0.1:8000/api/recruiter/resume-accept/` + id,
@@ -74,8 +75,14 @@ const ManageCan = () => {
           return object.application_id.toString() !== id;
         });
         setCandidate(afterDelte);
+        alertFunc();
       });
   };
+  function alertFunc() {
+    setTimeout(() => {
+      alert("Xóa ứng viên thành công");
+    }, 3000);
+  }
   const handleCancle = (e) => {
     let id = e.currentTarget.id;
     console.log(id);
@@ -87,12 +94,13 @@ const ManageCan = () => {
       )
       .then((res) => {
         if (res.data.message.includes("declined")) {
-          alert("Xóa ứng viên thành công");
+          alert("Hệ thống đang gửi mail xác nhận đến ứng viên");
         }
         const afterDelte = candidate.filter((object) => {
           return object.application_id.toString() !== id;
         });
         setCandidate(afterDelte);
+        alertFunc();
       });
   };
   console.log(candidate);
@@ -224,12 +232,9 @@ const ManageCan = () => {
                                 className="form-select"
                                 aria-label="Default select example"
                                 style={{ fontSize: "13px" }}
-                                value=""
+                                value={id}
                                 onChange={handleGetID}
                               >
-                                <option selected="" value="">
-                                  Chọn ngành nghề chuyên môn
-                                </option>
                                 {renderJob()}
                               </select>
                             </div>

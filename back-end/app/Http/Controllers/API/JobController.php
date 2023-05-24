@@ -395,6 +395,7 @@ class JobController extends Controller
             foreach ($jobs as $job) {
                 $company_name = self::getAllCompanyName($job['recruiter_id']);
                 $job->company_name = $company_name;
+                $job->company_image = self::getCompanyImage($job['recruiter_id']);
                 unset($job->recruiter_id);
             }
         }
@@ -506,5 +507,13 @@ class JobController extends Controller
         }
         $job_detail['recCan'] =  $recCandidate->unique('resume_id');
         return $job_detail;
+    }
+
+    public function searchJobTitle(Request $request){
+        $jobs = Job::select('job_id', 'salary', 'job_name', 'job_location', 'recruiter_id')
+            ->where('job_name', 'like', "%$request->title%")
+            ->orderBy('job_id', 'desc')
+            ->get();
+        return $jobs;
     }
 }

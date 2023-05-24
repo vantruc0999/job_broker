@@ -55,7 +55,7 @@ const AddJob = () => {
     job_description:
       "- Tốt nghiệp Cao đẳng/ Đại học chuyên ngành CNTT, Toán Tin, Viễn thông… \n - Có tối thiểu 01 năm kinh nghiệm ở vị trí tương đương;\n - Có kiến thức về lập trình hướng đối tượng",
     benefit:
-      "- Thu nhập: Thỏa thuận theo năng lực và kinh nghiệm. \n - Thưởng: Thưởng theo quy định công ty, thưởng theo hiệu quả công việc,... \n - Phát triển: Được bổ nhiệm các vị trí cao hơn khi thể hiện được năng lực làm việc",
+      "- Thu nhập: Thỏa thuận theo năng lực và kinh nghiệm.  \n - Thưởng: Thưởng theo quy định công ty, thưởng theo hiệu quả công việc,... \n - Phát triển: Được bổ nhiệm các vị trí cao hơn khi thể hiện được năng lực làm việc",
     job_skill: [],
   });
 
@@ -338,7 +338,7 @@ const AddJob = () => {
             navigate("/packageRecruiter");
           } else if (res.data.message === "Job has been created successfully") {
             alert("Tạo tin tuyển dụng thành công");
-            navigate("/homeRecruiter");
+            navigate("/managaJob");
           } else if (
             res.data.message === "Job start date must be greater or equal today"
           ) {

@@ -75,6 +75,7 @@ function App(props) {
         <Route path="/homeCandidate" element={<Homepage />} />
         <Route path="/homeRecruiter" element={<HomeRecruiter />} />
         <Route path="/listJob" element={<ListJob />} />
+        <Route path="/job/:id" element={<Test />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

@@ -27,37 +27,6 @@ const animatedComponents = makeAnimated();
 function CreateCV() {
   let params = useParams();
   const navigate = useNavigate();
-  const tx = document.getElementById("exp_input");
-  if (tx) {
-    tx.setAttribute(
-      "style",
-      "height:" +
-        tx.scrollHeight +
-        "px;overflow-y:hidden; width:100%;border:none "
-    );
-    tx.addEventListener("input", OnInput, false);
-  }
-  function OnInput() {
-    this.style.height = 0;
-    this.style.height = this.scrollHeight + "px";
-  }
-
-  const tx2 = document.getElementById("exp_input2");
-  if (tx2) {
-    tx2.setAttribute(
-      "style",
-      "height:" +
-        tx2.scrollHeight +
-        "px;overflow-y:hidden; width:100%;border:none "
-    );
-    tx2.addEventListener("input", OnInput2, false);
-  }
-
-  function OnInput2() {
-    this.style.height = 0;
-    this.style.height = this.scrollHeight + "px";
-  }
-
   const [showForm, setShowForm] = useState([]);
   const [exp, setExp] = useState([]);
   const [education, setEducation] = useState([]);
@@ -76,6 +45,23 @@ function CreateCV() {
   const [imagePreview, setImagePreview] = useState("");
   const imageListRef = ref(storage, "image/");
   console.log(imagePreview);
+  useEffect(() => {
+    function OnInput2() {
+      this.style.height = 0;
+      this.style.height = this.scrollHeight + "px";
+    }
+    const textarea = document.getElementsByTagName("textarea");
+    for (let index = 0; index < textarea.length; index++) {
+      const element = textarea[index];
+      element.setAttribute(
+        "style",
+        "height:" +
+          element.scrollHeight +
+          "px;overflow-y:hidden; width:100%;border:none "
+      );
+      element.addEventListener("input", OnInput2, false);
+    }
+  }, [JSON.stringify(exp), JSON.stringify(active)]);
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     let flag = true;
@@ -124,6 +110,56 @@ function CreateCV() {
     });
     setTemplate(params.id);
   }, []);
+
+  useEffect(() => {
+    setExp([
+      {
+        description: "1st hacker rank",
+        company: "NFQ",
+        timeend: "2022",
+        timestart: "2010",
+        position: "_AI developer _Backend developer",
+      },
+    ]);
+
+    setEducation([
+      {
+        rank: "GPA: 3.8",
+        school: "DUT",
+        specialize: "Software Engineering 123",
+        time: "2020-2023",
+      },
+    ]);
+
+    setActive([
+      {
+        description: "Good feedback from mentor 1",
+        timeend: "2022",
+        timestart: "2010",
+        company: "CAPSTONE 112",
+        position: "Laravel developer",
+      },
+    ]);
+
+    setCertificate([
+      {
+        title: "Hacker rank",
+      },
+    ]);
+
+    setSoftSkill([
+      {
+        title: "Chơi game",
+      },
+    ]);
+
+    setAwards([
+      {
+        title: "Top 1 server",
+      },
+    ]);
+  }, []);
+  console.log(template);
   useEffect(() => {
     const textarea = document.getElementById("emailSummary");
     const placeholder = "Email";
@@ -159,7 +195,7 @@ function CreateCV() {
           first_name: res.data.first_name,
           last_name: res.data.last_name,
           address: res.data.address,
-          birth_day: res.data.birth_day,
+          birth_day: "2002-12-12",
           email: res.data.email,
           phone: res.data.phone,
           namecv: res.data.first_name,
@@ -317,30 +353,7 @@ function CreateCV() {
       </>
     );
   };
-  const addLanguage = (e) => {
-    return (
-      <>
-        <div className="content_form">
-          <textarea
-            className="exp_input"
-            id="exp_input2"
-            placeholder="Ngoại ngữ..."
-            style={{
-              border: "none",
-              width: "100%",
-              overflow: "hidden",
-            }}
-            value={active.achievement}
-            onChange={(e) => {
-              setLanguage(e.target.value);
-            }}
-            minRows={1}
-            maxRows={6}
-          />
-        </div>
-      </>
-    );
-  };
+
   const addContentCertificates = () => {
     return (
       <>
@@ -462,7 +475,7 @@ function CreateCV() {
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian bắt đầu"
-                  value={exp.timestart}
+                  value={active.timestart}
                   style={{ border: "none" }}
                   onChange={(e) =>
                     handleActInputChange(index, "timestart", e.target.value)
@@ -473,7 +486,7 @@ function CreateCV() {
                   className="exp_input"
                   type="text"
                   placeholder="Thời gian kết thúc "
-                  value={exp.timeend}
+                  value={active.timeend}
                   style={{ border: "none" }}
                   onChange={(e) =>
                     handleActInputChange(index, "timeend", e.target.value)
@@ -741,6 +754,7 @@ function CreateCV() {
     };
     console.log(experience_project);
     if (!resume.image) {
+      console.log("1");
       // flag = false;
       // alert("Bạn chưa chọn ảnh đại diện");
       resume.image = Logo;
@@ -796,13 +810,8 @@ function CreateCV() {
                     src={imagePreview}
                     alt=""
                     style={{
-                      maxWidth: "230px",
-                      height: "230px",
-                      margin: "0 auto",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      objectFit: "cover",
+                      maxWidth: "220px",
+                      height: "220px",
                       borderRadius: "50%",
                     }}
                   />
@@ -811,13 +820,8 @@ function CreateCV() {
                     src={Logo}
                     alt=""
                     style={{
-                      maxWidth: "230px",
-                      height: "230px",
-                      margin: "0 auto",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      objectFit: "cover",
+                      maxWidth: "220px",
+                      height: "220px",
                       borderRadius: "50%",
                     }}
                   />
@@ -943,6 +947,15 @@ function CreateCV() {
                   onChange={handleInput}
                   style={{ padding: "5px", border: "none", color: "#000" }}
                 />
+                {/* <input
+                  required="required"
+                  type="text"
+                  placeholder="Vị trí mong muốn"
+                  value={inputs.position}
+                  name="position"
+                  onChange={handleInput}
+                  style={{ padding: "5px", border: "none", color: "#000" }}
+                /> */}
               </div>
             </section>
             <section className="experience">
@@ -1034,7 +1047,7 @@ function CreateCV() {
             </section>
             <section className="experience">
               <h4>
-                <i className="fas fa-medal" /> Giải thưởng
+                <i className="fas fa-medal" /> Hoạt động
               </h4>
               {awards.length > 0 ? (
                 addContentAward()
@@ -1094,11 +1107,6 @@ function CreateCV() {
                         style={{
                           maxWidth: "230px",
                           height: "230px",
-                          margin: "0 auto",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          objectFit: "cover",
                         }}
                       />
                     ) : (
@@ -1108,11 +1116,6 @@ function CreateCV() {
                         style={{
                           maxWidth: "230px",
                           height: "230px",
-                          margin: "0 auto",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          objectFit: "cover",
                         }}
                       />
                     )}

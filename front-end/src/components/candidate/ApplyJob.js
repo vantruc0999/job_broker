@@ -60,6 +60,8 @@ const ApplyJob = () => {
                     alt="..."
                     style={{
                       padding: "25px",
+                      width: "150px",
+                      height: "150px",
                     }}
                   />
                 </div>
@@ -129,7 +131,7 @@ const ApplyJob = () => {
                         </p>
                       </li>
                     </ul>
-                    <p
+                    {/* <p
                       className="decription"
                       style={{
                         fontSize: "13px",
@@ -144,7 +146,7 @@ const ApplyJob = () => {
                       trợ các giải pháp tài chính chuyên nghiệp cho khách hàng
                       Tìm kiếm, mở rộng và xây dựng nguồn khách hàng tiềm năng *
                       DỊCH VỤ KHÁCH HÀNG Hỗ trợ khách hàng làm dịc...
-                    </p>
+                    </p> */}
                   </div>
                 </div>
                 <div

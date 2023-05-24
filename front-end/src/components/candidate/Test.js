@@ -43,7 +43,7 @@ const Test = () => {
           setJobDetail(res.data.job_detail);
         });
     }
-  }, []);
+  }, [params.id]);
   const skills =
     detailJob && detailJob.skills ? detailJob.skills.join(", ") : "";
   function renderSkill() {

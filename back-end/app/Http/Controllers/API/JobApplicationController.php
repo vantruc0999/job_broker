@@ -80,7 +80,7 @@ class JobApplicationController extends Controller
         $full_name = $candidate->first_name . ' ' . $candidate->last_name;
         $recruiter = auth()->user();
         $mailable = new HelloMail($recruiter, $full_name, 1);
-        Mail::to($candidate->email)->send($mailable);
+        Mail::to($candidate->email)->queue($mailable);
         return response([
             'message' => 'Resume has been approved',
             // 'recruiter' => $recruiter

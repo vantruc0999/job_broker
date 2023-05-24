@@ -73,7 +73,7 @@ function Homepage() {
       );
     } else {
       return (
-        <Link to="/createCV">
+        <Link to="/chooseCV">
           <button className="btn btn-primary" type="button">
             <i className="fas fa-regular fa-plus mr-2" />
             Tạo CV ngay!

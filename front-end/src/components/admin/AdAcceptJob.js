@@ -9,6 +9,14 @@ function AdAcceptJob() {
   const [openModal, setOpenModal] = useState(false);
   const [id, setId] = useState("");
   const [success, setSuccess] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentData = jobwait.slice(indexOfFirstItem, indexOfLastItem);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   let user = JSON.parse(localStorage.getItem("user"));
   const config = {
     headers: {
@@ -124,6 +132,60 @@ function AdAcceptJob() {
       });
     }
   };
+  const renderJobWait2 = () => {
+    if (Object.keys(currentData).length > 0) {
+      return currentData.map((value, key) => {
+        return (
+          <>
+            <tbody>
+              <tr>
+                <td>{value.company_name}</td>
+                <td>
+                  <a> {value.job_name} </a>
+                  <br />
+                </td>
+                <td>{value.job_location}</td>
+                <td>{value.status}</td>
+                <td className="project-actions text-right">
+                  {openModal === false ? (
+                    <>
+                      <span
+                        className="btn btn-primary btn-sm"
+                        id={value.job_id}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setOpenModal(true);
+                        }}
+                      >
+                        <i className="fas fa-folder"> </i>
+                        Xem
+                      </span>
+                    </>
+                  ) : (
+                    <ModalViewJob setJobwait={setJobwait} id={value.job_id} />
+                  )}
+                  <button
+                    id={value.job_id}
+                    className="btn btn-success ml-2 btn-sm"
+                    onClick={(e) => handleDetailCV(e)}
+                  >
+                    Duyệt
+                  </button>
+                  <button
+                    id={value.job_id}
+                    className="btn btn-danger ml-2 btn-sm"
+                    onClick={(e) => handleDelete(e)}
+                  >
+                    Từ chối
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </>
+        );
+      });
+    }
+  };
   return (
     <>
       <div className="content-wrapper" style={{ minHeight: "665px" }}>
@@ -185,14 +247,14 @@ function AdAcceptJob() {
                     >
                       <thead>
                         <tr>
-                          <th>Tên công ty</th>
-                          <th>Tên công việc</th>
-                          <th>Địa chỉ</th>
-                          <th>Trạng thái</th>
-                          <th>Tính năng</th>
+                          <th style={{ width: "15%" }}>Tên công ty</th>
+                          <th style={{ width: "30%" }}>Tên công việc</th>
+                          <th style={{ width: "20%" }}>Địa chỉ</th>
+                          <th style={{ width: "15%" }}>Trạng thái</th>
+                          <th style={{ width: "20%" }}>Tính năng</th>
                         </tr>
                       </thead>
-                      {renderJobWait()}
+                      {renderJobWait2()}
                     </table>
                   </div>
                 </div>
@@ -202,80 +264,19 @@ function AdAcceptJob() {
                       className="dataTables_paginate paging_simple_numbers"
                       id="example2_paginate"
                     >
-                      <ul className="pagination">
-                        <li
-                          className="paginate_button page-item previous disabled"
-                          id="example2_previous"
-                        >
-                          <a
-                            href="#"
-                            aria-controls="example2"
-                            data-dt-idx={0}
-                            tabIndex={0}
-                            className="page-link"
+                      {Array.from(
+                        { length: Math.ceil(jobwait.length / itemsPerPage) },
+                        (_, i) => (
+                          <button
+                            className="btn btn-primary"
+                            key={i + 1}
+                            onClick={() => paginate(i + 1)}
+                            style={{ marginRight: "5px" }}
                           >
-                            Sau
-                          </a>
-                        </li>
-                        <li className="paginate_button page-item active">
-                          <a
-                            href="#"
-                            aria-controls="example2"
-                            data-dt-idx={1}
-                            tabIndex={0}
-                            className="page-link"
-                          >
-                            1
-                          </a>
-                        </li>
-                        <li className="paginate_button page-item">
-                          <a
-                            href="#"
-                            aria-controls="example2"
-                            data-dt-idx={2}
-                            tabIndex={0}
-                            className="page-link"
-                          >
-                            2
-                          </a>
-                        </li>
-                        <li className="paginate_button page-item">
-                          <a
-                            href="#"
-                            aria-controls="example2"
-                            data-dt-idx={3}
-                            tabIndex={0}
-                            className="page-link"
-                          >
-                            3
-                          </a>
-                        </li>
-                        <li className="paginate_button page-item">
-                          <a
-                            href="#"
-                            aria-controls="example2"
-                            data-dt-idx={4}
-                            tabIndex={0}
-                            className="page-link"
-                          >
-                            4
-                          </a>
-                        </li>
-                        <li
-                          className="paginate_button page-item next"
-                          id="example2_next"
-                        >
-                          <a
-                            href="#"
-                            aria-controls="example2"
-                            data-dt-idx={7}
-                            tabIndex={0}
-                            className="page-link"
-                          >
-                            Tiếp
-                          </a>
-                        </li>
-                      </ul>
+                            {i + 1}
+                          </button>
+                        )
+                      )}
                     </div>
                   </div>
                 </div>

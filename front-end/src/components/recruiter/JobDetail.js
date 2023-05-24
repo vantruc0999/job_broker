@@ -384,13 +384,16 @@ const JobDetail = () => {
 
             <div className="col-lg-4">
               <div className="card">
-                <div className="card-body">
+                <div
+                  className="card-body"
+                  style={{ backgroundColor: "#f4f6f7" }}
+                >
                   <div
                     className="profile-company d-flex flex-column align-items-center"
                     style={{ margin: "0 auto" }}
                   >
                     <img
-                      src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                      src={detailJob.company_image}
                       alt="Profile"
                       className="rounded-circle"
                       style={{ maxWidth: "120px" }}
@@ -406,15 +409,6 @@ const JobDetail = () => {
                     </div>
                   </div>
 
-                  <div
-                    className="location"
-                    style={{ float: "left", fontSize: "14px" }}
-                  >
-                    {/* <div className="h6 text-semibold">Địa chỉ công ty</div> */}
-                    <p className="content-detail">
-                      <i className="fas fa-map-marker-alt mr-1"></i> Đà Nẵng
-                    </p>
-                  </div>
                   <div className="social-links mt-2"></div>
                 </div>
               </div>

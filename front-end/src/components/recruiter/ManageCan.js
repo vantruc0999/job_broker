@@ -235,6 +235,9 @@ const ManageCan = () => {
                                 value={id}
                                 onChange={handleGetID}
                               >
+                                <option selected="" value="">
+                                  Chọn tin tuyển dụng
+                                </option>
                                 {renderJob()}
                               </select>
                             </div>

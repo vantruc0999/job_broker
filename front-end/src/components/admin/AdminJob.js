@@ -94,7 +94,7 @@ function AdminJob() {
                   <br />
                 </td>
                 <td>{value.job_location}</td>
-                <td>{value.salary}</td>
+                <td>{value.status}</td>
                 <td className="project-actions text-right">
                   {openModal === false ? (
                     <>
@@ -148,7 +148,7 @@ function AdminJob() {
                   <br />
                 </td>
                 <td>{value.job_location}</td>
-                <td>{value.salary}</td>
+                <td>{value.status}</td>
                 <td className="project-actions text-right">
                   {openModal === false ? (
                     <>
@@ -250,11 +250,11 @@ function AdminJob() {
                     >
                       <thead>
                         <tr>
-                          <th>Tên công ty</th>
-                          <th>Tên công việc</th>
-                          <th>Địa chỉ</th>
-                          <th>Lương</th>
-                          <th>Tính năng</th>
+                          <th style={{ width: "15%" }}>Tên công ty</th>
+                          <th style={{ width: "30%" }}>Tên công việc</th>
+                          <th style={{ width: "20%" }}>Địa chỉ</th>
+                          <th style={{ width: "15%" }}>Trạng thái</th>
+                          <th style={{ width: "20%" }}>Tính năng</th>
                         </tr>
                       </thead>
                       {renderJobWait2()}
@@ -275,6 +275,7 @@ function AdminJob() {
                               className="btn btn-primary"
                               key={i + 1}
                               onClick={() => paginate(i + 1)}
+                              style={{ marginRight: "5px" }}
                             >
                               {i + 1}
                             </button>

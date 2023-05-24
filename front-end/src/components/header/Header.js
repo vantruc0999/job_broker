@@ -62,21 +62,12 @@ function Header() {
             <div className="dropdown-menu">
               <div style={{ borderBottom: "1px solid #e7e9eb" }}>
                 <Link to="/allCV" className="dropdown-item" href="#">
-                  Cập nhập hồ sơ
-                </Link>
-                <Link className="dropdown-item" href="#">
-                  Giới thiệu bản thân
-                </Link>
-                <Link className="dropdown-item" href="#">
-                  Đổi mật khẩu
+                  Xem hồ sơ CV
                 </Link>
               </div>
               <div style={{ borderBottom: "1px solid #e7e9eb" }}>
                 <Link to="/applyJob" className="dropdown-item" href="#">
                   Việc làm đã ứng tuyển
-                </Link>
-                <Link className="dropdown-item" href="#">
-                  Việc làm đã lưu
                 </Link>
               </div>
               <div onClick={logout}>
@@ -170,38 +161,8 @@ function Header() {
                     >
                       CV / Hồ sơ
                     </a>
-                    <div className="dropdown-menu">
-                      {/* <Link to="/createCV">
-                        <a className="dropdown-item" href="#">
-                          Tạo CV
-                        </a>
-                      </Link> */}
-                      {checkLogin()}
-                      {/* <a className="dropdown-item" href="#">
-                        Check CV
-                      </a> */}
-                    </div>
+                    <div className="dropdown-menu">{checkLogin()}</div>
                   </li>
-                  {/* <li className="nav-item dropdown">
-                    <Link
-                      className="nav-link dropdown-toggle text-dark"
-                      data-toggle="dropdown"
-                      href="#"
-                    >
-                      Phát triển sự nghiệp
-                    </Link>
-                    <div className="dropdown-menu">
-                      <Link className="dropdown-item" href="#">
-                        Tra cứu
-                      </Link>
-                      <Link className="dropdown-item" href="#">
-                        Kiến thức
-                      </Link>
-                      <Link className="dropdown-item" href="#">
-                        Tra cứu lương
-                      </Link>
-                    </div>
-                  </li> */}
                 </ul>
               </div>
               <div className="pt-2">

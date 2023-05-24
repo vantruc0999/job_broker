@@ -331,6 +331,7 @@ function ModalCV({ closeModal, modalId }) {
                       justifyContent: "center",
                       alignItems: "center",
                       objectFit: "cover",
+                      borderRadius: "50%",
                     }}
                   />
                 </div>
@@ -341,7 +342,7 @@ function ModalCV({ closeModal, modalId }) {
                         {" "}
                         {resume.resume.last_name} {resume.resume.first_name}
                       </p>
-                      <p className="regular">Developer</p>
+                      {/* <p className="regular">Developer</p> */}
                     </div>
                     <ul style={{ padding: "0" }}>
                       <li>
